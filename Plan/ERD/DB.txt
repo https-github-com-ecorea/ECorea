@@ -103,27 +103,27 @@ ALTER TABLE CHALLENGE
 
 /* 후기 */
 CREATE TABLE HUGI (
-	rno NUMBER(10) NOT NULL, /* 후기글번호 */
-	ono NUMBER(10) NOT NULL, /* 주문상세번호 */
-	rtitle VARCHAR2(30 char) NOT NULL, /* 제목 */
-	rregday DATE NOT NULL, /* 작성일 */
-	rwriter VARCHAR2(20 char), /* 작성자 */
-	rcontent CLOB NOT NULL, /* 내용 */
-	rimg VARCHAR2(100 char) NOT NULL /* 이미지 */
+	hno NUMBER(10) NOT NULL, /* 후기글번호 */
+	jno NUMBER(10) NOT NULL, /* 주문상세번호 */
+	htitle VARCHAR2(30 char) NOT NULL, /* 제목 */
+	hregday DATE NOT NULL, /* 작성일 */
+	hwriter VARCHAR2(20 char), /* 작성자 */
+	hcontent CLOB NOT NULL, /* 내용 */
+	himg VARCHAR2(100 char) NOT NULL /* 이미지 */
 );
 
 CREATE UNIQUE INDEX PK_HUGI
 	ON HUGI (
-		rno ASC,
-		ono ASC
+		hno ASC,
+		jno ASC
 	);
 
 ALTER TABLE HUGI
 	ADD
 		CONSTRAINT PK_HUGI
 		PRIMARY KEY (
-			rno,
-			ono
+			hno,
+			jno
 		);
 
 /* 문의하기-일반회원 */
@@ -237,7 +237,7 @@ CREATE TABLE CHPROVE (
 );
 
 CREATE UNIQUE INDEX PK_CHPROVE
-	ON CHALLENGE_PROVE (
+	ON CHPROVE (
 		cpno ASC,
 		cno ASC
 	);
@@ -252,27 +252,27 @@ ALTER TABLE CHPROVE
 
 /* 주문상세 */
 CREATE TABLE JUMUN (
-	ono NUMBER(10) NOT NULL, /* 주문상세번호 */
-	ocnt NUMBER(5) NOT NULL, /* 수량 */
-	ostatus VARCHAR2(10 char), /* 배송상태 */
-	oprice NUMBER(10) NOT NULL, /* 가격 */
-	ototal NUMBER(10) NOT NULL, /* 주문총금액 */
-	ousepoint NUMBER(10), /* 사용포인트 */
-	oday DATE, /* 주문날짜 */
+	jno NUMBER(10) NOT NULL, /* 주문상세번호 */
+	jcnt NUMBER(5) NOT NULL, /* 수량 */
+	jstatus VARCHAR2(10 char), /* 배송상태 */
+	jprice NUMBER(10) NOT NULL, /* 가격 */
+	jtotal NUMBER(10) NOT NULL, /* 주문총금액 */
+	jusepoint NUMBER(10), /* 사용포인트 */
+	jday DATE, /* 주문날짜 */
 	member_id VARCHAR2(20 char), /* 일반아이디 */
 	pno NUMBER(10) /* 상품번호 */
 );
 
 CREATE UNIQUE INDEX PK_JUMUN
 	ON JUMUN (
-		ono ASC
+		jno ASC
 	);
 
 ALTER TABLE JUMUN
 	ADD
 		CONSTRAINT PK_JUMUN
 		PRIMARY KEY (
-			ono
+			jno
 		);
 
 /* 관심상품 */
@@ -302,7 +302,7 @@ CREATE TABLE EXCHANGE (
 	excategory VARCHAR2(10 char), /* 말머리 */
 	excontent CLOB NOT NULL, /* 내용 */
 	exregday DATE, /* 작성일 */
-	ono NUMBER(10) /* 주문상세번호 */
+	jno NUMBER(10) /* 주문상세번호 */
 );
 
 CREATE UNIQUE INDEX PK_EXCHANGE
@@ -391,10 +391,10 @@ ALTER TABLE HUGI
 	ADD
 		CONSTRAINT FK_JUMUN_TO_HUGI
 		FOREIGN KEY (
-			ono
+			jno
 		)
 		REFERENCES JUMUN (
-			ono
+			jno
 		);
 
 ALTER TABLE QnA_Q
@@ -543,10 +543,10 @@ ALTER TABLE EXCHANGE
 	ADD
 		CONSTRAINT FK_JUMUN_TO_EXCHANGE
 		FOREIGN KEY (
-			ono
+			jno
 		)
 		REFERENCES JUMUN (
-			ono
+			jno
 		);
 
 ALTER TABLE EXCHANGE_RE
