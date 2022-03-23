@@ -16,6 +16,5 @@ public class EcoreaApplication {
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
-	}
-	
+	}	
 }
