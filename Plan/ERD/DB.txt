@@ -1,25 +1,25 @@
 /* 일반회원 */
-CREATE TABLE USER (
-	user_id VARCHAR2(20 char) NOT NULL, /* 일반아이디 */
-	user_pw VARCHAR2(10 char) NOT NULL, /* 비밀번호 */
-	user_email VARCHAR2(30 char) NOT NULL, /* 이메일 */
-	user_name VARCHAR2(20 char) NOT NULL, /* 이름 */
-	user_point NUMBER(10), /* 포인트 */
-	user_checkcode VARCHAR2(20 char), /* 체크코드 */
-	user_joinday DATE, /* 가입일 */
-	user_enable NUMBER(1) /* 승인여부 */
+CREATE TABLE MEMBER (
+	member_id VARCHAR2(20 char) NOT NULL, /* 일반아이디 */
+	member_pw VARCHAR2(10 char) NOT NULL, /* 비밀번호 */
+	member_email VARCHAR2(30 char) NOT NULL, /* 이메일 */
+	member_name VARCHAR2(20 char) NOT NULL, /* 이름 */
+	member_point NUMBER(10), /* 포인트 */
+	member_checkcode VARCHAR2(20 char), /* 체크코드 */
+	member_joinday DATE, /* 가입일 */
+	member_enable NUMBER(1) /* 승인여부 */
 );
 
-CREATE UNIQUE INDEX PK_USER
+CREATE UNIQUE INDEX PK_MEMBER
 	ON USER (
-		user_id ASC
+		member_id ASC
 	);
 
-ALTER TABLE USER
+ALTER TABLE MEMBER
 	ADD
-		CONSTRAINT PK_USER
+		CONSTRAINT PK_MEMBER
 		PRIMARY KEY (
-			user_id
+			member_id
 		);
 
 /* 기업회원 */
@@ -102,7 +102,7 @@ ALTER TABLE CHALLENGE
 		);
 
 /* 후기 */
-CREATE TABLE REVIEW (
+CREATE TABLE HUGI (
 	rno NUMBER(10) NOT NULL, /* 후기글번호 */
 	ono NUMBER(10) NOT NULL, /* 주문상세번호 */
 	rtitle VARCHAR2(30 char) NOT NULL, /* 제목 */
@@ -112,15 +112,15 @@ CREATE TABLE REVIEW (
 	rimg VARCHAR2(100 char) NOT NULL /* 이미지 */
 );
 
-CREATE UNIQUE INDEX PK_REVIEW
-	ON REVIEW (
+CREATE UNIQUE INDEX PK_HUGI
+	ON HUGI (
 		rno ASC,
 		ono ASC
 	);
 
-ALTER TABLE REVIEW
+ALTER TABLE HUGI
 	ADD
-		CONSTRAINT PK_REVIEW
+		CONSTRAINT PK_HUGI
 		PRIMARY KEY (
 			rno,
 			ono
@@ -135,7 +135,7 @@ CREATE TABLE QnA_Q (
 	qqcontent CLOB NOT NULL, /* 내용 */
 	qqimg VARCHAR2(100 char), /* 이미지 */
 	qqregday DATE, /* 작성일 */
-	user_id VARCHAR2(20 char) /* 일반아이디 */
+	member_id VARCHAR2(20 char) /* 일반아이디 */
 );
 
 CREATE UNIQUE INDEX PK_QnA_Q
@@ -162,7 +162,7 @@ CREATE TABLE ADDRESS (
 	atel VARCHAR2(15 char) NOT NULL, /* 전화번호 */
 	atoname VARCHAR2(20 char) NOT NULL, /* 받는사람이름 */
 	astandard NUMBER(1), /* 기본배송지여부 */
-	user_id VARCHAR2(20 char) NOT NULL /* 일반아이디 */
+	member_id VARCHAR2(20 char) NOT NULL /* 일반아이디 */
 );
 
 CREATE UNIQUE INDEX PK_ADDRESS
@@ -205,7 +205,7 @@ ALTER TABLE QnA_A
 /* 장바구니_상품 */
 CREATE TABLE CART (
 	pno NUMBER(10) NOT NULL, /* 상품번호 */
-	user_id VARCHAR2(20 char) NOT NULL, /* 일반아이디 */
+	member_id VARCHAR2(20 char) NOT NULL, /* 일반아이디 */
 	cartcnt NUMBER(5), /* 수량 */
 	cartprice NUMBER(10), /* 가격 */
 	cartpname VARCHAR2(20 char) /* 상품명 */
@@ -214,7 +214,7 @@ CREATE TABLE CART (
 CREATE UNIQUE INDEX PK_CART
 	ON CART (
 		pno ASC,
-		user_id ASC
+		member_id ASC
 	);
 
 ALTER TABLE CART
@@ -222,36 +222,36 @@ ALTER TABLE CART
 		CONSTRAINT PK_CART
 		PRIMARY KEY (
 			pno,
-			user_id
+			member_id
 		);
 
 /* 챌린지인증 */
-CREATE TABLE CHALLENGE_PROVE (
+CREATE TABLE CHPROVE (
 	cpno NUMBER(10) NOT NULL, /* 챌린지인증번호 */
 	cno NUMBER(10) NOT NULL, /* 챌린지번호 */
 	cptitle VARCHAR2(30 char) NOT NULL, /* 챌린지인증제목 */
 	cpcontent CLOB NOT NULL, /* 챌린지인증내용 */
 	cpregday DATE, /* 챌린지인증작성일 */
 	cpimg VARCHAR2(100 char) NOT NULL, /* 챌린지인증이미지 */
-	user_id VARCHAR2(20 char) /* 일반아이디 */
+	member_id VARCHAR2(20 char) /* 일반아이디 */
 );
 
-CREATE UNIQUE INDEX PK_CHALLENGE_PROVE
+CREATE UNIQUE INDEX PK_CHPROVE
 	ON CHALLENGE_PROVE (
 		cpno ASC,
 		cno ASC
 	);
 
-ALTER TABLE CHALLENGE_PROVE
+ALTER TABLE CHPROVE
 	ADD
-		CONSTRAINT PK_CHALLENGE_PROVE
+		CONSTRAINT PK_CHPROVE
 		PRIMARY KEY (
 			cpno,
 			cno
 		);
 
 /* 주문상세 */
-CREATE TABLE ORDER (
+CREATE TABLE JUMUN (
 	ono NUMBER(10) NOT NULL, /* 주문상세번호 */
 	ocnt NUMBER(5) NOT NULL, /* 수량 */
 	ostatus VARCHAR2(10 char), /* 배송상태 */
@@ -259,31 +259,31 @@ CREATE TABLE ORDER (
 	ototal NUMBER(10) NOT NULL, /* 주문총금액 */
 	ousepoint NUMBER(10), /* 사용포인트 */
 	oday DATE, /* 주문날짜 */
-	user_id VARCHAR2(20 char), /* 일반아이디 */
+	member_id VARCHAR2(20 char), /* 일반아이디 */
 	pno NUMBER(10) /* 상품번호 */
 );
 
-CREATE UNIQUE INDEX PK_ORDER
-	ON ORDER (
+CREATE UNIQUE INDEX PK_JUMUN
+	ON JUMUN (
 		ono ASC
 	);
 
-ALTER TABLE ORDER
+ALTER TABLE JUMUN
 	ADD
-		CONSTRAINT PK_ORDER
+		CONSTRAINT PK_JUMUN
 		PRIMARY KEY (
 			ono
 		);
 
 /* 관심상품 */
 CREATE TABLE BOOKMARK (
-	user_id VARCHAR2(20 char) NOT NULL, /* 일반아이디 */
+	member_id VARCHAR2(20 char) NOT NULL, /* 일반아이디 */
 	pno NUMBER(10) NOT NULL /* 상품번호 */
 );
 
 CREATE UNIQUE INDEX PK_BOOKMARK
 	ON BOOKMARK (
-		user_id ASC,
+		member_id ASC,
 		pno ASC
 	);
 
@@ -291,7 +291,7 @@ ALTER TABLE BOOKMARK
 	ADD
 		CONSTRAINT PK_BOOKMARK
 		PRIMARY KEY (
-			user_id,
+			member_id,
 			pno
 		);
 
@@ -387,13 +387,13 @@ ALTER TABLE CHALLENGE
 			corp_id
 		);
 
-ALTER TABLE REVIEW
+ALTER TABLE HUGI
 	ADD
-		CONSTRAINT FK_ORDER_TO_REVIEW
+		CONSTRAINT FK_JUMUN_TO_HUGI
 		FOREIGN KEY (
 			ono
 		)
-		REFERENCES ORDER (
+		REFERENCES JUMUN (
 			ono
 		);
 
@@ -409,22 +409,22 @@ ALTER TABLE QnA_Q
 
 ALTER TABLE QnA_Q
 	ADD
-		CONSTRAINT FK_USER_TO_QnA_Q
+		CONSTRAINT FK_MEMBER_TO_QnA_Q
 		FOREIGN KEY (
-			user_id
+			member_id
 		)
-		REFERENCES USER (
-			user_id
+		REFERENCES MEMBER (
+			member_id
 		);
 
 ALTER TABLE ADDRESS
 	ADD
-		CONSTRAINT FK_USER_TO_ADDRESS
+		CONSTRAINT FK_MEMBER_TO_ADDRESS
 		FOREIGN KEY (
-			user_id
+			member_id
 		)
-		REFERENCES USER (
-			user_id
+		REFERENCES MEMBER (
+			member_id
 		);
 
 ALTER TABLE QnA_A
@@ -451,12 +451,12 @@ ALTER TABLE QnA_A
 
 ALTER TABLE CART
 	ADD
-		CONSTRAINT FK_USER_TO_CART
+		CONSTRAINT FK_MEMBER_TO_CART
 		FOREIGN KEY (
-			user_id
+			member_id
 		)
-		REFERENCES USER (
-			user_id
+		REFERENCES MEMBER (
+			member_id
 		);
 
 ALTER TABLE CART
@@ -469,9 +469,9 @@ ALTER TABLE CART
 			pno
 		);
 
-ALTER TABLE CHALLENGE_PROVE
+ALTER TABLE CHPROVE
 	ADD
-		CONSTRAINT FK_CHALLENGE_TO_CHALLENGE_PROVE
+		CONSTRAINT FK_CHALLENGE_TO_CHPROVE
 		FOREIGN KEY (
 			cno
 		)
@@ -479,29 +479,29 @@ ALTER TABLE CHALLENGE_PROVE
 			cno
 		);
 
-ALTER TABLE CHALLENGE_PROVE
+ALTER TABLE CHPROVE
 	ADD
-		CONSTRAINT FK_USER_TO_CHALLENGE_PROVE
+		CONSTRAINT FK_MEMBER_TO_CHPROVE
 		FOREIGN KEY (
-			user_id
+			member_id
 		)
-		REFERENCES USER (
-			user_id
+		REFERENCES MEMBER (
+			member_id
 		);
 
-ALTER TABLE ORDER
+ALTER TABLE JUMUN
 	ADD
-		CONSTRAINT FK_USER_TO_ORDER
+		CONSTRAINT FK_MEMBER_TO_JUMUN
 		FOREIGN KEY (
-			user_id
+			member_id
 		)
-		REFERENCES USER (
-			user_id
+		REFERENCES MEMBER (
+			member_id
 		);
 
-ALTER TABLE ORDER
+ALTER TABLE JUMUN
 	ADD
-		CONSTRAINT FK_PRODUCT_TO_ORDER
+		CONSTRAINT FK_PRODUCT_TO_JUMUN
 		FOREIGN KEY (
 			pno
 		)
@@ -521,12 +521,12 @@ ALTER TABLE BOOKMARK
 
 ALTER TABLE BOOKMARK
 	ADD
-		CONSTRAINT FK_USER_TO_BOOKMARK
+		CONSTRAINT FK_MEMBER_TO_BOOKMARK
 		FOREIGN KEY (
-			user_id
+			member_id
 		)
-		REFERENCES USER (
-			user_id
+		REFERENCES MEMBER (
+			member_id
 		);
 
 ALTER TABLE EXCHANGE
@@ -541,11 +541,11 @@ ALTER TABLE EXCHANGE
 
 ALTER TABLE EXCHANGE
 	ADD
-		CONSTRAINT FK_ORDER_TO_EXCHANGE
+		CONSTRAINT FK_JUMUN_TO_EXCHANGE
 		FOREIGN KEY (
 			ono
 		)
-		REFERENCES ORDER (
+		REFERENCES JUMUN (
 			ono
 		);
 
