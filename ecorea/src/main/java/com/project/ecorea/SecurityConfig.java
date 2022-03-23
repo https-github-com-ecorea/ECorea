@@ -16,8 +16,6 @@ import lombok.AllArgsConstructor;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private PasswordEncoder passwordEncoder;
 	
-	
-	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
