@@ -1,0 +1,562 @@
+/* 일반회원 */
+CREATE TABLE USER (
+	user_id VARCHAR2(20 char) NOT NULL, /* 일반아이디 */
+	user_pw VARCHAR2(10 char) NOT NULL, /* 비밀번호 */
+	user_email VARCHAR2(30 char) NOT NULL, /* 이메일 */
+	user_name VARCHAR2(20 char) NOT NULL, /* 이름 */
+	user_point NUMBER(10), /* 포인트 */
+	user_checkcode VARCHAR2(20 char), /* 체크코드 */
+	user_joinday DATE, /* 가입일 */
+	user_enable NUMBER(1) /* 승인여부 */
+);
+
+CREATE UNIQUE INDEX PK_USER
+	ON USER (
+		user_id ASC
+	);
+
+ALTER TABLE USER
+	ADD
+		CONSTRAINT PK_USER
+		PRIMARY KEY (
+			user_id
+		);
+
+/* 기업회원 */
+CREATE TABLE CORP (
+	corp_id VARCHAR2(20 char) NOT NULL, /* 기업아이디 */
+	corp_name VARCHAR2(20 char) NOT NULL, /* 기업이름 */
+	corp_pw VARCHAR2(10 char) NOT NULL, /* 비밀번호 */
+	corp_num VARCHAR2(10 char) NOT NULL, /* 사업자번호 */
+	corp_email VARCHAR2(30 char) NOT NULL, /* 이메일번호 */
+	corp_zipcode VARCHAR2(5 char) NOT NULL, /* 우편번호 */
+	corp_address1 VARCHAR2(50 char) NOT NULL, /* 도로명주소 */
+	corp_address2 VARCHAR2(50 char), /* 상세주소 */
+	corp_joinday DATE, /* 가입일 */
+	corp_enable NUMBER(1) /* 승인여부 */
+);
+
+CREATE UNIQUE INDEX PK_CORP
+	ON CORP (
+		corp_id ASC
+	);
+
+ALTER TABLE CORP
+	ADD
+		CONSTRAINT PK_CORP
+		PRIMARY KEY (
+			corp_id
+		);
+
+/* 상품 */
+CREATE TABLE PRODUCT (
+	pno NUMBER(10) NOT NULL, /* 상품번호 */
+	pcategory VARCHAR2(2 char) NOT NULL, /* 카테고리 */
+	price NUMBER(10) NOT NULL, /* 가격 */
+	pname VARCHAR2(20 char) NOT NULL, /* 상품명 */
+	pstock NUMBER(10) NOT NULL, /* 재고 */
+	pcontent CLOB NOT NULL, /* 설명 */
+	pthumbnail VARCHAR2(100 char) NOT NULL, /* 썸네일이미지 */
+	pordercnt NUMBER(10), /* 구매횟수 */
+	pregday DATE, /* 상품등록일 */
+	corp_id VARCHAR2(20 char) /* 기업아이디 */
+);
+
+CREATE UNIQUE INDEX PK_PRODUCT
+	ON PRODUCT (
+		pno ASC
+	);
+
+ALTER TABLE PRODUCT
+	ADD
+		CONSTRAINT PK_PRODUCT
+		PRIMARY KEY (
+			pno
+		);
+
+/* 챌린지 */
+CREATE TABLE CHALLENGE (
+	cno NUMBER(10) NOT NULL, /* 챌린지번호 */
+	cname VARCHAR2(30 char) NOT NULL, /* 챌린지명 */
+	cgoal NUMBER(5) NOT NULL, /* 달성목표 */
+	cpoint NUMBER(5) NOT NULL, /* 보상포인트 */
+	cregday DATE, /* 등록일 */
+	cstartday DATE NOT NULL, /* 시작기한 */
+	cendday DATE NOT NULL, /* 마감기한 */
+	cthumbnail VARCHAR2(100 char) NOT NULL, /* 썸네일 */
+	ccontent CLOB NOT NULL, /* 상세설명 */
+	cjoincnt NUMBER(5), /* 참여횟수 */
+	corp_id VARCHAR2(20 char) NOT NULL /* 기업아이디 */
+);
+
+CREATE UNIQUE INDEX PK_CHALLENGE
+	ON CHALLENGE (
+		cno ASC
+	);
+
+ALTER TABLE CHALLENGE
+	ADD
+		CONSTRAINT PK_CHALLENGE
+		PRIMARY KEY (
+			cno
+		);
+
+/* 후기 */
+CREATE TABLE REVIEW (
+	rno NUMBER(10) NOT NULL, /* 후기글번호 */
+	ono NUMBER(10) NOT NULL, /* 주문상세번호 */
+	rtitle VARCHAR2(30 char) NOT NULL, /* 제목 */
+	rregday DATE NOT NULL, /* 작성일 */
+	rwriter VARCHAR2(20 char), /* 작성자 */
+	rcontent CLOB NOT NULL, /* 내용 */
+	rimg VARCHAR2(100 char) NOT NULL /* 이미지 */
+);
+
+CREATE UNIQUE INDEX PK_REVIEW
+	ON REVIEW (
+		rno ASC,
+		ono ASC
+	);
+
+ALTER TABLE REVIEW
+	ADD
+		CONSTRAINT PK_REVIEW
+		PRIMARY KEY (
+			rno,
+			ono
+		);
+
+/* 문의하기-일반회원 */
+CREATE TABLE QnA_Q (
+	pno NUMBER(10) NOT NULL, /* 상품번호 */
+	qqno NUMBER(10) NOT NULL, /* 문의글번호 */
+	qqcategory VARCHAR2(10 char) NOT NULL, /* 말머리 */
+	qqtitle VARCHAR2(20 char) NOT NULL, /* 제목 */
+	qqcontent CLOB NOT NULL, /* 내용 */
+	qqimg VARCHAR2(100 char), /* 이미지 */
+	qqregday DATE, /* 작성일 */
+	user_id VARCHAR2(20 char) /* 일반아이디 */
+);
+
+CREATE UNIQUE INDEX PK_QnA_Q
+	ON QnA_Q (
+		pno ASC,
+		qqno ASC
+	);
+
+ALTER TABLE QnA_Q
+	ADD
+		CONSTRAINT PK_QnA_Q
+		PRIMARY KEY (
+			pno,
+			qqno
+		);
+
+/* 배송지 */
+CREATE TABLE ADDRESS (
+	ano NUMBER(10) NOT NULL, /* 배송지번호 */
+	aname VARCHAR2(10 char) NOT NULL, /* 배송지명 */
+	azipcode VARCHAR2(5 char) NOT NULL, /* 우편번호 */
+	aaddress1 VARCHAR2(50 char) NOT NULL, /* 도로명주소 */
+	aaddress2 VARCHAR2(50 char) NOT NULL, /* 상세주소 */
+	atel VARCHAR2(15 char) NOT NULL, /* 전화번호 */
+	atoname VARCHAR2(20 char) NOT NULL, /* 받는사람이름 */
+	astandard NUMBER(1), /* 기본배송지여부 */
+	user_id VARCHAR2(20 char) NOT NULL /* 일반아이디 */
+);
+
+CREATE UNIQUE INDEX PK_ADDRESS
+	ON ADDRESS (
+		ano ASC
+	);
+
+ALTER TABLE ADDRESS
+	ADD
+		CONSTRAINT PK_ADDRESS
+		PRIMARY KEY (
+			ano
+		);
+
+/* 문의답변-기업회원 */
+CREATE TABLE QnA_A (
+	pno NUMBER(10) NOT NULL, /* 상품번호 */
+	qqno NUMBER(10) NOT NULL, /* 문의글번호 */
+	qano NUMBER(10) NOT NULL, /* 답글번호 */
+	corp_id VARCHAR2(20 char), /* 기업아이디 */
+	qacontent CLOB NOT NULL /* 내용 */
+);
+
+CREATE UNIQUE INDEX PK_QnA_A
+	ON QnA_A (
+		pno ASC,
+		qqno ASC,
+		qano ASC
+	);
+
+ALTER TABLE QnA_A
+	ADD
+		CONSTRAINT PK_QnA_A
+		PRIMARY KEY (
+			pno,
+			qqno,
+			qano
+		);
+
+/* 장바구니_상품 */
+CREATE TABLE CART (
+	pno NUMBER(10) NOT NULL, /* 상품번호 */
+	user_id VARCHAR2(20 char) NOT NULL, /* 일반아이디 */
+	cartcnt NUMBER(5), /* 수량 */
+	cartprice NUMBER(10), /* 가격 */
+	cartpname VARCHAR2(20 char) /* 상품명 */
+);
+
+CREATE UNIQUE INDEX PK_CART
+	ON CART (
+		pno ASC,
+		user_id ASC
+	);
+
+ALTER TABLE CART
+	ADD
+		CONSTRAINT PK_CART
+		PRIMARY KEY (
+			pno,
+			user_id
+		);
+
+/* 챌린지인증 */
+CREATE TABLE CHALLENGE_PROVE (
+	cpno NUMBER(10) NOT NULL, /* 챌린지인증번호 */
+	cno NUMBER(10) NOT NULL, /* 챌린지번호 */
+	cptitle VARCHAR2(30 char) NOT NULL, /* 챌린지인증제목 */
+	cpcontent CLOB NOT NULL, /* 챌린지인증내용 */
+	cpregday DATE, /* 챌린지인증작성일 */
+	cpimg VARCHAR2(100 char) NOT NULL, /* 챌린지인증이미지 */
+	user_id VARCHAR2(20 char) /* 일반아이디 */
+);
+
+CREATE UNIQUE INDEX PK_CHALLENGE_PROVE
+	ON CHALLENGE_PROVE (
+		cpno ASC,
+		cno ASC
+	);
+
+ALTER TABLE CHALLENGE_PROVE
+	ADD
+		CONSTRAINT PK_CHALLENGE_PROVE
+		PRIMARY KEY (
+			cpno,
+			cno
+		);
+
+/* 주문상세 */
+CREATE TABLE ORDER (
+	ono NUMBER(10) NOT NULL, /* 주문상세번호 */
+	ocnt NUMBER(5) NOT NULL, /* 수량 */
+	ostatus VARCHAR2(10 char), /* 배송상태 */
+	oprice NUMBER(10) NOT NULL, /* 가격 */
+	ototal NUMBER(10) NOT NULL, /* 주문총금액 */
+	ousepoint NUMBER(10), /* 사용포인트 */
+	oday DATE, /* 주문날짜 */
+	user_id VARCHAR2(20 char), /* 일반아이디 */
+	pno NUMBER(10) /* 상품번호 */
+);
+
+CREATE UNIQUE INDEX PK_ORDER
+	ON ORDER (
+		ono ASC
+	);
+
+ALTER TABLE ORDER
+	ADD
+		CONSTRAINT PK_ORDER
+		PRIMARY KEY (
+			ono
+		);
+
+/* 관심상품 */
+CREATE TABLE BOOKMARK (
+	user_id VARCHAR2(20 char) NOT NULL, /* 일반아이디 */
+	pno NUMBER(10) NOT NULL /* 상품번호 */
+);
+
+CREATE UNIQUE INDEX PK_BOOKMARK
+	ON BOOKMARK (
+		user_id ASC,
+		pno ASC
+	);
+
+ALTER TABLE BOOKMARK
+	ADD
+		CONSTRAINT PK_BOOKMARK
+		PRIMARY KEY (
+			user_id,
+			pno
+		);
+
+/* 교환/반품 */
+CREATE TABLE EXCHANGE (
+	exno NUMBER(10) NOT NULL, /* 교환/반품번호 */
+	corp_id VARCHAR2(20 char) NOT NULL, /* 기업아이디 */
+	excategory VARCHAR2(10 char), /* 말머리 */
+	excontent CLOB NOT NULL, /* 내용 */
+	exregday DATE, /* 작성일 */
+	ono NUMBER(10) /* 주문상세번호 */
+);
+
+CREATE UNIQUE INDEX PK_EXCHANGE
+	ON EXCHANGE (
+		exno ASC,
+		corp_id ASC
+	);
+
+ALTER TABLE EXCHANGE
+	ADD
+		CONSTRAINT PK_EXCHANGE
+		PRIMARY KEY (
+			exno,
+			corp_id
+		);
+
+/* 교환/반품 답변 */
+CREATE TABLE EXCHANGE_RE (
+	exno NUMBER(10) NOT NULL, /* 교환/반품번호 */
+	corp_id VARCHAR2(20 char) NOT NULL, /* 기업아이디 */
+	exrecontent CLOB NOT NULL /* 내용 */
+);
+
+CREATE UNIQUE INDEX PK_EXCHANGE_RE
+	ON EXCHANGE_RE (
+		exno ASC,
+		corp_id ASC
+	);
+
+ALTER TABLE EXCHANGE_RE
+	ADD
+		CONSTRAINT PK_EXCHANGE_RE
+		PRIMARY KEY (
+			exno,
+			corp_id
+		);
+
+/* 카테고리 */
+CREATE TABLE CATEGORY (
+	pcategory VARCHAR2(2 char) NOT NULL /* 카테고리 */
+);
+
+CREATE UNIQUE INDEX PK_CATEGORY
+	ON CATEGORY (
+		pcategory ASC
+	);
+
+ALTER TABLE CATEGORY
+	ADD
+		CONSTRAINT PK_CATEGORY
+		PRIMARY KEY (
+			pcategory
+		);
+
+ALTER TABLE PRODUCT
+	ADD
+		CONSTRAINT FK_CATEGORY_TO_PRODUCT
+		FOREIGN KEY (
+			pcategory
+		)
+		REFERENCES CATEGORY (
+			pcategory
+		);
+
+ALTER TABLE PRODUCT
+	ADD
+		CONSTRAINT FK_CORP_TO_PRODUCT
+		FOREIGN KEY (
+			corp_id
+		)
+		REFERENCES CORP (
+			corp_id
+		);
+
+ALTER TABLE CHALLENGE
+	ADD
+		CONSTRAINT FK_CORP_TO_CHALLENGE
+		FOREIGN KEY (
+			corp_id
+		)
+		REFERENCES CORP (
+			corp_id
+		);
+
+ALTER TABLE REVIEW
+	ADD
+		CONSTRAINT FK_ORDER_TO_REVIEW
+		FOREIGN KEY (
+			ono
+		)
+		REFERENCES ORDER (
+			ono
+		);
+
+ALTER TABLE QnA_Q
+	ADD
+		CONSTRAINT FK_PRODUCT_TO_QnA_Q
+		FOREIGN KEY (
+			pno
+		)
+		REFERENCES PRODUCT (
+			pno
+		);
+
+ALTER TABLE QnA_Q
+	ADD
+		CONSTRAINT FK_USER_TO_QnA_Q
+		FOREIGN KEY (
+			user_id
+		)
+		REFERENCES USER (
+			user_id
+		);
+
+ALTER TABLE ADDRESS
+	ADD
+		CONSTRAINT FK_USER_TO_ADDRESS
+		FOREIGN KEY (
+			user_id
+		)
+		REFERENCES USER (
+			user_id
+		);
+
+ALTER TABLE QnA_A
+	ADD
+		CONSTRAINT FK_QnA_Q_TO_QnA_A
+		FOREIGN KEY (
+			pno,
+			qqno
+		)
+		REFERENCES QnA_Q (
+			pno,
+			qqno
+		);
+
+ALTER TABLE QnA_A
+	ADD
+		CONSTRAINT FK_CORP_TO_QnA_A
+		FOREIGN KEY (
+			corp_id
+		)
+		REFERENCES CORP (
+			corp_id
+		);
+
+ALTER TABLE CART
+	ADD
+		CONSTRAINT FK_USER_TO_CART
+		FOREIGN KEY (
+			user_id
+		)
+		REFERENCES USER (
+			user_id
+		);
+
+ALTER TABLE CART
+	ADD
+		CONSTRAINT FK_PRODUCT_TO_CART
+		FOREIGN KEY (
+			pno
+		)
+		REFERENCES PRODUCT (
+			pno
+		);
+
+ALTER TABLE CHALLENGE_PROVE
+	ADD
+		CONSTRAINT FK_CHALLENGE_TO_CHALLENGE_PROVE
+		FOREIGN KEY (
+			cno
+		)
+		REFERENCES CHALLENGE (
+			cno
+		);
+
+ALTER TABLE CHALLENGE_PROVE
+	ADD
+		CONSTRAINT FK_USER_TO_CHALLENGE_PROVE
+		FOREIGN KEY (
+			user_id
+		)
+		REFERENCES USER (
+			user_id
+		);
+
+ALTER TABLE ORDER
+	ADD
+		CONSTRAINT FK_USER_TO_ORDER
+		FOREIGN KEY (
+			user_id
+		)
+		REFERENCES USER (
+			user_id
+		);
+
+ALTER TABLE ORDER
+	ADD
+		CONSTRAINT FK_PRODUCT_TO_ORDER
+		FOREIGN KEY (
+			pno
+		)
+		REFERENCES PRODUCT (
+			pno
+		);
+
+ALTER TABLE BOOKMARK
+	ADD
+		CONSTRAINT FK_PRODUCT_TO_BOOKMARK
+		FOREIGN KEY (
+			pno
+		)
+		REFERENCES PRODUCT (
+			pno
+		);
+
+ALTER TABLE BOOKMARK
+	ADD
+		CONSTRAINT FK_USER_TO_BOOKMARK
+		FOREIGN KEY (
+			user_id
+		)
+		REFERENCES USER (
+			user_id
+		);
+
+ALTER TABLE EXCHANGE
+	ADD
+		CONSTRAINT FK_CORP_TO_EXCHANGE
+		FOREIGN KEY (
+			corp_id
+		)
+		REFERENCES CORP (
+			corp_id
+		);
+
+ALTER TABLE EXCHANGE
+	ADD
+		CONSTRAINT FK_ORDER_TO_EXCHANGE
+		FOREIGN KEY (
+			ono
+		)
+		REFERENCES ORDER (
+			ono
+		);
+
+ALTER TABLE EXCHANGE_RE
+	ADD
+		CONSTRAINT FK_EXCHANGE_TO_EXCHANGE_RE
+		FOREIGN KEY (
+			exno,
+			corp_id
+		)
+		REFERENCES EXCHANGE (
+			exno,
+			corp_id
+		);
