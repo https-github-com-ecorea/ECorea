@@ -13,8 +13,10 @@ public class EcoreaApplication {
 		SpringApplication.run(EcoreaApplication.class, args);
 	}
 	
+	/*
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
-	}	
+	}
+	*/
 }

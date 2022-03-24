@@ -16,5 +16,7 @@ public interface ProductDao {
 	/* 페이징 */
 	public List<ProductDto.productList> productListPaging(Integer firstRnum, Integer lastRnum, String imagePath);
 	
+	/* 상품 상세 페이지 */
 	public Product findByPno(Integer pno);
+	
 }

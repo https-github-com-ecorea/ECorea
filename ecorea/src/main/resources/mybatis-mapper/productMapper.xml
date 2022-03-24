@@ -6,7 +6,7 @@
 	<select id="productCnt" resultType="int">
 		select /*+ index_ffs(product product_pk_pno) */ count(pno) from product
 		<where>
-			<if test="pcategory!=null">pcategory=#{pcategory}</if>
+			<if test="catecode!=null">catecode=#{catecode}</if>
 		</where>
 	</select>
 	
@@ -21,8 +21,10 @@
 		]]>
 	</select>
 		
-		
+	<!-- 상품 상세 페이지 -->
 	<select id="findByPno" resultType="com.project.ecorea.dto.ProductDto$productRead">
-		select pcategory, pno, (select c.corp_name from product p inner join corp c on p.corp_id = c.corp_id) as cname, pthumbnail, pname, pcontent, price from product p where pno=#{pno} and rownum=1;
+		select catecode, pno, (select c.corp_name from product p inner join corp c on p.corp_id = c.corp_id where pno=#{pno} and rownum=1) as cname, pthumbnail, pname, pcontent, price 
+		from product p where pno=#{pno} and rownum=1
 	</select>
+	
 </mapper>

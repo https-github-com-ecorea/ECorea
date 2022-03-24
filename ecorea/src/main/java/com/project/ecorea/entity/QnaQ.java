@@ -19,5 +19,5 @@ public class QnaQ {
 	private String qqimg; /* 이미지 */
 	private LocalDate qqregday; /* 등록일 */
 	private String memberId; /* 작성자 */
-	
+
 }

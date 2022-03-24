@@ -17,15 +17,16 @@ public class ProductMvcController {
 	private ProductService service;
 	
 	/* 상품 목록 화면 */
-	@GetMapping("/product/list")
+	@GetMapping("/product/productList")
 	public ModelAndView productList(@RequestParam(defaultValue="1") Integer pageno) {
 		PageDto page = service.productList(pageno);
 		return new ModelAndView("product/list").addObject(page);
 	}
 
 	/* 상품 상세 페이지 화면 */
-	@GetMapping("/product/read")
-	public ModelAndView productRead(Integer pno) {
-		return new ModelAndView("product/read").addObject("product", service.productRead(pno));
+	@GetMapping("/product/member/productDetail")
+	public ModelAndView productRead(Integer pno, Integer qqno) {
+		return new ModelAndView("product/member/productDetail").addObject("product", service.productRead(pno));
 	}
+
 }

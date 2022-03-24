@@ -1,6 +1,6 @@
 package com.project.ecorea.dto;
 
-import java.util.List;
+import java.util.*;
 
 import com.project.ecorea.entity.*;
 
@@ -11,6 +11,7 @@ public class ProductDto {
 	
 	/* 상품 목록 출력용 */
 	@Data
+	@AllArgsConstructor
 	public static class productList {
 		private Integer pno; /* 상품 번호 */
 		private String cname; /* 제조사 */
@@ -19,6 +20,7 @@ public class ProductDto {
 		private Integer price; /* 가격 */
 	}
 	
+	/* 상품 상세 페이지 출력용 */
 	@Data
 	@AllArgsConstructor
 	@Builder
@@ -31,8 +33,7 @@ public class ProductDto {
 		private String pcontent; /* 상품 설명 */
 		private Integer price; /* 가격 */
 		private List<Hugi> Hugis; /* 후기 리스트 */
-		private List<QnaQ> Qnaqs; /* 문의 리스트 - 질문 */
-		private List<QnaA> Qnaas; /* 문의 리스트 - 답변 */
+		private List<QnaDto.QnaList> Qnas; /* 문의 리스트 */
 	}
 	
 }
