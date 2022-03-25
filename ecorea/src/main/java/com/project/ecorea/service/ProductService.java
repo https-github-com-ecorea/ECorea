@@ -9,6 +9,7 @@ import org.springframework.stereotype.*;
 import org.springframework.web.multipart.*;
 
 import com.project.ecorea.dao.*;
+import com.project.ecorea.dto.*;
 import com.project.ecorea.dto.ProductDto.*;
 import com.project.ecorea.entity.*;
 
@@ -24,15 +25,8 @@ public class ProductService {
 	
 	private final ProductDao productDao;
 
-	public void productUpload(ProductUpload uploadDto) {
-		System.out.println("==================================");
-		System.out.println("### service start ###");
-		System.out.println("uploadDto : " + uploadDto);
-		System.out.println("==================================");
+	public void uploadProduct(ProductDto.Upload uploadDto) {
 		Product product = uploadDto.toEntity();
-		System.out.println("==================================");
-		System.out.println("product : " + product);
-		System.out.println("==================================");
 		MultipartFile pthumbnail = uploadDto.getPthumnail();
 		product.setPthumbnail(defaultImage);
 		if(pthumbnail!=null && pthumbnail.isEmpty()==false && pthumbnail.getContentType().toLowerCase().startsWith("image/")) {
