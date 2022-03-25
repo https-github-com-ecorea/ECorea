@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain=true)
 public class Product {
 	
-	private String pcategory; /* 카테고리 */
+	private String catecode; /* 카테고리 */
 	private Integer pno; /* 상품 번호 */
 	private String pname; /* 상품명 */
 	private Integer price; /* 가격 */
@@ -26,7 +26,7 @@ public class Product {
 	private String corpId; /* 제조사 */
 	
 	public ProductDto.productRead toDto(String imagePath) {
-		return ProductDto.productRead.builder().pcategory(pcategory).pno(pno).pcontent(pcontent).pname(pname).price(price).pthumbnail(imagePath + pthumbnail).build();
+		return ProductDto.productRead.builder().catecode(catecode).pno(pno).pcontent(pcontent).pname(pname).price(price).pthumbnail(imagePath + pthumbnail).build();
 	}
 
 }

@@ -11,7 +11,7 @@ import com.project.ecorea.dto.*;
 public interface ProductDao {
 	
 	/* 카테고리별 상품 개수 */
-	public int productCnt(String pcategory);
+	public int productCnt(String catecode);
 	
 	/* 페이징 */
 	public List<ProductDto.productList> productListPaging(Integer firstRnum, Integer lastRnum, String imagePath);

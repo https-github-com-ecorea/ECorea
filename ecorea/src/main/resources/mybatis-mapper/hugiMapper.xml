@@ -4,7 +4,7 @@
 
 	<!-- 후기 목록 출력 -->
 	<select id="findByPno" resultType="com.project.ecorea.dto.HugiDto$hugiList">
-		select * from hugi where pno=#{pno} order by hno desc
+		select h.* from hugi h inner join jumun j on h.jno=j.jno where j.pno=#{pno} order by hno
 	</select>
 
 </mapper>

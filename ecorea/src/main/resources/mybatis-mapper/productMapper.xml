@@ -15,7 +15,7 @@
 		<![CDATA[
 		select * from
 		    (select rownum as rnum, newdesc.* from
-		        (select /*+ index_desc(product product_pk_pno)*/ pno, (select c.corp_name from product p inner join corp c on p.corp_id = c.corp_id) as cname, pname, price, #{imagePath} || pthumbnail as pthumbnail from product) newdesc
+		        (select /*+ index_desc(product product_pk_pno)*/ pno, cname, pname, price, #{imagePath} || pthumbnail as pthumbnail from product_dto) newdesc
 		    where rownum<=#{lastRnum})
 		where rnum>=#{firstRnum}
 		]]>

@@ -25,5 +25,5 @@ public class QnaService {
 		}
 		return dto;
 	}
-	
+
 }

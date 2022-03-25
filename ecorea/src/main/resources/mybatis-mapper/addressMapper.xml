@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.ecorea.dao.AddressDao">
+
+	<!-- 컬럼명 맞추기 -->
+	<resultMap type="address" id="namecheck">
+		<result property="memberId" column="member_id"/>
+	</resultMap>
+	
+	<!-- 배송지 추가 -->
+	<insert id="addAddress">
+		<selectKey keyProperty="addressNo" resultType="integer">
+			select address_seq.nextval from dual
+		</selectKey>
+		insert into address values(#{ano}, #{aname}, #{azipcode}, #{aaddress1}, #{aaddress2}, #{atel}, #{atoname}, #{astandard}, #{memberId})
+	</insert>
+	
+	<!-- 배송지 리스트 -->
+	<select id="addressList" resultType="list" resultMap="namecheck">
+		select * from address where member_id=#{memberId}
+	</select>
+	
+	<!-- 해당 아이디에 기존에 저장된 배송지가 있는지 확인 -->
+	<select id="checkAddressByMemberId" resultType="boolean" resultMap="namecheck">
+		select count(*) from address where member_id=#{memberId} and rownum=1
+	</select>
+	
+	<!-- 선택한 배송지 정보 -->
+	<select id="chosenAddress" resultType="address" resultMap="namecheck">
+		select * from address where member_id=#{memberId} and ano=#{ano}
+	</select>
+
+</mapper>

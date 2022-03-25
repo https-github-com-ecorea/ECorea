@@ -24,13 +24,13 @@ public class ProductService {
 	private final QnaDao qnaDao;
 	
 	/* 상품 목록 페이징에 필요한 상수 */
-	private int PRODUCT_PER_PAGE = 16;
+	private int PRODUCT_PER_PAGE = 9;
 	private int PAGE_PER_BLOCK = 5;
 	
 	/* 상품 목록 페이징 */
-	public PageDto productList(int pageno) {
+	public PageDto productList(int pageno, String catecode) {
 		
-		int count = productDao.productCnt(null);
+		int count = productDao.productCnt(catecode);
 		int firstRnum = ((pageno - 1) * PRODUCT_PER_PAGE) + 1;
 		int lastRnum = (firstRnum + PRODUCT_PER_PAGE) - 1;
 		if (count < lastRnum)
