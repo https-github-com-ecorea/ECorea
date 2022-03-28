@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.ecorea.dao.CartDao">
-
+	<!-- 장바구니 list 출력 -->
 	<resultMap type="com.project.ecorea.dto.CartDto$CartProduct" id="productMap">
 		<id column="pno" property="pno"/>
 		<result column="pname" property="cartpname"/>
@@ -12,21 +12,48 @@
 
 	<resultMap type="com.project.ecorea.dto.CartDto$CartList" id="mapForCartList">
 		<result column="corp_name" property="corpName"/>
-		<result column="cartprice" property="cartprice"/>
 		<collection property="cartProduct" javaType="java.util.ArrayList" resultMap="productMap"></collection>		
 	</resultMap>
 
 	<select id="findByMemberId" resultMap="mapForCartList">
-		select c.pno, c.cartcnt, c.cartprice, p.price, p.pname, p.pthumbnail, e.corp_name 
+		select c.pno, c.cartcnt, p.price, p.pname, p.pthumbnail, e.corp_name 
 		from cart c 
     		inner join product p 
         		on(c.pno=p.pno)
     		inner join corp e
         		on(p.corp_id=e.corp_id)
 		where c.member_id=#{memberId}
-	</select>	
+	</select>
+	
+	<!-- 장바구니 상품개수 증가 -->	
+	<update id="updateCntPlus">
+		update cart set cartcnt=cartcnt+#{cartcnt} where member_id=#{memberId} and pno=#{pno}
+	</update>
+	
+	<!-- 장바구니 상품개수 감소 -->
+	<update id="updateCntMinus">
+		update cart set cartcnt=cartcnt-#{cartcnt} where member_id=#{memberId} and pno=#{pno}
+	</update>
+	
+	<!-- 장바구니 상품 한 개 삭제 -->
+	<delete id="deleteOne">
+		delete from cart where member_id=#{memberId} and pno=#{pno} 
+	</delete>
+	
+	<!-- 장바구니 선택한 상품 삭제 -->
+	<delete id="deleteSelected">
+		delete from cart where member_id=#{memberId} and pno in
+		<foreach collection="pnos" item="pno" open="(" separator="," close=")">
+			#{pno}
+		</foreach>
+	</delete>
+	
+	<!-- 장바구니 상품 전체 삭제 -->
+	<delete id="deleteAll">
+		delete from cart where member_id=#{memberId}
+	</delete>
+	
 </mapper>
-
 
 <!--  
 	public Cart findByPnoAndMemberId(Integer pno, String memberId);

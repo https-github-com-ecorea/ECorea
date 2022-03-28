@@ -24,5 +24,12 @@ public class CartDto {
 	}
 		
 	private List<CartList> cartList;
+	
+	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
+	public static class DeleteSelected {
+		private List<Integer> pnos;
+	}
 
 }

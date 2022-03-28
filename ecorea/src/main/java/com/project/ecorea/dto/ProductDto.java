@@ -25,4 +25,13 @@ public class ProductDto {
 					.pcontent(pcontent).pordercnt(0).pregday(LocalDate.now()).corpId(corpId).build();
 		}
 	}
+	
+	@Data
+	public static class corpProductList {
+		private Integer pno;
+		private String pthumbnail;
+		private String pname;
+		private String corpId;
+	}
+	
 }
