@@ -8,10 +8,12 @@
 <body>
 <script>
 	$(document).ready(function() {
+		/* 배송지 추가 팝업창 */
 		$('#add_address_btn').click(function() {
 			const popup = window.open('/mypage/member/newAddress', '_blank', 'toolbar=yes, menubar=yes, width=700, height=500');
 		})
 		
+		/* 배송지 목록 */
 		$.ajax("/mypage/member/addressListRest").done(result => {
 			console.log(result);
 			$.each(result, function(idx, address) {
@@ -19,6 +21,14 @@
 				$("<span>").text(address.aname).appendTo($("#radio_btn_area"));
 				if (address.astandard == 1)
 					$('<span>').text(address.azipcode + " " + address.aaddress1 + " " + address.aaddress2).appendTo($('#address_info_area'));
+			})
+		})
+		
+		/* 선택한 배송지 출력 */
+		$('#radio_btn_area').on("click", ".address", function() {
+			const $ano = $(this).attr("data-ano");
+			$.ajax("/mypage/member/chosenAddress/" + $ano).done(address => {
+				$('#chosen_address_info').text("(" + address.azipcode + ") " + address.aaddress1 + " " + address.aaddress2)
 			})
 		})
 	})
