@@ -12,7 +12,7 @@ import lombok.*;
 public class ProductDto {
 	
 	@Data
-	public static class ProductUpload {
+	public static class Upload {
 		private String pname;
 		private String corpId;
 		private Integer price;

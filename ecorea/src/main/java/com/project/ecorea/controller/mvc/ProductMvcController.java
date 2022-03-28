@@ -14,15 +14,12 @@ public class ProductMvcController {
 	private ProductService productService;
 	
 	@GetMapping("/product/productUpload")
-	public void productUpload() {
+	public void uploadProduct() {
 	}
 	
 	@PostMapping("/product/productUpload")
-	public String productUpload(ProductDto.ProductUpload uploadDto) {
-		System.out.println("==================================");
-		System.out.println("###controller start###");
-		System.out.println("==================================");
-		productService.productUpload(uploadDto);
+	public String uploadProduct(ProductDto.Upload uploadDto) {
+		productService.uploadProduct(uploadDto);
 		return "redirect:/mypage/corp/productList";
 	}
 	
