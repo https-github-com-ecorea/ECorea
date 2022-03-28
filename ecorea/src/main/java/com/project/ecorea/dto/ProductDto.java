@@ -2,8 +2,6 @@ package com.project.ecorea.dto;
 
 import java.util.*;
 
-import com.project.ecorea.entity.*;
-
 import lombok.*;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -22,6 +20,7 @@ public class ProductDto {
 	
 	/* 상품 상세 페이지 출력용 */
 	@Data
+	@NoArgsConstructor
 	@AllArgsConstructor
 	@Builder
 	public static class productRead {
@@ -32,7 +31,7 @@ public class ProductDto {
 		private String pname; /* 상품명 */
 		private String pcontent; /* 상품 설명 */
 		private Integer price; /* 가격 */
-		private List<Hugi> Hugis; /* 후기 리스트 */
+		private List<HugiDto.HugiList> Hugis; /* 후기 리스트 */
 		private List<QnaDto.QnaList> Qnas; /* 문의 리스트 */
 	}
 	

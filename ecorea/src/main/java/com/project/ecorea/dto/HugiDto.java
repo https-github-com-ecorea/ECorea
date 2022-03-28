@@ -8,7 +8,7 @@ public class HugiDto {
 	/* 후기 출력용 */
 	@Data
 	@AllArgsConstructor
-	public static class hugiList {
+	public static class HugiList {
 		private Integer hno; /* 후기 번호 */
 		private String htitle; /* 제목 */
 		private String hcontent; /* 내용 */
@@ -16,5 +16,5 @@ public class HugiDto {
 		private String hregday; /* 등록일 */
 		private String himg; /* 이미지 */
 	}
-	
+
 }

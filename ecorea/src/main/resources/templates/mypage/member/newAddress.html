@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+	$(document).ready(function() {
+  		$('#add').click(function() {
+  			const params = {
+  				aname : $('#addressname').val(),
+  				azipcode : $('#zipcode').val(),
+  				aaddress1 : $('#address1').val(),
+  				aaddress2 : $('#address2').val(),
+  				atel : $('#totel').val(),
+  				atoname : $('#toperson').val(),
+  				astandard : 0,
+  				member_id : "kpython2"
+  			}
+  			$.ajax({
+  				url: "/mypage/member/addAddressRest",
+  				method: "post",
+  				data: params
+  			}).done(() => {
+  				window.close();
+  			}).fail(() => alert("주소를 추가하지 못했습니다."));
+  		})
+  	})
+  </script>
+  <style>
+    h1 {
+      text-align: center;
+    }
+    .form-control {
+      width: 400px;
+    }
+    .form-control {
+      display: inline;
+    }
+    .form-label {
+      width: 120px;
+      text-align: left;
+    }
+  </style>
+  <title>배송주소록 추가</title>
+</head>
+<body>
+  <h1>배송주소록 추가</h1>
+  <div class="mb-3 mt-3">
+    <label for="addressname" class="form-label">배송지명</label>
+    <input type="text" class="form-control" id="addressname" placeholder="배송지명" name="ano" required>
+  </div>
+  <div class="mb-3 mt-3">
+    <label for="toperson" class="form-label">받는사람</label>
+    <input type="text" class="form-control" id="toperson" placeholder="받는사람 이름" name="atoname" required>
+  </div>
+  <div class="mb-3 mt-3">
+    <label for="totel" class="form-label">휴대전화</label>
+    <input type="tel" class="form-control" id="totel" placeholder="휴대전화" name="atel" required>
+  </div>
+  <div class="mb-3 mt-3">
+    <label for="address" class="form-label">주소</label>
+    <input type="text" class="form-control" id="zipcode" placeholder="우편번호" name="azipcode" required>
+  </div>
+  <button type="button" class="btn btn-secondary">우편번호 검색</button>
+  <input type="text" class="form-control" id="address1" placeholder="도로명주소" name="aaddress1" required>
+  <input type="text" class="form-control" id="address2" placeholder="상세주소" name=" aaddress2" required>
+
+  <div class="form-check">
+    <input type="radio" class="form-check-input" id="radio1" name="optradio" value="option1" checked>배송지명1
+    <label class="form-check-label" for="radio1"></label>
+  </div>
+  <div class="form-check">
+    <input type="radio" class="form-check-input" id="radio2" name="optradio" value="option2">배송지명2
+    <label class="form-check-label" for="radio2"></label>
+  </div>
+  <div class="form-check">
+    <input type="radio" class="form-check-input" id="radio3" name="optradio" value="option3">배송지명3
+    <label class="form-check-label" for="radio3"></label>
+  </div>
+  <textarea class="form-control" rows="5" id="comment" name="text"></textarea>
+  <button type="submit" id="add" class="btn btn-primary">배송지 추가</button>
+</body>
+</html>

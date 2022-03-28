@@ -6,7 +6,6 @@ import org.springframework.stereotype.*;
 
 import com.project.ecorea.dao.*;
 import com.project.ecorea.dto.*;
-import com.project.ecorea.entity.*;
 
 import lombok.AllArgsConstructor;
 
@@ -17,13 +16,9 @@ public class HugiService {
 	private HugiDao dao;
 	
 	/* 후기 목록 출력 */
-	public List<HugiDto.hugiList> hugiList(Integer pno) {
-		List<HugiDto.hugiList> dto = new ArrayList<>();
-		List<Hugi> entity = dao.findByPno(pno);
-		for (Hugi hugi : entity) {
-			dto.add(hugi.toDto());
-		}
-		return dto;
+	public List<HugiDto.HugiList> hugiList(Integer pno) {
+		List<HugiDto.HugiList> hugis = dao.findByPno(pno);
+		return hugis;
 	}
-	
+
 }

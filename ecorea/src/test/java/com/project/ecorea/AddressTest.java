@@ -14,7 +14,7 @@ public class AddressTest {
 	@Autowired
 	private AddressService service;
 	
-	@Test
+	// @Test
 	public void addressList() {
 		System.out.println(service.addressList("kpython2"));
 	}
@@ -22,6 +22,11 @@ public class AddressTest {
 	// @Test
 	public void chosenAddressTest() {
 		System.out.println(service.chosenAddress("kpython2", 1));
+	}
+	
+	@Test
+	public void addAddress() {
+		System.out.println(service.addAddress("kpython2", null));
 	}
 	
 }

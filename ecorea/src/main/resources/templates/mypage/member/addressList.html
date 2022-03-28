@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<title>배송 주소록 관리</title>
+</head>
+<body>
+<script>
+	$(document).ready(function() {
+		$('#add_address_btn').click(function() {
+			const popup = window.open('/mypage/member/newAddress', '_blank', 'toolbar=yes, menubar=yes, width=700, height=500');
+		})
+		
+		$.ajax("/mypage/member/addressListRest").done(result => {
+			console.log(result);
+			$.each(result, function(idx, address) {
+				$("<input type='radio' name='address' class='address'>").attr("data-ano", address.ano).appendTo($('#radio_btn_area'));
+				$("<span>").text(address.aname).appendTo($("#radio_btn_area"));
+				if (address.astandard == 1)
+					$('<span>').text(address.azipcode + " " + address.aaddress1 + " " + address.aaddress2).appendTo($('#address_info_area'));
+			})
+		})
+	})
+</script>
+<div id="page">
+	<div id="main">
+		<div>
+			<button id="add_address_btn">배송지 추가</button>
+			<div id="radio_btn_area">
+			<!-- 등록된 배송지들을 라디오 버튼으로 출력하는 영역 -->
+			</div>
+			<hr>
+			<div id="address_info_area">
+				<span>배송지 : </span>
+				<!-- radio로 선택한 배송지 정보를 출력하는 영역 -->
+				<span id="chosen_address_info"></span>
+			</div>
+			<hr>
+		</div>
+	</div>
+</div>
+</body>
+</html>

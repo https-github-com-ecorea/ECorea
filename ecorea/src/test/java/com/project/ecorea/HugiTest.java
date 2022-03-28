@@ -18,5 +18,5 @@ public class HugiTest {
 	public void hugiListTest() {
 		System.out.println(service.hugiList(10));
 	}
-	
+
 }

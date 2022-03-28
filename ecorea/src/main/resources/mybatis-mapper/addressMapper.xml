@@ -8,8 +8,8 @@
 	</resultMap>
 	
 	<!-- 배송지 추가 -->
-	<insert id="addAddress">
-		<selectKey keyProperty="addressNo" resultType="integer">
+	<insert id="addAddress" useGeneratedKeys="true" keyProperty="ano">
+		<selectKey keyProperty="ano" order="BEFORE" resultType="int">
 			select address_seq.nextval from dual
 		</selectKey>
 		insert into address values(#{ano}, #{aname}, #{azipcode}, #{aaddress1}, #{aaddress2}, #{atel}, #{atoname}, #{astandard}, #{memberId})
@@ -21,7 +21,7 @@
 	</select>
 	
 	<!-- 해당 아이디에 기존에 저장된 배송지가 있는지 확인 -->
-	<select id="checkAddressByMemberId" resultType="boolean" resultMap="namecheck">
+	<select id="checkAddressByMemberId" resultType="integer">
 		select count(*) from address where member_id=#{memberId} and rownum=1
 	</select>
 	

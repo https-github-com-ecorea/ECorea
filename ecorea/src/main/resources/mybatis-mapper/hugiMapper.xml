@@ -3,7 +3,7 @@
 <mapper namespace="com.project.ecorea.dao.HugiDao">
 
 	<!-- 후기 목록 출력 -->
-	<select id="findByPno" resultType="com.project.ecorea.dto.HugiDto$hugiList">
+	<select id="findByPno" resultType="com.project.ecorea.dto.HugiDto$HugiList">
 		select h.* from hugi h inner join jumun j on h.jno=j.jno where j.pno=#{pno} order by hno
 	</select>
 

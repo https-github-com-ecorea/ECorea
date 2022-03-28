@@ -10,10 +10,10 @@ import com.project.ecorea.entity.*;
 public interface AddressDao {
 	
 	/* 배송지 추가 */
-	public Integer addAddress(Address address);
+	public void addAddress(Address address);
 	
 	/* 해당 아이디에 기존에 저장된 배송지가 있는지 확인 */
-	public boolean checkAddressByMemberId(String loginId);
+	public Integer checkAddressByMemberId(String memberId);
 	
 	/* 배송지 목록 출력 */
 	public List<Address> addressList(String loginId);

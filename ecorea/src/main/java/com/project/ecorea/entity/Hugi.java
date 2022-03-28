@@ -1,9 +1,6 @@
 package com.project.ecorea.entity;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
-import com.project.ecorea.dto.*;
 
 import lombok.*;
 import lombok.experimental.Accessors;
@@ -22,12 +19,5 @@ public class Hugi {
 	private String hwriter; /* 작성자 */
 	private String hcontent; /* 내용 */
 	private String himg; /* 이미지 */
-	
-	/* 날짜 변경 출력용 */
-	public HugiDto.hugiList toDto() {
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		String regday = dtf.format(this.hregday);
-		return new HugiDto.hugiList(this.hno, this.htitle, this.hcontent, this.hwriter, regday, this.himg);
-	}
 	
 }

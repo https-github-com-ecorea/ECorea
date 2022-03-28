@@ -17,7 +17,7 @@ public class Address {
 	private String aaddress2; /* 상세 주소 */
 	private String atel; /* 전화번호 */
 	private String atoname; /* 받는 사람 */
-	private Boolean astandard; /* 기본 배송지 여부 */
+	private Integer astandard; /* 기본 배송지 여부 */
 	private String memberId; /* 회원 아이디 */
 	
 }

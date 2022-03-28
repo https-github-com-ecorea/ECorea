@@ -26,7 +26,7 @@ public class Product {
 	private String corpId; /* 제조사 */
 	
 	public ProductDto.productRead toDto(String imagePath) {
-		return ProductDto.productRead.builder().catecode(catecode).pno(pno).pcontent(pcontent).pname(pname).price(price).pthumbnail(imagePath + pthumbnail).build();
+		return ProductDto.productRead.builder().catecode(catecode).pno(pno).cname(corpId).pcontent(pcontent).pname(pname).price(price).pthumbnail(imagePath + pthumbnail).build();
 	}
 
 }
