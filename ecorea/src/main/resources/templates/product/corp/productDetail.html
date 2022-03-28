@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+  integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
+  integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
+  integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="../../index.css">
+  <title>상품 상세페이지</title>
+  <style>
+    h3 {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .productinfo {
+      width: 900px;
+      height: 350px;
+      margin: 0 auto;
+      
+    }
+    .product-img {
+      float: left;
+      margin: 10px;
+    }
+* {box-sizing: border-box}
+body {font-family: Verdana, sans-serif; margin:0}
+.mySlides {display: none}
+img {vertical-align: middle; height: 300px;}
+
+/* Slideshow container */
+.slideshow-container {
+  width: 350px;
+  position: relative;
+  margin: auto;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+  .prev, .next,.text {font-size: 11px}
+}
+.product-info {
+  float: right;
+  height: 350px;
+  width: 500px;
+  /* padding: 10px; */
+  margin: 10px;
+  text-align: start;
+}
+.inside-product {
+  width: 900px;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+.reviewlist {
+  width: 900px;
+  text-align: center;
+}
+.qnalist {
+  width: 900px;
+  text-align: center;
+}
+
+</style>
+</head>
+<body>
+  <h3>상품 상세페이지</h3>
+  <nav>
+    <div class="topnav">
+      <a href="#">생활</a>
+      <a href="#">제로웨이스트</a>
+      <a href="#">소품</a>
+      <a href="#">DIY</a>
+      <div class="topnav-right">
+        <a href="#">챌린지</a>
+        <a href="#">브랜드 소개</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="productinfo">
+    <div class="product-img">
+      <div class="slideshow-container">
+
+        <div class="mySlides fade">
+          <img src="../../image/product.jpg" style="width:100%">
+        </div>
+        
+        <div class="mySlides fade">
+          <img src="../../image/product.jpg" style="width:100%">
+        </div>
+        
+        <div class="mySlides fade">
+          <img src="../../image/product.jpg" style="width:100%">
+        </div>
+        
+        <a class="prev" onclick="plusSlides(-1)">❮</a>
+        <a class="next" onclick="plusSlides(1)">❯</a>
+        
+        </div>
+        <br>
+        
+        <div style="text-align:center">
+          <span class="dot" onclick="currentSlide(1)"></span> 
+          <span class="dot" onclick="currentSlide(2)"></span> 
+          <span class="dot" onclick="currentSlide(3)"></span> 
+        </div>
+    </div>
+
+ 
+    <div class="product-info">
+      <p style="font-size:20px;">상품명</p><br>
+      <span>판매가격 : <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;원</span></span><br>
+      <div class="updown">
+        <span>수량 : </span>&nbsp;&nbsp;&nbsp;<button type="button">-</button>
+        <input type="text" name="p_num1" id="p_num1" size="2" maxlength="4" class="p_num" value="1">
+        <button type="button">+</button>
+      </div>
+      <span>옵션 : </span><select class="form-select form-select-sm" style="width: 200px;">
+        <option>옵션을 선택하세요</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+      </select><br>
+      <span>총 합계 : </span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;원(&nbsp;&nbsp;&nbsp;개)</span><br><br>
+      <input type="submit" class="btn btn-secondary" value="바로구매">
+      <input type="submit" class="btn btn-secondary" value="장바구니 담기">
+      <input type="submit" class="btn btn-secondary" value="관심상품 등록">
+    </div>
+      <div class="inside-product topnav topnav-right">
+      <a href="#">상품 상세정보</a>
+      <a href="#">구매 후기</a>
+      <a href="#">상품 문의</a>
+    </div>
+    <div class="detail-product">
+    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores unde pariatur nisi repudiandae quam. A, voluptas culpa? Ipsum excepturi at possimus magnam cum, aperiam rem nulla quaerat facere provident alias sunt tempore eveniet vitae praesentium, sed totam tempora ex sapiente beatae rerum? Aperiam blanditiis recusandae fugit, laboriosam consectetur et officia est pariatur provident, dicta itaque dolorem inventore debitis eveniet expedita nam ducimus vitae aliquid. Doloribus quia illum tempora unde quo. Illum provident fugit eius consequuntur, expedita, sapiente quos sed quam obcaecati dicta nulla esse quae iste id suscipit quibusdam maiores, saepe nostrum aspernatur veniam nemo? Itaque doloremque aliquid delectus illum iste quaerat libero vel veniam praesentium. Delectus exercitationem, doloremque sunt dolorum explicabo est nostrum amet officiis pariatur nulla quasi nisi dicta! Illum doloribus dolore neque fugiat quo animi. Quidem voluptate sint necessitatibus quibusdam nihil repellendus omnis corporis saepe ut harum molestiae, consequatur delectus consectetur dignissimos, fugiat numquam ab atque impedit? Cupiditate doloremque repudiandae doloribus officiis aliquam iusto minima a sit omnis eveniet incidunt sequi pariatur excepturi, ex, tempora quas ut aperiam. Fugit quibusdam ab voluptatibus ea cupiditate culpa aliquam iusto blanditiis possimus at. Numquam deserunt natus, animi assumenda consequatur nesciunt quos adipisci molestiae vel repellendus. Repellendus obcaecati nesciunt dignissimos nostrum illo quam, atque ipsum quaerat, impedit totam iusto nihil laudantium natus velit laborum dolor porro deserunt ea unde perferendis sunt error. Dolorum repudiandae reprehenderit rem at saepe ab quam minus voluptas sunt doloremque minima, repellendus asperiores error perspiciatis voluptatem tempora itaque odio impedit explicabo vitae? Ad iste pariatur mollitia atque.</p>
+  </div>
+  <hr>
+  <div class="reviewlist">
+    <h3 style="text-align: center;">구매 후기</h3>
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+          <th>번호</th>
+          <th>제목</th>
+          <th>작성자</th>
+          <th>등록일</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>번호</td>
+          <td>제목</td>
+          <td>작성자</td>
+          <td>등록일</td>
+        </tr>
+        <tr>
+          <td>번호</td>
+          <td>이미지</td>
+          <td>내용</td>
+          <td>등록일</td>
+        </tr>
+    </table>
+  </div>
+  <hr>
+  <div class="qnalist">
+    <h3 style="text-align: center;">상품 문의</h3>
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+          <th>번호</th>
+          <th>카테고리</th>
+          <th>제목</th>
+          <th>작성자</th>
+          <th>등록일</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>번호</td>
+          <td>카테고리</td>
+          <td>제목</td>
+          <td>작성자</td>
+          <td>등록일</td>
+        </tr>
+        <tr>
+          <td>답변번호</td>
+          <td>이미지</td>
+          <td>내용</td>
+          <td>답변작성자</td>
+          <td>답변등록일</td>
+        </tr>
+    </table>
+  </div>
+  </div>
+
+
+  <script>
+    let slideIndex = 1;
+    showSlides(slideIndex);
+    
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+    
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+    
+    function showSlides(n) {
+      let i;
+      let slides = document.getElementsByClassName("mySlides");
+      let dots = document.getElementsByClassName("dot");
+      if (n > slides.length) {slideIndex = 1}    
+      if (n < 1) {slideIndex = slides.length}
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";  
+      }
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex-1].style.display = "block";  
+      dots[slideIndex-1].className += " active";
+    }
+    </script>
+</body>
+</html>
