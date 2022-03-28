@@ -23,10 +23,11 @@ public class CartMvcController {
 	}
 	
 	
-	// 장바구니에서 상품 삭제
-	@PostMapping("/order/cart/delete")
+	// 장바구니에서 상품 한 개 삭제
+	@PostMapping("/order/cart/deleteOne")
 	public String deleteCartProduct() {
 		
-		return "";
+		return "redirect:/order/cart";
 	}
+	
 }

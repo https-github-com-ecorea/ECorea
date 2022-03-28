@@ -40,7 +40,13 @@ public class ProductService {
 			}			
 		}
 		productDao.save(product);
-
+	}
+	
+	
+	public List<ProductDto.corpProductList> regProductsList(String corpId) {
+		List<ProductDto.corpProductList> corpProductListDto = productDao.findByCorpId(corpId);
+		return corpProductListDto;
+		
 	}
 
 }
