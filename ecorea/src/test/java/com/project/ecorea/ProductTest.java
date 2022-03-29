@@ -14,7 +14,7 @@ public class ProductTest {
 	@Autowired
 	private ProductService service;
 	
-	@Test
+	// @Test
 	public void productReadTest() {
 		System.out.println(service.productRead(10));
 	}
@@ -24,7 +24,7 @@ public class ProductTest {
 		System.out.println(service.checkStock(1, 5));
 	}
 	
-	// @Test
+	@Test
 	public void productListTest() {
 		System.out.println(service.productList(1, "22"));
 	}

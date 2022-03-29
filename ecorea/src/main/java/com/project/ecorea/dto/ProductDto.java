@@ -11,6 +11,7 @@ public class ProductDto {
 	@Data
 	@AllArgsConstructor
 	public static class productList {
+		private String catecode; /* 상품 카테고리 */
 		private Integer pno; /* 상품 번호 */
 		private String cname; /* 제조사 */
 		private String pthumbnail; /* 썸네일 */

@@ -17,13 +17,14 @@ public class AddressService {
 	
 	/* 배송지 추가 */
 	public Boolean addAddress(String /*loginId*/username, Address address) {
-		username = "dnazer0";
+		username = "kpython2";
 		address.setMemberId(/*loginId*/username);
-		dao.addAddress(address);
 		if (dao.checkAddressByMemberId(/*loginId*/username) <= 0) {
 			address.setAstandard(1);
-			return false;
+			dao.addAddress(address);
+			return true;
 		}
+		dao.addAddress(address);
 		return true;
 	}
 

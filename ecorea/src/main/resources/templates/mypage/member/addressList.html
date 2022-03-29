@@ -4,24 +4,29 @@
 <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <title>배송 주소록 관리</title>
-</head>
-<body>
 <script>
+	/* 배송지 목록 */
+	function addressList() {
+		$.ajax("/mypage/member/addressListRest").done(result => {
+			$.each(result, function(idx, address) {
+				$radio = $("<input type='radio' name='address' class='address'>").attr("data-ano", address.ano).appendTo($('#radio_btn_area'));
+				$("<span>").text(address.aname).appendTo($("#radio_btn_area"));
+				if (address.astandard == 1) { /* 기존 배송지 우선 선택 */
+					$radio.prop("checked", true);
+					$('#chosen_address_info').text("(" + address.azipcode + ") " + address.aaddress1 + " " + address.aaddress2);
+				}
+			})
+		})
+	}
+	
 	$(document).ready(function() {
+		/* 배송지 목록 출력 */
+		addressList();
+		
 		/* 배송지 추가 팝업창 */
 		$('#add_address_btn').click(function() {
-			const popup = window.open('/mypage/member/newAddress', '_blank', 'toolbar=yes, menubar=yes, width=700, height=500');
-		})
-		
-		/* 배송지 목록 */
-		$.ajax("/mypage/member/addressListRest").done(result => {
-			console.log(result);
-			$.each(result, function(idx, address) {
-				$("<input type='radio' name='address' class='address'>").attr("data-ano", address.ano).appendTo($('#radio_btn_area'));
-				$("<span>").text(address.aname).appendTo($("#radio_btn_area"));
-				if (address.astandard == 1)
-					$('<span>').text(address.azipcode + " " + address.aaddress1 + " " + address.aaddress2).appendTo($('#address_info_area'));
-			})
+			const popup = window.open('/mypage/member/newAddress', '_blank', 'toolbar=yes, menubar=yes, width=700, height=700');
+			$(popup).on("beforeunload", $('#radio_btn_area').empty(), addressList); /* 닫기 전에 버튼 블록 비우고 새 데이터 재출력 */
 		})
 		
 		/* 선택한 배송지 출력 */
@@ -32,6 +37,10 @@
 			})
 		})
 	})
+</script>
+</head>
+<body>
+<script>
 </script>
 <div id="page">
 	<div id="main">

@@ -20,7 +20,7 @@ public class AddressRestController {
 	/* 배송지 추가 */
 	@PostMapping("/mypage/member/addAddressRest")
 	public ResponseEntity<Void> addAddressRest(Address address/*, Principal principal*/) {
-		String username = "dnazer0";
+		String username = "kpython2";
 		Boolean result = service.addAddress(username, address);
 		if (result == true)
 			return ResponseEntity.ok(null);
@@ -30,7 +30,7 @@ public class AddressRestController {
 	/* 배송지 리스트 출력 */
 	@GetMapping("/mypage/member/addressListRest")
 	public ResponseEntity<List<Address>> addressListRest(/*Principal principal*/) {
-		String username = "dnazer0";
+		String username = "kpython2";
 		List<Address> list = service.addressList(username/*principal.getName()*/);
 		return ResponseEntity.ok(list);
 	}
@@ -38,7 +38,7 @@ public class AddressRestController {
 	/* 선택한 배송지 정보 출력 */
 	@GetMapping("/mypage/member/chosenAddress/{ano}")
 	public ResponseEntity<Address> chosenAddress(@PathVariable Integer ano/*, Principal principal*/) {
-		String username = "dnazer0";
+		String username = "kpython2";
 		Address address = service.chosenAddress(username/*principal.getName()*/, ano);
 		return ResponseEntity.ok(address);
 	}

@@ -13,11 +13,11 @@
 	<!-- 페이징 -->
 	<select id="productListPaging" resultType="com.project.ecorea.dto.ProductDto$productList">
 		<![CDATA[
-		select * from
-		    (select rownum as rnum, newdesc.* from
-		        (select /*+ index_desc(product product_pk_pno)*/ pno, cname, pname, price, #{imagePath} || pthumbnail as pthumbnail from product_dto) newdesc
-		    where rownum<=#{lastRnum})
-		where rnum>=#{firstRnum}
+			(select * from
+			    (select rownum as rnum, newdesc.* from
+			        (select /*+ index_desc(product product_pk_pno)*/ pno, catecode, cname, pname, price, #{imagePath} || pthumbnail as pthumbnail from product_dto where catecode=#{catecode}) newdesc
+			    where catecode=#{catecode} and rownum<=#{lastRnum})
+			where rnum>=#{firstRnum})
 		]]>
 	</select>
 		

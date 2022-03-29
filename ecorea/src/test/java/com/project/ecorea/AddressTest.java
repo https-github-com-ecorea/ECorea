@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.project.ecorea.dao.AddressDao;
 import com.project.ecorea.service.AddressService;
 
 @SpringBootTest
@@ -13,6 +14,9 @@ public class AddressTest {
 	
 	@Autowired
 	private AddressService service;
+	
+	@Autowired
+	private AddressDao dao;
 	
 	// @Test
 	public void addressList() {
@@ -26,7 +30,7 @@ public class AddressTest {
 	
 	@Test
 	public void addAddress() {
-		System.out.println(service.addAddress("kpython2", null));
+		System.out.println(dao.checkAddressByMemberId("kpython2"));
 	}
 	
 }
