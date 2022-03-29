@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<title>배송 주소록 관리</title>
+<script>
+	/* 배송지 목록 */
+	function addressList() {
+		$.ajax("/mypage/member/addressListRest").done(result => {
+			$.each(result, function(idx, address) {
+				$radio = $("<input type='radio' name='address' class='address'>").attr("data-ano", address.ano).appendTo($('#radio_btn_area'));
+				$("<span>").text(address.aname).appendTo($("#radio_btn_area"));
+				if (address.astandard == 1) { /* 기존 배송지 우선 선택 */
+					$radio.prop("checked", true);
+					$('#chosen_address_info').text("(" + address.azipcode + ") " + address.aaddress1 + " " + address.aaddress2);
+				}
+			})
+		})
+	}
+	
+	$(document).ready(function() {
+		/* 배송지 목록 출력 */
+		addressList();
+		
+		/* 배송지 추가 팝업창 */
+		$('#add_address_btn').click(function() {
+			const popup = window.open('/mypage/member/newAddress', '_blank', 'toolbar=yes, menubar=yes, width=700, height=700');
+			$(popup).on("beforeunload", $('#radio_btn_area').empty(), addressList); /* 닫기 전에 버튼 블록 비우고 새 데이터 재출력 */
+		})
+		
+		/* 선택한 배송지 출력 */
+		$('#radio_btn_area').on("click", ".address", function() {
+			const $ano = $(this).attr("data-ano");
+			$.ajax("/mypage/member/chosenAddress/" + $ano).done(address => {
+				$('#chosen_address_info').text("(" + address.azipcode + ") " + address.aaddress1 + " " + address.aaddress2)
+			})
+		})
+	})
+</script>
+</head>
+<body>
+<script>
+</script>
+<div id="page">
+	<div id="main">
+		<div>
+			<button id="add_address_btn">배송지 추가</button>
+			<div id="radio_btn_area">
+			<!-- 등록된 배송지들을 라디오 버튼으로 출력하는 영역 -->
+			</div>
+			<hr>
+			<div id="address_info_area">
+				<span>배송지 : </span>
+				<!-- radio로 선택한 배송지 정보를 출력하는 영역 -->
+				<span id="chosen_address_info"></span>
+			</div>
+			<hr>
+		</div>
+	</div>
+</div>
+</body>
+</html>
