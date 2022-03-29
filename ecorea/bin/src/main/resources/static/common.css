@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Bungee+Shade&family=Coming+Soon&family=Cutive+Mono&family=Faster+One&family=Gowun+Dodum&family=Gruppo&family=Londrina+Outline&family=Monofett&family=Rock+3D&display=swap');
+
+/*
+font-family: 'Amatic SC', cursive;
+font-family: 'Bungee Shade', cursive;
+font-family: 'Coming Soon', cursive;
+font-family: 'Cutive Mono', monospace;
+font-family: 'Faster One', cursive;
+font-family: 'Gowun Dodum', sans-serif;
+font-family: 'Gruppo', cursive;
+font-family: 'Londrina Outline', cursive;
+font-family: 'Monofett', cursive;
+font-family: 'Rock 3D', cursive; 
+*/
+
+html body {
+  font-family: 'Gowun Dodum', sans-serif;
+}
+
+h1 {
+  margin: 40px;
+  text-align: center;
+}
+
+a:hover {
+  color: black;
+}
+
+/* index.html */
+.logo {
+  font-family: 'Rock 3D', cursive;
+  font-size: 40px;
+  font-weight: bold;
+}

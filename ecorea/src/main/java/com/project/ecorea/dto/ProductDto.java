@@ -2,11 +2,17 @@ package com.project.ecorea.dto;
 
 import java.util.*;
 
+import java.time.*;
+
+import org.springframework.web.multipart.*;
+
+import com.project.ecorea.entity.*;
+
 import lombok.*;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ProductDto {
-	
+
 	/* 상품 목록 출력용 */
 	@Data
 	@AllArgsConstructor
@@ -34,6 +40,29 @@ public class ProductDto {
 		private Integer price; /* 가격 */
 		private List<HugiDto.HugiList> Hugis; /* 후기 리스트 */
 		private List<QnaDto.QnaList> Qnas; /* 문의 리스트 */
+
+	@Data
+	public static class Upload {
+		private String pname;
+		private String corpId;
+		private Integer price;
+		private Integer pstock;
+		private MultipartFile pthumnail;
+		private String pcontent;
+		
+		public Product toEntity() {
+			return Product.builder().pcategory("11").price(price).pname(pname).pstock(pstock)
+					.pcontent(pcontent).pordercnt(0).pregday(LocalDate.now()).corpId(corpId).build();
+		}
+	}
+	
+	@Data
+	public static class corpProductList {
+		private Integer pno;
+		private String pthumbnail;
+		private String pname;
+		private String corpId;
+    
 	}
 	
 }

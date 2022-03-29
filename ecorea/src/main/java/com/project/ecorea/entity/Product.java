@@ -1,11 +1,13 @@
 package com.project.ecorea.entity;
 
-import java.time.LocalDate;
+import java.time.*;
 
-import com.project.ecorea.dto.ProductDto;
+import com.project.ecorea.dto.*;
 
 import lombok.*;
-import lombok.experimental.Accessors;
+import lombok.experimental.*;
+
+import org.springframework.format.annotation.*;
 
 @Data
 @AllArgsConstructor
@@ -22,11 +24,8 @@ public class Product {
 	private String pthumbnail; /* 썸네일 */
 	private String pcontent; /* 상품 설명 */
 	private Integer pordercnt; /* 주문 횟수 */
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate pregday; /* 등록일 */
 	private String corpId; /* 제조사 */
 	
-	public ProductDto.productRead toDto(String imagePath) {
-		return ProductDto.productRead.builder().catecode(catecode).pno(pno).cname(corpId).pcontent(pcontent).pname(pname).price(price).pthumbnail(imagePath + pthumbnail).build();
-	}
-
 }

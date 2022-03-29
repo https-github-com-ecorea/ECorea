@@ -1,14 +1,12 @@
 package com.project.ecorea.controller.mvc;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.project.ecorea.service.*;
-
-import lombok.AllArgsConstructor;
-
-import com.project.ecorea.dto.PageDto;
+import lombok.*;
+import org.springframework.stereotype.*;
+import org.springframework.web.servlet.*;
+import com.project.ecorea.dto.*;
+import com.project.ecorea.service.*;
 
 @Controller
 @AllArgsConstructor
@@ -34,4 +32,22 @@ public class ProductMvcController {
 	public void qnaUpload() {
 	}
 	
+	// 상품등록 페이지
+	@GetMapping("/product/productUpload")
+	public void uploadProduct() {
+	}
+	
+	// 상품등록
+	@PostMapping("/product/productUpload")
+	public String uploadProduct(ProductDto.Upload uploadDto) {
+		productService.uploadProduct(uploadDto);
+		return "redirect:/mypage/corp/productList";
+	}
+
+	// 등록된 상품 보기
+	@GetMapping("/mypage/corp/productList")
+	public ModelAndView regProductList() {
+		String corpId = "samsung";
+		return new ModelAndView("mypage/corp/productList").addObject("regProducts", productService.regProductsList(corpId));
+	}
 }

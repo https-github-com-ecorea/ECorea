@@ -30,6 +30,7 @@
   		})
   	})
   </script>
+  <link rel="stylesheet" href="../../common.css">
   <style>
     h1 {
       text-align: center;
@@ -39,16 +40,28 @@
     }
     .form-control {
       display: inline;
+      margin-bottom: 20px;
     }
     .form-label {
       width: 120px;
       text-align: left;
+    }
+    .wrapper {
+      position:absolute;
+      left: 30%;
+    }
+    .form-check {
+      display: inline-block;
+    }
+    .btn {
+      margin-bottom: 15px;
     }
   </style>
   <title>배송주소록 추가</title>
 </head>
 <body>
   <h1>배송주소록 추가</h1>
+<div class="wrapper">
   <div class="mb-3 mt-3">
     <label for="addressname" class="form-label">배송지명</label>
     <input type="text" class="form-control" id="addressname" placeholder="배송지명" name="ano" required>
@@ -68,7 +81,6 @@
   <button type="button" class="btn btn-secondary">우편번호 검색</button>
   <input type="text" class="form-control" id="address1" placeholder="도로명주소" name="aaddress1" required>
   <input type="text" class="form-control" id="address2" placeholder="상세주소" name=" aaddress2" required>
-
   <div class="form-check">
     <input type="radio" class="form-check-input" id="radio1" name="optradio" value="option1" checked>배송지명1
     <label class="form-check-label" for="radio1"></label>
@@ -83,5 +95,6 @@
   </div>
   <textarea class="form-control" rows="5" id="comment" name="text"></textarea>
   <button type="submit" id="add" class="btn btn-primary">배송지 추가</button>
+  </div>
 </body>
 </html>

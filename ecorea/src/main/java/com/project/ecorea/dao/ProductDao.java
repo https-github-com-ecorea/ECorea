@@ -1,6 +1,6 @@
 package com.project.ecorea.dao;
 
-import java.util.List;
+import java.util.*;
 
 import org.apache.ibatis.annotations.*;
 
@@ -18,5 +18,11 @@ public interface ProductDao {
 	
 	/* 상품 상세 페이지 */
 	public Product findByPno(Integer pno);
+
+	// 기업회원 - 상품 등록
+	public void save(Product product);
 	
+	// 기업회원 - 등록된 상품 목록 출력
+	public List<ProductDto.corpProductList> findByCorpId(String corpId);
+  
 }

@@ -1,15 +1,20 @@
 package com.project.ecorea.service;
 
+import java.io.*;
 import java.util.*;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
+import org.springframework.web.multipart.*;
 
 import com.project.ecorea.dto.*;
 
 import lombok.*;
 
 import com.project.ecorea.dao.*;
+
+import com.project.ecorea.dto.ProductDto.*;
+import com.project.ecorea.entity.*;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +23,11 @@ public class ProductService {
 	/* Property 읽어 오기 */
 	@Value("${product.image.path}") /* 경로 */
 	private String imagePath;
+  
+  @Value("${product.image.folder}")
+	private String imageFolder;
+	@Value("${default.image.name}")
+	private String defaultImage;
 	
 	private final ProductDao productDao;
 	private final HugiDao hugiDao;
@@ -68,6 +78,30 @@ public class ProductService {
 	/* 재고 확인 (수량 변경 시 필요) */
 	public Boolean checkStock(Integer pno, Integer count) {
 		return productDao.findByPno(pno).getPstock() >= count;
+
+    
+   /* 상품 등록 */
+	public void uploadProduct(ProductDto.Upload uploadDto) {
+		Product product = uploadDto.toEntity();
+		MultipartFile pthumbnail = uploadDto.getPthumnail();
+		product.setPthumbnail(defaultImage);
+		if(pthumbnail!=null && pthumbnail.isEmpty()==false && pthumbnail.getContentType().toLowerCase().startsWith("image/")) {
+			String pthumbnailName = UUID.randomUUID() + "-" + pthumbnail.getOriginalFilename();
+			File file = new File(imageFolder, pthumbnailName);
+			try {
+				pthumbnail.transferTo(file);
+				product.setPthumbnail(pthumbnailName);
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}			
+		}
+		productDao.save(product);
+	}
+	
+	/* 등록 상품 리스트 출력 */
+	public List<ProductDto.corpProductList> regProductsList(String corpId) {
+		List<ProductDto.corpProductList> corpProductListDto = productDao.findByCorpId(corpId);
+		return corpProductListDto;
 	}
 
 }
