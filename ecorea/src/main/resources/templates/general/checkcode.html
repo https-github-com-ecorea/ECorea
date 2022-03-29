@@ -2,13 +2,20 @@
 <html>
 <head>
 <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<title>Insert title here</title>
+<title>체크코드 확인</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="/css/main.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="./../common.css">
+<style>
+	#page {
+		position:absolute;
+    left: 35%;
+	}
+</style>
 <script th:inline="체크코드확인">
 	$(document).ready(function() {
 		// 서버에서 ${msg}값이 전달된 경우 $('#msg_div')를 보이게 하자
