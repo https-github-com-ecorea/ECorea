@@ -1,12 +1,11 @@
 package com.project.ecorea.dto;
 
-import java.util.*;
+import java.time.LocalDate;
+import java.util.List;
 
-import java.time.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import org.springframework.web.multipart.*;
-
-import com.project.ecorea.entity.*;
+import com.project.ecorea.entity.Product;
 
 import lombok.*;
 
@@ -40,6 +39,7 @@ public class ProductDto {
 		private Integer price; /* 가격 */
 		private List<HugiDto.HugiList> Hugis; /* 후기 리스트 */
 		private List<QnaDto.QnaList> Qnas; /* 문의 리스트 */
+	}
 
 	@Data
 	public static class Upload {

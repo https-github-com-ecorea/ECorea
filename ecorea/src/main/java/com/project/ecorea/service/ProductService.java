@@ -3,7 +3,7 @@ package com.project.ecorea.service;
 import java.io.*;
 import java.util.*;
 
-import org.springframework.beans.factory.annotation.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.*;
 import org.springframework.web.multipart.*;
 
@@ -13,7 +13,6 @@ import lombok.*;
 
 import com.project.ecorea.dao.*;
 
-import com.project.ecorea.dto.ProductDto.*;
 import com.project.ecorea.entity.*;
 
 @Service
@@ -24,7 +23,7 @@ public class ProductService {
 	@Value("${product.image.path}") /* 경로 */
 	private String imagePath;
   
-  @Value("${product.image.folder}")
+	@Value("${product.image.folder}")
 	private String imageFolder;
 	@Value("${default.image.name}")
 	private String defaultImage;
@@ -78,6 +77,7 @@ public class ProductService {
 	/* 재고 확인 (수량 변경 시 필요) */
 	public Boolean checkStock(Integer pno, Integer count) {
 		return productDao.findByPno(pno).getPstock() >= count;
+	}
 
   /* 상품 등록 */
 	public void uploadProduct(ProductDto.Upload uploadDto) {
@@ -126,4 +126,5 @@ public class ProductService {
 			return false;
 		}
 		return true;
+	}
 }

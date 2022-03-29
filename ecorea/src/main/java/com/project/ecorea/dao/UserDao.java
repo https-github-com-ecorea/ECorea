@@ -1,9 +1,11 @@
 package com.project.ecorea.dao;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import com.project.ecorea.entity.Corp;
 import com.project.ecorea.entity.Member;
 
-
+@Mapper
 public interface UserDao {
 
 	public void memberSave(Member member);
