@@ -1,5 +1,6 @@
 package com.project.ecorea.controller.mvc;
 
+
 import org.springframework.web.bind.annotation.*;
 import com.project.ecorea.service.*;
 import lombok.*;
@@ -9,8 +10,10 @@ import org.springframework.stereotype.*;
 import org.springframework.web.servlet.*;
 import org.springframework.web.servlet.mvc.support.*;
 
+
 import com.project.ecorea.dto.*;
 import com.project.ecorea.service.*;
+
 
 @Controller
 @AllArgsConstructor
@@ -43,6 +46,7 @@ public class ProductMvcController {
 	public void qnaUpload() {
 	}
 	
+
 	// 상품등록 페이지
 	@GetMapping("/product/productUpload")
 	public void uploadProduct() {
@@ -55,12 +59,16 @@ public class ProductMvcController {
 		return "redirect:/mypage/corp/productList";
 	}
 
+
 	// 등록된 상품 리스트 보기
 	@GetMapping("/mypage/corp/productList")
 	public ModelAndView regProductList() {
 		String corpId = "samsung";
 		return new ModelAndView("mypage/corp/productList").addObject("regProducts", productService.regProductsList(corpId));
 	}
+
+}
+
 
 	
 	// 상품 수정페이지에서 등록된 상품 상세정보 출력
@@ -91,4 +99,5 @@ public class ProductMvcController {
 		return "redirect:/mypage/corp/productList";
 	}	
 }
+
 

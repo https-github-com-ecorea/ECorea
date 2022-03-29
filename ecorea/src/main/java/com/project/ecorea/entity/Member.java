@@ -2,6 +2,8 @@ package com.project.ecorea.entity;
 
 import java.time.LocalDate;
 
+
+import com.project.ecorea.dto.MemberDto;
 import com.project.ecorea.dto.MemberDto.Info;
 
 import lombok.AllArgsConstructor;
@@ -28,6 +30,6 @@ public class Member {
 	private Integer failcnt;
 	
 	public Info toInfo() {
-		return Info.builder().id(id).name(name).email(email).build();
+		return MemberDto.Info.builder().id(id).name(name).email(email).build();
 	}
 }

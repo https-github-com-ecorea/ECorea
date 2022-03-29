@@ -1,11 +1,14 @@
 package com.project.ecorea.dto;
 
 import java.time.LocalDate;
+
 import java.util.List;
+
 
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.ecorea.entity.Product;
+
 
 import lombok.*;
 
@@ -41,6 +44,7 @@ public class ProductDto {
 		private List<QnaDto.QnaList> Qnas; /* 문의 리스트 */
 	}
 
+
 	@Data
 	public static class Upload {
 		private String pname;
@@ -51,6 +55,7 @@ public class ProductDto {
 		private String pcontent;
 		
 		public Product toEntity() {
+
 			return Product.builder().catecode("11").price(price).pname(pname).pstock(pstock)
 					.pcontent(pcontent).pordercnt(0).pregday(LocalDate.now()).corpId(corpId).build();
 		}
@@ -58,11 +63,11 @@ public class ProductDto {
 	
 	@Data
 	public static class CorpProductList {
+
 		private Integer pno;
 		private String pthumbnail;
 		private String pname;
-		private String corpId;
-    
+		private String corpId;   
 	}
 	
 	@Data
@@ -87,6 +92,4 @@ public class ProductDto {
 		private String pcontent;
 		private String corpId;
 	}
-	
-	
 }

@@ -128,9 +128,11 @@ public class CartTest {
 		List<Integer> pnos = new ArrayList<Integer>(Arrays.asList(1,2));
 		CartDto.DeleteSelected dto = new CartDto.DeleteSelected(pnos);
 		Integer result = cartService.deleteSelected(memberId, dto);
+
 		System.out.println("====================================");
 		System.out.println("dto : " + dto);
 		System.out.println("====================================");
+    
 		assertEquals(result, 2);
 	}
 }

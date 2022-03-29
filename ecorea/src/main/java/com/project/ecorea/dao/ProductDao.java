@@ -24,6 +24,7 @@ public interface ProductDao {
 	
 	// 기업회원 - 등록된 상품 목록 출력
 
+
 	public List<ProductDto.CorpProductList> findByCorpId(String corpId);
 	
 	// 상품 수정페이지에서 등록된 상품상세 정보 보여주기

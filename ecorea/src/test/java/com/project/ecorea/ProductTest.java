@@ -1,11 +1,13 @@
 package com.project.ecorea;
 
+
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.context.*;
 import org.springframework.test.context.web.*;
 
 import com.project.ecorea.service.*;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,12 +18,15 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.context.*;
 import org.springframework.format.annotation.*;
+
 import org.springframework.transaction.annotation.*;
+
 
 import com.project.ecorea.dao.*;
 import com.project.ecorea.dto.*;
 import com.project.ecorea.entity.*;
 import com.project.ecorea.service.*;
+
 
 
 @SpringBootTest
@@ -46,6 +51,7 @@ public class ProductTest {
 		System.out.println(service.productList(1, "22"));
 	}
 
+
 	@Autowired
 	ProductDao productDao;
 	@Autowired
@@ -58,6 +64,7 @@ public class ProductTest {
 	
 	//@Test
 	public void saveTest() {		
+
 		Product product = Product.builder().pno(100).catecode("11").price(1325).pname("티비").pstock(30).pcontent("싸요싸요")
 		.pthumbnail("iu").pordercnt(0).pregday(LocalDate.now()).corpId("lg").build();
 		productDao.save(product);
@@ -66,6 +73,7 @@ public class ProductTest {
 	//@Test
 	public void findByCorpIdTest() {
 		List<ProductDto.CorpProductList> list = productDao.findByCorpId("samsung");
+
 		System.out.println("==============================");
 		System.out.println("findByCorpId : " + list);
 		System.out.println("==============================");
@@ -74,11 +82,12 @@ public class ProductTest {
 	//@Test
 	public void regProductListTest() {
 		List<ProductDto.CorpProductList> list = productService.regProductsList("lg");
+
 		System.out.println("==============================");
 		System.out.println("regProductList : " + list);
 		System.out.println("==============================");
 	}
-	
+
 	//@Test
 	public void readProductDetailForUpdateTest() {
 		ProductDto.ProductDetailForUpdate product = productDao.findByCorpIdAndPno("samsung", 1);

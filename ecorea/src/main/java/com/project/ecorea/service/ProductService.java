@@ -3,9 +3,13 @@ package com.project.ecorea.service;
 import java.io.*;
 import java.util.*;
 
+
+import org.springframework.beans.factory.annotation.*;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.*;
 import org.springframework.web.multipart.*;
+
 
 import com.project.ecorea.dto.*;
 
@@ -22,13 +26,14 @@ public class ProductService {
 	/* Property 읽어 오기 */
 	@Value("${product.image.path}") /* 경로 */
 	private String imagePath;
-  
+
 	@Value("${product.image.folder}")
 	private String imageFolder;
 	@Value("${default.image.name}")
 	private String defaultImage;
 	
 	private final ProductDao productDao;
+
 	private final HugiDao hugiDao;
 	private final QnaDao qnaDao;
 	
@@ -80,6 +85,7 @@ public class ProductService {
 	}
 
   /* 상품 등록 */
+
 	public void uploadProduct(ProductDto.Upload uploadDto) {
 		Product product = uploadDto.toEntity();
 		MultipartFile pthumbnail = uploadDto.getPthumnail();
@@ -96,7 +102,6 @@ public class ProductService {
 		}
 		productDao.save(product);
 	}
-	
 
 	// 등록 상품 리스트 출력
 	public List<ProductDto.CorpProductList> regProductsList(String corpId) {
