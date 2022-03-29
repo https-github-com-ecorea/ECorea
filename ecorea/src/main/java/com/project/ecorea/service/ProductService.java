@@ -25,6 +25,7 @@ public class ProductService {
 	
 	private final ProductDao productDao;
 
+	// 상품 등록
 	public void uploadProduct(ProductDto.Upload uploadDto) {
 		Product product = uploadDto.toEntity();
 		MultipartFile pthumbnail = uploadDto.getPthumnail();
@@ -42,11 +43,34 @@ public class ProductService {
 		productDao.save(product);
 	}
 	
+	// 등록 상품 리스트 출력
+	public List<ProductDto.CorpProductList> regProductsList(String corpId) {
+		List<ProductDto.CorpProductList> corpProductListDto = productDao.findByCorpId(corpId);
+		return corpProductListDto;		
+	}
 	
-	public List<ProductDto.corpProductList> regProductsList(String corpId) {
-		List<ProductDto.corpProductList> corpProductListDto = productDao.findByCorpId(corpId);
-		return corpProductListDto;
-		
+	// 등록된 상품 상세정보 출력
+	public ProductDto.ProductDetailForUpdate readProductDetailForUpdate(String corpId, Integer pno) {
+		ProductDto.ProductDetailForUpdate product = productDao.findByCorpIdAndPno(corpId, pno);
+		return product;
+	}
+	
+	// 상품 상세정보 수정
+	public Boolean updateProduct(ProductDto.UpdateProduct productDto) {
+		Integer updateResult = productDao.updateProduct(productDto);
+		if(updateResult<=0) {
+			return false;
+		}
+		return true;		
+	}
+	
+	// 상품 삭제
+	public Boolean deleteProduct(String corpId, Integer pno) {
+		Integer deleteResult = productDao.deleteProduct(corpId, pno);
+		if(deleteResult<=0) {
+			return false;
+		}
+		return true;
 	}
 
 }

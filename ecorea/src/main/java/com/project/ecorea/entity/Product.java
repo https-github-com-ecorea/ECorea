@@ -14,7 +14,7 @@ import lombok.experimental.*;
 @Builder
 public class Product {
 	private Integer pno;
-	private String pcategory;
+	private String catecode;
 	private Integer price;
 	private String pname;
 	private Integer pstock;
