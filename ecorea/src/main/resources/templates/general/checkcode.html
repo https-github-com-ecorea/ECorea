@@ -16,35 +16,16 @@
     left: 35%;
 	}
 </style>
-<script th:inline="체크코드확인">
-	$(document).ready(function() {
-		// 서버에서 ${msg}값이 전달된 경우 $('#msg_div')를 보이게 하자
-		// 자바스크립트에서 타임리프 변수에 접근하기 : 공백없이 아래와 똑같이 적어야 한다
-		const msg = /*[[${msg}]]*/;
-		
-		// 위 코드에서 msg값이 없으면 null이 된다
-		// js에서 undefined와 null의 차이 : undefined는 값을  안준거고 null은 갑이 없다라고 준 거
-		if(msg!=null)
-			$('#msg_div').css("display","block");
-	});
-</script>
 </head>
 <body>
 <div id="page">
-	<header id="header" th:replace="/fragments/header">
-	</header>
-	<nav id="nav" th:replace="/fragments/nav">
-	</nav>
 	<div id="main">
-		<aside id="aside" th:replace="/fragments/aside">
-		</aside>
 		<section id="section">
 			<!--  bootstrap alert  -->
 			<div class="alert alert-warning" id="msg_div" style="display:none;">
   				<strong>확인! </strong><span th:text="${msg}" ></span>
 			</div>
-			<form id="check_join_form" method="post" action="/member/check_join">
-				<input type="hidden" name="_csrf" th:value="${_csrf.token}">
+			<form id="check_join_form" method="post" action="/general/checkcode">
 				<div>
 					<h1>체크코드 확인</h1>
 					<div class="form-group">
@@ -57,8 +38,6 @@
 			</form>
 		</section>
 	</div>
-	<footer id="footer" th:replace="/fragments/footer">
-	</footer>
 </div>
 </body>
 </html>

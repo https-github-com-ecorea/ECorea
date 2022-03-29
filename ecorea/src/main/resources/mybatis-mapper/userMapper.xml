@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.ecorea.dao.UserDao">
+	<resultMap type="Member" id="memberTable">
+		<id column="member_id" property="id"></id>
+		<result column="member_pw" property="pw"></result>
+		<result column="member_name" property="name"></result>		
+		<result column="member_email" property="email"></result>		
+		<result column="member_point" property="point"></result>		
+		<result column="member_checkcode" property="checkcode"></result>		
+		<result column="member_joinday" property="joinday"></result>		
+		<result column="member_enable" property="enable"></result>		
+		<result column="member_authority" property="authority"></result>		
+		<result column="member_failcnt" property="failcnt"></result>		
+	</resultMap>
+	
+	<resultMap type="Corp" id="corpTable">
+		<id column="corp_id" property="id"></id>
+		<result column="corp_Name" property="corpName"></result>
+		<result column="corp_pw" property="pw"></result>
+		<result column="corp_Num" property="corpNum"></result>		
+		<result column="corp_email" property="email"></result>		
+		<result column="corp_zipcode" property="zipcode"></result>
+		<result column="corp_address1" property="address1"></result>		
+		<result column="corp_address2" property="address2"></result>		
+		<result column="corp_joinday" property="joinday"></result>		
+		<result column="corp_enable" property="enable"></result>
+		<result column="corp_authority" property="authority"></result>
+		<result column="corp_failcnt" property="failcnt"></result>
+	</resultMap>
+	
+	<insert id="memberSave">
+		insert into member values(#{id}, #{pw}, #{email}, #{name}, #{point}, #{checkcode}, #{joinday}, #{enable}, #{authority}, #{failcnt})
+	</insert>
+	
+	<insert id="corpSave">
+		insert into corp values(#{id}, #{corpName}, #{pw}, #{corpNum}, #{email}, #{zipcode}, #{address1}, #{address2}, #{joinday}, #{enable}, #{authority}, #{failcnt})
+	</insert>
+	
+	<select id="memberFindByIdAndEmail" resultMap="memberTable">
+		select * from member where member_id=#{id} and member_email=#{email}
+	</select>
+	
+	<select id="corpFindByIdAndEmail"  resultMap="corpTable">
+		select * from corp where corp_id=#{id} and corp_email=#{email}
+	</select>
+	
+	<select id="memberFindByEmailAndName" resultMap="memberTable">
+		select * from member where member_email=#{email} and member_name=#{name}
+	</select>
+	
+	<select id="corpFindByEmailAndName" resultMap="corpTable">
+		select * from corp where corp_email=#{email} and corp_name=#{name}
+	</select>
+	
+	<select id="exitsById" resultType="integer">
+		select count(*) from member m full outer join corp c on m.member_id = c.corp_id where m.member_id=#{id};
+	</select>
+	
+	<select id="memberFindById" resultMap="memberTable">
+		select * from member where member_id=#{id}
+	</select>
+	
+	<select id="corpFindById" resultMap="corpTable">
+		select * from corp where corp_id=#{id}
+	</select>
+	
+	<update id="memberInfoUpdate">
+		update member
+		<trim suffixOverrides="," prefix="set">
+			<if test="pw!=null">member_pw=#{pw},</if>
+			<if test="checkcode!=null">member_checkcode=#{checkcode},</if>
+			<if test="enable!=null">member_enable=#{enable},</if>
+			<if test="failcnt!=null">member_failcnt=#{failcnt}</if>
+		</trim>
+		where member_id=#{id}
+	</update>
+	
+	<update id="corpInfoUpdate">
+		update corp
+		<trim suffixOverrides="," prefix="set">
+			<if test="pw!=null">corp_pw=#{pw},</if>
+			<if test="enable!=null">corp_enable=#{enable},</if>
+			<if test="failcnt!=null">corp_failcnt=#{failcnt}</if>
+		</trim>
+		where corp_id=#{id}
+	</update>
+	
+	<select id="findByCheckcode" resultMap="memberTable">
+		select * from member where member_checkcode=#{checkcode} and rownum=1
+	</select>
+	
+	<delete id="memberDeleteById">
+		delete from member where member_id=#{id}
+	</delete>
+	
+	<delete id="corpDeleteById">
+		delete from corp where corp_id=#{id}
+	</delete>
+</mapper>
