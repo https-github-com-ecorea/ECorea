@@ -7,12 +7,20 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <link rel="stylesheet" href="./../common.css">
   <style>
     h1 {
       text-align: center;
     }
     .form-control {
       width: 400px;
+    }
+    .was-validated {
+      position:absolute;
+      left: 30%;
+    }
+    #address {
+      margin-bottom: 20px;
     }
   </style>
   <title>기업 회원 가입</title>
@@ -50,15 +58,15 @@
       <input type="text" class="form-control" id="address" placeholder="기업 주소명" name="address" required>
     </div>
     <div class="mb-3 mt-3">
-      <label for="address" class="form-label">주소</label>
-      <button type="button" class="btn btn-secondary">우편번호 검색</button>
+      <label for="address" class="form-label">주소</label><br>
+      <button type="button" class="btn btn-secondary" style="margin-bottom: 20px;">우편번호 검색</button>
       <input type="text" class="form-control" id="address" placeholder="우편번호" name="address" required>
       <input type="text" class="form-control" id="address" placeholder="도로명주소" name="address" required>
       <input type="text" class="form-control" id="address" placeholder="상세주소" name="address" required>
     </div>
 
 
-    <button type="submit" class="btn btn-primary">회원가입</button>
+    <button type="submit" class="btn btn-primary"  formaction="../index.html">회원가입</button>
   </form>
 </div>
 </body>

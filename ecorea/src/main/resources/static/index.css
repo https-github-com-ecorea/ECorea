@@ -1,9 +1,24 @@
 * {margin: 0; padding: 0;}
 ul, li{list-style: none;}
-a {outline: 0; text-decoration: none; color:black;}
+a {outline: 0; text-decoration: none; color:rgba(0, 0, 0, 0.65);}
 
 header {
-height: 150px;
+height: 130px;
+}
+header .logo {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+header span {
+  padding: 10px;
+  float: right;
+}
+header .logo a:hover {
+  color:rgba(0, 0, 0, 0.774);
+}
+header span a:hover {
+  color:rgba(0, 0, 0, 0.774);
 }
 .topnav {
 background-color: rgb(238, 240, 238);
@@ -83,7 +98,7 @@ font-size: 25px;
 background-position: center;
 background-repeat: no-repeat;
 background-size: cover;
-height: 12rem;
+height: 15rem;
 }
 
 #intro .col-6:nth-of-type(1) .intro-first-card {
