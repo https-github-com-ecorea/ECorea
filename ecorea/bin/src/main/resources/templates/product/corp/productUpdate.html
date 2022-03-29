@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="./../../common.css">
+  <style>
+      .form-control {
+      width: 400px;
+    }
+    .form-control {
+      display: inline;
+    }
+    .form-label {
+      width: 120px;
+      text-align: left;
+    }
+    .wrapper {
+      position:absolute;
+      left: 30%;
+    }
+    .btn {
+      float: right;
+      margin-right: 20px;
+    }
+  </style>
+  <title>상품 수정</title>
+</head>
+<body>
+  <h1>상품 수정</h1>
+  <div class="wrapper">
+  <form action="/action_page.php">
+    <div class="mb-3 mt-3">
+      <label for="product-name" class="form-label">상품명</label>
+      <input type="text" class="form-control" id="email" placeholder="변경가능" name="product-name">
+    </div>
+    <div class="mb-3">
+      <label for="corpid" class="form-label">기업명</label>
+      <input type="text" class="form-control" id="corpid" name="corpid">
+    </div>
+    <div class="mb-3">
+      <label for="price" class="form-label">가격</label>
+      <input type="text" class="form-control" placeholder="변경가능" id="price" name="price">
+    </div>
+    <div class="mb-3">
+      <label for="stock" class="form-label">재고</label>
+      <input type="text" class="form-control"  placeholder="변경가능" id="stock" name="stock">
+    </div>
+    <div class="mb-3">
+      <label for="pimg" class="form-label">썸네일 이미지</label>
+      <input type="text" class="form-control"  placeholder="변경가능" id="pimg" name="pimg">
+    </div>
+    <button type="submit">첨부파일</button>
+    <label for="info" class="form-label">상세 정보</label><br><br>
+    <a href="./../mypage/corp/productList.html"><button type="submit" class="btn btn-primary">취소</button></a>
+    <a href="./corp/productDetail.html"><button type="submit" class="btn btn-primary">수정</button></a>
+  </form>
+</div>
+</body>
+</html>

@@ -31,28 +31,28 @@
 <body>
     <h1>일반 회원 가입</h1>
     <div class="wrapper">
-  <form action="/action_page.php" class="was-validated">
+  <form method="post" action="/general/memberJoin" class="was-validated">
     <div class="mb-3 mt-3">
-      <label for="uname" class="form-label">이름</label>
-      <input type="text" class="form-control" id="uname" placeholder="이름" name="uname" required>
+      <label for="name" class="form-label">이름</label>
+      <input type="text" class="form-control" id="name" placeholder="이름" name="name" required>
     </div>
     <div class="mb-3 mt-3">
-      <label for="uname" class="form-label">아이디</label>
-      <input type="text" class="form-control" id="uname" placeholder="아이디" name="uname" required>
+      <label for="id" class="form-label">아이디</label>
+      <input type="text" class="form-control" id="id" placeholder="아이디" name="id" required>
     </div>
     <div class="mb-3">
-      <label for="pwd" class="form-label">비밀번호</label>
-      <input type="password" class="form-control" id="pwd" placeholder="비밀번호" name="pswd" required>
+      <label for="pw" class="form-label">비밀번호</label>
+      <input type="password" class="form-control" id="pw" placeholder="비밀번호" name="pw" required>
     </div>
     <div class="mb-3">
-      <label for="pwd" class="form-label">비밀번호 확인</label>
-      <input type="password" class="form-control" id="pwd" placeholder="비밀번호 확인" name="pswd" required>
+      <label for="pw2" class="form-label">비밀번호 확인</label>
+      <input type="password" class="form-control" id="pw2" placeholder="비밀번호 확인" required>
     </div>
     <div class="mb-3">
       <label for="email" class="form-label">이메일</label>
       <input type="email" class="form-control" id="email" placeholder="이메일" name="email" required>
     </div>
-    <button type="submit" class="btn btn-primary" formaction="./checkcode.html">회원가입</button>
+    <button type="submit" class="btn btn-primary">회원가입</button>
   </form>
 </div>
 </body>
