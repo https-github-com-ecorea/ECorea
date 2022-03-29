@@ -14,8 +14,7 @@ import org.springframework.format.annotation.*;
 @NoArgsConstructor
 @Builder
 @Accessors(chain=true)
-public class Product {
-	
+public class Product {	
 	private String catecode; /* 카테고리 */
 	private Integer pno; /* 상품 번호 */
 	private String pname; /* 상품명 */
@@ -27,5 +26,4 @@ public class Product {
   @DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate pregday; /* 등록일 */
 	private String corpId; /* 제조사 */
-	
 }

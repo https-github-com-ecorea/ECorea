@@ -36,7 +36,7 @@
 	</insert>
 	
 	<!-- 기업 회원 - 등록된 상품 목록 출력 -->
-	<resultMap type="com.project.ecorea.dto.ProductDto$corpProductList" id="regProduct">
+	<resultMap type="com.project.ecorea.dto.ProductDto$CorpProductList" id="regProduct">
 		<id column="pno" property="pno"/>
 		<result column="pthumbnail" property="pthumbnail"/>
 		<result column="pname" property="pname"/>
@@ -47,4 +47,26 @@
 		select * from product where corp_id=#{corpId}
 	</select>
 	
+	<!-- 기업 회원 - 등록된 상품 상세정보 출력 -->
+	<select id="findByCorpIdAndPno" resultType="com.project.ecorea.dto.ProductDto$ProductDetailForUpdate">
+		select pno, catecode, price, pname, pstock, pcontent, pthumbnail, pordercnt, pregday, corp_id as corpId from product where corp_id=#{corpId} and pno=#{pno}
+	</select>
+	
+	<!-- 기업 회원 - 상품 상세정보 수정 -->
+	<update id="updateProduct">
+		update product
+		<trim suffixOverrides="," prefix="set">
+			<if test="pname!=null">pname=#{pname},</if>
+			<if test="price!=null">price=#{price},</if>
+			<if test="pstock!=null">pstock=#{pstock},</if>
+			<if test="pthumbnail!=null">pthumbnail=#{pthumbnail},</if>
+			<if test="pcontent!=null">pcontent=#{pcontent},</if>		
+		</trim>
+		where corp_id=#{corpId} and pno=#{pno}
+	</update>
+	
+	<!-- 기업 회원 - 상품 삭제 -->
+	<delete id="deleteProduct">
+		delete from product where corp_id=#{corpId} and pno=#{pno}
+	</delete>
 </mapper>
