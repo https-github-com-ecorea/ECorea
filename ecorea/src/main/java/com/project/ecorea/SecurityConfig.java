@@ -20,7 +20,7 @@ import lombok.AllArgsConstructor;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-	 
+
 	 private PasswordEncoder passwordEncoder;
 	 private LoginService loginService;
 	 private LoginSuccessHandler successHandler;
@@ -31,7 +31,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 provider.setPasswordEncoder(passwordEncoder);
 	 provider.setUserDetailsService(loginService); return provider;
 	 }
-	 
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -44,8 +43,3 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable();
 	}
 }
-
-
-
-
-

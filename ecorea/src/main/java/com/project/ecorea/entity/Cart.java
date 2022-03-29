@@ -1,7 +1,8 @@
 package com.project.ecorea.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+
+import lombok.*;
+
 
 @Data
 @AllArgsConstructor
