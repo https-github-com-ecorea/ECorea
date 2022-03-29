@@ -3,6 +3,8 @@ package com.project.ecorea.controller.mvc;
 import org.springframework.web.bind.annotation.*;
 import com.project.ecorea.service.*;
 import lombok.*;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
 import org.springframework.web.servlet.*;
 import org.springframework.web.servlet.mvc.support.*;
@@ -14,6 +16,7 @@ import com.project.ecorea.service.*;
 @AllArgsConstructor
 public class ProductMvcController {
 	
+	@Autowired
 	private ProductService productService;
 	
 	/* 상품 목록 화면 */
