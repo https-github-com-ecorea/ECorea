@@ -67,9 +67,6 @@ public class ProductMvcController {
 		return new ModelAndView("mypage/corp/productList").addObject("regProducts", productService.regProductsList(corpId));
 	}
 
-}
-
-
 	
 	// 상품 수정페이지에서 등록된 상품 상세정보 출력
 	@GetMapping("/product/corp/productUpdate")
