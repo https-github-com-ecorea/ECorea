@@ -32,6 +32,12 @@ public class ProductMvcController {
 		return new ModelAndView("product/member/productDetail").addObject("product", productService.productRead(pno));
 	}
 	
+	// 기업회원 상품 상세페이지
+	@GetMapping("/product/corp/productDetail")
+	public ModelAndView corpProductDetail(Integer pno) {
+		return new ModelAndView("product/corp/productDetail").addObject("product", productService.productRead(pno));
+	}
+	
 	/* 문의 작성 버튼 */
 	@GetMapping("/product/member/qnaUpload")
 	public void qnaUpload() {
