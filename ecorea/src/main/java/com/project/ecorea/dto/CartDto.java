@@ -5,7 +5,9 @@ import java.util.*;
 
 import lombok.*;
 
-
+@Data
+@AllArgsConstructor
+@Builder
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CartDto {
 	
@@ -21,7 +23,6 @@ public class CartDto {
 	@Data
 	public static class CartList {
 		private String corpName;		
-		private Integer cartprice;
 		private List<CartProduct> cartProduct;
 	}
 		
@@ -29,7 +30,6 @@ public class CartDto {
 	
 	@Data
 	@AllArgsConstructor
-	@NoArgsConstructor
 	public static class DeleteSelected {
 		private List<Integer> pnos;
 	}
