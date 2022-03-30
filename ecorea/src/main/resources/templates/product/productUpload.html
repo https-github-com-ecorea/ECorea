@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="/ckeditor/ckeditor.js"></script>
+  <link rel="stylesheet" href="./../../common.css">
+  <style>
+      .form-control {
+      width: 400px;
+    }
+    .form-control {
+      display: inline;
+    }
+    .form-label {
+      width: 120px;
+      text-align: left;
+    }
+    .wrapper {
+      position:absolute;
+      left: 30%;
+    }
+    .btn {
+      float: right;
+      margin-right: 20px;
+    }
+  </style>
+  <script>
+//자바스크립트를 이용해 상품 이미지 미리보기
+	function previewImage() {
+		const file = $("#pthumbnail")[0].files[0];
+		
+		// 이미지의 크기 제한 : 1MB
+		const maxSize = 1024*1024;
+		if(file.size>maxSize) {
+			Swal.fire('이미지 크기 오류', '상품이미지는 1MB를 넘을 수 없습니다', 'error');
+			// input과 이미지 미리보기 영역을 초기화
+			$('#pthumbnail').val('');
+			$('#thumbnail_img').removeAttr('src');
+			return false;
+		}
+		
+		const reader = new FileReader();
+		
+		reader.readAsDataURL(file);
+		reader.onload = function() {
+			$("#thumbnail_img").attr("src", reader.result);
+		}
+		return true;
+	}
+  
+  	$(document).ready(function() {
+  		$('#pthumbnail').change(function() {
+  			$('#thumbnail_img').css({
+  				'display': 'block'
+  			});
+  			previewImage();
+  		});
+  		
+  		const $ckUploadPath = "/product/image";
+  		CKEDITOR.replace('pcontent', {
+  				filebrowserUploadUrl : $ckUploadPath
+  		});
+  		
+  		$('#move_product_list').click(function() {
+  			if(confirm('상품 등록을 취소하시겠습니까?')==true){
+  				$('#move_product_list').attr('href', '/mypage/corp/productList');
+  			}
+  		});
+  	});
+  </script>
+  <title>상품 등록</title>
+</head>
+<body>
+  <h1>상품 등록</h1>
+  <div class="wrapper">
+  <form action="/product/productUpload" method="post">
+    <div class="mb-3 mt-3">
+      <label for="product-name" class="form-label">상품명</label>
+      <input type="text" class="form-control" id="email" placeholder="상품명 입력" name="product-name">
+    </div>
+    <div class="mb-3">
+      <label for="corpid" class="form-label">기업명</label>
+      <input type="text" class="form-control" id="corpid" placeholder="아이디 입력" name="corpid">
+    </div>
+    <div class="mb-3">
+      <label for="price" class="form-label">가격</label>
+      <input type="text" class="form-control" id="price" name="price">
+    </div>
+    <div class="mb-3">
+      <label for="stock" class="form-label">재고</label>
+      <input type="text" class="form-control" id="stock" name="stock">
+    </div>
+    <div class="mb-3">
+      <label for="pimg" class="form-label">썸네일 이미지</label>
+      <input type="file" class="form-control" id="pthumbnail" name="pthumbnail" accept=".jpg,.jpeg,.png,.gif">
+    </div>
+    <img id="thumbnail_img" height="200px" style="display:none;">
+    <!-- <button type="submit">첨부파일</button> -->
+    <div class="mb-3">
+	    <label for="info" class="form-label">상세 정보</label><br>
+    	<textarea class="form-control" name="pcontent" id="pcontent" rows="5" style="resize: none;"></textarea>
+    </div>
+    <a href="#" id="move_product_list"><button type="button" class="btn btn-primary">취소</button></a>
+    <button type="submit" class="btn btn-primary">등록</button>
+  </form>
+</div>
+</body>
+</html>
