@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.project.ecorea.entity.Product;
+import com.project.ecorea.entity.*;
 
 
 import lombok.*;
@@ -41,7 +41,8 @@ public class ProductDto {
 		private String pcontent; /* 상품 설명 */
 		private Integer price; /* 가격 */
 		private List<HugiDto.HugiList> Hugis; /* 후기 리스트 */
-		private List<QnaDto.QnaList> Qnas; /* 문의 리스트 */
+		private List<QnaDto.QnaQList> QQnas; /* 문의 리스트 */
+		private List<QnaDto.QnaAList> AQnas; /* 문의 리스트 */
 	}
 
 

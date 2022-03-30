@@ -10,6 +10,8 @@ import com.project.ecorea.dto.*;
 public interface QnaDao {
 	
 	/* 문의 목록 출력 */
-	public List<QnaDto.QnaList> findByPno(Integer pno);
+	public List<QnaDto.QnaQList> qfindByPno(Integer pno);
+	
+	public List<QnaDto.QnaAList> afindByPno(Integer pno);
 	
 }
