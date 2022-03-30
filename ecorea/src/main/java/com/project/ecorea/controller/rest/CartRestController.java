@@ -11,10 +11,9 @@ public class CartRestController {
 	@Autowired
 	CartService cartService;
 	
-	@PatchMapping("/order/cart/plusProduct")
-	public ResponseEntity<Integer> plusCartProduct() {
+	@PatchMapping("/order/cart/plusProduct/{pno}")
+	public ResponseEntity<Integer> plusCartProduct(@PathVariable Integer pno) {
 		String memberId = "zzzzuny";
-		Integer pno = 1;
 		Integer productCnt = cartService.plusCnt(memberId, pno);
 		if(productCnt<=0) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body(productCnt);
@@ -23,10 +22,9 @@ public class CartRestController {
 		
 	}
 	
-	@PatchMapping("/order/cart/minusProduct")
-	public ResponseEntity<Integer> minusCartProduct() {
+	@PatchMapping("/order/cart/minusProduct/{pno}")
+	public ResponseEntity<Integer> minusCartProduct(@PathVariable Integer pno) {
 		String memberId = "zzzzuny";
-		Integer pno = 1;
 		Integer productCnt = cartService.minusCnt(memberId, pno);
 		if(productCnt<=0) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body(productCnt);
