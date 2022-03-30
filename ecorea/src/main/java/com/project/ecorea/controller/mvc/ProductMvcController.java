@@ -73,7 +73,7 @@ public class ProductMvcController {
 	public ModelAndView readCorpProductDetail() {
 		String corpId = "samsung";
 		Integer pno = 1;
-		return new ModelAndView("product/productUpdate").addObject("product", productService.readProductDetailForUpdate(corpId, pno));
+		return new ModelAndView("product/corp/productUpdate").addObject("product", productService.readProductDetailForUpdate(corpId, pno));
 	}
 	
 	// 상품 수정

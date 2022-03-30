@@ -33,6 +33,10 @@ import lombok.AllArgsConstructor;
 public class UserMvcController {
 	private UserService service;
 	
+	@PreAuthorize("isAnonymous()")
+	@GetMapping("/general/joinSelect")
+	public void joinSelect() {}
+	
 	// 일반회원가입 화면 이동
 	@PreAuthorize("isAnonymous()")
 	@GetMapping("/general/memberJoin")
@@ -81,7 +85,9 @@ public class UserMvcController {
 	// 일반/기업 통합 회원 로그인 페이지 이동
 	@PreAuthorize("isAnonymous()")
 	@GetMapping("/general/login")
-	public void login() {}
+	public ModelAndView login(HttpSession session) {
+		return new ModelAndView("general/login").addObject("msg", session.getAttribute("msg"));
+	}
 	
 	// 아이디 찾기 페이지로 이동 (아이디 찾기 처리는 RestController)
 	@PreAuthorize("isAnonymous()")

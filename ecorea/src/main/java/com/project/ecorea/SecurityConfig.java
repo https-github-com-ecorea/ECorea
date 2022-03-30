@@ -26,7 +26,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 private LoginSuccessHandler successHandler;
 	 private LoginFailureHandler failureHandler;
 	 
-	 @Bean public DaoAuthenticationProvider daoAuthenticationProvider() {
+	 @Bean
+	 public DaoAuthenticationProvider daoAuthenticationProvider() {
 	 DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
 	 provider.setPasswordEncoder(passwordEncoder);
 	 provider.setUserDetailsService(loginService); return provider;
