@@ -17,6 +17,7 @@
   crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="./../common.css">
   <link rel="stylesheet" href="./../index.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script th:inline="javascript">
   	const page = /*[[${page}]]*/
   	
@@ -33,14 +34,21 @@
   	
   	/* 상품 목록 */
   	function productList() {
-  		const $products = $("#products");
+  		const $wrap = $(".card-wrap table");
+  		let $tr;
   		$.each(page.products, function(idx, product) {
-  			const $card = $('<div class="card">').appendTo($products);
+  			if (idx % 3 == 0)
+  				$tr = $('<tr>').appendTo($wrap);
+			const $td = $('<td>').appendTo($tr);
+  			const $card = $('<div class="card">').appendTo($td);
   			const $a = $('<a>').attr('href', "/product/read?pno=" + product.pno).attr('title', product.name).appendTo($card);
-  			$('<img>').attr('src', '#').attr('alt', '상품').attr('style', 'width:80%').appendTo($a);
+  			$('<img>').attr('src', '../image/product.jpg').attr('alt', '상품').attr('style', 'width:80%').appendTo($a);
   			$('<h1>').text(product.cname).appendTo($a);
   			$('<p>').attr('class', 'title').text(product.pname).appendTo($a);
   			$('<p>').attr('class', 'amount').text(product.price + " 원").appendTo($card);
+  			const $btnwrapper = $('<div>').attr('class', 'btnwrapper').appendTo($card);
+  			$('<button>').attr('class', 'left-btn').text('바로구매').appendTo($btnwrapper);
+  			$('<button>').attr('class', 'right-btn').text('장바구니').appendTo($btnwrapper);
   		})
   	}
   	
@@ -176,8 +184,8 @@ button:hover, a:hover {
   </div>
 
 <section class="card-wrap">
-	<div id="products">
-	</div>
+	<table>
+	</table>
 	<div id="pagination">
 	</div>
 </section>

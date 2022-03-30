@@ -2,6 +2,8 @@ package com.project.ecorea.entity;
 
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -17,6 +19,7 @@ public class QnaQ {
 	private String qqtitle; /* 제목 */
 	private String qqcontent; /* 내용 */
 	private String qqimg; /* 이미지 */
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate qqregday; /* 등록일 */
 	private String memberId; /* 작성자 */
 
