@@ -32,7 +32,7 @@ public class ProductDto {
 	@NoArgsConstructor
 	@AllArgsConstructor
 	@Builder
-	public static class productRead {
+	public static class ProductRead {
 		private String catecode; /* 상품 카테고리 */
 		private Integer pno; /* 상품 번호 */
 		private String cname; /* 제조사 */

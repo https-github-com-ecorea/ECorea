@@ -7,4 +7,21 @@
 		select h.* from hugi h inner join jumun j on h.jno=j.jno where j.pno=#{pno} order by hno
 	</select>
 
+	<select id="findByhwriter" resultType="com.project.ecorea.dto.HugiDto$HugiList">
+		select h.* from hugi h inner join jumun j on h.jno=j.jno where h.hwriter=#{loginId} order by hno
+	</select>
+	
+	<delete id="deleteByHno">
+		delete from hugi where hno=#{hno}
+	</delete>
+	
+	
+	<insert id="saveReviwe" useGeneratedKeys="true" keyProperty="hno">
+		<selectKey keyProperty="hno" order="BEFORE" resultType="int">
+			select hugi_seq.nextval from dual
+		</selectKey>
+		insert into hugi
+		values (#{pno}, #{hno}, #{jno}, #{htitle}, #{hregday}, #{hwriter}, #{hcontent}, #{himg})
+	</insert>
+	
 </mapper>

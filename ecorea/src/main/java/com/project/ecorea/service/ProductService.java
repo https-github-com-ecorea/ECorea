@@ -72,8 +72,8 @@ public class ProductService {
 	}
 	
 	/* 상품 상세 페이지 */
-	public ProductDto.productRead productRead(Integer pno) {
-		ProductDto.productRead productDto = productDao.findByPno(pno).toDto(imagePath);
+	public ProductDto.ProductRead productRead(Integer pno) {
+		ProductDto.ProductRead productDto = productDao.findByPno(pno).toDto(imagePath);
 		productDto.setHugis(hugiDao.findByPno(pno));
 		productDto.setQQnas(qnaDao.qfindByPno(pno));
 		productDto.setAQnas(qnaDao.afindByPno(pno));
