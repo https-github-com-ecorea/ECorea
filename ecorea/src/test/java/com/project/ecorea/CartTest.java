@@ -20,6 +20,8 @@ public class CartTest {
 	CartDao cartDao;
 	@Autowired
 	CartService cartService;
+	@Autowired
+	ProductDao productDao;
 
 	
 	
@@ -122,7 +124,7 @@ public class CartTest {
 	}
 	
 	@Transactional
-	@Test
+	//@Test
 	public void deleteSelectedServiceTest() {
 		String memberId = "zzzzuny";
 		List<Integer> pnos = new ArrayList<Integer>(Arrays.asList(1,2));
@@ -135,4 +137,17 @@ public class CartTest {
     
 		assertEquals(result, 2);
 	}
+	
+	//@Test
+	public void saveTest() {
+		Integer pno = 5;
+		String memberId = "zzzzuny";
+		Integer cartcnt = 1;
+		Product product = productDao.findByPno(pno);
+		System.out.println("#########################" + product);		
+		Integer cartPrice = product.getPrice() * cartcnt;
+		Cart cart = Cart.builder().memberId(memberId).cartpname(product.getPname()).pno(pno).cartcnt(1).cartprice(cartPrice).build();
+		System.out.println("#########################" + cart);
+		cartDao.saveOneProduct(cart);				
+	}	
 }

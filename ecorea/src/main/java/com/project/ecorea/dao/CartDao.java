@@ -24,4 +24,5 @@ public interface CartDao {
 	
 	public Integer deleteAll(String membeId);
 	
+	public void saveOneProduct(Cart cart);
 }

@@ -58,6 +58,10 @@
 		delete from cart where member_id=#{memberId}
 	</delete>
 	
+	<!-- 장바구니에 상품 담기 -->
+	<insert id="saveOneProduct">
+		insert into cart values(#{memberId}, #{pno}, #{cartcnt}, #{cartprice}, #{cartpname})
+	</insert>
 </mapper>
 
 <!--  

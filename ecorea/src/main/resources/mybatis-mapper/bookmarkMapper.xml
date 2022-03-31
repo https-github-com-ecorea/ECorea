@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.ecorea.dao.BookmarkDao">
+	<!-- 관심상품 list 출력 -->
+	<select id="findByMemberId" resultType="com.project.ecorea.dto.BookmarkDto$BookmarkList">
+		select p.pno, p.catecode, p.pname, p.price, p.pthumbnail
+		from bookmark b 
+			left join product p
+		on b.pno=p.pno
+	</select>
+	
+	<!-- 관심상품 한 개 삭제 -->
+	<delete id="deleteOne">
+		delete from bookmark where member_id=#{memberId} and pno=#{pno}
+	</delete>
+	
+	<!-- 관심상품 전체 삭제 -->
+	<delete id="deleteAll">
+		delete from bookmark where member_id=#{memberId}
+	</delete>
+	
+	<!-- 관심상품 선택 삭제 -->
+	<delete id="deleteSelected">
+		delete from bookmark where member_id=#{memberId} and pno in
+		<foreach collection="pnos" item="pno" open="(" separator="," close=")">
+			#{pno}
+		</foreach>
+	</delete>	
+</mapper>
