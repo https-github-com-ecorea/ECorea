@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="./../common.css">
+  <style>
+  * {box-sizing: border-box;}
+
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+</style>
+  <title>교환/반품 신청</title>
+
+</head>
+<body>
+  <h1>교환/반품 신청</h1>
+  <div class="container">
+    <form action="/action_page.php">
+    
+       <label for="choice">말머리</label>
+      <select id="choice" name="choice">
+        <option value="selectoption">선택해주세요</option>
+        <option value="australia">교환신청</option>
+        <option value="canada">반품신청</option>
+      </select>
+    
+      <label for="ordernumber">주문번호</label>
+      <input type="text" id="ordernumber" name="ordernumber" placeholder="">
+  
+      <label for="exchangetitle">제목</label>
+      <input type="text" id="exchangetitle" name="exchangetitle">
+  
+      <label for="exchangecontent">내용(사유)</label>
+      <textarea id="exchangecontent" name="exchangecontent"     style="height:200px"></textarea>
+
+      <label for="celphone">연락처</label>
+      <input type="text" id="celphone" name="celphone">
+
+      <button type="submit" class="btn btn-primary" formaction="/order/reviewList/">교환/반품 신청</button>
+    </form>
+  </div>
+</body>
+</html>

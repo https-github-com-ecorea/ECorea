@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -17,58 +17,6 @@
   crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="./../common.css">
   <link rel="stylesheet" href="./../index.css">
-  <script th:inline="javascript">
-  	const page = /*[[${page}]]*/
-  	
-  	/* 현재 url의 카테고리 코드 추출 */
-  	/* Code By Color Scripter™ */
-    function getParameterByName(name, url) {
-	     if (!url) url = window.location.href;
-	     name = name.replace(/[\[\]]/g, "\\$&");
-	     var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-	         results = regex.exec(url);
-	     return results[2];
-    }
-  	let catecode = getParameterByName('catecode');
-  	
-  	/* 상품 목록 */
-  	function productList() {
-  		const $products = $("#products");
-  		$.each(page.products, function(idx, product) {
-  			const $card = $('<div class="card">').appendTo($products);
-  			const $a = $('<a>').attr('href', "/product/read?pno=" + product.pno).attr('title', product.name).appendTo($card);
-  			$('<img>').attr('src', '#').attr('alt', '상품').attr('style', 'width:80%').appendTo($a);
-  			$('<h1>').text(product.cname).appendTo($a);
-  			$('<p>').attr('class', 'title').text(product.pname).appendTo($a);
-  			$('<p>').attr('class', 'amount').text(product.price + " 원").appendTo($card);
-  		})
-  	}
-  	
-  	/* 페이징 */
-  	function pagination() {
-		const $pagination = $('#pagination');
-		const $ul = $('<ul class="pagination">').appendTo($pagination);
-		if (page.prev > 0) {
-			const $li = $('<li>').appendTo($ul);
-			$('<a>').attr('href', '/product/productList?pageno=' + page.prev + '&catecode=' + catecode).text("이전").appendTo($li);
-		}
-		for (let i = page.start; i <= page.end; i++) {
-			const $li = $('<li>').appendTo($ul);
-			$('<a>').attr('href', '/product/productList?pageno=' + i + '&catecode=' + catecode).text(i).appendTo($li);
-			if (i == page.pageno)
-				$li.attr('class', 'active');
-		}
-		if (page.next > page.end) {
-			const $li = $('<li>').appendTo($ul);
-			$('<a>').attr('href', '/product/productList?pageno=' + page.next + '&catecode=' + catecode).text("다음").appendTo($li);
-		}
-  	}
-  	
-	$(document).ready(function() {
-		productList();
-		pagination();
-	})
-  </script>
   <style>
     h1 {
       text-align: center;
@@ -176,10 +124,122 @@ button:hover, a:hover {
   </div>
 
 <section class="card-wrap">
-	<div id="products">
-	</div>
-	<div id="pagination">
-	</div>
+  <table>
+    <tr>
+      <td>
+        <div class="card">
+          <a href="#"><img src="../image/product.jpg" alt="상품" style="width:80%"></a>
+          <a href="#"><h1>브랜드명</h1></a>
+          <a href="#"><p class="title">[업사이클링DIY] 업사이클링 티셔츠 손목 쿠션Kit</p></a>
+          <p class="amount">15,000원</p>
+          <div class="btnwrapper">
+          <p><button class="left-btn">바로구매</button></p>
+          <p><button class="right-btn">장바구니</button></p>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="card">
+          <a href="#"><img src="../image/product.jpg" alt="상품" style="width:80%"></a>
+          <a href="#"><h1>브랜드명</h1></a>
+          <a href="#"><p class="title">[업사이클링DIY] 업사이클링 티셔츠 손목 쿠션Kit</p></a>
+          <p class="amount">15,000원</p>
+          <div class="btnwrapper">
+          <p><button class="left-btn">바로구매</button></p>
+          <p><button class="right-btn">장바구니</button></p>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="card">
+          <a href="#"><img src="../image/product.jpg" alt="상품" style="width:80%"></a>
+          <a href="#"><h1>브랜드명</h1></a>
+          <a href="#"><p class="title">[업사이클링DIY] 업사이클링 티셔츠 손목 쿠션Kit</p></a>
+          <p class="amount">15,000원</p>
+          <div class="btnwrapper">
+          <p><button class="left-btn">바로구매</button></p>
+          <p><button class="right-btn">장바구니</button></p>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="card">
+          <a href="#"><img src="../image/product.jpg" alt="상품" style="width:80%"></a>
+          <a href="#"><h1>브랜드명</h1></a>
+          <a href="#"><p class="title">[업사이클링DIY] 업사이클링 티셔츠 손목 쿠션Kit</p></a>
+          <p class="amount">15,000원</p>
+          <div class="btnwrapper">
+          <p><button class="left-btn">바로구매</button></p>
+          <p><button class="right-btn">장바구니</button></p>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="card">
+          <a href="#"><img src="../image/product.jpg" alt="상품" style="width:80%"></a>
+          <a href="#"><h1>브랜드명</h1></a>
+          <a href="#"><p class="title">[업사이클링DIY] 업사이클링 티셔츠 손목 쿠션Kit</p></a>
+          <p class="amount">15,000원</p>
+          <div class="btnwrapper">
+          <p><button class="left-btn">바로구매</button></p>
+          <p><button class="right-btn">장바구니</button></p>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="card">
+          <a href="#"><img src="../image/product.jpg" alt="상품" style="width:80%"></a>
+          <a href="#"><h1>브랜드명</h1></a>
+          <a href="#"><p class="title">[업사이클링DIY] 업사이클링 티셔츠 손목 쿠션Kit</p></a>
+          <p class="amount">15,000원</p>
+          <div class="btnwrapper">
+          <p><button class="left-btn">바로구매</button></p>
+          <p><button class="right-btn">장바구니</button></p>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="card">
+          <a href="#"><img src="../image/product.jpg" alt="상품" style="width:80%"></a>
+          <a href="#"><h1>브랜드명</h1></a>
+          <a href="#"><p class="title">[업사이클링DIY] 업사이클링 티셔츠 손목 쿠션Kit</p></a>
+          <p class="amount">15,000원</p>
+          <div class="btnwrapper">
+          <p><button class="left-btn">바로구매</button></p>
+          <p><button class="right-btn">장바구니</button></p>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="card">
+          <a href="#"><img src="../image/product.jpg" alt="상품" style="width:80%"></a>
+          <a href="#"><h1>브랜드명</h1></a>
+          <a href="#"><p class="title">[업사이클링DIY] 업사이클링 티셔츠 손목 쿠션Kit</p></a>
+          <p class="amount">15,000원</p>
+          <div class="btnwrapper">
+          <p><button class="left-btn">바로구매</button></p>
+          <p><button class="right-btn">장바구니</button></p>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="card">
+          <a href="#"><img src="../image/product.jpg" alt="상품" style="width:80%"></a>
+          <a href="#"><h1>브랜드명</h1></a>
+          <a href="#"><p class="title">[업사이클링DIY] 업사이클링 티셔츠 손목 쿠션Kit</p></a>
+          <p class="amount">15,000원</p>
+          <div class="btnwrapper">
+          <p><button class="left-btn">바로구매</button></p>
+          <p><button class="right-btn">장바구니</button></p>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
 </section>
 
 <footer>
