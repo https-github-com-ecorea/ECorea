@@ -23,7 +23,7 @@
   <script th:inline="javascript">
   	const product = /*[[${product}]]*/
   	
-  	function reviwes() {
+  	/* function reviwes() {
   		const $hugi = $('#hugi');
   		$.each(product.hugis, function(object, hugi) {
   			console.log(hugi);
@@ -33,30 +33,32 @@
 			$('<td>').text(hugi.hwriter).appendTo($tr);
 			$('<td>').text(hugi.hregday).appendTo($tr);
   		});
-  	}
+  	} */
   	
   	function qna() {
   		const $qna = $('#qna');
-  		$.each(product.qnas, function(object, qna) {
-  			console.log(qna);
+  		$.each(product.qqnas, function(index, qnaq) {
+  			console.log(qnaq);
 		  	const $tr = $('<tr>').appendTo($qna);
-			$('<td>').text(qna.qqno).appendTo($tr);
-			$('<td>').text(qna.qqcategory).appendTo($tr);
-			$('<td>').text(qna.qqtitle).appendTo($tr);
-			$('<td>').text(qna.memberId).appendTo($tr);
-			$('<td>').text(qna.qqregday).appendTo($tr);
+			$('<td>').text(qnaq.qqno).appendTo($tr);
+			$('<td>').text(qnaq.qqcategory).appendTo($tr);
+			$('<td>').text(qnaq.qqtitle).appendTo($tr);
+			$('<td>').text(qnaq.memberId).appendTo($tr);
+			$('<td>').text(qnaq.qqregday).appendTo($tr);
 	  		
-			if(qna.qano!=null){
-			  	const $tr = $('<tr>').appendTo($qna);
-					$('<td>').text(qna.qano).appendTo($tr);
-					$('<td>').text(qna.qacontent).appendTo($tr);
-					$('<td>').text(qna.corpId).appendTo($tr);
-	  		}
+			$.each(product.aqnas, function(index, qnaa) {
+				if(qnaa.qano==qnaq.qqno){
+				  	const $tr = $('<tr>').appendTo($qna);
+						$('<td>').text(qnaa.qano).appendTo($tr);
+						$('<td>').text(qnaa.qacontent).appendTo($tr);
+						$('<td>').text(qnaa.corpId).appendTo($tr);
+		  		}				
+			})
   		});
   	}
   	
   	$(document).ready(function() {
-  		reviwes();
+  		// reviwes();
   		qna();
   		$('#total_price').text(product.price * $('#p_num1').val() + ' 원');
   	});
@@ -252,19 +254,14 @@ img {vertical-align: middle; height: 300px;}
           <th>등록일</th>
         </tr>
       </thead>
-      <tbody id="hugi">
-      	<!-- <tr>
-          <td>번호</td>
-          <td>제목</td>
-          <td>작성자</td>
-          <td>등록일</td>
+      <tbody>
+      	<tr th:each="products : ${product.hugis}">
+          <td th:text="${products.hno}">번호</td>
+          <td th:text="${products.htitle}">제목</td>
+          <td th:text="${products.hwriter}">작성자</td>
+          <td th:text="${products.hregday}">등록일</td>
         </tr>
         <tr>
-          <td>번호</td>
-          <td>제목</td>
-          <td>작성자</td>
-          <td>등록일</td>
-        </tr> -->
     </table>
   </div>
   <hr>

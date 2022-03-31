@@ -30,7 +30,7 @@ public class Product {
 	private LocalDate pregday; /* 등록일 */
 	private String corpId; /* 제조사 */
 	
-	public ProductDto.productRead toDto(String imagePath) {
-		return ProductDto.productRead.builder().catecode(catecode).pno(pno).cname(corpId).pcontent(pcontent).pname(pname).price(price).pthumbnail(imagePath + pthumbnail).build();
+	public ProductDto.ProductRead toDto(String imagePath) {
+		return ProductDto.ProductRead.builder().catecode(catecode).pno(pno).cname(corpId).pcontent(pcontent).pname(pname).price(price).pthumbnail(imagePath + pthumbnail).build();
 	}
 }
