@@ -6,6 +6,8 @@ import lombok.*;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Cart {	
 	private String memberId;
 	private Integer pno;

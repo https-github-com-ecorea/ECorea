@@ -17,6 +17,68 @@
   crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="./../common.css">
   <link rel="stylesheet" href="./../index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script th:inline="javascript">
+  	const page = /*[[${page}]]*/
+  	
+  	/* 현재 url의 카테고리 코드 추출 */
+  	/* Code By Color Scripter™ */
+    function getParameterByName(name, url) {
+	     if (!url) url = window.location.href;
+	     name = name.replace(/[\[\]]/g, "\\$&");
+	     var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+	         results = regex.exec(url);
+	     return results[2];
+    }
+  	let catecode = getParameterByName('catecode');
+  	
+  	/* 상품 목록 */
+  	function productList() {
+  		const $wrap = $(".card-wrap table");
+  		let $tr;
+  		$.each(page.products, function(idx, product) {
+  			if (idx % 3 == 0)
+  				$tr = $('<tr>').appendTo($wrap);
+			const $td = $('<td>').appendTo($tr);
+  			const $card = $('<div class="card">').appendTo($td);
+  			const $a = $('<a>').attr('href', "/product/read?pno=" + product.pno).attr('title', product.name).appendTo($card);
+  			$('<img>').attr('src', '../image/product.jpg').attr('alt', '상품').attr('style', 'width:80%').appendTo($a);
+  			$('<h1>').text(product.cname).appendTo($a);
+  			$('<p>').attr('class', 'title').text(product.pname).appendTo($a);
+  			$('<p>').attr('class', 'amount').text(product.price + " 원").appendTo($card);
+  			const $btnwrapper = $('<div>').attr('class', 'btnwrapper').appendTo($card);
+  			$('<button>').attr('class', 'left-btn').text('바로구매').appendTo($btnwrapper);
+  			$('<button>').attr('class', 'right-btn').text('장바구니').appendTo($btnwrapper);
+  		})
+  	}
+  	
+  	/* 페이징 */
+  	function pagination() {
+		const $pagination = $('#pagination');
+		const $ul = $('<ul class="pagination">').appendTo($pagination);
+		if (page.prev > 0) {
+			const $li = $('<li>').appendTo($ul);
+			$('<a>').attr('href', '/product/productList?pageno=' + page.prev + '&catecode=' + catecode).text("이전").appendTo($li);
+		}
+		for (let i = page.start; i <= page.end; i++) {
+			const $li = $('<li>').appendTo($ul);
+			$('<a>').attr('href', '/product/productList?pageno=' + i + '&catecode=' + catecode).text(i).appendTo($li);
+			if (i == page.pageno)
+				$li.attr('class', 'active');
+		}
+		if (page.next > page.end) {
+			const $li = $('<li>').appendTo($ul);
+			$('<a>').attr('href', '/product/productList?pageno=' + page.next + '&catecode=' + catecode).text("다음").appendTo($li);
+		}
+  	}
+  	
+	$(document).ready(function() {
+		productList();
+		pagination();
+	})
+  </script>
+
   <style>
     h1 {
       text-align: center;
@@ -124,7 +186,8 @@ button:hover, a:hover {
   </div>
 
 <section class="card-wrap">
-  <table>
+
+<!--   <table>
     <tr>
       <td>
         <div class="card">
@@ -239,7 +302,11 @@ button:hover, a:hover {
         </div>
       </td>
     </tr>
-  </table>
+  </table> -->
+	<table>
+	</table>
+	<div id="pagination">
+	</div>
 </section>
 
 <footer>

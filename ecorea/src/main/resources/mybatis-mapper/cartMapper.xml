@@ -25,6 +25,11 @@
 		where c.member_id=#{memberId}
 	</select>
 	
+	<!-- 장바구니 상품 한개 select -->
+	<select id="findByMemberIdAndPno" resultType="com.project.ecorea.entity.Cart">
+		select * from cart where member_id=#{memberId} and pno=#{pno}
+	</select>
+	
 	<!-- 장바구니 상품개수 증가 -->	
 	<update id="updateCntPlus">
 		update cart set cartcnt=cartcnt+#{cartcnt} where member_id=#{memberId} and pno=#{pno}
@@ -53,6 +58,10 @@
 		delete from cart where member_id=#{memberId}
 	</delete>
 	
+	<!-- 장바구니에 상품 담기 -->
+	<insert id="saveOneProduct">
+		insert into cart values(#{memberId}, #{pno}, #{cartcnt}, #{cartprice}, #{cartpname})
+	</insert>
 </mapper>
 
 <!--  

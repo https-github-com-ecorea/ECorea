@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -17,6 +17,50 @@
   crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../../common.css">
   <link rel="stylesheet" href="../../index.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script th:inline="javascript">
+  	const product = /*[[${product}]]*/
+  	
+  	/* 리뷰 목록 */
+	function reviewList() {
+ 		$.each(product.hugis, function(idx, hugi) {
+ 			console.log(hugi.htitle);
+ 			const $tbody = $('.reviewlist .table tbody');
+ 			const $tr = $('<tr>').appendTo($tbody);
+ 			$('<td>').text(hugi.hno).appendTo($tr);
+ 			$('<td>').text(hugi.htitle).appendTo($tr);
+ 			$('<td>').text(hugi.hwriter).appendTo($tr);
+ 			$('<td>').text(hugi.hregday).appendTo($tr);
+ 		})
+	}
+	
+  	/* 문의 목록 */
+	function qnaQList() {
+ 		$.each(product.qqnas, function(idx, qqna) {
+ 			const $tbody = $('.qnalist .table tbody');
+ 			const $qtr = $('<tr>').appendTo($tbody);
+ 			$('<td>').text(qqna.qqno).appendTo($qtr);
+ 			$('<td>').text(qqna.qqcategory).appendTo($qtr);
+ 			$('<td>').text(qqna.qqtitle).appendTo($qtr);
+ 			$('<td>').text(qqna.memberId).appendTo($qtr);
+ 			$('<td>').text(qqna.qqregday).appendTo($qtr);
+ 			$.each(product.aqnas, function(idx, aqna) {		/* 문의 번호(qqno)가 일치하는 답변 출력 */
+ 				if (qqna.qqno == aqna.qqno) {
+	 	 			const $tbody = $('.qnalist .table tbody');
+	 	 			const $qtr = $('<tr>').appendTo($tbody);
+	 	 			$('<td>').text(aqna.qano).appendTo($qtr);
+	 	 			$('<td>').text(aqna.qacontent).appendTo($qtr);
+	 	 			$('<td>').text(aqna.corpId).appendTo($qtr);
+ 				}
+ 	 		})
+ 		})
+	}
+  	
+  	$(document).ready(function() {
+  		reviewList();
+  		qnaQList();
+  	})
+  </script>
   <title>상품 상세페이지</title>
   <style>
     h3 {
@@ -174,11 +218,15 @@ img {vertical-align: middle; height: 300px;}
           <span class="dot" onclick="currentSlide(3)"></span> 
         </div>
     </div>
-
- 
     <div class="product-info">
+
+      <p style="font-size:20px;" th:text="${product.pname}">상품명</p><br>
+      <span>판매가격 : <span th:text="${product.price} + ' 원'"></span></span><br>
+      <!--
+
       <p style="font-size:20px;">상품명</p><br>
       <span>판매가격 : <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;원</span></span><br>
+       -->
       <div class="updown">
         <span>수량 : </span>&nbsp;&nbsp;&nbsp;<button type="button">-</button>
         <input type="text" name="p_num1" id="p_num1" size="2" maxlength="4" class="p_num" value="1">
@@ -201,7 +249,12 @@ img {vertical-align: middle; height: 300px;}
       <a href="#content3">상품 문의</a>
     </div>
     <div class="detail-product" id="content1">
+
+    <p th:text='${product.pcontent}'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores unde pariatur nisi repudiandae quam. A, voluptas culpa? Ipsum excepturi at possimus magnam cum, aperiam rem nulla quaerat facere provident alias sunt tempore eveniet vitae praesentium, sed totam tempora ex sapiente beatae rerum? Aperiam blanditiis recusandae fugit, laboriosam consectetur et officia est pariatur provident, dicta itaque dolorem inventore debitis eveniet expedita nam ducimus vitae aliquid. Doloribus quia illum tempora unde quo. Illum provident fugit eius consequuntur, expedita, sapiente quos sed quam obcaecati dicta nulla esse quae iste id suscipit quibusdam maiores, saepe nostrum aspernatur veniam nemo? Itaque doloremque aliquid delectus illum iste quaerat libero vel veniam praesentium. Delectus exercitationem, doloremque sunt dolorum explicabo est nostrum amet officiis pariatur nulla quasi nisi dicta! Illum doloribus dolore neque fugiat quo animi. Quidem voluptate sint necessitatibus quibusdam nihil repellendus omnis corporis saepe ut harum molestiae, consequatur delectus consectetur dignissimos, fugiat numquam ab atque impedit? Cupiditate doloremque repudiandae doloribus officiis aliquam iusto minima a sit omnis eveniet incidunt sequi pariatur excepturi, ex, tempora quas ut aperiam. Fugit quibusdam ab voluptatibus ea cupiditate culpa aliquam iusto blanditiis possimus at. Numquam deserunt natus, animi assumenda consequatur nesciunt quos adipisci molestiae vel repellendus. Repellendus obcaecati nesciunt dignissimos nostrum illo quam, atque ipsum quaerat, impedit totam iusto nihil laudantium natus velit laborum dolor porro deserunt ea unde perferendis sunt error. Dolorum repudiandae reprehenderit rem at saepe ab quam minus voluptas sunt doloremque minima, repellendus asperiores error perspiciatis voluptatem tempora itaque odio impedit explicabo vitae? Ad iste pariatur mollitia atque.</p>    
+    <!-- 
+
     <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores unde pariatur nisi repudiandae quam. A, voluptas culpa? Ipsum excepturi at possimus magnam cum, aperiam rem nulla quaerat facere provident alias sunt tempore eveniet vitae praesentium, sed totam tempora ex sapiente beatae rerum? Aperiam blanditiis recusandae fugit, laboriosam consectetur et officia est pariatur provident, dicta itaque dolorem inventore debitis eveniet expedita nam ducimus vitae aliquid. Doloribus quia illum tempora unde quo. Illum provident fugit eius consequuntur, expedita, sapiente quos sed quam obcaecati dicta nulla esse quae iste id suscipit quibusdam maiores, saepe nostrum aspernatur veniam nemo? Itaque doloremque aliquid delectus illum iste quaerat libero vel veniam praesentium. Delectus exercitationem, doloremque sunt dolorum explicabo est nostrum amet officiis pariatur nulla quasi nisi dicta! Illum doloribus dolore neque fugiat quo animi. Quidem voluptate sint necessitatibus quibusdam nihil repellendus omnis corporis saepe ut harum molestiae, consequatur delectus consectetur dignissimos, fugiat numquam ab atque impedit? Cupiditate doloremque repudiandae doloribus officiis aliquam iusto minima a sit omnis eveniet incidunt sequi pariatur excepturi, ex, tempora quas ut aperiam. Fugit quibusdam ab voluptatibus ea cupiditate culpa aliquam iusto blanditiis possimus at. Numquam deserunt natus, animi assumenda consequatur nesciunt quos adipisci molestiae vel repellendus. Repellendus obcaecati nesciunt dignissimos nostrum illo quam, atque ipsum quaerat, impedit totam iusto nihil laudantium natus velit laborum dolor porro deserunt ea unde perferendis sunt error. Dolorum repudiandae reprehenderit rem at saepe ab quam minus voluptas sunt doloremque minima, repellendus asperiores error perspiciatis voluptatem tempora itaque odio impedit explicabo vitae? Ad iste pariatur mollitia atque.</p>
+     -->
   </div>
   <hr>
   <div class="reviewlist">
@@ -216,6 +269,7 @@ img {vertical-align: middle; height: 300px;}
         </tr>
       </thead>
       <tbody>
+      <!--
         <tr>
           <td>번호</td>
           <td>제목</td>
@@ -228,6 +282,8 @@ img {vertical-align: middle; height: 300px;}
           <td>내용</td>
           <td>등록일</td>
         </tr>
+         -->
+       </tbody>
     </table>
   </div>
   <hr>
@@ -244,6 +300,7 @@ img {vertical-align: middle; height: 300px;}
         </tr>
       </thead>
       <tbody>
+      <!-- 
         <tr>
           <td>번호</td>
           <td>카테고리</td>
@@ -258,6 +315,8 @@ img {vertical-align: middle; height: 300px;}
           <td>답변작성자</td>
           <td>답변등록일</td>
         </tr>
+         -->
+       </tbody>
     </table>
   </div>
   </div>
