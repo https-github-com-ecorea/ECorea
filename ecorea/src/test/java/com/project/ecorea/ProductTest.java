@@ -41,12 +41,12 @@ public class ProductTest {
 		System.out.println(service.productRead(10));
 	}
 	
-	// @Test
+	@Test
 	public void checkStockTest() {
-		System.out.println(service.checkStock(1, 5));
+		System.out.println(service.checkStock(10, 5));
 	}
 	
-	@Test
+	// @Test
 	public void productListTest() {
 		System.out.println(service.productList(1, "22"));
 	}
@@ -128,7 +128,7 @@ public class ProductTest {
 	}
 	
 	@Transactional
-	@Test
+	//@Test
 	public void deleteTest() {
 		String corpId = "samsung";
 		Integer pno = 1;

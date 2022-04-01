@@ -16,11 +16,11 @@ public class ProductRestController {
 
 	/* 재고 확인 (수량 변경 시 필요) */
 	@GetMapping("/product/productList/checkstock")
-	public ResponseEntity<Void> checkStock(Integer pno, Integer count) {
+	public ResponseEntity<Boolean> checkStock(Integer pno, Integer count) {
 		Boolean stock = service.checkStock(pno, count);
-		if (stock == true)
-			return ResponseEntity.ok(null);
-		return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+		if (stock == false)
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(stock);
+		return ResponseEntity.ok(stock);
 	}
 	
 }
