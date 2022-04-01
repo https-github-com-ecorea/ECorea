@@ -63,17 +63,3 @@
 		insert into cart values(#{memberId}, #{pno}, #{cartcnt}, #{cartprice}, #{cartpname})
 	</insert>
 </mapper>
-
-<!--  
-	public Cart findByPnoAndMemberId(Integer pno, String memberId);
-	
-	public List<Cart> findByMemberId(String memberId);
-	
-	public void save(Cart cart);
-	
-	public void increase(Cart cart);
-	
-	public void decrease(Cart cart);
-	
-	public void delete(List<Integer> pnos, String memberId);
--->
