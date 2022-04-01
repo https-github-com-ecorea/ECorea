@@ -75,8 +75,8 @@ public class ProductService {
 	public ProductDto.productRead productRead(Integer pno) {
 		ProductDto.productRead productDto = productDao.findByPno(pno).toDto(imagePath);
 		productDto.setHugis(hugiDao.findByPno(pno));
-		productDto.setQQnas(qnaDao.qfindByPno(pno));
-		productDto.setAQnas(qnaDao.afindByPno(pno));
+		productDto.setQQnas(qnaDao.questionFindByPno(pno));
+		productDto.setAQnas(qnaDao.answerFindByPno(pno));
 		return productDto;
 	}
 	
@@ -99,7 +99,7 @@ public class ProductService {
 				product.setPthumbnail(pthumbnailName);
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
-			}			
+			}
 		}
 		productDao.save(product);
 	}

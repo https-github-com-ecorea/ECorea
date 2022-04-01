@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.project.ecorea.dto.QnaDto.QuestionDto;
+
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -23,4 +25,9 @@ public class QnaQ {
 	private LocalDate qqregday; /* 등록일 */
 	private String memberId; /* 작성자 */
 
+	public QuestionDto toDto(String imagepath) {
+		return QuestionDto.builder().qqno(qqno).qqcategory(qqcategory).qqtitle(qqtitle).qqcontent(qqcontent).qqimg(imagepath + qqimg)
+				.qqregday(qqregday).memberId(memberId).build();
+	}
+	
 }

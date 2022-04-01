@@ -2,14 +2,57 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.ecorea.dao.QnaDao">
 
-	<!-- 문의 목록 -->
-	<select id="qfindByPno" resultType="com.project.ecorea.dto.QnaDto$QnaQList">
+	<!-- 내부 표기 변환 resultMap -->
+	<resultMap type="com.project.ecorea.dto.QnaDto$AnswerDto" id="namecheck">
+		<result property="corpId" column="corp_id"/>
+	</resultMap>
+	
+	<!-- 상품 상세 : 문의 목록 -->
+	<select id="questionFindByPno" resultType="com.project.ecorea.dto.QnaDto$QuestionDto">
 		select q.qqno, q.qqcategory, q.qqtitle, q.qqcontent, q.qqimg, q.qqregday, q.member_id
 		from QNA_Q q where q.pno=#{pno}
 	</select>
 	
-	<select id="afindByPno" resultType="com.project.ecorea.dto.QnaDto$QnaAList">
+	<!-- 상품 상세 : 문의 답변 목록 -->
+	<select id="answerFindByPno" resultType="com.project.ecorea.dto.QnaDto$AnswerDto" resultMap="namecheck">
 		select qqno, qano, corp_id, qacontent from QNA_A where pno=#{pno}
 	</select>
-
+	
+	<!-- 답변 여부 -->
+	<select id="isAnswer" resultType="int">
+		select count(*) from qna_a a inner join qna_q q on a.qqno=q.qqno where a.qqno=#{qqno}
+	</select>
+	
+	<!-- 일반 회원 마이페이지 : 문의 목록 -->
+	<select id="memberQuestionFindById" resultType="com.project.ecorea.dto.QnaDto$QuestionDto">
+		select qqno, qqcategory, qqtitle, qqcontent, qqimg, qqregday, member_id
+			from QNA_Q where member_id=#{memberId}
+	</select>
+	
+	<!-- 기업 회원 마이페이지 : 문의 목록 -->
+	<select id="corpQuestionFindById" resultType="com.project.ecorea.dto.QnaDto$QuestionDto">
+		select qqno, qqcategory, qqtitle, qqcontent, qqimg, qqregday, member_id
+			from QNA_Q inner join product on qna_q.pno=product.pno where corp_id=#{corpId}
+	</select>
+	
+	<!-- 일반 회원 마이페이지 : 문의 상세 -->
+	<select id="memberQuestionFindByQqno" resultType="com.project.ecorea.dto.QnaDto$QuestionDto">
+		select * from qna_q where qqno=#{qqno}
+	</select>
+	
+	<!-- 일반 회원 마이페이지 : 문의 상세 답변 -->
+	<select id="memberAnswerFindByQqno" resultType="com.project.ecorea.dto.QnaDto$AnswerDto">
+		select * from qna_a where qqno=#{qqno}
+	</select>
+	
+	<!-- 기업 회원 마이페이지 : 문의 상세 -->
+	<select id="corpQuestionFindByQqno" resultType="com.project.ecorea.dto.QnaDto$QuestionDto">
+		select * from qna_q where qqno=#{qqno}
+	</select>
+	
+	<!-- 기업 회원 마이페이지 : 문의 상세 답변 -->
+	<select id="corpAnswerFindByQqno" resultType="com.project.ecorea.dto.QnaDto$AnswerDto">
+		select * from qna_a where qqno=#{qqno}
+	</select>
+	
 </mapper>
