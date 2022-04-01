@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.project.ecorea.dto.QnaDto.QuestionDto;
+
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -22,5 +24,5 @@ public class QnaQ {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate qqregday; /* 등록일 */
 	private String memberId; /* 작성자 */
-
+	
 }
