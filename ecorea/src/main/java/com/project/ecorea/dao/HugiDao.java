@@ -19,5 +19,7 @@ public interface HugiDao {
 	public void deleteByHno(Integer hno);
 
 	public void reviewSave(Hugi hugi);
+
+	public void updateByReview(Integer hno, HugiUpdate update);
 	
 }
