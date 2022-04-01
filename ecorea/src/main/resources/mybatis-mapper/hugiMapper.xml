@@ -15,7 +15,6 @@
 		delete from hugi where hno=#{hno}
 	</delete>
 	
-	
 	<insert id="saveReviwe" useGeneratedKeys="true" keyProperty="hno">
 		<selectKey keyProperty="hno" order="BEFORE" resultType="int">
 			select hugi_seq.nextval from dual
@@ -23,5 +22,15 @@
 		insert into hugi
 		values (#{pno}, #{hno}, #{jno}, #{htitle}, #{hregday}, #{hwriter}, #{hcontent}, #{himg})
 	</insert>
+	
+	<update id="updateByReview">
+		update hugi
+		<trim suffixOverrides="," prefix="set">
+			<if test="htitle!=null">htitle=#{htitle},</if>
+			<if test="hcontent!=null">hcontent=#{hcontent},</if>
+			<if test="himg!=null">himg=#{himg},</if>
+		</trim>
+		where hno=#{hno}
+	</update>
 	
 </mapper>

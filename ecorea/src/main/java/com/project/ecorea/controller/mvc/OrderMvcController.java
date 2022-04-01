@@ -53,8 +53,8 @@ public class OrderMvcController {
 	}
 	
 	@PostMapping("/order/reviewUpdate")
-	public String reviewUpdate(Principal principal) {
-		
+	public String reviewUpdate(Integer hno, HugiDto.HugiUpdate update) {
+		hugiService.reviewUpdate(hno, update);
 		
 		return "redirect:/order/reviewList";
 	}

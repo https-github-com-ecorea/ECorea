@@ -26,11 +26,18 @@ public class HugiDto {
 		private Integer pno;
 		private String htitle;
 		private String hcontent;
-		private String himg;
 		
 		public Hugi toEntity() {
-			return Hugi.builder().htitle(htitle).hcontent(hcontent).himg(himg).jno(jno).pno(pno).build();
+			return Hugi.builder().htitle(htitle).hcontent(hcontent).jno(jno).pno(pno).build();
 		}
+	}
+	
+	/* 후기 변경 */
+	@Data
+	public static class HugiUpdate {
+		private String htitle;
+		private String hcontent;
+		private String himg;
 	}
 
 }

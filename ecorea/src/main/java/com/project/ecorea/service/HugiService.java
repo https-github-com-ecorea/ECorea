@@ -40,10 +40,15 @@ public class HugiService {
 	/* 일반 회원 상품 등록 */
 	public void reviewUpload(String loginId, HugiUpload upload) {
 		Hugi hugi = upload.toEntity();
-		hugi.setHwriter(loginId).setHregday(LocalDate.now());
+		
+		hugi.setHwriter(loginId).setHregday(LocalDate.now()).setHimg("");
 		
 		dao.reviewSave(hugi);
 	}
-	
-	
+
+	public void reviewUpdate(Integer hno, HugiUpdate update) {
+		
+		update.setHimg("");
+		dao.updateByReview(hno, update);
+	}
 }
