@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.ecorea.dao.QnaDao">
+
+	<!-- 문의 목록 -->
+	<select id="qfindByPno" resultType="com.project.ecorea.dto.QnaDto$QnaQList">
+		select q.qqno, q.qqcategory, q.qqtitle, q.qqcontent, q.qqimg, q.qqregday, q.member_id
+		from QNA_Q q where q.pno=#{pno}
+	</select>
+	
+	<select id="afindByPno" resultType="com.project.ecorea.dto.QnaDto$QnaAList">
+		select qqno, qano, corp_id, qacontent from QNA_A where pno=#{pno}
+	</select>
+
+</mapper>

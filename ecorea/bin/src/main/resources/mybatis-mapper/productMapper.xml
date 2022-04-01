@@ -1,7 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.ecorea.dao.ProductDao">
+
+	<!-- 카테고리별 상품 개수 -->
+	<select id="productCnt" resultType="int">
+		select /*+ index_ffs(product product_pk_pno) */ count(pno) from product
+		<where>
+			<if test="catecode!=null">catecode=#{catecode}</if>
+		</where>
+	</select>
 	
+	<!-- 페이징 -->
+	<select id="productListPaging" resultType="com.project.ecorea.dto.ProductDto$productList">
+		<![CDATA[
+			(select * from
+			    (select rownum as rnum, newdesc.* from
+			        (select /*+ index_desc(product product_pk_pno)*/ pno, catecode, cname, pname, price, #{imagePath} || pthumbnail as pthumbnail from product_dto where catecode=#{catecode}) newdesc
+			    where catecode=#{catecode} and rownum<=#{lastRnum})
+			where rnum>=#{firstRnum})
+		]]>
+	</select>
+		
+	<!-- 상품 상세 페이지 -->
+	<select id="findByPno" resultType="product">
+		select catecode, pno, (select c.corp_name from product p inner join corp c on p.corp_id = c.corp_id where pno=#{pno} and rownum=1) as cname, pthumbnail, pname, pcontent, price, pstock 
+		from product p where pno=#{pno} and rownum=1
+	</select>
 
 	<!-- 기업 회원 - 상품 등록 -->
 	<insert id="save" useGeneratedKeys="true" keyProperty="pno">
@@ -13,7 +37,8 @@
 	</insert>
 	
 	<!-- 기업 회원 - 등록된 상품 목록 출력 -->
-	<resultMap type="com.project.ecorea.dto.ProductDto$corpProductList" id="regProduct">
+
+	<resultMap type="com.project.ecorea.dto.ProductDto$CorpProductList" id="regProduct">
 		<id column="pno" property="pno"/>
 		<result column="pthumbnail" property="pthumbnail"/>
 		<result column="pname" property="pname"/>
@@ -24,4 +49,27 @@
 		select * from product where corp_id=#{corpId}
 	</select>
 	
+
+	<!-- 기업 회원 - 등록된 상품 상세정보 출력 -->
+	<select id="findByCorpIdAndPno" resultType="com.project.ecorea.dto.ProductDto$ProductDetailForUpdate">
+		select pno, catecode, price, pname, pstock, pcontent, pthumbnail, pordercnt, pregday, corp_id as corpId from product where corp_id=#{corpId} and pno=#{pno}
+	</select>
+	
+	<!-- 기업 회원 - 상품 상세정보 수정 -->
+	<update id="updateProduct">
+		update product
+		<trim suffixOverrides="," prefix="set">
+			<if test="pname!=null">pname=#{pname},</if>
+			<if test="price!=null">price=#{price},</if>
+			<if test="pstock!=null">pstock=#{pstock},</if>
+			<if test="pthumbnail!=null">pthumbnail=#{pthumbnail},</if>
+			<if test="pcontent!=null">pcontent=#{pcontent},</if>		
+		</trim>
+		where corp_id=#{corpId} and pno=#{pno}
+	</update>
+	
+	<!-- 기업 회원 - 상품 삭제 -->
+	<delete id="deleteProduct">
+		delete from product where corp_id=#{corpId} and pno=#{pno}
+	</delete>
 </mapper>

@@ -18,6 +18,49 @@
   <link rel="stylesheet" href="../../common.css">
   <link rel="stylesheet" href="../../index.css">
   <title>상품 상세페이지</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  
+  <script th:inline="javascript">
+  	const product = /*[[${product}]]*/
+  	
+  	function reviwes() {
+  		const $hugi = $('#hugi');
+  		$.each(product.hugis, function(object, hugi) {
+  			console.log(hugi);
+		  	const $tr = $('<tr>').appendTo($hugi);
+			$('<td>').text(hugi.hno).appendTo($tr);
+			$('<td>').text(hugi.htitle).appendTo($tr);
+			$('<td>').text(hugi.hwriter).appendTo($tr);
+			$('<td>').text(hugi.hregday).appendTo($tr);
+  		});
+  	}
+  	
+  	function qna() {
+  		const $qna = $('#qna');
+  		$.each(product.qnas, function(object, qna) {
+  			console.log(qna);
+		  	const $tr = $('<tr>').appendTo($qna);
+			$('<td>').text(qna.qqno).appendTo($tr);
+			$('<td>').text(qna.qqcategory).appendTo($tr);
+			$('<td>').text(qna.qqtitle).appendTo($tr);
+			$('<td>').text(qna.memberId).appendTo($tr);
+			$('<td>').text(qna.qqregday).appendTo($tr);
+	  		
+			if(qna.qano!=null){
+			  	const $tr = $('<tr>').appendTo($qna);
+					$('<td>').text(qna.qano).appendTo($tr);
+					$('<td>').text(qna.qacontent).appendTo($tr);
+					$('<td>').text(qna.corpId).appendTo($tr);
+	  		}
+  		});
+  	}
+  	
+  	$(document).ready(function() {
+  		reviwes();
+  		qna();
+  		$('#total_price').text(product.price * $('#p_num1').val() + ' 원');
+  	});
+  </script>
   <style>
     h3 {
       text-align: center;
@@ -177,20 +220,14 @@ img {vertical-align: middle; height: 300px;}
 
  
     <div class="product-info">
-      <p style="font-size:20px;">상품명</p><br>
-      <span>판매가격 : <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;원</span></span><br>
+      <p th:text="${product.pname}" style="font-size:20px;">상품명</p><br>
+      <span>판매가격 : <span id="price" th:text="${product.price} + ' 원'"></span></span><br>
       <div class="updown">
         <span>수량 : </span>&nbsp;&nbsp;&nbsp;<button type="button">-</button>
         <input type="text" name="p_num1" id="p_num1" size="2" maxlength="4" class="p_num" value="1">
         <button type="button">+</button>
       </div>
-      <span>옵션 : </span><select class="form-select form-select-sm" style="width: 200px;">
-        <option>옵션을 선택하세요</option>
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-      </select><br>
-      <span>총 합계 : </span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;원(&nbsp;&nbsp;&nbsp;개)</span><br><br>
+      <span>총 합계 : </span><span id="total_price">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;원(&nbsp;&nbsp;&nbsp;개)</span><br><br>
       <input type="submit" class="btn btn-secondary" value="바로구매">
       <input type="submit" class="btn btn-secondary" value="장바구니 담기">
       <input type="submit" class="btn btn-secondary" value="관심상품 등록">
@@ -201,7 +238,7 @@ img {vertical-align: middle; height: 300px;}
       <a href="#">상품 문의</a>
     </div>
     <div class="detail-product">
-    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores unde pariatur nisi repudiandae quam. A, voluptas culpa? Ipsum excepturi at possimus magnam cum, aperiam rem nulla quaerat facere provident alias sunt tempore eveniet vitae praesentium, sed totam tempora ex sapiente beatae rerum? Aperiam blanditiis recusandae fugit, laboriosam consectetur et officia est pariatur provident, dicta itaque dolorem inventore debitis eveniet expedita nam ducimus vitae aliquid. Doloribus quia illum tempora unde quo. Illum provident fugit eius consequuntur, expedita, sapiente quos sed quam obcaecati dicta nulla esse quae iste id suscipit quibusdam maiores, saepe nostrum aspernatur veniam nemo? Itaque doloremque aliquid delectus illum iste quaerat libero vel veniam praesentium. Delectus exercitationem, doloremque sunt dolorum explicabo est nostrum amet officiis pariatur nulla quasi nisi dicta! Illum doloribus dolore neque fugiat quo animi. Quidem voluptate sint necessitatibus quibusdam nihil repellendus omnis corporis saepe ut harum molestiae, consequatur delectus consectetur dignissimos, fugiat numquam ab atque impedit? Cupiditate doloremque repudiandae doloribus officiis aliquam iusto minima a sit omnis eveniet incidunt sequi pariatur excepturi, ex, tempora quas ut aperiam. Fugit quibusdam ab voluptatibus ea cupiditate culpa aliquam iusto blanditiis possimus at. Numquam deserunt natus, animi assumenda consequatur nesciunt quos adipisci molestiae vel repellendus. Repellendus obcaecati nesciunt dignissimos nostrum illo quam, atque ipsum quaerat, impedit totam iusto nihil laudantium natus velit laborum dolor porro deserunt ea unde perferendis sunt error. Dolorum repudiandae reprehenderit rem at saepe ab quam minus voluptas sunt doloremque minima, repellendus asperiores error perspiciatis voluptatem tempora itaque odio impedit explicabo vitae? Ad iste pariatur mollitia atque.</p>
+    <p th:text="${product.pcontent}"></p>
   </div>
   <hr>
   <div class="reviewlist">
@@ -215,8 +252,8 @@ img {vertical-align: middle; height: 300px;}
           <th>등록일</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
+      <tbody id="hugi">
+      	<!-- <tr>
           <td>번호</td>
           <td>제목</td>
           <td>작성자</td>
@@ -224,10 +261,10 @@ img {vertical-align: middle; height: 300px;}
         </tr>
         <tr>
           <td>번호</td>
-          <td>이미지</td>
-          <td>내용</td>
+          <td>제목</td>
+          <td>작성자</td>
           <td>등록일</td>
-        </tr>
+        </tr> -->
     </table>
   </div>
   <hr>
@@ -243,8 +280,8 @@ img {vertical-align: middle; height: 300px;}
           <th>등록일</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
+      <tbody id="qna">
+        <!-- <tr>
           <td>번호</td>
           <td>카테고리</td>
           <td>제목</td>
@@ -257,7 +294,7 @@ img {vertical-align: middle; height: 300px;}
           <td>내용</td>
           <td>답변작성자</td>
           <td>답변등록일</td>
-        </tr>
+        </tr> -->
     </table>
   </div>
   </div>
