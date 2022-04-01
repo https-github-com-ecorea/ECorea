@@ -21,4 +21,12 @@
         		on(c.cno=p.cno)
 		where p.member_id=#{memberId}
 	</select>
+	
+	<!-- 챌린지 인증 등록 -->
+	<insert id="saveChProve" useGeneratedKeys="true" keyProperty="cpno">
+		<selectKey keyProperty="cpno" order="BEFORE" resultType="int">
+			select chprove_seq.nextval from dual
+		</selectKey>
+		insert into chprove values(#{cpno},#{cno},#{cptitle},#{cpcontent},#{cpregday},#{cpimg},#{memberId})
+	</insert>
 </mapper>
