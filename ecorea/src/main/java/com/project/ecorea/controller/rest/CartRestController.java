@@ -10,10 +10,10 @@ import com.project.ecorea.service.*;
 public class CartRestController {
 	@Autowired
 	CartService cartService;
+	String memberId = "spring11";
 	
 	@PatchMapping("/order/cart/plusProduct/{pno}")
 	public ResponseEntity<Integer> plusCartProduct(@PathVariable Integer pno) {
-		String memberId = "zzzzuny";
 		Integer productCnt = cartService.plusCnt(memberId, pno);
 		if(productCnt<=0) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body(productCnt);
@@ -24,7 +24,6 @@ public class CartRestController {
 	
 	@PatchMapping("/order/cart/minusProduct/{pno}")
 	public ResponseEntity<Integer> minusCartProduct(@PathVariable Integer pno) {
-		String memberId = "zzzzuny";
 		Integer productCnt = cartService.minusCnt(memberId, pno);
 		if(productCnt<=0) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body(productCnt);

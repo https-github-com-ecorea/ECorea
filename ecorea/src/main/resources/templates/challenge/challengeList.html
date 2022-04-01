@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+  integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
+  integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
+  integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="./../common.css">
+  <link rel="stylesheet" href="./../index.css">
+  <style>
+    * {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: white;
+  padding: 20px;
+  font-family: Arial;
+}
+
+/* Center website */
+.main {
+  max-width: 1000px;
+  margin: auto;
+}
+
+h1 {
+  font-size: 50px;
+  word-break: break-all;
+}
+
+.row {
+  margin: 10px -16px;
+}
+
+/* Add padding BETWEEN each column */
+.row,
+.row > .column {
+  padding: 8px;
+}
+
+/* Create three equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 33.33%;
+  display: none; /* Hide all elements by default */
+}
+
+/* Clear floats after rows */ 
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Content */
+.content {
+  background-color: white;
+  padding: 10px;
+}
+
+/* The "show" class is added to the filtered elements */
+.show {
+  display: block;
+}
+
+/* Style the buttons */
+.btn {
+  border: none;
+  outline: none;
+  padding: 10px 10px;
+  background-color: rgb(175, 122, 234);
+  cursor: pointer;
+  width: 300px;
+  margin-top: 5px;
+}
+
+.btn:hover {
+  background-color: rgb(127, 109, 208);
+}
+
+.btn.active {
+  background-color: #666;
+  color: white;
+}
+  </style>
+  <title>챌린지 목록</title>
+</head>
+<body>
+  <header>
+    <div class="logo"><a href="index.html">ECorea</a></div>
+  </header>
+  <h1>챌린지 목록</h1><br>
+  <nav>
+    <div class="topnav">
+      <a href="#">생활</a>
+      <a href="#">제로웨이스트</a>
+      <a href="#">소품</a>
+      <a href="#">DIY</a>
+      <div class="topnav-right">
+        <a href="#">챌린지</a>
+        <a href="#">브랜드 소개</a>
+      </div>
+    </div>
+
+  <!-- MAIN (Center website) -->
+<div class="main">
+
+  <!-- Portfolio Gallery Grid -->
+  <div class="row">
+    <div class="column nature">
+      <div class="content">
+      <span>브랜드명</span>
+        <a href="#"><img src="./../image/ocean.jpeg" alt="Mountains" style="width:100%"></a>
+        <h4><a href="#">챌린지명</a></h4>
+        <p>기한</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia quos porro nobis?</p>
+        <div>
+          <div class="progress">
+            <div class="progress-bar" style="width:70%">70%</div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" formaction="">신청하기</button>
+      </div>
+    </div>
+    <div class="column nature">
+      <div class="content">
+      <span>브랜드명</span>
+        <a href="#"><img src="./../image/ocean.jpeg" alt="Mountains" style="width:100%"></a>
+        <h4><a href="#">챌린지명</a></h4>
+        <p>기한</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia quos porro nobis?</p>
+        <div>
+          <div class="progress">
+            <div class="progress-bar" style="width:70%">70%</div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" formaction="">신청하기</button>
+      </div>
+    </div>
+    
+    <div class="column nature">
+      <div class="content">
+      <span>브랜드명</span>
+        <a href="#"><img src="./../image/ocean.jpeg" alt="Mountains" style="width:100%"></a>
+        <h4><a href="#">챌린지명</a></h4>
+        <p>기한</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia quos porro nobis?</p>
+        <div>
+          <div class="progress">
+            <div class="progress-bar" style="width:70%">70%</div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" formaction="">신청하기</button>
+      </div>
+    </div>
+    <div class="column nature">
+      <div class="content">
+      <span>브랜드명</span>
+        <a href="#"><img src="./../image/ocean.jpeg" alt="Mountains" style="width:100%"></a>
+        <h4><a href="#">챌린지명</a></h4>
+        <p>기한</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia quos porro nobis?</p>
+        <div>
+          <div class="progress">
+            <div class="progress-bar" style="width:70%">70%</div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" formaction="">신청하기</button>
+      </div>
+    </div>
+    <div class="column nature">
+      <div class="content">
+      <span>브랜드명</span>
+        <a href="#"><img src="./../image/ocean.jpeg" alt="Mountains" style="width:100%"></a>
+        <h4><a href="#">챌린지명</a></h4>
+        <p>기한</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia quos porro nobis?</p>
+        <div>
+          <div class="progress">
+            <div class="progress-bar" style="width:70%">70%</div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" formaction="">신청하기</button>
+      </div>
+    </div>
+    <div class="column nature">
+      <div class="content">
+      <span>브랜드명</span>
+        <a href="#"><img src="./../image/ocean.jpeg" alt="Mountains" style="width:100%"></a>
+        <h4><a href="#">챌린지명</a></h4>
+        <p>기한</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia quos porro nobis?</p>
+        <div>
+          <div class="progress">
+            <div class="progress-bar" style="width:70%">70%</div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" formaction="">신청하기</button>
+      </div>
+    </div>
+  <!-- END GRID -->
+  </div>
+  
+  <!-- END MAIN -->
+  </div>
+  
+  <script>
+  filterSelection("all")
+  function filterSelection(c) {
+    var x, i;
+    x = document.getElementsByClassName("column");
+    if (c == "all") c = "";
+    for (i = 0; i < x.length; i++) {
+      w3RemoveClass(x[i], "show");
+      if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
+    }
+  }
+  
+  function w3AddClass(element, name) {
+    var i, arr1, arr2;
+    arr1 = element.className.split(" ");
+    arr2 = name.split(" ");
+    for (i = 0; i < arr2.length; i++) {
+      if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];}
+    }
+  }
+  
+  function w3RemoveClass(element, name) {
+    var i, arr1, arr2;
+    arr1 = element.className.split(" ");
+    arr2 = name.split(" ");
+    for (i = 0; i < arr2.length; i++) {
+      while (arr1.indexOf(arr2[i]) > -1) {
+        arr1.splice(arr1.indexOf(arr2[i]), 1);     
+      }
+    }
+    element.className = arr1.join(" ");
+  }
+  
+  
+  // Add active class to the current button (highlight it)
+  var btnContainer = document.getElementById("myBtnContainer");
+  var btns = btnContainer.getElementsByClassName("btn");
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener("click", function(){
+      var current = document.getElementsByClassName("active");
+      current[0].className = current[0].className.replace(" active", "");
+      this.className += " active";
+    });
+  }
+  </script>
+  
+</body>
+</html>

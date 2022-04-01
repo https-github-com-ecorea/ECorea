@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="../../common.css">
+  <title>문의 목록 조회</title>
+  <style>
+    h1 {
+      text-align: center;
+    }
+    .wrapper {
+      margin: 30px;
+      
+    }
+    .btn {
+    margin-bottom: 5px;
+    }
+  </style>
+  <!-- <script>
+  	function productUpdate() {
+		const $form = $('<form>').attr('method','get').attr('action','/product/corp/productUpdate').appendTo($('body'));
+		$('<input>').attr('type','hidden').attr('name','pno').val($('#pno').text()).appendTo($form);
+		$form.submit();
+	}
+  	
+  	function productDelete() {
+		const $form = $('<form>').attr('method','post').attr('action','/product/corp/productDelete').appendTo($('body'));
+		$('<input>').attr('type','hidden').attr('name','pno').val($('#pno').text()).appendTo($form);
+		$form.submit();
+	}
+  	
+  	$(function() {
+  		$('#moveProductDetail').click(function() {
+  			$('#moveProductDetail').attr('href', '/product/corp/ProductDetail?pno=' + $('#pno').text());
+  		});
+
+		$('#moveProductUpdate').click(productUpdate);
+		$('#moveProductDelete').click(function() {
+			const result = confirm("상품을 삭제할까요?")
+			
+			if(result === true) {
+				productDelete();
+			}
+		});
+  	});
+  </script> -->
+</head>
+<body>
+  <h1>문의 목록 조회</h1>
+  <div class="wrapper">
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성일</th>
+        <th>답변여부</th>
+      </tr>
+    </thead>
+    <tbody>
+    	<tr>
+        <td></td>
+        <td></td>
+	      <td></td>
+        <td></td>
+    	</tr>
+    	<tr>
+        <td></td>
+        <td></td>
+	      <td></td>
+        <td></td>
+    	</tr>
+    	<tr>
+        <td></td>
+        <td></td>
+	      <td></td>
+        <td></td>
+    	</tr>
+    	<tr>
+        <td></td>
+        <td></td>
+	      <td></td>
+        <td></td>
+    	</tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
