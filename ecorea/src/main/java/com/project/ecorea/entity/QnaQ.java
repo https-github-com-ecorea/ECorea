@@ -24,10 +24,5 @@ public class QnaQ {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate qqregday; /* 등록일 */
 	private String memberId; /* 작성자 */
-
-	public QuestionDto toDto(String imagepath) {
-		return QuestionDto.builder().qqno(qqno).qqcategory(qqcategory).qqtitle(qqtitle).qqcontent(qqcontent).qqimg(imagepath + qqimg)
-				.qqregday(qqregday).memberId(memberId).build();
-	}
 	
 }

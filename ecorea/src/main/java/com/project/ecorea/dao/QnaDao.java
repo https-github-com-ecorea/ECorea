@@ -18,7 +18,7 @@ public interface QnaDao {
 	public List<QnaDto.AnswerDto> answerFindByPno(Integer pno);
 	
 	/* 상품 상세 : 문의 작성 */
-	public void questionUpload(QnaQ question);
+	public void uploadQuestion(QnaQ question);
 	
 	/* 답변 여부 */
 	public int isAnswer(Integer qqno);
@@ -34,11 +34,26 @@ public interface QnaDao {
 	
 	/* 일반 회원 마이페이지 : 문의 상세 답변 */
 	public QnaDto.AnswerDto memberAnswerFindByQqno(String loginId, Integer qqno);
-
+	
+	/* 일반 회원 마이페이지 : 문의 수정 */
+	public Integer updateQuestion(QnaQ question);
+	
+	/* 일반 회원 마이페이지 : 문의 삭제 */
+	public Integer deleteQuestion(String memberId, Integer qqno);
+	
 	/* 기업 회원 마이페이지 : 문의 상세 */
 	public QnaDto.QuestionDto corpQuestionFindByQqno(String loginId, Integer qqno);
 
 	/* 기업 회원 마이페이지 : 문의 상세 답변 */
 	public QnaDto.AnswerDto corpAnswerFindByQqno(String loginId, Integer qqno);
+	
+	/* 기업 회원 마이페이지 : 문의 상세 답변 작성 */
+	public void uploadAnswer(QnaA answer);
+	
+	/* 기업 회원 마이페이지 : 문의 답변 수정 */
+	public Integer updateAnswer(QnaA answer);
+
+	/* 기업 회원 마이페이지 : 문의 답변 삭제 */
+	public Integer deleteAnswer(String corpId, Integer qano);
 	
 }

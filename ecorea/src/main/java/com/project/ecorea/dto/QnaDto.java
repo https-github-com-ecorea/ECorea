@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.project.ecorea.entity.QnaA;
 import com.project.ecorea.entity.QnaQ;
 
 import lombok.*;
@@ -31,18 +32,23 @@ public class QnaDto {
 	@Data
 	@AllArgsConstructor
 	@NoArgsConstructor
+	@Builder
 	public static class AnswerDto {
 		private Integer qqno; /* 질문 번호 */
 		private Integer qano; /* 답변 번호 */
 		private String corpId; /* 답변 작성자 (기업) */
 		private String qacontent; /* 답변 내용 */
+		
+		public QnaA toEntity() {
+			return QnaA.builder().qqno(qqno).qano(qano).corpId(corpId).qacontent(qacontent).build();
+		}
 	}
 
 	/* 문의 작성 */
 	@Data
 	@AllArgsConstructor
 	@NoArgsConstructor
-	public static class QuestionUpload {
+	public static class uploadQuestion {
 		private Integer pno; /* 상품 번호 */
 		private String qqcategory; /* 질문 카테고리 */
 		private MultipartFile qqimg; /* 이미지 */
@@ -52,8 +58,8 @@ public class QnaDto {
 		
 		public QnaQ toEntity() {
 			return QnaQ.builder().pno(pno).qqcategory(qqcategory)
-					.qqtitle(qqtitle).qqregday(LocalDate.now()).memberId(memberId).build();
+					.qqtitle(qqtitle).qqcontent(qqcontent).qqregday(LocalDate.now()).memberId(memberId).build();
 		}
 	}
-	
+
 }
