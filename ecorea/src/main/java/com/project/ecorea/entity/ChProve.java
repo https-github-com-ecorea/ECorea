@@ -11,6 +11,7 @@ import lombok.experimental.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
+@Builder
 public class ChProve {
 	private Integer cpno;	// 챌린지 인증 번호
 	private Integer cno;	// 챌린지 번호
