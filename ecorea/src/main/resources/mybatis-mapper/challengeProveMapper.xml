@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.ecorea.dao.ChProveDao">
+	<!-- 일반회원 챌린지 list 출력 -->
+	<resultMap type="com.project.ecorea.dto.ChProveDto$Prove" id="proveMap">
+		<id column="cpno" property="cpno"/>
+		<result column="cpimg" property="cpimg"/>
+		<result column="cptitle" property="cptitle"/>
+		<result column="cpregday" property="cpregday"/>
+	</resultMap>
+
+	<resultMap type="com.project.ecorea.dto.ChProveDto$ProveList" id="mapForProveList">
+		<result column="cname" property="cname"/>
+		<collection property="proves" javaType="java.util.ArrayList" resultMap="proveMap"></collection>		
+	</resultMap>
+
+	<select id="findByMemberId" resultMap="mapForProveList">
+		select c.cname, p.cpno, p.cptitle, p.cpregday, p.cpimg
+		from chprove p 
+    		left join challenge c 
+        		on(c.cno=p.cno)
+		where p.member_id=#{memberId}
+	</select>
+</mapper>
