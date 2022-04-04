@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="./../../common.css">
+  <link rel="stylesheet" href="../../../static/common.css">
   <style>
   * {box-sizing: border-box;}
 
@@ -33,10 +33,25 @@ input[type=text], select, textarea {
   <h1>문의 작성</h1>
   <div class="container">
     <form action="/mypage/member/qnaUpload" method="post">
+
+      <label for="choice">말머리</label>
+      <select id="choice" name="choice">
+        <option selected disabled value="selectoption">선택해주세요</option>
+        <option value="australia">배송문의</option>
+        <option value="canada">상품문의</option>
+        <option value="canada">교환문의</option>
+        <option value="canada">환불문의</option>
+        <option value="canada">주문취소</option>
+      </select>
+
       <label for="reviewtitle">제목</label>
       <input type="text" id="reviewtitle" name="reviewtitle" placeholder="제목을 입력해주세요.">
   
       <label for="reviewcontent">내용</label>
+      <div class="mb-3">
+        <input type="file" class="form-control" id="pthumbnail" name="pthumbnail" accept=".jpg,.jpeg,.png,.gif">
+      </div>
+      <img id="thumbnail_img" height="200px" style="display:none;">
       <textarea id="reviewcontent" name="reviewcontent" placeholder="내용을 입력해주세요." style="height:200px"></textarea>
   
       <button type="submit" class="btn btn-primary">등록</button>
