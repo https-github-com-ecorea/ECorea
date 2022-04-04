@@ -126,7 +126,7 @@
 			const result = confirm("상품을 장바구니에서 삭제하시겠습니까?");
 			if(result==true) {
 				const $form = $('<form>').attr('method','post').attr('action','/order/cart/deleteOne').appendTo($('body'));
-				$('<input>').attr('type','text').attr('name','pno').val($(this).attr('data-pno')).appendTo($form);
+				$('<input>').attr('type','hidden').attr('name','pno').val($(this).attr('data-pno')).appendTo($form);
 				$form.submit();
 			}
 		}
@@ -137,7 +137,7 @@
 			const result = confirm("장바구니에 담긴 상품을 전체 삭제하시겠습니까?");
 			if(result==true) {
 				const $form = $('<form>').attr('method','post').attr('action','/order/cart/deleteAll').appendTo($('body'));
-				$('<input>').attr('type','text').attr('name','confirm').val("confirm").appendTo($form);
+				$('<input>').attr('type','hidden').attr('name','confirm').val("confirm").appendTo($form);
 				$form.submit();
 			}
 		}
@@ -148,10 +148,10 @@
 			const result = confirm("선택한 상품을 장바구니에서 삭제하시겠습니까?");
 			if(result==true) {
 				const $form = $('<form>').attr('method','post').attr('action','/order/cart/deleteSelected').appendTo($('body'));
-				$('<input>').attr('type','text').attr('name','confirm').val("confirm").appendTo($form);
+				$('<input>').attr('type','hidden').attr('name','confirm').val("confirm").appendTo($form);
 				$('.pno').each(function(idx, checkbox) {
 					if($(this).prop('checked')==true) {
-						$('<input>').attr('type','text').attr('name','pnos').val($(this).attr('data-pno')).appendTo($form);
+						$('<input>').attr('type','hidden').attr('name','pnos').val($(this).attr('data-pno')).appendTo($form);
 					}
 				});
 				if($form.serialize()!="")
