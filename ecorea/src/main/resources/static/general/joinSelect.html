@@ -8,23 +8,28 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="./../common.css">
   <style>
-        .wrapper {
+    h1 {
+      text-align: center;
+    }
+    .btn {
+      width: 180px;
+      height: 250px;
+    }
+    .wrapper {
       position:absolute;
-      left: 35%;
+      left: 33%;
+    }
+    .memberbtn {
+      margin-right: 40px;
     }
   </style>
-  <title>회원 정보 수정</title>
+  <title>회원 가입 선택</title>
 </head>
 <body>
-  <div class="wrapper">
-  <h1>회원 정보 수정</h1>
-  <form action="/mypage/checkPassword" method="post" class="was-validated">
-  <div class="mb-3">
-    <label for="pw" class="form-label">비밀번호 확인</label>
-    <input type="password" class="form-control" id="pw" placeholder="비밀번호 확인" required>
-  </div>
-  <button type="submit" class="btn btn-primary">확인</button>
+  <h1>회원 가입</h1>
+  <form class="wrapper">
+  <button type="submit" class="btn btn-primary memberbtn" formaction="./memberJoin.html">일반 회원 가입 버튼</button>
+  <button type="submit" class="btn btn-primary" formaction="./corpJoin.html">기업 회원 가입 버튼</button>
 </form>
-</div>
 </body>
 </html>

@@ -28,7 +28,7 @@
   <h1>바로구매</h1>
   <div class="wrapper">
   <h3>주문 정보</h3>
-  <form class="form-inline" action="/action_page.php">
+  <form class="form-inline" action="/order/orderList" method="post">
     <label for="order-person" class="mr-sm-2">주문자</label>
     <input type="text" class="form-control mb-2 mr-sm-2" placeholder="주문자명" id="order-person">
     <label for="email" class="mr-sm-2">이메일</label>
@@ -52,7 +52,7 @@
   </form>
   <hr>
   <h3>배송지 정보</h3>
-  <form class="form-inline" action="/action_page.php">
+  <form class="form-inline" action="/mypage/member/addressList" method="post">
     <label for="to-person" class="mr-sm-2">받는 사람</label>
     <input type="text" class="form-control mb-2 mr-sm-2" placeholder="받는 사람" id="to-person">
     <label for="phone" class="mr-sm-2">휴대전화</label>
@@ -75,7 +75,7 @@
   </form>
   <hr>
   <h3>결제 상세</h3>
-  <form class="form-inline" action="/action_page.php">
+  <form class="form-inline" action="/order/pay" method="post">
     <label for="point" class="mr-sm-2">보유 포인트</label>
     <input type="number" class="form-control mb-2 mr-sm-2" placeholder="보유 포인트" id="point">
     <label for="use-point" class="mr-sm-2">사용 포인트</label>
