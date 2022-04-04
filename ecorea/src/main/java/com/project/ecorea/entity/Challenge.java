@@ -13,6 +13,7 @@ import lombok.experimental.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Accessors(chain = true)
 public class Challenge {
 	private Integer cno;

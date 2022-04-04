@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <link rel="stylesheet" href="./../common.css">
   <title>장바구니</title>
   <style>
@@ -31,239 +32,214 @@
       margin: 40px;
     }
   </style>
+	<script th:inline="javascript">
+		const cartList = /*[[${cartList}]]*/
+		
+		// 장바구니 총 금액 
+		function getTotalPrice() {
+			let totalPrice = 0;
+			$(".product_price").each(function(idx, price) {
+				totalPrice += parseInt($(price).text());
+			});
+			return totalPrice;
+		}
+		
+		// 장바구니 리스트 출력
+		function printCartList() {
+			$('#list').empty();
+            const $list = $('#list');
+            $.each(cartList, function(idx, cart) {
+                const products = cartList[idx].cartProduct;
+                const $brand = $('<h3>').text(cartList[idx].corpName).appendTo($list);
+                const $container = $('<div class="container">').appendTo($list);
+                const $table = $('<table class="table table-bordered">').appendTo($container);
+                const $thead = $('<thead>').appendTo($table);
+                const $tr1 = $('<tr>').appendTo($thead);
+                $('<th>').text("번호").appendTo($tr1);
+                $('<th>').text("이미지").appendTo($tr1);
+                $('<th>').text("상품명(금액)").appendTo($tr1);
+                $('<th>').text("수량").appendTo($tr1);
+                $('<th>').text("상품 금액").appendTo($tr1);
+                $('<th>').appendTo($tr1);
+                const $tbody = $('<tbody>').appendTo($table);
+                
+                $.each(products, function(i, product) {
+                	const $tr2 = $('<tr>').appendTo($tbody);
+                    const $td_pno = $('<td>').appendTo($tr2);
+                        const $div_pno = $('<div class="form-check">').appendTo($td_pno);
+                        $('<input type="checkbox" value="">').attr("class","form-check-input pno").attr("data-pno",product.pno).appendTo($div_pno);
+                        $('<span name="pno" id="pno">').text("\u00a0\u00a0" + product.pno).appendTo($div_pno);
+                    $('<td>').text(product.pthumbnail).appendTo($tr2);
+                    const $td_cartpname = $('<td>').appendTo($tr2);
+                    	$('<span name="cartpname" id="cartpname">').text(product.cartpname).appendTo($td_cartpname);
+                    	$('<span name="price" id="price">').text(product.price).appendTo($td_cartpname);
+                    	
+                    const $td_cnt = $('<td>').appendTo($tr2);
+                        const $div_cnt = $('<div class="updown">').appendTo($td_cnt);
+                        	$('<button type="button">').text("-").attr("class","minus").attr("data-pno",product.pno).appendTo($div_cnt);
+	                        $('<span name="cartcnt" id="cartcnt">').text("\u00a0\u00a0" + product.cartcnt + "\u00a0\u00a0").appendTo($div_cnt);
+	                        $('<button type="button">').text("+").attr("class","plus").attr("data-pno",product.pno).appendTo($div_cnt);                        
+                    $('<td>').attr("class","product_price").text(product.price*product.cartcnt).appendTo($tr2);
+                    const $td_delete = $('<td>').appendTo($tr2);
+                    	$('<button type="button">').text("삭제").attr("class","btn btn-primary delete").attr("data-pno",product.pno).appendTo($td_delete);                    
+                });
+                $('<hr>').appendTo($list);
+                
+            })
+        }
+		
+		// 수량 증가
+		function plusCnt() {
+            const $pno = $(this).attr('data-pno');
+            let count = $(this).prev().text();  
+            
+            $.ajax({
+            	url: "/order/cart/plusProduct/" + $pno,
+            	method: "patch"
+            }).done((productCnt)=>{
+            	$(this).prev().text("\u00a0\u00a0" + productCnt + "\u00a0\u00a0");
+            	const $price = $(this).parent().parent().prev().find('#price').text();
+            	$(this).parent().parent().next().text(productCnt*$price);
+            	$('#totalpay').text(getTotalPrice());            	
+            }).fail(()=>alert("더 이상 구매할 수 없습니다."));             
+        }
+		
+		// 수량 감소
+		function minusCnt() {
+			const $pno = $(this).attr('data-pno');
+			let count = $(this).next().text();
+			
+			$.ajax({
+				url: "/order/cart/minusProduct/" + $pno,
+				method: "patch"
+			}).done((productCnt)=>{
+				$(this).next().text("\u00a0\u00a0" + productCnt + "\u00a0\u00a0");
+				const $price = $(this).parent().parent().prev().find("#price").text();
+				$(this).parent().parent().next().text(productCnt*$price);
+				$("#totalpay").text(getTotalPrice());
+			}).fail(()=>alert("최소 구매 수량은 1개 입니다."));
+		}
+		
+		
+		// 상품 한개 삭제
+		function deleteOne() {
+			const result = confirm("상품을 장바구니에서 삭제하시겠습니까?");
+			if(result==true) {
+				const $form = $('<form>').attr('method','post').attr('action','/order/cart/deleteOne').appendTo($('body'));
+				$('<input>').attr('type','text').attr('name','pno').val($(this).attr('data-pno')).appendTo($form);
+				$form.submit();
+			}
+		}
+		
+		
+		// 상품 전체 삭제
+		function deleteAll() {
+			const result = confirm("장바구니에 담긴 상품을 전체 삭제하시겠습니까?");
+			if(result==true) {
+				const $form = $('<form>').attr('method','post').attr('action','/order/cart/deleteAll').appendTo($('body'));
+				$('<input>').attr('type','text').attr('name','confirm').val("confirm").appendTo($form);
+				$form.submit();
+			}
+		}
+		
+		
+		// 선택 상품 삭제
+		function deleteSelected() {
+			const result = confirm("선택한 상품을 장바구니에서 삭제하시겠습니까?");
+			if(result==true) {
+				const $form = $('<form>').attr('method','post').attr('action','/order/cart/deleteSelected').appendTo($('body'));
+				$('<input>').attr('type','text').attr('name','confirm').val("confirm").appendTo($form);
+				$('.pno').each(function(idx, checkbox) {
+					if($(this).prop('checked')==true) {
+						$('<input>').attr('type','text').attr('name','pnos').val($(this).attr('data-pno')).appendTo($form);
+					}
+				});
+				if($form.serialize()!="")
+					$form.submit();
+			}			
+		}
+		
+		
+		// 선택상품 주문하기
+		function order() {
+			const result = confirm("선택한 상품을 주문하시겠습니까?");
+			if(result == true) {
+				const $form = $('<form>').attr('method','post').attr('action','/order/pay').appendTo($('body')); 
+				$('.pno').each(function(idx, checkbox) {
+					if($(checkbox).prop('checked')==true) {
+						const pno = parseInt($(checkbox).attr('data-pno'));
+						
+					}
+				});
+			}
+		}
+		
+		
+          
+    	$(document).ready(function() {
+    		printCartList();
+    		$('#totalpay').text(getTotalPrice());
+    		$('.plus').click(plusCnt);
+    		$('.minus').click(minusCnt);
+    		$('.delete').click(deleteOne);
+    		$('#delete_selected').click(deleteSelected);
+    		$('#delete_all').click(deleteAll);
+    		$('#order').click(order);
+    		
+    	}) 
+	</script>
 </head>
 <body>
-  <h1>장바구니</h1>
-  <div class="wrapper">
-  <button type="submit" class="btn btn-primary">선택삭제</button>
-  <button type="submit" class="btn btn-primary">전체삭제</button><br>
-  <h3>A브랜드</h3>
-  <div class="container">            
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>번호</th>
-          <th>이미지</th>
-          <th>상품명</th>
-          <th>수량</th>
-          <th>금액</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" value="">
-              </label>
-            </div>
-          </td>
-          <td></td>
-          <td></td>
-          <td>
-            <div class="updown">
-            <button type="button">-</button>
-            <input type="text" name="p_num1" id="p_num1" size="2" maxlength="4" class="p_num" value="1">
-            <button type="button">+</button>
-          </div>
-          </td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>
-            <div class="form-check">
-            <label class="form-check-label">
-              <input type="checkbox" class="form-check-input" value="">
-            </label>
-          </div>
-        </td>
-          <td></td>
-          <td></td>
-          <td>
-            <div class="updown">
-              <button type="button">-</button>
-              <input type="text" name="p_num1" id="p_num1" size="2" maxlength="4" class="p_num" value="1">
-              <button type="button">+</button>
-            </div>
-          </td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" value="">
-              </label>
-            </div>
-          </td>
-          <td></td>
-          <td></td>
-          <td>
-            <div class="updown">
-              <button type="button">-</button>
-              <input type="text" name="p_num1" id="p_num1" size="2" maxlength="4" class="p_num" value="1">
-              <button type="button">+</button>
-            </div>
-          </td>
-          <td></td>
-        </tr>
-         <tr>
-          <td>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" value="">
-              </label>
-            </div>
-          </td>
-          <td></td>
-          <td></td>
-          <td>
-            <div class="updown">
-              <button type="button">-</button>
-              <input type="text" name="p_num1" id="p_num1" size="2" maxlength="4" class="p_num" value="1">
-              <button type="button">+</button>
-            </div>
-          </td>
-          <td></td>
-        </tr>
-         <tr>
-          <td>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" value="">
-              </label>
-            </div>
-          </td>
-          <td></td>
-          <td></td>
-          <td>
-            <div class="updown">
-              <button type="button">-</button>
-              <input type="text" name="p_num1" id="p_num1" size="2" maxlength="4" class="p_num" value="1">
-              <button type="button">+</button>
-            </div>
-          </td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+	<h1>장바구니</h1>
+  	<div class="wrapper">
+  	<button type="submit" class="btn btn-primary" id="delete_selected">선택삭제</button>
+  	<button type="submit" class="btn btn-primary" id="delete_all">전체삭제</button><br>
+  	<div id="list">
+	  	<h3></h3>
+	  	<div class="container">            
+	    <table class="table table-bordered">
+	      <thead>
+	        <tr>
+	          <th>번호</th>
+	          <th>이미지</th>
+	          <th>상품명</th>
+	          <th>수량</th>
+	          <th>금액</th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	        <tr>
+	          <td>
+	            <div class="form-check">
+	                <input type="checkbox" class="form-check-input" value="">
+	                <span name="pno" id="pno"></span>
+	            </div>
+	          </td>
+	          <td></td>
+	          <td></td>
+	          <td>
+	            <div class="updown">
+	            <button type="button">-</button>
+	            <input type="text" name="p_num1" id="p_num1" size="2" maxlength="4" class="p_num" value="1">
+	            <button type="button">+</button>
+	          </div>
+	          </td>
+	          <td></td>
+	        </tr>   
+	      </tbody>
+	    </table>
+	    </div>
+	   
   <hr>
-  <h3>B브랜드</h3>
-  <div class="container">            
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>번호</th>
-          <th>이미지</th>
-          <th>상품명</th>
-          <th>수량</th>
-          <th>금액</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" value="">
-              </label>
-            </div>
-          </td>
-          <td></td>
-          <td></td>
-          <td>
-            <div class="updown">
-            <button type="button">-</button>
-            <input type="text" name="p_num1" id="p_num1" size="2" maxlength="4" class="p_num" value="1">
-            <button type="button">+</button>
-          </div>
-          </td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>
-            <div class="form-check">
-            <label class="form-check-label">
-              <input type="checkbox" class="form-check-input" value="">
-            </label>
-          </div>
-        </td>
-          <td></td>
-          <td></td>
-          <td>
-            <div class="updown">
-              <button type="button">-</button>
-              <input type="text" name="p_num1" id="p_num1" size="2" maxlength="4" class="p_num" value="1">
-              <button type="button">+</button>
-            </div>
-          </td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" value="">
-              </label>
-            </div>
-          </td>
-          <td></td>
-          <td></td>
-          <td>
-            <div class="updown">
-              <button type="button">-</button>
-              <input type="text" name="p_num1" id="p_num1" size="2" maxlength="4" class="p_num" value="1">
-              <button type="button">+</button>
-            </div>
-          </td>
-          <td></td>
-        </tr>
-         <tr>
-          <td>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" value="">
-              </label>
-            </div>
-          </td>
-          <td></td>
-          <td></td>
-          <td>
-            <div class="updown">
-              <button type="button">-</button>
-              <input type="text" name="p_num1" id="p_num1" size="2" maxlength="4" class="p_num" value="1">
-              <button type="button">+</button>
-            </div>
-          </td>
-          <td></td>
-        </tr>
-         <tr>
-          <td>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" value="">
-              </label>
-            </div>
-          </td>
-          <td></td>
-          <td></td>
-          <td>
-            <div class="updown">
-              <button type="button">-</button>
-              <input type="text" name="p_num1" id="p_num1" size="2" maxlength="4" class="p_num" value="1">
-              <button type="button">+</button>
-            </div>
-          </td>
-          <td></td>
-        </tr>
+  </div>
+
       </tbody>
     </table>
   </div>
   <form class="form-inline" action="/action_page.php">
     <label for="totalpay" class="mr-sm-2">총 금액</label>
-    <input type="text" class="form-control mb-2 mr-sm-2" id="totalpay">
-    <button type="submit" class="btn btn-primary" style="margin-bottom:20px;">주문하기</button><br>
+    <div class="form-control mb-2 mr-sm-2" id="totalpay"></div>
+    <button type="button" class="btn btn-primary" style="margin-bottom:20px;" id="order">주문하기</button><br>
     </form>
   </div>
 </body>

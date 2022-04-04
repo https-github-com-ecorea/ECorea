@@ -22,7 +22,7 @@ public class QnaMvcController {
 	/* 일반 회원 - 문의 목록 */
 	@GetMapping("/mypage/member/qnaList")
 	public ModelAndView memberQnaList(/*Principal principal*/String loginId) {
-		return new ModelAndView("mypage/member/qnaList").addObject("memberQnaList", service.memberMyPageQuestionList(loginId));
+		return new ModelAndView("mypage/member/qnaList").addObject("memberQnaList", service.memberMyPageQuestionList("ngoley6"));
 	}
 	
 	/* 일반 회원 - 문의 상세 */
@@ -43,6 +43,14 @@ public class QnaMvcController {
 		return "redirect:/mypage/member/qnaList";
 	}
 	
+	/* 일반 회원 - 문의 수정 화면 */
+	@GetMapping("/mypage/member/qnaUpdate")
+	public ModelAndView updateQuestion() {
+		String loginId = "ngoley6";
+		Integer qqno = 3;
+		return new ModelAndView().addObject("memberUpdateQuestion", service.memberMypageDetail(loginId, qqno, null));
+	}
+	
 	/* 일반 회원 - 문의 수정 */
 	@PostMapping("/mypage/member/qnaUpdate")
 	public String updateQuestion(QnaQ questionDto) {
@@ -60,7 +68,7 @@ public class QnaMvcController {
 	/* 기업 회원 - 문의 목록 */
 	@GetMapping("/mypage/corp/qnaList")
 	public ModelAndView corpQnaList(/*Principal principal*/String loginId) {
-		return new ModelAndView("mypage/corp/qnaList").addObject("corpQnaList", service.corpMyPageQuestionList(loginId));
+		return new ModelAndView("mypage/corp/qnaList").addObject("corpQnaList", service.corpMyPageQuestionList("LG"));
 	}
 
 	/* 기업 회원 - 문의 상세 화면 */
@@ -89,6 +97,5 @@ public class QnaMvcController {
 		service.deleteAnswer(loginId, qano);
 		return "redirect:/mypage/corp/qnaList";
 	}
-	
 	
 }
