@@ -19,7 +19,8 @@ public class ChProveService {
 	
 	// 나의 챌린지 목록 출력
 	public List<ChProveDto.ProveList> readProve(String memberId) {
-		List<ChProveDto.ProveList> proveList = proveDao.findByMemberId(memberId);		
+		List<ChProveDto.ProveList> proveList = proveDao.findByMemberId(memberId);
+		
 		return proveList;
 	}
 	

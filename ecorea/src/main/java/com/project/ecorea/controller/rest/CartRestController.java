@@ -10,7 +10,7 @@ import com.project.ecorea.service.*;
 public class CartRestController {
 	@Autowired
 	CartService cartService;
-	String memberId = "spring11";
+	String memberId = "zzzzuny";
 	
 	@PatchMapping("/order/cart/plusProduct/{pno}")
 	public ResponseEntity<Integer> plusCartProduct(@PathVariable Integer pno) {

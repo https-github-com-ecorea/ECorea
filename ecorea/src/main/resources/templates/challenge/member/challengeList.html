@@ -37,200 +37,45 @@
   </style>
 </head>
 <body>
-  <h1>나의 챌린지 목록</h1>
-  <div th:text="${proveList}"></div>
-  <div class="wrapper">
-    <div class="certified">
-  <h3>A챌린지</h3>
-  <button type="submit" class="btn btn-primary" formaction="">인증하기</button>
-  <button type="submit" class="btn btn-secondary" formaction="">신청취소</button>
-</div>
-  <div class="container">            
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>번호</th>
-          <th>이미지</th>
-          <th>인증내용</th>
-          <th>작성일</th>
-          <th>삭제</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" value="">
-              </label>
-            </div>
-          </td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>
-            <button type="submit" class="btn btn-primary" formaction="">삭제</button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="form-check">
-            <label class="form-check-label">
-              <input type="checkbox" class="form-check-input" value="">
-            </label>
-          </div>
-        </td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>
-            <button type="submit" class="btn btn-primary" formaction="">삭제</button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" value="">
-              </label>
-            </div>
-          </td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>
-            <button type="submit" class="btn btn-primary" formaction="">삭제</button>
-          </td>
-        </tr>
-         <tr>
-          <td>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" value="">
-              </label>
-            </div>
-          </td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>
-            <button type="submit" class="btn btn-primary" formaction="">삭제</button>
-          </td>
-        </tr>
-         <tr>
-          <td>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" value="">
-              </label>
-            </div>
-          </td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>
-            <button type="submit" class="btn btn-primary" formaction="">삭제</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <hr>
-  <div class="certified">
-    <h3>B챌린지</h3>
-    <button type="submit" class="btn btn-primary" formaction="">인증하기</button>
-    <button type="submit" class="btn btn-secondary" formaction="">신청취소</button>
-  </div>
-  <div class="container">            
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>번호</th>
-          <th>이미지</th>
-          <th>인증내용</th>
-          <th>작성일</th>
-          <th>삭제</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" value="">
-              </label>
-            </div>
-          </td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>
-            <button type="submit" class="btn btn-primary" formaction="">삭제</button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="form-check">
-            <label class="form-check-label">
-              <input type="checkbox" class="form-check-input" value="">
-            </label>
-          </div>
-        </td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>
-            <button type="submit" class="btn btn-primary" formaction="">삭제</button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" value="">
-              </label>
-            </div>
-          </td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>
-            <button type="submit" class="btn btn-primary" formaction="">삭제</button>
-          </td>
-        </tr>
-         <tr>
-          <td>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" value="">
-              </label>
-            </div>
-          </td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>
-            <button type="submit" class="btn btn-primary" formaction="">삭제</button>
-          </td>
-        </tr>
-         <tr>
-          <td>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" value="">
-              </label>
-            </div>
-          </td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>
-            <button type="submit" class="btn btn-primary" formaction="">삭제</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  </div>
+	<h1>나의 챌린지 목록</h1>
+    <div th:each="list: ${proveList}" class="wrapper">
+        <div class="certified">
+            <h3 th:text="${list.cname}"></h3>
+            <button type="submit" class="btn btn-primary" formaction="">인증하기</button>
+            <button type="submit" class="btn btn-secondary" formaction="">신청취소</button>
+        </div>
+        <div class="container">            
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>이미지</th>
+                        <th>인증내용</th>
+                        <th>작성일</th>
+                        <th>삭제</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="prove: ${list.proves}">
+                        <td>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input cpno" value="" th:data-cpno="${prove.cpno}">
+                                    <span th:text="${prove.cpno}"></span>
+                                </label>
+                            </div>
+                        </td>
+                        <td th:text="${prove.cpimg}"></td>
+                        <td th:text="${prove.cptitle}"></td>
+                        <td th:text="${prove.cpregday}"></td>
+                        <td>
+                            <button type="button" class="btn btn-primary deleteOne" th:data-cpno="${prove.cpno}" formaction="">삭제</button>
+                        </td>
+                    </tr>           
+                </tbody>
+            </table>
+        </div>
+        <hr>
+    </div>
 </body>
 </html>
