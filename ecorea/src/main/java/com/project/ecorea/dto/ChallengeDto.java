@@ -32,15 +32,27 @@ public class ChallengeDto {
 	@Data
 	@Builder
 	public static class ChallengeDetail {
-		private Integer cno;
-		private String cname;
-		private Integer cgoal;
-		private String cstartday;
-		private String cendday;
-		private String cthumbnail;
-		private String ccontent;
-		private Integer cjoincnt;
-		private Integer applycnt;
+		private Integer cno; /* 챌린지 글 번호 */
+		private String cname; /* 기업명 */
+		private Integer cgoal; /* 목표 */
+		private LocalDate cstartday; /* 챌린지 시작 기간 */
+		private LocalDate cendday; /* 챌린지 마감 기간 */
+		private String cthumbnail; /* 썸네일 이미지 */
+		private String ccontent; /* 챌린지 상세 내용 */
+		private Integer cjoincnt; /* 참여 인원 */
+		private Integer applycnt; /* 목표 인원과 참여 인원 백분율 */
+	}
+	
+	@Data
+	@Builder
+	public static class ChallengeList {
+		private Integer cno; /* 챌린지 글 번호 */
+		private String cname; /* 기업명 */
+		private LocalDate cregday; /* 등록일 */
+		private LocalDate cstartday; /* 챌린지 시작 기간 */
+		private LocalDate cendday; /* 챌린지 마감 기간 */
+		private String cthumbnail; /* 썸네일 이미지 */
+		private Integer applycnt; /* 목표 인원과 참여 인원 백분율 */
 	}
   
 }
