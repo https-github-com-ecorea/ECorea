@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import com.project.ecorea.service.*;
 import lombok.*;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
 import org.springframework.web.servlet.*;
@@ -31,7 +33,8 @@ public class ProductMvcController {
 
 	/* 상품 상세 페이지 화면 */
 	@GetMapping("/product/member/productDetail")
-	public ModelAndView productRead(Integer pno) {
+	public ModelAndView productRead(Integer pno, HttpSession session) {
+		session.setAttribute("pno", pno);
 		return new ModelAndView("product/member/productDetail").addObject("product", productService.productRead(pno));
 	}
 	

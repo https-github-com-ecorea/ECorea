@@ -41,7 +41,7 @@
   				$tr = $('<tr>').appendTo($wrap);
 			const $td = $('<td>').appendTo($tr);
   			const $card = $('<div class="card">').appendTo($td);
-  			const $a = $('<a>').attr('href', "/product/read?pno=" + product.pno).attr('title', product.name).appendTo($card);
+  			const $a = $('<a>').attr('href', "/product/member/productDetail?pno=" + product.pno).attr('title', product.name).appendTo($card);
   			$('<img>').attr('src', '../image/product.jpg').attr('alt', '상품').attr('style', 'width:80%').appendTo($a);
   			$('<h1>').text(product.cname).appendTo($a);
   			$('<p>').attr('class', 'title').text(product.pname).appendTo($a);
