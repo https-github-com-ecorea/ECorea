@@ -27,13 +27,13 @@ public class QnaTest {
 	@Autowired
 	private QnaService service;
 	
-	// @Test
+	@Test
 	public void qnaListTest() {
 		// System.out.println(service.productQuestionList(10, "imagepath"));
 		// System.out.println(service.productAnswerList(10));
 		// System.out.println(service.memberMyPageQuestionList("ngoley6"));
 		// System.out.println(service.corpMyPageQuestionList("LG"));
-		// System.out.println(service.memberMypageDetail("ngoley6", 3, "이미지 경로 + "));
+		System.out.println(service.memberMypageDetail("ngoley6", 3, "이미지 경로 + "));
 		// System.out.println(service.corpMypageDetail("LG", 3));
 	}
 	
@@ -73,7 +73,7 @@ public class QnaTest {
 		System.out.println("결과 : " + result);
 	}
 	
-	@Test
+	// @Test
 	public void deleteAnswerTest() {
 		Integer result = dao.deleteAnswer("LG", 2);
 		System.out.println("결과 : " + result);

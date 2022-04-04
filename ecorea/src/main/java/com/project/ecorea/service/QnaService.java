@@ -59,9 +59,9 @@ public class QnaService {
 		List<QnaDto.QuestionDto> entity = dao.memberQuestionFindById(loginId);
 		for (QnaDto.QuestionDto qna : entity) {
 			if (dao.isAnswer(qna.getQqno()) > 0) {
-				qna.setIsAnswer(true);
+				qna.setIsAnswer("O");
 			} else {
-				qna.setIsAnswer(false);
+				qna.setIsAnswer("X");
 			}
 			dto.add(qna);
 		}
@@ -74,9 +74,9 @@ public class QnaService {
 		List<QnaDto.QuestionDto> entity = dao.corpQuestionFindById(loginId);
 		for (QnaDto.QuestionDto qna : entity) {
 			if (dao.isAnswer(qna.getQqno()) > 0) {
-				qna.setIsAnswer(true);
+				qna.setIsAnswer("O");
 			} else {
-				qna.setIsAnswer(false);
+				qna.setIsAnswer("X");
 			}
 			dto.add(qna);
 		}
@@ -87,9 +87,14 @@ public class QnaService {
 	public Object memberMypageDetail(String loginId, Integer qqno, String imagepath) {
 		QnaDto.QuestionDto question = dao.memberQuestionFindByQqno(loginId, qqno);
 		QnaDto.AnswerDto answer = dao.memberAnswerFindByQqno(loginId, qqno);
-		HashSet<Object> qna = new HashSet<>();
+		// HashSet<Object> qna = new HashSet<>();
+		List<Object> qna = new ArrayList<>();
 		question.setQqimg((imagepath + question.getQqimg()));
 		qna.add(question);
+		/* 
+		if (answer != null)
+			qna.add(answer);
+		*/
 		qna.add(answer);
 		return qna;
 	}
@@ -98,7 +103,8 @@ public class QnaService {
 	public Object corpMypageDetail(String loginId, Integer qqno, String imagepath) {
 		QnaDto.QuestionDto question = dao.corpQuestionFindByQqno(loginId, qqno);
 		QnaDto.AnswerDto answer = dao.corpAnswerFindByQqno(loginId, qqno);
-		HashSet<Object> qna = new HashSet<>();
+		// HashSet<Object> qna = new HashSet<>();
+		List<Object> qna = new ArrayList<>();
 		question.setQqimg((imagepath + question.getQqimg()));
 		qna.add(question);
 		qna.add(answer);
