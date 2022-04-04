@@ -4,6 +4,9 @@ import java.time.*;
 
 import org.springframework.format.annotation.*;
 
+import com.project.ecorea.dto.*;
+import com.project.ecorea.dto.ChallengeDto.*;
+
 import lombok.*;
 import lombok.experimental.*;
 
@@ -27,4 +30,8 @@ public class Challenge {
 	private String ccontent;
 	private Integer cjoincnt;
 	private String corpId;
+	
+	public ChallengeDto.ChallengeDetail toDto() {
+		return ChallengeDto.ChallengeDetail.builder().cno(cno).cname(cname).cgoal(cgoal).cstartday(ccontent).cendday(ccontent).cthumbnail(cthumbnail).ccontent(ccontent).cjoincnt(cjoincnt).build();
+	}
 }

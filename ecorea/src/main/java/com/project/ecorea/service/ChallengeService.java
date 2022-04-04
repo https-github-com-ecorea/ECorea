@@ -1,5 +1,6 @@
 package com.project.ecorea.service;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
@@ -7,6 +8,8 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.*;
 
 import com.project.ecorea.dao.*;
 import com.project.ecorea.dto.*;
@@ -50,6 +53,37 @@ public class ChallengeService {
 	public void challengeUpdate(Challenge challenge) {
 		
 		
+	}
+	
+	public List<Challenge> readchallengeList() {
+		List<Challenge> challenge = dao.findByChallengeAll();
+		
+		return challenge;
+	}
+
+	public List<Challenge> readCorpChallengeList(String loginId) {
+		List<Challenge> challenge = dao.findByCorpId(loginId);
+		return challenge;
+	}
+
+	public ChallengeDto.ChallengeDetail readUserDetail(Integer cno) {
+		Challenge challenge = dao.findBycno(cno);
+		ChallengeDto.ChallengeDetail detail = challenge.toDto();
+		Integer applyCnt = (challenge.getCjoincnt() / challenge.getCgoal()) * 100;
+		
+		detail.setApplycnt(applyCnt);
+		
+		return detail;
+	}
+
+	public ChallengeDto.ChallengeDetail readCorpDetail(Integer cno) {
+		Challenge challenge = dao.findBycno(cno);
+		ChallengeDto.ChallengeDetail detail = challenge.toDto();
+		Integer applyCnt = (challenge.getCjoincnt() / challenge.getCgoal()) * 100;
+		
+		detail.setApplycnt(applyCnt);
+		
+		return detail;
 	}
 
 }

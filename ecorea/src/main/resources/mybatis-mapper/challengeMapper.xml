@@ -2,11 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.ecorea.dao.ChallengeDao">
 
-	<!-- 내부 표기 변환 resultMap -->
-	<resultMap type="Challenge" id="namecheck">
-		<result property="corpId" column="corp_id"/>
-	</resultMap>
-
 	<!-- 상품 상세 : 문의 작성 -->
 	<insert id="challengeUpload" useGeneratedKeys="true" keyProperty="cno">
 		<selectKey keyProperty="cno" order="BEFORE" resultType="int">
@@ -14,5 +9,13 @@
 		</selectKey>
 		insert into challenge values(#{cno}, #{cname}, #{cgoal}, #{cpoint}, #{cregday}, #{cstartday}, #{cendday}, #{cthumbnail}, #{ccontent}, #{cjoincnt}, #{corpId})
 	</insert>
+
+	<select id="findChallengeAll" resultType="challenge">
+		select * from challenge order by cno desc
+	</select>
+
+	<select id="findByCorpId" resultType="challenge">
+		select * from challenge where corp_id=#{id} order by cno desc
+	</select>
 
 </mapper>

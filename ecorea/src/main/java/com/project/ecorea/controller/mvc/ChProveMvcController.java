@@ -4,6 +4,8 @@ import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.*;
 
+import com.project.ecorea.dto.*;
+import com.project.ecorea.entity.*;
 import com.project.ecorea.service.*;
 
 import lombok.*;
@@ -21,4 +23,18 @@ public class ChProveMvcController {
 		mav.addObject("proveList", proveService.readProve(memberId));
 		return mav;
 	}
+	
+	// 챌린지 인증 등록페이지
+	@GetMapping("/challenge/member/challengeProveUpload")
+	public void UploadProve() {
+	}
+	
+	// 챌린지 인증 등록
+	@PostMapping("/challenge/member/challengeProveUpload")
+	public String UploadProve(ChProveDto.InputProve dto) {	
+		String memberId = "zzzzuny";
+		proveService.UploadChProve(dto, memberId);
+		return "redirect:/challenge/member/challengeList";
+	}
+	
 }
