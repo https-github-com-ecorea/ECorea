@@ -3,7 +3,6 @@ package com.project.ecorea.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.*;
@@ -55,35 +54,42 @@ public class ChallengeService {
 		
 	}
 	
-	public List<Challenge> readchallengeList() {
-		List<Challenge> challenge = dao.findByChallengeAll();
+	/* 전체 회원 : 챌린지 목록 출력 */
+	public List<ChallengeDto.ChallengeList> readchallengeList() {
+		List<Challenge> challenges = dao.findByChallengeAll();
+		List<ChallengeDto.ChallengeList> dto = new ArrayList<>();
 		
-		return challenge;
+		for(Challenge challenge : challenges) {
+			ChallengeDto.ChallengeList detail = challenge.toListDto();
+			Integer applyCnt = (int)((double)(challenge.getCjoincnt()/challenge.getCgoal())*100);
+			detail.setApplycnt(applyCnt);
+			dto.add(detail);
+		}
+		return dto;
 	}
 
-	public List<Challenge> readCorpChallengeList(String loginId) {
-		List<Challenge> challenge = dao.findByCorpId(loginId);
-		return challenge;
+	/* 기업 회원 : 챌린지 목록 출력*/ 
+	public List<ChallengeDto.ChallengeList> readCorpChallengeList(String loginId) {
+		List<Challenge> challenges = dao.findByCorpId(loginId);
+		List<ChallengeDto.ChallengeList> dto = new ArrayList<>();
+		
+		for(Challenge challenge : challenges) {
+			ChallengeDto.ChallengeList detail = challenge.toListDto();
+			Integer applyCnt = (int)((double)(challenge.getCjoincnt()/challenge.getCgoal())*100);
+			detail.setApplycnt(applyCnt);
+			dto.add(detail);
+		}
+		
+		return dto;
 	}
 
+	/* 전체 회원 : 챌린지 상세 페이지 출력 */
 	public ChallengeDto.ChallengeDetail readUserDetail(Integer cno) {
 		Challenge challenge = dao.findBycno(cno);
-		ChallengeDto.ChallengeDetail detail = challenge.toDto();
-		Integer applyCnt = (challenge.getCjoincnt() / challenge.getCgoal()) * 100;
-		
+		ChallengeDto.ChallengeDetail detail = challenge.toDetailDto();
+		Integer applyCnt = (int)((double)(challenge.getCjoincnt()/challenge.getCgoal())*100);
 		detail.setApplycnt(applyCnt);
 		
 		return detail;
 	}
-
-	public ChallengeDto.ChallengeDetail readCorpDetail(Integer cno) {
-		Challenge challenge = dao.findBycno(cno);
-		ChallengeDto.ChallengeDetail detail = challenge.toDto();
-		Integer applyCnt = (challenge.getCjoincnt() / challenge.getCgoal()) * 100;
-		
-		detail.setApplycnt(applyCnt);
-		
-		return detail;
-	}
-
 }

@@ -10,12 +10,16 @@
 		insert into challenge values(#{cno}, #{cname}, #{cgoal}, #{cpoint}, #{cregday}, #{cstartday}, #{cendday}, #{cthumbnail}, #{ccontent}, #{cjoincnt}, #{corpId})
 	</insert>
 
-	<select id="findChallengeAll" resultType="challenge">
+	<select id="findByChallengeAll" resultType="challenge">
 		select * from challenge order by cno desc
 	</select>
 
 	<select id="findByCorpId" resultType="challenge">
 		select * from challenge where corp_id=#{id} order by cno desc
+	</select>
+
+	<select id="findBycno" resultType="challenge">
+		select * from challenge where cno=#{cno}
 	</select>
 
 </mapper>
