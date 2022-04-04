@@ -81,21 +81,21 @@
   <form action="/product/productUpload" method="post">
   	<div>
   		<select name="" id="">
-  			<option value="선택">선택</option>
+  			<option selected disabled value="선택">선택</option>
   			<option value="생활">생활</option>
   			<option value="제로웨이스트">제로웨이스트</option>
   			<option value="소품">소품</option>
   			<option value="DIY">DIY</option>
   		</select>
   		<select name="" id="">
-  			<option value="선택">선택</option>
+  			<option selected disabled value="선택">선택</option>
   			<option value="반려용품">반려용품</option>
   			<option value="생활가전">생활가전</option>
   		</select>
   	</div>
     <div class="mb-3 mt-3">
       <label for="product-name" class="form-label">상품명</label>
-      <input type="text" class="form-control" id="email" placeholder="상품명 입력" name="product-name">
+      <input type="text" class="form-control" id="product-name" placeholder="상품명 입력" name="product-name">
     </div>
     <div class="mb-3">
       <label for="corpid" class="form-label">기업명</label>
@@ -114,9 +114,9 @@
       <input type="file" class="form-control" id="pthumbnail" name="pthumbnail" accept=".jpg,.jpeg,.png,.gif">
     </div>
     <img id="thumbnail_img" height="200px" style="display:none;">
-    <!-- <button type="submit">첨부파일</button> -->
+
     <div class="mb-3">
-	    <label for="info" class="form-label">상세 정보</label><br>
+	    <label for="pcontent" class="form-label">상세 정보</label><br>
     	<textarea class="form-control" name="pcontent" id="pcontent" rows="5" style="resize: none;"></textarea>
     </div>
     <a href="#" id="move_product_list"><button type="button" class="btn btn-primary">취소</button></a>

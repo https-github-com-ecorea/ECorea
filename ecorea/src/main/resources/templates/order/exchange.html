@@ -33,11 +33,11 @@ input[type=text], select, textarea {
 <body>
   <h1>교환/반품 신청</h1>
   <div class="container">
-    <form action="/action_page.php">
+    <form action="/order/exchange" method="post">
     
        <label for="choice">말머리</label>
       <select id="choice" name="choice">
-        <option value="selectoption">선택해주세요</option>
+        <option selected disabled value="selectoption">선택해주세요</option>
         <option value="australia">교환신청</option>
         <option value="canada">반품신청</option>
       </select>
@@ -49,7 +49,7 @@ input[type=text], select, textarea {
       <input type="text" id="exchangetitle" name="exchangetitle">
   
       <label for="exchangecontent">내용(사유)</label>
-      <textarea id="exchangecontent" name="exchangecontent"     style="height:200px"></textarea>
+      <textarea id="exchangecontent" name="exchangecontent" style="height:200px"></textarea>
 
       <label for="celphone">연락처</label>
       <input type="text" id="celphone" name="celphone">
