@@ -112,9 +112,10 @@ public class QnaService {
 	}
 
 	/* 일반 회원 : 문의 작성 */
-	public void uploadQuestion(QnaDto.uploadQuestion questionUpDto) {
+	public void uploadQuestion(QnaDto.uploadQuestion questionUpDto, Integer pno) {
 		QnaQ question = questionUpDto.toEntity();
 		MultipartFile qqimg = questionUpDto.getQqimg();
+		question.setPno(pno);
 		question.setQqimg(defaultImage);
 		if(qqimg!=null && qqimg.isEmpty()==false && qqimg.getContentType().toLowerCase().startsWith("image/")) {
 			String qqimgName = UUID.randomUUID() + "-" + qqimg.getOriginalFilename();

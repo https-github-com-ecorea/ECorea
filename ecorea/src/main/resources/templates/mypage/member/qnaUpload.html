@@ -32,7 +32,7 @@ input[type=text], select, textarea {
 <body>
   <h1>문의 작성</h1>
   <div class="container">
-    <form action="/mypage/member/qnaUpload" method="post">
+      <form action="/mypage/member/qnaUpload" method="post">
 
       <label for="choice">말머리</label>
       <select id="choice" name="choice">
@@ -45,14 +45,16 @@ input[type=text], select, textarea {
       </select>
 
       <label for="reviewtitle">제목</label>
-      <input type="text" id="reviewtitle" name="qqtitle" placeholder="제목을 입력해주세요.">
+      <input type="hidden" id="pno" name="pno" th:value="${session.pno}">
+      <label for="qqtitle">제목</label>
+      <input type="text" id="qqtitle" name="qqtitle" placeholder="제목을 입력해주세요.">
   
-      <label for="reviewcontent">내용</label>
+      <label for="qqcontent">내용</label>
       <div class="mb-3">
         <input type="file" class="form-control" id="pthumbnail" name="pthumbnail" accept=".jpg,.jpeg,.png,.gif">
       </div>
       <img id="thumbnail_img" height="200px" style="display:none;">
-      <textarea id="reviewcontent" name="reviewcontent" placeholder="내용을 입력해주세요." style="height:200px"></textarea> 
+      <textarea id="qqcontent" name="qqcontent" placeholder="내용을 입력해주세요." style="height:200px"></textarea>
       <button type="submit" class="btn btn-primary">등록</button>
     </form>
   </div>

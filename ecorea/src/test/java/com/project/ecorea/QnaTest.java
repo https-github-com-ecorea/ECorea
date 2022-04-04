@@ -27,7 +27,7 @@ public class QnaTest {
 	@Autowired
 	private QnaService service;
 	
-	@Test
+	// @Test
 	public void qnaListTest() {
 		// System.out.println(service.productQuestionList(10, "imagepath"));
 		// System.out.println(service.productAnswerList(10));
@@ -61,8 +61,8 @@ public class QnaTest {
 	
 	// @Test
 	public void updateAnswerTest() {
-		QnaA answer = QnaA.builder().pno(3).qqno(10).qano(6)
-				.qacontent("네 수정 시간을 드리겠읍니다......").corpId("LG").build();
+		QnaA answer = QnaA.builder().pno(3).qqno(1).qano(1)
+				.qacontent("네 수정 시간을 드리겠읍니다......").corpId("SAMSUNG").build();
 		Integer result = dao.updateAnswer(answer);
 		System.out.println("결과 : " + result);
 	}

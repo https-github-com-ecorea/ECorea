@@ -10,10 +10,9 @@
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script th:inline="javascript">
   	const question = /*[[${memberQnaDetail[0]}]]*/
-  	let answer = /*[[${memberQnaDetail[1]}]]*/
 
   	function nullCheck() {
-		if (answer != null) {
+		if (/*[[${memberQnaDetail[1]}]]*/ != null) {
 			/* 답변이 있으면 출력 */
 			alert("답변이 있습니다.");
 		} else {
@@ -21,9 +20,23 @@
 			alert("답변이 없습니다.");
 		}
   	}
+  	
+  	function deleteBtn() {
+  		const $form = $('<form>').attr('method', 'post').attr('action', '/mypage/member/qnaDelete').appendTo($('body'));
+  		$('<input>').attr('type', 'hidden').attr('name', 'qqno').val(question.qqno).appendTo($form);
+  		$form.submit();
+  	}
 
   	$(document).ready(function() {
   		nullCheck();
+  		
+		$('#delete').click(function() {
+			const result = confirm("문의를 삭제할까요?")
+			if (result == true) {
+				deleteBtn();
+			}
+		});
+  		
   	})
   </script>
   <style>
@@ -51,18 +64,19 @@ input[type=text], select, textarea {
 <body>
   <h1>문의글 상세</h1>
   <div class="container">
-    <form action="/mypage/member/qnaDetail?qno=?" method="post">
-      <label for="reviewtitle">제목</label>
-      <input type="text" id="reviewtitle" name="reviewtitle" placeholder="제목을 입력해주세요." th:value="${memberQnaDetail[0].qqtitle}">
+    <form th:action="@{/mypage/member/qnaUpdate?qqno={qqno}(qqno=${memberQnaDetail[0].qqno})}" method="post">
+      <input type='hidden' id='memberId' name='memberId' th:value='${session.memberId}'>
+      <label for="qqtitle">제목</label>
+      <input type="text" id="qqtitle" name="qqtitle" placeholder="제목을 입력해주세요." th:value="${memberQnaDetail[0].qqtitle}">
   
-      <label for="reviewcontent">내용</label>
-      <textarea id="reviewcontent" name="reviewcontent" placeholder="내용을 입력해주세요." style="height:200px" th:text="${memberQnaDetail[0].qqcontent}"></textarea>
+      <label for="qqcontent">내용</label>
+      <textarea id="qqcontent" name="qqcontent" placeholder="내용을 입력해주세요." style="height:200px" th:text="${memberQnaDetail[0].qqcontent}"></textarea>
       
-      <label for="qnaanswer">답변</label>
-  	  <textarea id="qnaanswer" name="qnaanswer" style="height:200px"></textarea>
+      <!-- <label for="qnaanswer">답변</label>
+  	  <textarea id="qnaanswer" name="qnaanswer" style="height:200px"></textarea> -->
 
-  <button type="submit" class="btn btn-primary" formaction="">수정</button>
-  <button type="submit" class="btn btn-primary" formaction="">삭제</button>
+  <button type="submit" class="btn btn-primary" id="update">수정</button>
+  <button type="button" class="btn btn-primary" id="delete">삭제</button>
   <button type="submit" class="btn btn-primary" formaction="">목록</button>
 
     </form>
