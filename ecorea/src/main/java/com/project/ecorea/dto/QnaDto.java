@@ -25,7 +25,7 @@ public class QnaDto {
 		private String qqimg; /* 이미지 */
 		private LocalDate qqregday; /* 등록일 */
 		private String memberId; /* 작성자 */
-		private Boolean isAnswer; /* 답변 여부 */
+		private String isAnswer; /* 답변 여부 */
 	}
 	
 	/* 문의 답변 출력 */
