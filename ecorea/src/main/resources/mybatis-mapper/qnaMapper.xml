@@ -57,14 +57,11 @@
 	<update id="updateQuestion">
 		update qna_q
 		<trim suffixOverrides="," prefix="set">
-			<if test="qqno!=null">qqno=#{qqno},</if> 
-			<if test="pno!=null">pno=#{pno},</if> 
 			<if test="qqcategory!=null">qqcategory=#{qqcategory},</if>
 			<if test="qqtitle!=null">qqtitle=#{qqtitle},</if>
 			<if test="qqcontent!=null">qqcontent=#{qqcontent},</if> 
 			<if test="qqimg!=null">qqimg=#{qqimg},</if>
 			<if test="qqregday!=null">qqregday=#{qqregday},</if>
-			<if test="memberId!=null">member_id=#{memberId},</if>
 		</trim>
 		where member_id=#{memberId} and qqno=#{qqno}
 	</update>
@@ -96,10 +93,6 @@
 	<update id="updateAnswer">
 		update qna_a
 		<trim suffixOverrides="," prefix="set">
-			<if test="pno!=null">pno=#{pno},</if> 
-			<if test="qqno!=null">qqno=#{qqno},</if> 
-			<if test="qano!=null">qano=#{qano},</if>
-			<if test="corpId!=null">corp_id=#{corpId},</if>
 			<if test="qacontent!=null">qacontent=#{qacontent},</if> 
 		</trim>
 		where corp_id=#{corpId} and qano=#{qano}

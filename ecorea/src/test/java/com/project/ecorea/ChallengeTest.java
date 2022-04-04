@@ -32,32 +32,12 @@ public class ChallengeTest {
 	}
 	
 	@Test
-	public boolean DateTest() throws ParseException {
-		/* 오늘 날짜가 정해진 기한 안에 들어가는지 확인하는 코드 */
-		boolean result = false;
-		
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		Date nowTime = new Date();
-		String today = format.format(nowTime);
-		System.out.println("현재 날짜 : " + today);
-		
-		String startday = "2022-04-03";
-		String endday = "2022-04-13";
-		
-		Date start = format.parse(startday);
-		Date end = format.parse(endday);
-		Date to = format.parse(today);
-		
-		int compare1 = to.compareTo(start);
-		int compare2 = end.compareTo(to);
-		
-		if (compare1 >= 0 && compare2 >= 0) {
-			result = true;
-		} else {
-			result = false;
-		}
-		return result;
+	public void DateTest() {
+		LocalDate date = LocalDate.of(2022, 3, 26);
+		Challenge clg = Challenge.builder().cno(22).cname("LG").cgoal(50).cpoint(2000).cregday(date)
+				.cstartday(LocalDate.of(2022, 4, 3)).cendday(LocalDate.of(2022, 5, 3)).corpId("LG")
+				.cthumbnail("imgimgimgimg").cjoincnt(0).ccontent("환경 보호!! 수정 수정ㅠㅠ").build();
+		System.out.println("결과 : " + service.challengeUpdate(clg));
 	}
-	
-	
+ 	
 }
