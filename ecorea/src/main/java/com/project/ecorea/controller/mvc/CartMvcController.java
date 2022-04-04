@@ -16,7 +16,7 @@ import lombok.*;
 @Controller
 public class CartMvcController {
 	private final CartService cartService;
-	String memberId = "spring11";
+	String memberId = "zzzzuny";
 	
 	// 장바구니 보기
 	@GetMapping("/order/cart")

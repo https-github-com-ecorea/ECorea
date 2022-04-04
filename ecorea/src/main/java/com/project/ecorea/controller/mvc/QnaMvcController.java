@@ -1,5 +1,7 @@
 package com.project.ecorea.controller.mvc;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
@@ -27,8 +29,9 @@ public class QnaMvcController {
 	
 	/* 일반 회원 - 문의 상세 */
 	@GetMapping("/mypage/member/qnaDetail")
-	public ModelAndView memberQnaDetail(String loginId, Integer qqno, String imagepath) {
-		return new ModelAndView("mypage/member/qnaDetail").addObject("memberQnaDetail", service.memberMypageDetail(loginId, qqno, imagepath));
+	public ModelAndView memberQnaDetail(String loginId, Integer qqno, String imagepath, HttpSession session) {
+		session.setAttribute("memberId", loginId);
+		return new ModelAndView("mypage/member/qnaDetail").addObject("memberQnaDetail", service.memberMypageDetail("ngoley6", qqno, imagepath));
 	}
 	
 	/* 일반 회원 - 문의 등록 화면 */
@@ -38,18 +41,20 @@ public class QnaMvcController {
 	
 	/* 일반 회원 - 문의 등록 */
 	@PostMapping("/mypage/member/qnaUpload")
-	public String uploadQnaQ(QnaDto.uploadQuestion questionUpDto) {
-		service.uploadQuestion(questionUpDto);
+	public String uploadQnaQ(QnaDto.uploadQuestion questionUpDto, Integer pno) {
+		service.uploadQuestion(questionUpDto, 1);
 		return "redirect:/mypage/member/qnaList";
 	}
 	
 	/* 일반 회원 - 문의 수정 화면 */
+	/*
 	@GetMapping("/mypage/member/qnaUpdate")
 	public ModelAndView updateQuestion() {
 		String loginId = "ngoley6";
 		Integer qqno = 3;
 		return new ModelAndView().addObject("memberUpdateQuestion", service.memberMypageDetail(loginId, qqno, null));
 	}
+	*/
 	
 	/* 일반 회원 - 문의 수정 */
 	@PostMapping("/mypage/member/qnaUpdate")
@@ -60,8 +65,9 @@ public class QnaMvcController {
 	
 	/* 일반 회원 - 문의 삭제 */
 	@PostMapping("/mypage/member/qnaDelete")
-	public String deleteQuestion(String loginId, Integer qqno) {
-		service.deleteQuestion(loginId, qqno);
+	public String deleteQuestion(String loginId, Integer qqno, HttpSession session) {
+		session.setAttribute("session", session);
+		service.deleteQuestion("ngoley6", qqno);
 		return "redirect:/mypage/member/qnaList";
 	}
 	

@@ -4,6 +4,11 @@ package com.project.ecorea.service;
 import java.io.File;
 import java.io.IOException;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,10 +53,39 @@ public class ChallengeService {
 		dao.challengeUpload(challengeDto);
 	}
 
+	/* 기업 회원 : 챌린지 수정 가능 날짜 확인 */
+	public boolean challengeUpdateisDate(Challenge challenge) {
+		LocalDate localRegday = challenge.getCregday();
+		Date regday = java.sql.Date.valueOf(localRegday);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(regday);
+		cal.add(Calendar.DATE, 10);
+		Date endday = cal.getTime();
+		
+		boolean result = false;
+		Date today = new Date();
+		int compare1 = today.compareTo(regday);
+		int compare2 = endday.compareTo(today);
+		if (compare1 >= 0 && compare2 >= 0) {
+			result = true;
+		} else {
+			result = false;
+		}
+		return result;
+	}
+	
 	/* 기업 회원 : 챌린지 수정 */
-	public void challengeUpdate(Challenge challenge) {
-		
-		
+	public Boolean challengeUpdate(Challenge challenge) {
+		boolean result;
+		if (challengeUpdateisDate(challenge) == true) {
+			Integer update = dao.challengeUpdate(challenge);
+			if (update <= 0)
+				result = false;
+			result = true;		
+		} else {
+			result = false;
+		}
+		return result;
 	}
 	
 	/* 전체 회원 : 챌린지 목록 출력 */
