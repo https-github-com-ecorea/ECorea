@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <link rel="stylesheet" href="../../common.css">
   <title>나의 챌린지 목록</title>
   <style>
@@ -35,14 +36,45 @@
       margin-bottom: 5px;;
     }
   </style>
+  <script>
+  	// 챌린지 인증 삭제
+  	function deleteOne() {
+  		const result = confirm("인증글을 삭제하시겠습니까?");
+  		if(result==true) {
+  			const $form = $('<form>').attr('method','post').attr('action','/challenge/member/deleteOne').appendTo($('body'));
+  	  		$('<input>').attr('type','hidden').attr('name','cpno').val($(this).attr('data-cpno')).appendTo($form);
+  	  		$form.submit();
+  		} 		
+  	}
+  	
+  	// 챌린지 신청 취소
+  	function cancel() {
+  		const result = confirm("챌린지 신청을 취소하시겠습니까?");
+  		if(result==true) {
+  			const $form = $('<form>').attr('method','post').attr('action','/challenge/member/cancel').appendTo($('body'));
+  			$('<input>').attr('type','hidden').attr('name','cno').val($(this).attr('data-cno')).appendTo($form);
+  			$form.submit();
+  		}
+  	}	
+  	
+  	
+  	
+  	$(document).ready(function() {
+  		$(".deleteOne").click(deleteOne);
+  		$(".cancel").click(cancel);
+  		
+  		
+  	});
+  </script>
 </head>
 <body>
 	<h1>나의 챌린지 목록</h1>
+	<div th:text="${proveList}"></div>
     <div th:each="list: ${proveList}" class="wrapper">
         <div class="certified">
             <h3 th:text="${list.cname}"></h3>
-            <button type="submit" class="btn btn-primary" formaction="">인증하기</button>
-            <button type="submit" class="btn btn-secondary" formaction="">신청취소</button>
+            <button type="button" class="btn btn-primary upload" th:onclick="|location.href='@{/challenge/member/challengeProveUpload(cno=${list.cno})}'|">인증하기</button>
+            <button type="button" class="btn btn-secondary cancel" th:data-cno="${list.cno}">신청취소</button>
         </div>
         <div class="container">            
             <table class="table table-bordered">
@@ -65,7 +97,9 @@
                                 </label>
                             </div>
                         </td>
-                        <td th:text="${prove.cpimg}"></td>
+                        <td>
+                        	<img name="imagename" th:src="${prove.cpimg}" width="75px;">
+                        </td>
                         <td th:text="${prove.cptitle}"></td>
                         <td th:text="${prove.cpregday}"></td>
                         <td>

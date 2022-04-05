@@ -9,7 +9,11 @@ import com.project.ecorea.entity.*;
 
 @Mapper
 public interface ChProveDao {
-	public List<ChProveDto.ProveList> findByMemberId(String memberId);
+	public List<ChProveDto.ProveList> findByMemberId(String memberId, String imagePath);
 	
 	public void saveChProve(ChProve chProve);
+	
+	public Integer deleteByMemberIdAndCpno(String memberId, Integer cpno);
+	
+	public Integer deleteByMemberIdAndCno(String memberId, Integer cno);
 }
