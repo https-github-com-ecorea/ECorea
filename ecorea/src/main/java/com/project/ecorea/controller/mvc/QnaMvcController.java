@@ -41,8 +41,8 @@ public class QnaMvcController {
 	
 	/* 일반 회원 - 문의 등록 */
 	@PostMapping("/mypage/member/qnaUpload")
-	public String uploadQnaQ(QnaDto.uploadQuestion questionUpDto, Integer pno) {
-		service.uploadQuestion(questionUpDto, 1);
+	public String uploadQnaQ(QnaDto.uploadQuestion questionUpDto, String loginId, Integer pno) {
+		service.uploadQuestion(questionUpDto, "ngoley6", 10);
 		return "redirect:/mypage/member/qnaList";
 	}
 	
@@ -84,21 +84,21 @@ public class QnaMvcController {
 	}
 	
 	/* 기업 회원 - 문의 답변 등록 */
-	@PostMapping("/mypage/corp/qnaDetail")
+	@PostMapping("/mypage/corp/answerUpload")
 	public String uploadQnaA(QnaDto.AnswerDto answerUpDto) {
 		service.uploadAnswer(answerUpDto);
 		return "redirect:/mypage/corp/qnaList";
 	}
 	
 	/* 기업 회원 - 문의 답변 수정 */
-	@PostMapping("/mypage/corp/qnaDetailUpdate")
+	@PostMapping("/mypage/corp/answerUpdate")
 	public String updateAnswer(QnaA answerDto) {
 		service.updateAnswer(answerDto);
 		return "redirect:/mypage/corp/qnaList";
 	}
 	
 	/* 기업 회원 - 문의 답변 삭제 */
-	@PostMapping("/mypage/corp/qnaDetailDelete")
+	@PostMapping("/mypage/corp/answerDelete")
 	public String deleteAnswer(String loginId, Integer qano) {
 		service.deleteAnswer(loginId, qano);
 		return "redirect:/mypage/corp/qnaList";

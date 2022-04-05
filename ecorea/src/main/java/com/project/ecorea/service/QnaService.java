@@ -63,6 +63,7 @@ public class QnaService {
 			} else {
 				qna.setIsAnswer("X");
 			}
+			qna.setMemberId(loginId);
 			dto.add(qna);
 		}
 		return dto;
@@ -87,14 +88,10 @@ public class QnaService {
 	public Object memberMypageDetail(String loginId, Integer qqno, String imagepath) {
 		QnaDto.QuestionDto question = dao.memberQuestionFindByQqno(loginId, qqno);
 		QnaDto.AnswerDto answer = dao.memberAnswerFindByQqno(loginId, qqno);
-		// HashSet<Object> qna = new HashSet<>();
 		List<Object> qna = new ArrayList<>();
 		question.setQqimg((imagepath + question.getQqimg()));
+		question.setMemberId(loginId);
 		qna.add(question);
-		/* 
-		if (answer != null)
-			qna.add(answer);
-		*/
 		qna.add(answer);
 		return qna;
 	}
@@ -103,7 +100,6 @@ public class QnaService {
 	public Object corpMypageDetail(String loginId, Integer qqno, String imagepath) {
 		QnaDto.QuestionDto question = dao.corpQuestionFindByQqno(loginId, qqno);
 		QnaDto.AnswerDto answer = dao.corpAnswerFindByQqno(loginId, qqno);
-		// HashSet<Object> qna = new HashSet<>();
 		List<Object> qna = new ArrayList<>();
 		question.setQqimg((imagepath + question.getQqimg()));
 		qna.add(question);
@@ -111,10 +107,11 @@ public class QnaService {
 		return qna;
 	}
 
-	/* 일반 회원 : 문의 작성 */
-	public void uploadQuestion(QnaDto.uploadQuestion questionUpDto, Integer pno) {
+	/* 일반 회원 : 문의 등록 */
+	public void uploadQuestion(QnaDto.uploadQuestion questionUpDto, String loginId, Integer pno) {
 		QnaQ question = questionUpDto.toEntity();
 		MultipartFile qqimg = questionUpDto.getQqimg();
+		question.setMemberId(loginId);
 		question.setPno(pno);
 		question.setQqimg(defaultImage);
 		if(qqimg!=null && qqimg.isEmpty()==false && qqimg.getContentType().toLowerCase().startsWith("image/")) {

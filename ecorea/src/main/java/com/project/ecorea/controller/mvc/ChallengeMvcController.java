@@ -36,7 +36,7 @@ public class ChallengeMvcController {
 	public String challengeUpload(ChallengeDto.challengeUpload challenge) {
 		service.challengeUpload(challenge);
 		return "rediret:/challenge/challengeList";
-	}
+	} 
 	
 	/* 기업 회원 : 챌린지 수정 화면 */
 	@GetMapping("/challenge/corp/challengeUpdate")

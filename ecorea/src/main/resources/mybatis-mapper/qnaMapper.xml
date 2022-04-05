@@ -3,8 +3,14 @@
 <mapper namespace="com.project.ecorea.dao.QnaDao">
 
 	<!-- 내부 표기 변환 resultMap -->
-	<resultMap type="com.project.ecorea.dto.QnaDto$AnswerDto" id="namecheck">
+	<resultMap type="com.project.ecorea.dto.QnaDto$AnswerDto" id="namecheckAnswer">
 		<result property="corpId" column="corp_id"/>
+		<result property="memberId" column="member_id" />
+	</resultMap>
+	
+	<resultMap type="com.project.ecorea.dto.QnaDto$QuestionDto" id="namecheckQuestion">
+		<result property="corpId" column="corp_id"/>
+		<result property="memberId" column="member_id" />
 	</resultMap>
 	
 	<!-- 상품 상세 : 문의 목록 -->
@@ -14,7 +20,7 @@
 	</select>
 	
 	<!-- 상품 상세 : 문의 답변 목록 -->
-	<select id="answerFindByPno" resultType="com.project.ecorea.dto.QnaDto$AnswerDto" resultMap="namecheck">
+	<select id="answerFindByPno" resultType="com.project.ecorea.dto.QnaDto$AnswerDto" resultMap="namecheckAnswer">
 		select qqno, qano, corp_id, qacontent from QNA_A where pno=#{pno}
 	</select>
 	
@@ -23,7 +29,8 @@
 		<selectKey keyProperty="qqno" order="BEFORE" resultType="int">
 			select qnaq_seq.nextval from dual
 		</selectKey>
-		insert into qna_q values(#{qqno}, #{pno}, #{qqcategory}, #{qqtitle}, #{qqcontent}, #{qqimg}, #{qqregday}, #{memberId})
+		insert into qna_q(qqno, pno, qqcategory, qqtitle, qqcontent, qqimg, qqregday, member_id) 
+		values(#{qqno}, #{pno}, #{qqcategory}, #{qqtitle}, #{qqcontent}, #{qqimg}, #{qqregday}, #{memberId})
 	</insert>
 	
 	<!-- 답변 여부 -->
@@ -32,24 +39,24 @@
 	</select>
 	
 	<!-- 일반 회원 마이페이지 : 문의 목록 -->
-	<select id="memberQuestionFindById" resultType="com.project.ecorea.dto.QnaDto$QuestionDto">
+	<select id="memberQuestionFindById" resultType="com.project.ecorea.dto.QnaDto$QuestionDto" resultMap="namecheckQuestion">
 		select qqno, qqcategory, qqtitle, qqcontent, qqimg, qqregday, member_id
 			from QNA_Q where member_id=#{memberId}
 	</select>
 	
 	<!-- 기업 회원 마이페이지 : 문의 목록 -->
-	<select id="corpQuestionFindById" resultType="com.project.ecorea.dto.QnaDto$QuestionDto">
+	<select id="corpQuestionFindById" resultType="com.project.ecorea.dto.QnaDto$QuestionDto" resultMap="namecheckQuestion">
 		select qqno, qqcategory, qqtitle, qqcontent, qqimg, qqregday, member_id
 			from QNA_Q inner join product on qna_q.pno=product.pno where corp_id=#{corpId}
 	</select>
 	
 	<!-- 일반 회원 마이페이지 : 문의 상세 -->
-	<select id="memberQuestionFindByQqno" resultType="com.project.ecorea.dto.QnaDto$QuestionDto">
+	<select id="memberQuestionFindByQqno" resultType="com.project.ecorea.dto.QnaDto$QuestionDto" resultMap="namecheckQuestion">
 		select * from qna_q where qqno=#{qqno}
 	</select>
 	
 	<!-- 일반 회원 마이페이지 : 문의 상세 답변 -->
-	<select id="memberAnswerFindByQqno" resultType="com.project.ecorea.dto.QnaDto$AnswerDto">
+	<select id="memberAnswerFindByQqno" resultType="com.project.ecorea.dto.QnaDto$AnswerDto" resultMap="namecheckAnswer">
 		select * from qna_a where qqno=#{qqno}
 	</select>
 	
@@ -72,12 +79,12 @@
 	</delete>
 	
 	<!-- 기업 회원 마이페이지 : 문의 상세 -->
-	<select id="corpQuestionFindByQqno" resultType="com.project.ecorea.dto.QnaDto$QuestionDto">
+	<select id="corpQuestionFindByQqno" resultType="com.project.ecorea.dto.QnaDto$QuestionDto" resultMap="namecheckQuestion">
 		select * from qna_q where qqno=#{qqno}
 	</select>
 	
 	<!-- 기업 회원 마이페이지 : 문의 상세 답변 -->
-	<select id="corpAnswerFindByQqno" resultType="com.project.ecorea.dto.QnaDto$AnswerDto">
+	<select id="corpAnswerFindByQqno" resultType="com.project.ecorea.dto.QnaDto$AnswerDto" resultMap="namecheckAnswer">
 		select * from qna_a where qqno=#{qqno}
 	</select>
 	
