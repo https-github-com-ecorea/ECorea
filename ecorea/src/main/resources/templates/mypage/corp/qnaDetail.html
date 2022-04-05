@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="./../../common.css">
   <script th:inline="javascript">
   	const data = /*[[${corpQnaDetail[0]}]]*/
-  	console.log(data.pno);
+  	console.log(data);
   </script>
   <style>
   * {box-sizing: border-box;}
@@ -38,7 +38,7 @@ input[type=text], select, textarea {
   <div class="container">
     <form th:action="@{/mypage/corp/answerUpload}" method="post">
 	  <input type="hidden" id="qqno" name="qqno" th:value="${corpQnaDetail[0].qqno}">
-      <!-- <input type="hidden" id="pno" name="pno" th:value="${corpQnaDetail[0].pno}"> -->
+	  <input type="hidden" id="pno" name="pno" th:value="${corpQnaDetail[0].pno}">
       <label for="memberId">아이디</label>
       <input type="text" id="memberId" name="memberId" th:value="${corpQnaDetail[0].memberId}">
     

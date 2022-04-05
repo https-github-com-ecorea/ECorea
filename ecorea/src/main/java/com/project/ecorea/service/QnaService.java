@@ -144,8 +144,10 @@ public class QnaService {
 	}
 	
 	/* 기업 회원 : 문의 답변 작성 */
-	public void uploadAnswer(QnaDto.AnswerDto answerUpDto) {
+	public void uploadAnswer(QnaDto.AnswerDto answerUpDto, Integer pno, String loginId) {
 		QnaA answer = answerUpDto.toEntity();
+		answer.setPno(pno);
+		answer.setCorpId(loginId);
 		dao.uploadAnswer(answer);
 	}
 	

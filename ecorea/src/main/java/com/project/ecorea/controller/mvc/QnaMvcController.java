@@ -85,8 +85,8 @@ public class QnaMvcController {
 	
 	/* 기업 회원 - 문의 답변 등록 */
 	@PostMapping("/mypage/corp/answerUpload")
-	public String uploadQnaA(QnaDto.AnswerDto answerUpDto) {
-		service.uploadAnswer(answerUpDto);
+	public String uploadQnaA(QnaDto.AnswerDto answerUpDto, Integer pno, String loginId) {
+		service.uploadAnswer(answerUpDto, pno, "LG");
 		return "redirect:/mypage/corp/qnaList";
 	}
 	

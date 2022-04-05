@@ -18,6 +18,7 @@ public class QnaDto {
 	@NoArgsConstructor
 	@Builder
 	public static class QuestionDto {
+		private Integer pno; /* 상품 번호 */
 		private Integer qqno; /* 질문 번호 */
 		private String qqcategory; /* 질문 카테고리 */
 		private String qqtitle; /* 제목 */

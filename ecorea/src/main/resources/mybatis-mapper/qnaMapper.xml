@@ -93,7 +93,8 @@
 		<selectKey keyProperty="qano" order="BEFORE" resultType="int">
 			select qnaa_seq.nextval from dual
 		</selectKey>
-		insert into qna_a values(#{qano}, #{qqno}, #{pno}, #{corpId}, #{qacontent})
+		insert into qna_a(qano, qqno, pno, corp_id, qacontent)
+		values(#{qano}, #{qqno}, #{pno}, #{corpId}, #{qacontent})
 	</insert>
 	
 	<!-- 기업 회원 마이페이지 : 문의 상세 답변 수정 -->
