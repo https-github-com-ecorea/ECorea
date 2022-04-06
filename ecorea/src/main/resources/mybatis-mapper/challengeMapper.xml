@@ -23,6 +23,26 @@
 		where corp_id=#{corpId} and cno=#{cno}
 	</update>
 
+	<!-- <resultMap type="com.project.ecorea.dto.ChallengeDto$ChallengeList" id="ChallengeList">
+		<id column="cno" property="cno"/>
+		<result column="cname" property="cname"/>
+		<result column="cregday" property="cregday"/>
+		<result column="cstartday" property="cstartday"/>
+		<result column="cendday" property="cendday"/>
+		<result column="cthumbnail" property="cthumbnail"/>
+		<result column="cgoal" property="cgoal"/>
+		<result column="cjoincnt" property="cjoincnt"/>
+		<result column="corpname" property="corpname"/>
+	</resultMap> -->
+	
+	<select id="findByCorpName" resultType="com.project.ecorea.dto.ChallengeDto$ChallengeList">
+		select c.corp_name as corpname, ch.cno, ch.cname, ch.cregday, ch.cstartday, ch.cendday, ch.cthumbnail, ch.cgoal, ch.cjoincnt
+		from challenge ch
+    		left join corp c
+        		on(c.corp_id=ch.corp_id)
+        order by ch.cno desc
+	</select>
+
 	<select id="findByChallengeAll" resultType="challenge">
 		select * from challenge order by cno desc
 	</select>
@@ -31,8 +51,11 @@
 		select * from challenge where corp_id=#{id} order by cno desc
 	</select>
 
-	<select id="findBycno" resultType="challenge">
-		select * from challenge where cno=#{cno}
+	<select id="findBycno" resultType="com.project.ecorea.dto.ChallengeDto$ChallengeDetail">
+		select cno,cname,cgoal,cstartday,cendday,cthumbnail,ccontent,cjoincnt, 
+			(select count(distinct p.member_id) from chprove p) as applycnt 
+		from challenge
+		where cno=1
 	</select>
 
 </mapper>

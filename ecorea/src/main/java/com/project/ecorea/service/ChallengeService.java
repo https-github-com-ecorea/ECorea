@@ -34,6 +34,7 @@ public class ChallengeService {
 	private String defaultImage;
 	
 	private final ChallengeDao dao;
+	private final ChProveDao proveDao;
 	
 	/* 기업 회원 : 챌린지 등록 */
 	public void challengeUpload(ChallengeDto.challengeUpload challenge) {
@@ -90,39 +91,31 @@ public class ChallengeService {
 	
 	/* 전체 회원 : 챌린지 목록 출력 */
 	public List<ChallengeDto.ChallengeList> readchallengeList() {
-		List<Challenge> challenges = dao.findByChallengeAll();
-		List<ChallengeDto.ChallengeList> dto = new ArrayList<>();
+		List<ChallengeDto.ChallengeList> list = dao.findByCorpName();
 		
-		for(Challenge challenge : challenges) {
-			ChallengeDto.ChallengeList detail = challenge.toListDto();
-			Integer applyCnt = (int)((double)(challenge.getCjoincnt()/challenge.getCgoal())*100);
-			detail.setApplycnt(applyCnt);
-			dto.add(detail);
+		for(ChallengeDto.ChallengeList dto : list) {
+			Integer applyCnt = (int)(((double)dto.getCjoincnt()/(double)dto.getCgoal())*100);
 		}
-		return dto;
+		
+		return list;
 	}
 
 	/* 기업 회원 : 챌린지 목록 출력*/ 
 	public List<ChallengeDto.ChallengeList> readCorpChallengeList(String loginId) {
-		List<Challenge> challenges = dao.findByCorpId(loginId);
-		List<ChallengeDto.ChallengeList> dto = new ArrayList<>();
+		List<ChallengeDto.ChallengeList> list = dao.findByCorpId(loginId);
 		
-		for(Challenge challenge : challenges) {
-			ChallengeDto.ChallengeList detail = challenge.toListDto();
-			Integer applyCnt = (int)((double)(challenge.getCjoincnt()/challenge.getCgoal())*100);
-			detail.setApplycnt(applyCnt);
-			dto.add(detail);
+		for(ChallengeDto.ChallengeList dto : list) {
+			Integer applyCnt = (int)(((double)dto.getCjoincnt()/(double)dto.getCgoal())*100);
 		}
 		
-		return dto;
+		return list;
 	}
 
 	/* 전체 회원 : 챌린지 상세 페이지 출력 */
 	public ChallengeDto.ChallengeDetail readUserDetail(Integer cno) {
-		Challenge challenge = dao.findBycno(cno);
-		ChallengeDto.ChallengeDetail detail = challenge.toDetailDto();
-		Integer applyCnt = (int)((double)(challenge.getCjoincnt()/challenge.getCgoal())*100);
-		detail.setApplycnt(applyCnt);
+		ChallengeDto.ChallengeDetail detail = dao.findBycno(cno);
+		List<ChProveDto.ChallengeDetailProveList> proveList = proveDao.findByProveAll();
+		// detail.setChProveList(proveList);
 		
 		return detail;
 	}

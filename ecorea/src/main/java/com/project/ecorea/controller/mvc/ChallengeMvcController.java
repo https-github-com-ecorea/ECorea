@@ -2,7 +2,6 @@ package com.project.ecorea.controller.mvc;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.*;
 
 import java.security.*;
 
@@ -65,12 +64,12 @@ public class ChallengeMvcController {
 	
 	/* 전체 유저 : 챌린지 상세 페이지 출력 */
 	@GetMapping("/challenge/member/challengeDetail")
-	public ModelAndView readUserDetail(Integer cno, HttpSession session, HttpServletRequest re) {		
+	public ModelAndView readUserDetail(Integer cno, HttpSession session, HttpServletRequest request) {
 		if(session.getAttribute("login")==null) {
 			return new ModelAndView("challenge/member/challengeDetail").addObject("challenge", service.readUserDetail(cno));
 		}
 		
-		if(re.isUserInRole("ROLE_MEMBER")) {
+		if(request.isUserInRole("ROLE_MEMBER")) {
 			return new ModelAndView("challenge/member/challengeDetail").addObject("challenge", service.readUserDetail(cno));
 		} else {
 			return new ModelAndView("challenge/corp/challengeDetail").addObject("challenge", service.readUserDetail(cno));
