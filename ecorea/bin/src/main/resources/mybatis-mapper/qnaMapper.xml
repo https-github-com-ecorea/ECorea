@@ -2,14 +2,112 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.ecorea.dao.QnaDao">
 
-	<!-- 문의 목록 -->
-	<select id="qfindByPno" resultType="com.project.ecorea.dto.QnaDto$QnaQList">
+	<!-- 내부 표기 변환 resultMap -->
+	<resultMap type="com.project.ecorea.dto.QnaDto$AnswerDto" id="namecheck">
+		<result property="corpId" column="corp_id"/>
+	</resultMap>
+	
+	<!-- 상품 상세 : 문의 목록 -->
+	<select id="questionFindByPno" resultType="com.project.ecorea.dto.QnaDto$QuestionDto">
 		select q.qqno, q.qqcategory, q.qqtitle, q.qqcontent, q.qqimg, q.qqregday, q.member_id
 		from QNA_Q q where q.pno=#{pno}
 	</select>
 	
-	<select id="afindByPno" resultType="com.project.ecorea.dto.QnaDto$QnaAList">
+	<!-- 상품 상세 : 문의 답변 목록 -->
+	<select id="answerFindByPno" resultType="com.project.ecorea.dto.QnaDto$AnswerDto" resultMap="namecheck">
 		select qqno, qano, corp_id, qacontent from QNA_A where pno=#{pno}
 	</select>
-
+	
+	<!-- 상품 상세 : 문의 작성 -->
+	<insert id="uploadQuestion" useGeneratedKeys="true" keyProperty="qqno">
+		<selectKey keyProperty="qqno" order="BEFORE" resultType="int">
+			select qnaq_seq.nextval from dual
+		</selectKey>
+		insert into qna_q values(#{qqno}, #{pno}, #{qqcategory}, #{qqtitle}, #{qqcontent}, #{qqimg}, #{qqregday}, #{memberId})
+	</insert>
+	
+	<!-- 답변 여부 -->
+	<select id="isAnswer" resultType="int">
+		select count(*) from qna_a a inner join qna_q q on a.qqno=q.qqno where a.qqno=#{qqno}
+	</select>
+	
+	<!-- 일반 회원 마이페이지 : 문의 목록 -->
+	<select id="memberQuestionFindById" resultType="com.project.ecorea.dto.QnaDto$QuestionDto">
+		select qqno, qqcategory, qqtitle, qqcontent, qqimg, qqregday, member_id
+			from QNA_Q where member_id=#{memberId}
+	</select>
+	
+	<!-- 기업 회원 마이페이지 : 문의 목록 -->
+	<select id="corpQuestionFindById" resultType="com.project.ecorea.dto.QnaDto$QuestionDto">
+		select qqno, qqcategory, qqtitle, qqcontent, qqimg, qqregday, member_id
+			from QNA_Q inner join product on qna_q.pno=product.pno where corp_id=#{corpId}
+	</select>
+	
+	<!-- 일반 회원 마이페이지 : 문의 상세 -->
+	<select id="memberQuestionFindByQqno" resultType="com.project.ecorea.dto.QnaDto$QuestionDto">
+		select * from qna_q where qqno=#{qqno}
+	</select>
+	
+	<!-- 일반 회원 마이페이지 : 문의 상세 답변 -->
+	<select id="memberAnswerFindByQqno" resultType="com.project.ecorea.dto.QnaDto$AnswerDto">
+		select * from qna_a where qqno=#{qqno}
+	</select>
+	
+	<!-- 일반 회원 마이페이지 : 문의 수정 -->
+	<update id="updateQuestion">
+		update qna_q
+		<trim suffixOverrides="," prefix="set">
+			<if test="qqno!=null">qqno=#{qqno},</if> 
+			<if test="pno!=null">pno=#{pno},</if> 
+			<if test="qqcategory!=null">qqcategory=#{qqcategory},</if>
+			<if test="qqtitle!=null">qqtitle=#{qqtitle},</if>
+			<if test="qqcontent!=null">qqcontent=#{qqcontent},</if> 
+			<if test="qqimg!=null">qqimg=#{qqimg},</if>
+			<if test="qqregday!=null">qqregday=#{qqregday},</if>
+			<if test="memberId!=null">member_id=#{memberId},</if>
+		</trim>
+		where member_id=#{memberId} and qqno=#{qqno}
+	</update>
+	
+	<!-- 일반 회원 마이페이지 : 문의 삭제 -->
+	<delete id="deleteQuestion">
+		delete from qna_q where member_id=#{memberId} and qqno=#{qqno}
+	</delete>
+	
+	<!-- 기업 회원 마이페이지 : 문의 상세 -->
+	<select id="corpQuestionFindByQqno" resultType="com.project.ecorea.dto.QnaDto$QuestionDto">
+		select * from qna_q where qqno=#{qqno}
+	</select>
+	
+	<!-- 기업 회원 마이페이지 : 문의 상세 답변 -->
+	<select id="corpAnswerFindByQqno" resultType="com.project.ecorea.dto.QnaDto$AnswerDto">
+		select * from qna_a where qqno=#{qqno}
+	</select>
+	
+	<!-- 기업 회원 마이페이지 : 문의 상세 답변 작성 -->
+	<insert id="uploadAnswer" useGeneratedKeys="true" keyProperty="qano">
+		<selectKey keyProperty="qano" order="BEFORE" resultType="int">
+			select qnaa_seq.nextval from dual
+		</selectKey>
+		insert into qna_a values(#{qano}, #{qqno}, #{pno}, #{corpId}, #{qacontent})
+	</insert>
+	
+	<!-- 기업 회원 마이페이지 : 문의 상세 답변 수정 -->
+	<update id="updateAnswer">
+		update qna_a
+		<trim suffixOverrides="," prefix="set">
+			<if test="pno!=null">pno=#{pno},</if> 
+			<if test="qqno!=null">qqno=#{qqno},</if> 
+			<if test="qano!=null">qano=#{qano},</if>
+			<if test="corpId!=null">corp_id=#{corpId},</if>
+			<if test="qacontent!=null">qacontent=#{qacontent},</if> 
+		</trim>
+		where corp_id=#{corpId} and qano=#{qano}
+	</update>
+	
+	<!-- 기업 회원 마이페이지 : 문의 상세 답변 삭제 -->
+	<delete id="deleteAnswer">
+		delete from qna_a where corp_id=#{corpId} and qano=#{qano}
+	</delete>
+	
 </mapper>
