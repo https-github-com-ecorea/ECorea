@@ -23,8 +23,6 @@ header span a:hover {
 .topnav {
 background-color: rgb(238, 240, 238);
 overflow: hidden;
-/* position: fixed;
-width: 100%; */
 }
 .topnav a {
 float: left;
@@ -40,7 +38,8 @@ color: black;
 }
 .topnav-right {
 float: right;
-}
+} 
+
 .carousel-inner {
 height: 300px;
 }
@@ -130,6 +129,7 @@ transition: hover 0.4s ease;
 #intro .intro-first-card .overlay a:hover {
 color: #fafa6f;
 }
+
 
 #services .services-col .card {
 transition: 0.4s ease;

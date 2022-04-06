@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -15,9 +15,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
   integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
   crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="./../common.css">
-  <link rel="stylesheet" href="./../index.css">
-
+  <link rel="stylesheet" href="../../static/common.css">
+  <link rel="stylesheet" href="../../static/index.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script th:inline="javascript">
   	const page = /*[[${page}]]*/
@@ -78,7 +77,6 @@
 		pagination();
 	})
   </script>
-
   <style>
     h1 {
       text-align: center;
@@ -144,6 +142,8 @@ button {
 .card-wrap {
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: center;
 }
 a {
   text-decoration: none;
@@ -163,7 +163,7 @@ button:hover, a:hover {
 </head>
 <body>
   <header>
-    <div class="logo"><a href="index.html">ECorea</a></div>
+    <div class="logo"><a href="/">ECorea</a></div>
   </header>
   <h1>상품 목록</h1><br>
   <nav>
@@ -186,12 +186,11 @@ button:hover, a:hover {
   </div>
 
 <section class="card-wrap">
-
-<!--   <table>
+  <table>
     <tr>
       <td>
         <div class="card">
-          <a href="#"><img src="../image/product.jpg" alt="상품" style="width:80%"></a>
+          <a href="#"><img src="../../static/image/product.jpg" alt="상품" style="width:80%"></a>
           <a href="#"><h1>브랜드명</h1></a>
           <a href="#"><p class="title">[업사이클링DIY] 업사이클링 티셔츠 손목 쿠션Kit</p></a>
           <p class="amount">15,000원</p>
@@ -203,7 +202,7 @@ button:hover, a:hover {
       </td>
       <td>
         <div class="card">
-          <a href="#"><img src="../image/product.jpg" alt="상품" style="width:80%"></a>
+          <a href="#"><img src="../../static/image/product.jpg" alt="상품" style="width:80%"></a>
           <a href="#"><h1>브랜드명</h1></a>
           <a href="#"><p class="title">[업사이클링DIY] 업사이클링 티셔츠 손목 쿠션Kit</p></a>
           <p class="amount">15,000원</p>
@@ -215,7 +214,7 @@ button:hover, a:hover {
       </td>
       <td>
         <div class="card">
-          <a href="#"><img src="../image/product.jpg" alt="상품" style="width:80%"></a>
+          <a href="#"><img src="../../static/image/product.jpg" alt="상품" style="width:80%"></a>
           <a href="#"><h1>브랜드명</h1></a>
           <a href="#"><p class="title">[업사이클링DIY] 업사이클링 티셔츠 손목 쿠션Kit</p></a>
           <p class="amount">15,000원</p>
@@ -229,7 +228,7 @@ button:hover, a:hover {
     <tr>
       <td>
         <div class="card">
-          <a href="#"><img src="../image/product.jpg" alt="상품" style="width:80%"></a>
+          <a href="#"><img src="../../static/image/product.jpg" alt="상품" style="width:80%"></a>
           <a href="#"><h1>브랜드명</h1></a>
           <a href="#"><p class="title">[업사이클링DIY] 업사이클링 티셔츠 손목 쿠션Kit</p></a>
           <p class="amount">15,000원</p>
@@ -241,7 +240,7 @@ button:hover, a:hover {
       </td>
       <td>
         <div class="card">
-          <a href="#"><img src="../image/product.jpg" alt="상품" style="width:80%"></a>
+          <a href="#"><img src="../../static/image/product.jpg" alt="상품" style="width:80%"></a>
           <a href="#"><h1>브랜드명</h1></a>
           <a href="#"><p class="title">[업사이클링DIY] 업사이클링 티셔츠 손목 쿠션Kit</p></a>
           <p class="amount">15,000원</p>
@@ -253,7 +252,7 @@ button:hover, a:hover {
       </td>
       <td>
         <div class="card">
-          <a href="#"><img src="../image/product.jpg" alt="상품" style="width:80%"></a>
+          <a href="#"><img src="../../static/image/product.jpg" alt="상품" style="width:80%"></a>
           <a href="#"><h1>브랜드명</h1></a>
           <a href="#"><p class="title">[업사이클링DIY] 업사이클링 티셔츠 손목 쿠션Kit</p></a>
           <p class="amount">15,000원</p>
@@ -267,7 +266,7 @@ button:hover, a:hover {
     <tr>
       <td>
         <div class="card">
-          <a href="#"><img src="../image/product.jpg" alt="상품" style="width:80%"></a>
+          <a href="#"><img src="../../static/image/product.jpg" alt="상품" style="width:80%"></a>
           <a href="#"><h1>브랜드명</h1></a>
           <a href="#"><p class="title">[업사이클링DIY] 업사이클링 티셔츠 손목 쿠션Kit</p></a>
           <p class="amount">15,000원</p>
@@ -279,7 +278,7 @@ button:hover, a:hover {
       </td>
       <td>
         <div class="card">
-          <a href="#"><img src="../image/product.jpg" alt="상품" style="width:80%"></a>
+          <a href="#"><img src="../../static/image/product.jpg" alt="상품" style="width:80%"></a>
           <a href="#"><h1>브랜드명</h1></a>
           <a href="#"><p class="title">[업사이클링DIY] 업사이클링 티셔츠 손목 쿠션Kit</p></a>
           <p class="amount">15,000원</p>
@@ -291,7 +290,7 @@ button:hover, a:hover {
       </td>
       <td>
         <div class="card">
-          <a href="#"><img src="../image/product.jpg" alt="상품" style="width:80%"></a>
+          <a href="#"><img src="../../static/image/product.jpg" alt="상품" style="width:80%"></a>
           <a href="#"><h1>브랜드명</h1></a>
           <a href="#"><p class="title">[업사이클링DIY] 업사이클링 티셔츠 손목 쿠션Kit</p></a>
           <p class="amount">15,000원</p>
@@ -302,13 +301,10 @@ button:hover, a:hover {
         </div>
       </td>
     </tr>
-  </table> -->
-	<table>
-	</table>
+  </table>
 	<div id="pagination">
 	</div>
 </section>
-
 <footer>
   <address style="font-size: 12px; display:inline-block;margin-top:10px;margin-left:20px;">
     인천광역시 미추홀구<br>
@@ -316,6 +312,5 @@ button:hover, a:hover {
     전화번호 : 032-000-0000
   </address>
 </footer>
-
 </body>
 </html>

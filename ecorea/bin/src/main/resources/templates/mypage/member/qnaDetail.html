@@ -1,12 +1,31 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="./../../common.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script th:inline="javascript">
+  	const question = /*[[${memberQnaDetail[0]}]]*/
+  	let answer = /*[[${memberQnaDetail[1]}]]*/
+
+  	function nullCheck() {
+		if (answer != null) {
+			/* 답변이 있으면 출력 */
+			alert("답변이 있습니다.");
+		} else {
+			/* 답변이 없으면 출력되지 않음 */
+			alert("답변이 없습니다.");
+		}
+  	}
+
+  	$(document).ready(function() {
+  		nullCheck();
+  	})
+  </script>
   <style>
   * {box-sizing: border-box;}
 
@@ -32,15 +51,16 @@ input[type=text], select, textarea {
 <body>
   <h1>문의글 상세</h1>
   <div class="container">
-    <form action="/action_page.php">
+    <form action="/mypage/member/qnaDetail?qno=?" method="post">
       <label for="reviewtitle">제목</label>
-      <input type="text" id="reviewtitle" name="reviewtitle" placeholder="제목을 입력해주세요.">
+      <input type="text" id="reviewtitle" name="reviewtitle" placeholder="제목을 입력해주세요." th:value="${memberQnaDetail[0].qqtitle}">
   
       <label for="reviewcontent">내용</label>
-      <textarea id="reviewcontent" name="reviewcontent" placeholder="내용을 입력해주세요." style="height:200px"></textarea>
+      <textarea id="reviewcontent" name="reviewcontent" placeholder="내용을 입력해주세요." style="height:200px" th:text="${memberQnaDetail[0].qqcontent}"></textarea>
+      
       <label for="qnaanswer">답변</label>
-  <textarea id="qnaanswer" name="qnaanswer" style="height:200px"></textarea>
-  
+  	  <textarea id="qnaanswer" name="qnaanswer" style="height:200px"></textarea>
+
   <button type="submit" class="btn btn-primary" formaction="">수정</button>
   <button type="submit" class="btn btn-primary" formaction="">삭제</button>
   <button type="submit" class="btn btn-primary" formaction="">목록</button>

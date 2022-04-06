@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -191,20 +191,6 @@
 </head>
 <body>
 	<h1>장바구니</h1>
-	<div th:each= "list:${cartList}">
-	<hr>
-	<div th:text="${list.corpName}"></div>
-	<div th:each="product:${list.cartProduct}">
-		<div th:text="${product.pno}"></div>	
-	</div>
-	
-	
-	<!--  
-	<div th:each="product:${cartList.cartProduct}"></div>
-	<div th:text="${product.pno}"></div>
-	-->
-	</div>
-	
   	<div class="wrapper">
   	<button type="submit" class="btn btn-primary" id="delete_selected">선택삭제</button>
   	<button type="submit" class="btn btn-primary" id="delete_all">전체삭제</button><br>

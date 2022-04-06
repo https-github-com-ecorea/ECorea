@@ -80,29 +80,6 @@
   <style>
     h1 {
       text-align: center;
-      margin: 0;
-      margin-bottom: 10px;
-    }
-    .mid-category {
-      margin: 0 auto;
-      width: 600px;
-      height: 80px;
-      background-color: darkseagreen;
-      opacity: 0.3;
-      border-radius: 10px;
-    }
-    .mid-category ul li {
-      display: inline-block;
-      height: 80px;
-      line-height: 80px;
-      margin-right: 30px;
-    }
-    .mid-category ul li a {
-      font-size: 18px;
-    }
-    p {
-      text-align: center;
-      font-size: 30px;
     }
   .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -158,6 +135,28 @@ a {
 button:hover, a:hover {
   opacity: 0.7;
 }
+#category {
+  padding: 27px 0;
+}
+#category .position ul {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+li{
+  padding-left: 0;
+  margin: 20px;
+  display: list-item;
+  text-align: -webkit-match-parent;
+}
+ul {
+    margin-left: 0;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
   </style>
   <title>상품 목록</title>
 </head>
@@ -177,12 +176,17 @@ button:hover, a:hover {
         <a href="#">브랜드 소개</a>
       </div>
     </div>
-  <p>생활</p>
   <div class="mid-category">
+    <div class="container">
+      <div id="category" class="xans-element- xans-layout xans-layout-category">
+        <div class="position">
     <ul>
-      <li><a href="#">반려용품</a></li>
-      <li><a href="#">생활가전</a></li>
+      <li class="xans-record-"><a class="animsition-link" href="/product/productList.html?cno=10">반려용품</a></li>
+      <li class="xans-record-"><a class="animsition-link" href="/product/productList.html?cno=11">생활용품</a></li>
     </ul>
+  </div>
+  </div>
+</div>
   </div>
 
 <section class="card-wrap">
