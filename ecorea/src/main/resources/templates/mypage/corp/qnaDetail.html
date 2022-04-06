@@ -34,26 +34,26 @@ input[type=text], select, textarea {
   <div class="container">
     <form action="/mypage/corp/qnaDetail" method="post">
     
-      <label for="ordernumber">아이디</label>
-      <input type="text" id="ordernumber" name="ordernumber" placeholder="">
+      <label for="memberId">아이디</label>
+      <input type="text" id="memberId" name="memberId" placeholder="">
     
-       <label for="choice">말머리</label>
-      <select id="choice" name="choice">
+       <label for="qqcategory">말머리</label>
+      <select id="qqcategory" name="qqcategory">
         <option value="selectoption">변경불가</option>
       </select>
   
-      <label for="exchangetitle">제목</label>
-      <input type="text" id="exchangetitle" name="exchangetitle">
+      <label for="qqtitle">제목</label>
+      <input type="text" id="qqtitle" name="qqtitle">
   
-      <label for="exchangecontent">내용(사유)</label>
-      <textarea id="exchangecontent" name="exchangecontent" style="height:200px"></textarea>
+      <label for="qqcontent">내용(사유)</label>
+      <textarea id="qqcontent" name="qqcontent" style="height:200px"></textarea>
       
       <hr>
-          <label for="qnaanswer">답변</label>
-      <textarea id="qnaanswer" name="qnaanswer" style="height:200px"></textarea>
+      <label for="qacontent">답변</label>
+      <textarea id="qacontent" name="qacontent" style="height:200px"></textarea>
       
-      <button type="submit" class="btn btn-primary" formaction="">등록</button>
-      <button type="submit" class="btn btn-primary" formaction="">목록</button>
+      <button type="submit" class="btn btn-primary" formaction="/mypage/corp/qnaDetail">등록</button>
+      <button type="submit" class="btn btn-primary" formaction="/mypage/corp/qnaList">목록</button>
 
     </form>
   </div>
