@@ -3,6 +3,7 @@ package com.project.ecorea.dto;
 import java.time.*;
 import java.util.*;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.ecorea.entity.*;
@@ -14,12 +15,15 @@ public class ChallengeDto {
   
 	/* 기업 회원 : 챌린지 등록 */
 	@Data
-	public static class challengeUpload {
+	public static class ChallengeUpload {
 		private String cname; /* 챌린지 이름 */
 		private Integer cgoal; /* 달성 목표 */
 		private Integer cpoint; /* 보상 포인트 */
+		@DateTimeFormat(pattern = "yyyy-MM-dd")
 		private LocalDate cregday; /* 등록일 */
+		@DateTimeFormat(pattern = "yyyy-MM-dd")
 		private LocalDate cstartday; /* 챌린지 시작일 */
+		@DateTimeFormat(pattern = "yyyy-MM-dd")
 		private LocalDate cendday; /* 챌린지 마감일 */
 		private MultipartFile cthumbnail; /* 썸네일 */
 		private String ccontent; /* 내용 */
