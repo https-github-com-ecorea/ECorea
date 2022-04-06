@@ -24,10 +24,10 @@ import com.project.ecorea.entity.*;
 public class ProductService {
 	
 	/* Property 읽어 오기 */
-	@Value("${product.image.path}") /* 경로 */
+	@Value("${upload.image.path}") /* 경로 */
 	private String imagePath;
 
-	@Value("${product.image.folder}")
+	@Value("${upload.image.folder}")
 	private String imageFolder;
 	@Value("${default.image.name}")
 	private String defaultImage;

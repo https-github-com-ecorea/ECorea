@@ -4,6 +4,8 @@ import java.time.*;
 
 import org.springframework.format.annotation.*;
 
+import com.project.ecorea.dto.*;
+
 import lombok.*;
 import lombok.experimental.*;
 
@@ -21,4 +23,5 @@ public class ChProve {
 	private LocalDate cpregday;
 	private String cpimg;
 	private String memberId;
+	
 }
