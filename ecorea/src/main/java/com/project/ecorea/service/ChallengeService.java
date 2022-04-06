@@ -26,9 +26,9 @@ import lombok.*;
 public class ChallengeService {
 
 	/* Property 읽어 오기 (경로 및 파일) */
-	@Value("${product.image.path}")
+	@Value("${upload.image.path}")
 	private String imagePath;
-	@Value("${product.image.folder}")
+	@Value("${upload.image.folder}")
 	private String imageFolder;
 	@Value("${default.image.name}")
 	private String defaultImage;

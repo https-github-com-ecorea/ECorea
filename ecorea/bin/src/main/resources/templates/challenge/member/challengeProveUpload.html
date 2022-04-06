@@ -32,14 +32,16 @@ input[type=text], select, textarea {
 <body>
   <h1>챌린지 인증 작성</h1>
   <div class="container">
-    <form action="/action_page.php">
+    <form action="/challenge/member/challengeProveUpload" method="post">
       <label for="reviewtitle">제목</label>
       <input type="text" id="reviewtitle" name="reviewtitle" placeholder="제목을 입력해주세요.">
+
+      <button type="submit">첨부파일</button><br><br>
   
       <label for="reviewcontent">내용</label>
       <textarea id="reviewcontent" name="reviewcontent" placeholder="내용을 입력해주세요." style="height:200px"></textarea>
   
-      <button type="submit" class="btn btn-primary" formaction="/order/reviewList/">등록</button>
+      <button type="submit" class="btn btn-primary">등록</button>
     </form>
   </div>
 </body>
