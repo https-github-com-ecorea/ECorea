@@ -32,6 +32,11 @@ public class ChallengeTest {
 	}
 	
 	@Test
+	public void ChallengeUpdateTest() {
+		System.out.println(service.challengeUpdateView(123));
+	}
+	
+	// @Test
 	public void DateTest() {
 		LocalDate date = LocalDate.of(2022, 3, 26);
 		Challenge clg = Challenge.builder().cno(22).cname("LG").cgoal(50).cpoint(2000).cregday(date)

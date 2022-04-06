@@ -10,7 +10,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script th:inline="javascript">
    	/* 삭제 버튼 처리 함수 */
-
   	function deleteBtn() {
   		const $form = $('<form>').attr('method', 'post').attr('action', '/mypage/member/qnaDelete').appendTo($('body'));
   		$('<input>').attr('type', 'hidden').attr('name', 'qqno').val(question.qqno).appendTo($form);
