@@ -56,16 +56,17 @@ input[type=text], select, textarea {
     <form action="/challenge/corp/challengeUpload" method="post">
     
       <label for="challtitle">챌린지명</label>
-      <input type="text" id="challtitle" name="challtitle" placeholder="">
+      <input type="text" id="challtitle" name="cname" placeholder="">
 
       <label for="corpname">기업명</label>
-      <input type="text" id="corpname" name="corpname" placeholder="">
+      <input type="text" id="corpname" name="corpId" placeholder="">
 
       <label for="goal">달성목표</label>
-      <input type="text" id="goal" name="goal" placeholder="">
+      <input type="text" id="goal" name="cgoal" placeholder="">
 
       <label for="goalpoint">보상포인트</label>
-      <input type="text" id="goalpoint" name="goalpoint" placeholder="">
+      <input type="text" id="goalpoint" name="cpoint" placeholder="">
+
 
       <label for="challdue">챌린지 기간</label><br><br>
       <form action="event.jsp" id="mform">
@@ -78,13 +79,13 @@ input[type=text], select, textarea {
   
       <label for="challthumbnail" style="margin-top: 20px;">썸네일용 이미지</label>
       <button type="submit">첨부파일</button>
-      <input type="text" id="challthumbnail" name="challthumbnail">
+      <input type="text" id="challthumbnail" name="cthumbnail">
   
       <label for="challcontent">상세 설명</label>
-      <textarea id="challcontent" name="challcontent" style="height:200px"></textarea>
+      <textarea id="challcontent" name="ccontent" style="height:200px"></textarea>
       
-      <button type="submit" class="btn btn-primary" formaction="">등록</button>
-      <button type="submit" class="btn btn-primary" formaction="">취소</button>
+      <button type="submit" class="btn btn-primary">등록</button>
+      <button type="submit" class="btn btn-primary" onclick="location.href='/challenge/corp/challengeList'">취소</button>
 
     </form>
   </div>
