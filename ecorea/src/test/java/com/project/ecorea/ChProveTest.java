@@ -21,6 +21,9 @@ public class ChProveTest {
 	ChProveDao chproveDao;
 	@Autowired
 	ChProveService proveService;
+	@Value("${image.path}")
+	private String imagePath;
+	
 	
 	//@Test
 	public void intiTest() {
@@ -29,8 +32,8 @@ public class ChProveTest {
 	
 	//@Test
 	public void listTest() {
-		String memberId = "zzzzuny";
-		List<ChProveDto.ProveList> result = chproveDao.findByMemberId(memberId);
+		String memberId = "zzzzuny";		
+		List<ChProveDto.ProveList> result = chproveDao.findByMemberId(memberId, imagePath);
 		System.out.println("############# result : " + result);		
 	}
 	
@@ -43,7 +46,7 @@ public class ChProveTest {
 	@Test
 	public void saveServiceTest() {
 		String memberId = "zzzzuny";
-		ChProveDto.InputProve inputprove = InputProve.builder().cno(1).cptitle("제목이라").cpcontent("내애욘").cpimg("imgimg").build();
+		ChProveDto.InputProve inputprove = InputProve.builder().cno(1).cptitle("제목이라").cpcontent("내애욘").build();
 		proveService.UploadChProve(inputprove, memberId);
 	}
 }

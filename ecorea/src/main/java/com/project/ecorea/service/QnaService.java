@@ -23,9 +23,9 @@ import lombok.*;
 public class QnaService {
 	
 	/* Property 읽어 오기 (경로 및 파일) */
-	@Value("${product.image.path}")
+	@Value("${upload.image.path}")
 	private String imagePath;
-	@Value("${product.image.folder}")
+	@Value("${upload.image.folder}")
 	private String imageFolder;
 	@Value("${default.image.name}")
 	private String defaultImage;
@@ -63,6 +63,7 @@ public class QnaService {
 			} else {
 				qna.setIsAnswer("X");
 			}
+			qna.setMemberId(loginId);
 			dto.add(qna);
 		}
 		return dto;
@@ -87,14 +88,10 @@ public class QnaService {
 	public Object memberMypageDetail(String loginId, Integer qqno, String imagepath) {
 		QnaDto.QuestionDto question = dao.memberQuestionFindByQqno(loginId, qqno);
 		QnaDto.AnswerDto answer = dao.memberAnswerFindByQqno(loginId, qqno);
-		// HashSet<Object> qna = new HashSet<>();
 		List<Object> qna = new ArrayList<>();
 		question.setQqimg((imagepath + question.getQqimg()));
+		question.setMemberId(loginId);
 		qna.add(question);
-		/* 
-		if (answer != null)
-			qna.add(answer);
-		*/
 		qna.add(answer);
 		return qna;
 	}
@@ -103,7 +100,6 @@ public class QnaService {
 	public Object corpMypageDetail(String loginId, Integer qqno, String imagepath) {
 		QnaDto.QuestionDto question = dao.corpQuestionFindByQqno(loginId, qqno);
 		QnaDto.AnswerDto answer = dao.corpAnswerFindByQqno(loginId, qqno);
-		// HashSet<Object> qna = new HashSet<>();
 		List<Object> qna = new ArrayList<>();
 		question.setQqimg((imagepath + question.getQqimg()));
 		qna.add(question);
@@ -111,10 +107,12 @@ public class QnaService {
 		return qna;
 	}
 
-	/* 일반 회원 : 문의 작성 */
-	public void uploadQuestion(QnaDto.uploadQuestion questionUpDto) {
+	/* 일반 회원 : 문의 등록 */
+	public void uploadQuestion(QnaDto.uploadQuestion questionUpDto, String loginId, Integer pno) {
 		QnaQ question = questionUpDto.toEntity();
 		MultipartFile qqimg = questionUpDto.getQqimg();
+		question.setMemberId(loginId);
+		question.setPno(pno);
 		question.setQqimg(defaultImage);
 		if(qqimg!=null && qqimg.isEmpty()==false && qqimg.getContentType().toLowerCase().startsWith("image/")) {
 			String qqimgName = UUID.randomUUID() + "-" + qqimg.getOriginalFilename();
@@ -146,8 +144,10 @@ public class QnaService {
 	}
 	
 	/* 기업 회원 : 문의 답변 작성 */
-	public void uploadAnswer(QnaDto.AnswerDto answerUpDto) {
+	public void uploadAnswer(QnaDto.AnswerDto answerUpDto, Integer pno, String loginId) {
 		QnaA answer = answerUpDto.toEntity();
+		answer.setPno(pno);
+		answer.setCorpId(loginId);
 		dao.uploadAnswer(answer);
 	}
 	

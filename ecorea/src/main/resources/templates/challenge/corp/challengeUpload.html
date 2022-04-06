@@ -27,10 +27,9 @@ input[type=text], select, textarea {
   padding: 20px;
 }
 </style>
-
   <title>챌린지 등록</title>
-  <script type="text/javascript" src="./js/jquery-1.12.4.min.js"></script>
-  <script type="text/javascript">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script th:inline="javascript">
     $(function(){
      $("#mform").submit(function(){
             var startDate = $('#startDate').val();
@@ -48,43 +47,65 @@ input[type=text], select, textarea {
             }
          });
     });
+    
+    /* 챌린지 시작일 타입 변경 */
+    function changeStartDate() {
+    	var startDate = $('#startDate').val();
+    	var startArray = startDate.split('-');
+        var startday = new Date(startArray[0], startArray[1], startArray[2]);
+        return startday;
+    }
+    
+    /* 챌린지 마감일 타입 변경 */
+    function changeEndDate() {
+    	var endDate = $('#endDate').val();
+        var endArray = endDate.split('-');
+        var endday = new Date(endArray[0], endArray[1], endArray[2]);
+        return endday;
+    }
+    
    </script>
 </head>
 <body>
   <h1>챌린지 등록</h1>
   <div class="container">
     <form action="/challenge/corp/challengeUpload" method="post">
+    <input type="hidden" id="corpId" name="corpId" value="LG">
     
       <label for="challtitle">챌린지명</label>
-      <input type="text" id="challtitle" name="challtitle" placeholder="">
+      <input type="text" id="challtitle" name="cname" placeholder="">
 
       <label for="corpname">기업명</label>
-      <input type="text" id="corpname" name="corpname" placeholder="">
+      <input type="text" id="corpname" name="corpId" placeholder="">
 
       <label for="goal">달성목표</label>
-      <input type="text" id="goal" name="goal" placeholder="">
+      <input type="text" id="goal" name="cgoal" placeholder="">
 
       <label for="goalpoint">보상포인트</label>
-      <input type="text" id="goalpoint" name="goalpoint" placeholder="">
+      <input type="text" id="goalpoint" name="cpoint" placeholder="">
 
       <label for="challdue">챌린지 기간</label><br><br>
+      <!-- 
       <form action="event.jsp" id="mform">
-        시작일<input type="date" name="startDate" id="startDate">
-        종료일<input type="date" name="endDate" id="endDate">
+       -->
+        시작일<input type="date" name="cstartday" id="startDate">
+        종료일<input type="date" name="cendday" id="endDate">
+        <!-- 
         <input type="submit" value="전송">
         </form>
+         -->
         <!-- 수정가능기간 표시하는 태그 -->
       <span style="color:red; font-size:10pxl"></span><br>
-  
+  	  <!-- 
       <label for="challthumbnail" style="margin-top: 20px;">썸네일용 이미지</label>
       <button type="submit">첨부파일</button>
-      <input type="text" id="challthumbnail" name="challthumbnail">
-  
+      <input type="text" id="challthumbnail" name="cthumbnail">
+       -->
       <label for="challcontent">상세 설명</label>
-      <textarea id="challcontent" name="challcontent" style="height:200px"></textarea>
+      <textarea id="challcontent" name="ccontent" style="height:200px"></textarea>
       
-      <button type="submit" class="btn btn-primary" formaction="">등록</button>
-      <button type="submit" class="btn btn-primary" formaction="">취소</button>
+      <button type="submit" class="btn btn-primary">등록</button>
+      <button type="button" class="btn btn-primary" onclick="location.href='/challenge/corp/challengeList'">취소</button>
 
     </form>
   </div>

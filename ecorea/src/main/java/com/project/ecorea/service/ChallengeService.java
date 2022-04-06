@@ -3,7 +3,11 @@ package com.project.ecorea.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.*;
@@ -22,19 +26,21 @@ import lombok.*;
 public class ChallengeService {
 
 	/* Property 읽어 오기 (경로 및 파일) */
-	@Value("${product.image.path}")
+	@Value("${upload.image.path}")
 	private String imagePath;
-	@Value("${product.image.folder}")
+	@Value("${upload.image.folder}")
 	private String imageFolder;
 	@Value("${default.image.name}")
 	private String defaultImage;
 	
 	private final ChallengeDao dao;
+	private final ChProveDao proveDao;
 	
 	/* 기업 회원 : 챌린지 등록 */
-	public void challengeUpload(ChallengeDto.challengeUpload challenge) {
+	public void challengeUpload(ChallengeDto.ChallengeUpload challenge, String loginId) {
 		Challenge challengeDto = challenge.toEntity();
 		MultipartFile cthumbnail = challenge.getCthumbnail();
+		challengeDto.setCorpId(loginId);
 		challengeDto.setCthumbnail(defaultImage);
 		if (cthumbnail != null && cthumbnail.isEmpty() == false && cthumbnail.getContentType().toLowerCase().startsWith("image/")) {
 			String imgname = UUID.randomUUID() + "-" + cthumbnail.getOriginalFilename();
@@ -49,41 +55,70 @@ public class ChallengeService {
 		dao.challengeUpload(challengeDto);
 	}
 
-	/* 기업 회원 : 챌린지 수정 */
-	public void challengeUpdate(Challenge challenge) {
-		
-		
+	/* 기업 회원 : 챌린지 수정 화면 */
+	public Challenge challengeUpdateView(Integer cno) {
+		Challenge update = dao.challengeUpdateView(cno);
+		return update;
 	}
 	
-	public List<Challenge> readchallengeList() {
-		List<Challenge> challenge = dao.findByChallengeAll();
+	/* 기업 회원 : 챌린지 수정 가능 날짜 확인 */
+	public boolean challengeUpdateisDate(Challenge challenge) {
+		LocalDate localRegday = challenge.getCregday();
+		Date regday = java.sql.Date.valueOf(localRegday);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(regday);
+		cal.add(Calendar.DATE, 10);
+		Date endday = cal.getTime();
 		
-		return challenge;
+		boolean result = false;
+		Date today = new Date();
+		int compare1 = today.compareTo(regday);
+		int compare2 = endday.compareTo(today);
+		if (compare1 >= 0 && compare2 >= 0) {
+			result = true;
+		} else {
+			result = false;
+		}
+		return result;
+	}
+	
+	/* 기업 회원 : 챌린지 수정 */
+	public Boolean challengeUpdate(Challenge challenge) {
+		boolean result;
+		if (challengeUpdateisDate(challenge) == true) {
+			Integer update = dao.challengeUpdate(challenge);
+			if (update <= 0)
+				result = false;
+			result = true;		
+		} else {
+			result = false;
+		}
+		return result;
+	}
+	
+	/* 전체 회원 : 챌린지 목록 출력 */
+	public List<ChallengeDto.ChallengeList> readchallengeList() {
+		List<ChallengeDto.ChallengeList> list = dao.findByCorpName();
+		
+		for(ChallengeDto.ChallengeList dto : list) {
+			Integer applyCnt = (int)(((double)dto.getCjoincnt()/(double)dto.getCgoal())*100);
+		}
+		
+		return list;
 	}
 
-	public List<Challenge> readCorpChallengeList(String loginId) {
-		List<Challenge> challenge = dao.findByCorpId(loginId);
-		return challenge;
+	/* 기업 회원 : 챌린지 목록 출력*/ 
+	public List<ChallengeDto.ChallengeList> readCorpChallengeList(String loginId) {
+		List<ChallengeDto.ChallengeList> list = dao.findByCorpId(loginId);
+		return list;
 	}
 
+	/* 전체 회원 : 챌린지 상세 페이지 출력 */
 	public ChallengeDto.ChallengeDetail readUserDetail(Integer cno) {
-		Challenge challenge = dao.findBycno(cno);
-		ChallengeDto.ChallengeDetail detail = challenge.toDto();
-		Integer applyCnt = (challenge.getCjoincnt() / challenge.getCgoal()) * 100;
-		
-		detail.setApplycnt(applyCnt);
+		ChallengeDto.ChallengeDetail detail = dao.findBycno(cno);
+		List<ChProveDto.ChallengeDetailProveList> proveList = proveDao.findByProveAll();
+		// detail.setChProveList(proveList);
 		
 		return detail;
 	}
-
-	public ChallengeDto.ChallengeDetail readCorpDetail(Integer cno) {
-		Challenge challenge = dao.findBycno(cno);
-		ChallengeDto.ChallengeDetail detail = challenge.toDto();
-		Integer applyCnt = (challenge.getCjoincnt() / challenge.getCgoal()) * 100;
-		
-		detail.setApplycnt(applyCnt);
-		
-		return detail;
-	}
-
 }

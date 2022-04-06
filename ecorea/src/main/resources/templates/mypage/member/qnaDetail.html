@@ -6,21 +6,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="../../../static/common.css">
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="./../../common.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script th:inline="javascript">
-  	const question = /*[[${memberQnaDetail[0]}]]*/;
-  	let qanswer = /*[[${memberQnaDetail[1]}]]*/;
+   	/* 삭제 버튼 처리 함수 */
+  	function deleteBtn() {
+  		const $form = $('<form>').attr('method', 'post').attr('action', '/mypage/member/qnaDelete').appendTo($('body'));
+  		$('<input>').attr('type', 'hidden').attr('name', 'qqno').val(question.qqno).appendTo($form);
+  		$form.submit();
+  	}
 
   	$(document).ready(function() {
-    let $answer = document.querySelector('.answer');
-		if (qanswer != null) {
-      		$answer.style.display='block';
-			alert("답변이 있습니다.");
-		} else {
-			$answer.style.display='none';
-			alert("답변이 없습니다.");
-		}
+  		/* 삭제 버튼 처리 */
+		$('#delete').click(function() {
+			const result = confirm("문의를 삭제할까요?")
+			if (result == true) {
+				deleteBtn();
+			}
+		});
   	})
     
   </script>
@@ -49,22 +52,25 @@ input[type=text], select, textarea {
 <body>
   <h1>문의글 상세</h1>
   <div class="container">
-    <form action="/mypage/member/qnaDetail?qno=?" method="post">
-      <label for="reviewtitle">제목</label>
-      <input type="text" id="reviewtitle" name="reviewtitle" placeholder="제목을 입력해주세요." th:value="${memberQnaDetail[0].qqtitle}">
+    <form th:action="@{/mypage/member/qnaUpdate?qqno={qqno}(qqno=${memberQnaDetail[0].qqno})}" method="post">
+      <input type='hidden' id='memberId' name='memberId' th:value='${memberQnaDetail[0].memberId}'>
+      <label for="qqtitle">제목</label>
+      <input type="text" id="qqtitle" name="qqtitle" placeholder="제목을 입력해주세요." th:value="${memberQnaDetail[0].qqtitle}">
   
-      <label for="reviewcontent">내용</label>
-      <textarea id="reviewcontent" name="reviewcontent" placeholder="내용을 입력해주세요." style="height:200px" th:text="${memberQnaDetail[0].qqcontent}"></textarea>
+      <label for="qqcontent">내용</label>
+      <textarea id="qqcontent" name="qqcontent" placeholder="내용을 입력해주세요." style="height:200px" th:text="${memberQnaDetail[0].qqcontent}"></textarea>
       
-      <div class="answer" style="display:none;">
-      <label for="qnaanswer">답변</label>
-  	  <textarea id="qnaanswer" name="qnaanswer" style="height:200px"></textarea>
-    </div>
+      <label for="qacontent">답변</label>
+      <div th:if="${not #strings.isEmpty(memberQnaDetail[1])}">
+      	<textarea id="qacontent" name="qacontent" style="height:200px" th:text="${memberQnaDetail[1].qacontent}"></textarea>
+	  </div>
+	  <div th:unless="${not #strings.isEmpty(memberQnaDetail[1])}">
+        <textarea id="qacontent" name="qacontent" style="height:200px"></textarea>
+	  </div>
 
-  <button type="submit" class="btn btn-primary" formaction="">수정</button>
-  <button type="submit" class="btn btn-primary" formaction="">삭제</button>
-  <button type="submit" class="btn btn-primary" formaction="">목록</button>
-
+	  <button type="submit" class="btn btn-primary" id="update">수정</button>
+	  <button type="button" class="btn btn-primary" id="delete">삭제</button>
+	  <button type="button" class="btn btn-primary" onclick="location.href='/mypage/member/qnaList'">목록</button>
     </form>
   </div>
 </body>
