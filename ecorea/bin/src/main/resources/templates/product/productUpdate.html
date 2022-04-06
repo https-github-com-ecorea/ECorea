@@ -32,10 +32,10 @@
 <body>
   <h1>상품 수정</h1>
   <div class="wrapper">
-  <form action="/action_page.php">
+  <form action="/product/productUpdate" method="post"> 
     <div class="mb-3 mt-3">
       <label for="product-name" class="form-label">상품명</label>
-      <input type="text" class="form-control" id="email" placeholder="변경가능" name="product-name">
+      <input type="text" class="form-control" id="product-name" placeholder="변경가능" name="product-name">
     </div>
     <div class="mb-3">
       <label for="corpid" class="form-label">기업명</label>
@@ -55,8 +55,8 @@
     </div>
     <button type="submit">첨부파일</button>
     <label for="info" class="form-label">상세 정보</label><br><br>
-    <a href="./../mypage/corp/productList.html"><button type="submit" class="btn btn-primary">취소</button></a>
-    <a href="./corp/productDetail.html"><button type="submit" class="btn btn-primary">수정</button></a>
+    <a href="./../mypage/corp/productList"><button type="submit" class="btn btn-primary">취소</button></a>
+    <a href="./corp/productDetail"><button type="submit" class="btn btn-primary">수정</button></a>
   </form>
 </div>
 </body>

@@ -169,10 +169,10 @@ img {vertical-align: middle; height: 300px;}
 
  
     <div class="product-info">
-      <p style="font-size:20px;">챌린지명</p><br>
-      <p>기한 <span></span></p>
-      <p>참여한 횟수 <span>0</span>회</p>
-      <p>인증 횟수 <span>0</span>회</p>
+      <p style="font-size:20px;" th:text="${challenge.cname}">챌린지명</p><br>
+      <p th:text="${challenge.cstartday} + ' ~ ' +  ${challenge.cendday}">기한 <span></span></p>
+      <p>참여한 횟수 <span th:text=${challenge.applycnt}>0</span>회</p>
+      <p>인증 횟수 <span th:text="${challenge.cjoincnt}">0</span>회</p>
     
       <div class="progress">
         <div class="progress-bar" style="width:70%">70%</div>
