@@ -121,11 +121,11 @@
 		function order() {
 			const result = confirm("선택한 상품을 주문하시겠습니까?");
 			if(result == true) {
-				const $form = $('<form>').attr('method','post').attr('action','/order/pay').appendTo($('body')); 
+				const $form = $('<form>').attr('method','post').attr('action','/order/jumunsheets').appendTo($('body')); 
 				$('.pno').each(function(idx, checkbox) {
 					if($(checkbox).prop('checked')==true) {
 						const pno = parseInt($(checkbox).attr('data-pno'));
-						const count = parseInt($(checkbox))
+						const count = parseInt($(checkbox).parent().parent().next().next().next().find(".cartcnt").text());
 						
 					}
 				});
