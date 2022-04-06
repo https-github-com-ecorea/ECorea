@@ -38,5 +38,15 @@ public class ChProveDto {
 			return ChProve.builder().cno(cno).cptitle(cptitle).cpcontent(cpcontent).cpimg(cpimg).build();
 		}
 	}
+	
+	@Data
+	public static class ChallengeDetailProveList {
+		private String cname;
+		private Integer cpno;
+		private String cpimg;
+		private String cptitle;
+		private String cpcontent;
+		private String cpregday;
+	}
 }
 

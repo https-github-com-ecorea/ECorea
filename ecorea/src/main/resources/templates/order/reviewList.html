@@ -22,30 +22,26 @@
     }
   </style>
   <script>
-  	function productUpdate() {
-		const $form = $('<form>').attr('method','get').attr('action','/product/corp/productUpdate').appendTo($('body'));
-		$('<input>').attr('type','hidden').attr('name','pno').val($('#pno').text()).appendTo($form);
+  	function reviewUpdate() {
+		const $form = $('<form>').attr('method','get').attr('action','/order/reviewUpdate').appendTo($('body'));
+		$('<input>').attr('type','hidden').attr('name','hno').val($('#hno').text()).appendTo($form);
 		$form.submit();
 	}
   	
-  	function productDelete() {
-		const $form = $('<form>').attr('method','post').attr('action','/product/corp/productDelete').appendTo($('body'));
-		$('<input>').attr('type','hidden').attr('name','pno').val($('#pno').text()).appendTo($form);
+  	function reviewDelete() {
+		const $form = $('<form>').attr('method','post').attr('action','/order/reviewDelete').appendTo($('body'));
+		$('<input>').attr('type','hidden').attr('name','hno').val($('#hno').text()).appendTo($form);
 		$form.submit();
 	}
   	
   	$(function() {
-  		$('#moveProductDetail').click(function() {
-  			$('#moveProductDetail').attr('href', '/product/corp/ProductDetail?pno=' + $('#pno').text());
-  		});
-
-		$('#moveProductUpdate').click(productUpdate);
-		$('#moveProductDelete').click(function() {
-			const result = confirm("후기를 삭제할까요?")
-			
-			if(result === true) {
-				productDelete();
-			}
+		$('#moveReviewUpdate').click(function() {			
+			if(confirm("수정 페이지로 이동하시겠습니까?"))
+				reviewUpdate();
+		});
+		$('#moveReviewDelete').click(function() {			
+			if(confirm("후기를 삭제할까요?"))
+				reviewDelete();
 		});
   	});
   </script>
@@ -65,20 +61,19 @@
       </tr>
     </thead>
     <tbody>
-    	<tr th:each="regProducts : ${regProducts}">
-	        <td id="pno" th:text="${regProducts.pno}"></td>
+    	<tr th:each="hugis : ${hugi}">
+	        <td id="hno" th:text="${hugis.hno}"></td>
 			<td>
-				<img th:src="${regProducts.pthumbnail}"/>
+				<img th:src="${hugis.himg}"/>
 			</td>
-	        <td>
-	        	<a href="#" id="moveProductDetail" th:text="${regProducts.pname}"></a>
+	        <td th:text="${hugis.htitle}">
 	        </td>
-          <td></td>
-          <td></td>
+          <td th:text="${hugis.hcontent}"></td>
+          <td th:text="${hugis.hregday}"></td>
 	        <td>
-		        <button id="moveProductUpdate" class="btn btn-primary">수정</button>
+		        <button id="moveReviewUpdate" class="btn btn-primary">수정</button>
 		        <br>
-		        <button id="moveProductDelete" class="btn btn-primary">삭제</button>
+		        <button id="moveReviewDelete" class="btn btn-primary">삭제</button>
 	        </td>
     	</tr>
     </tbody>

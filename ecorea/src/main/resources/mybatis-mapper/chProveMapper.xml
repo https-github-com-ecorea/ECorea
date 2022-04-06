@@ -29,4 +29,22 @@
 		</selectKey>
 		insert into chprove values(#{cpno},#{cno},#{cptitle},#{cpcontent},#{cpregday},#{cpimg},#{memberId})
 	</insert>
+	
+	<!--  -->
+	<resultMap type="com.project.ecorea.dto.ChProveDto$ChallengeDetailProveList" id="detailProveList">
+		<id column="cpno" property="cpno"/>
+		<result column="cname" property="cname"/>
+		<result column="cpimg" property="cpimg"/>
+		<result column="cptitle" property="cptitle"/>
+		<result column="cpregday" property="cpregday"/>
+		<result column="cpcontent" property="cpcontent"/>
+	</resultMap>
+	
+	<select id="findByProveAll" resultMap="detailProveList">
+		select c.cname, p.cpno, p.cptitle, p.cpregday, p.cpimg, p.cpcontent
+		from chprove p
+    		left join challenge c 
+        		on(c.cno=p.cno)
+		order by p.cpno desc
+	</select>
 </mapper>

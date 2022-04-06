@@ -18,7 +18,7 @@ import lombok.experimental.*;
 public class Challenge {
 	/* 챌린지 글 번호 */
 	private Integer cno;
-	/* 챌린지 등록 기업 이름 */
+	/* 챌린지 이름 */
 	private String cname;
 	/* 챌린지 목표 */
 	private Integer cgoal;
@@ -44,9 +44,5 @@ public class Challenge {
 	
 	public ChallengeDto.ChallengeDetail toDetailDto() {
 		return ChallengeDto.ChallengeDetail.builder().cno(cno).cname(cname).cgoal(cgoal).cstartday(cstartday).cendday(cendday).cthumbnail(cthumbnail).ccontent(ccontent).cjoincnt(cjoincnt).build();
-	}
-	
-	public ChallengeDto.ChallengeList toListDto() {
-		return ChallengeDto.ChallengeList.builder().cno(cno).cname(cname).cstartday(cstartday).cendday(cendday).cthumbnail(cthumbnail).cregday(cregday).build();
 	}
 }
