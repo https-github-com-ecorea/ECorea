@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8"  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="./../common.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="/common.css">
   <title>바로구매</title>
   <style>
     h1 {
@@ -25,63 +26,76 @@
   </style>
 </head>
 <body>
-  <h1>바로구매</h1>
-  <div class="wrapper">
-  <h3>주문 정보</h3>
-  <form class="form-inline" action="/order/orderList" method="post">
-    <label for="order-person" class="mr-sm-2">주문자</label>
-    <input type="text" class="form-control mb-2 mr-sm-2" placeholder="주문자명" id="order-person">
-    <label for="email" class="mr-sm-2">이메일</label>
-    <input type="email" class="form-control mb-2 mr-sm-2" placeholder="이메일" id="email">
-    <label for="phone" class="mr-sm-2">휴대전화</label>
-    <input type="text" class="form-control mb-2 mr-sm-2" placeholder="휴대전화" id="phone">
-    <label for="order-person" class="mr-sm-2">주소</label>
-    <div class="form-check form-check-inline">
-      <input type="radio" class="form-check-input" id="radio1" name="optradio" value="option1" checked>배송지명1
-      <label class="form-check-label" for="radio1"></label>
+	<div th:text="${preview}">
+	</div>
+	<h1>바로구매</h1>
+    <div class="wrapper" th:each="preview: ${preview}">
+        <div class="jumun_info">
+        <h3>주문 정보</h3>
+            <form class="form-inline">
+                <div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th colspan="2">상품정보</th>
+                                <th>수량</th>
+                                <th>금액</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="product: ${preview.products}">
+                                <td th:text="${product.pthumbnail}"></td>
+                                <td th:text="${product.cartpname}"></td>
+                                <td th:text="${product.cartcnt}"></td>
+                                <td th:text="${product.price*product.cartcnt}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <label for="order-person" class="mr-sm-2">주문자</label>
+                <input type="text" class="form-control mb-2 mr-sm-2" th:value="${preview.memberName}" id="order-person">
+                <label for="email" class="mr-sm-2">이메일</label>
+                <input type="email" class="form-control mb-2 mr-sm-2" th:value="${preview.memberEmail}" id="email">
+                <label for="phone" class="mr-sm-2">휴대전화</label>
+                <input type="text" class="form-control mb-2 mr-sm-2" placeholder="휴대전화" id="phone">
+            </form>
+            <hr>
+        </div>
+        <div class="shipping_info">
+            <h3>배송지 정보</h3>
+            <form class="form-inline">
+            <label for="to-person" class="mr-sm-2">받는 사람</label>
+            <input type="text" class="form-control mb-2 mr-sm-2" th:value="${preview.address.atoname}" id="to-person">
+            <label for="phone" class="mr-sm-2">휴대전화</label>
+            <input type="text" class="form-control mb-2 mr-sm-2" th:value="${preview.address.atel}" id="phone">
+            <label for="message" class="mr-sm-2">배송 메시지</label>
+            <input type="text" class="form-control mb-2 mr-sm-2" placeholder="배송 메시지" id="message">
+            <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input" id="radio1" name="optradio" value="option1" checked>배송지명1
+                <label class="form-check-label" for="radio1"></label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input" id="radio2" name="optradio" value="option2">배송지명2
+                <label class="form-check-label" for="radio2"></label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input" id="radio3" name="optradio" value="option3">배송지명3
+                <label class="form-check-label" for="radio3"></label>
+            </div>
+            <textarea class="form-control" rows="5" id="comment" name="text"></textarea>
+            </form>
+            <hr>
+        </div>
+        <div class="payment">
+            <h3>결제 상세</h3>
+            <form class="form-inline">
+            <label for="point" class="mr-sm-2">보유 포인트</label>
+            <input type="number" class="form-control mb-2 mr-sm-2" th:value="${preview.havePoint}" id="point" disabled>
+            <label for="use-point" class="mr-sm-2">사용 포인트</label>
+            <input type="number" class="form-control mb-2 mr-sm-2" placeholder="사용 포인트" id="use-point">
+            <button type="button" class="btn btn-primary">적용</button><br>
+            <button type="button" class="btn btn-primary">주문하기</button><br>
+        </div>
     </div>
-    <div class="form-check form-check-inline">
-      <input type="radio" class="form-check-input" id="radio2" name="optradio" value="option2">배송지명2
-      <label class="form-check-label" for="radio2"></label>
-    </div>
-    <div class="form-check form-check-inline">
-      <input type="radio" class="form-check-input" id="radio3" name="optradio" value="option3">배송지명3
-      <label class="form-check-label" for="radio3"></label>
-    </div>
-    <textarea class="form-control" rows="5" id="comment" name="text"></textarea>
-  </form>
-  <hr>
-  <h3>배송지 정보</h3>
-  <form class="form-inline" action="/mypage/member/addressList" method="post">
-    <label for="to-person" class="mr-sm-2">받는 사람</label>
-    <input type="text" class="form-control mb-2 mr-sm-2" placeholder="받는 사람" id="to-person">
-    <label for="phone" class="mr-sm-2">휴대전화</label>
-    <input type="text" class="form-control mb-2 mr-sm-2" placeholder="휴대전화" id="phone">
-    <label for="message" class="mr-sm-2">배송 메시지</label>
-    <input type="text" class="form-control mb-2 mr-sm-2" placeholder="배송 메시지" id="message">
-    <div class="form-check form-check-inline">
-      <input type="radio" class="form-check-input" id="radio1" name="optradio" value="option1" checked>배송지명1
-      <label class="form-check-label" for="radio1"></label>
-    </div>
-    <div class="form-check form-check-inline">
-      <input type="radio" class="form-check-input" id="radio2" name="optradio" value="option2">배송지명2
-      <label class="form-check-label" for="radio2"></label>
-    </div>
-    <div class="form-check form-check-inline">
-      <input type="radio" class="form-check-input" id="radio3" name="optradio" value="option3">배송지명3
-      <label class="form-check-label" for="radio3"></label>
-    </div>
-    <textarea class="form-control" rows="5" id="comment" name="text"></textarea>
-  </form>
-  <hr>
-  <h3>결제 상세</h3>
-  <form class="form-inline" action="/order/pay" method="post">
-    <label for="point" class="mr-sm-2">보유 포인트</label>
-    <input type="number" class="form-control mb-2 mr-sm-2" placeholder="보유 포인트" id="point">
-    <label for="use-point" class="mr-sm-2">사용 포인트</label>
-    <input type="number" class="form-control mb-2 mr-sm-2" placeholder="사용 포인트" id="use-point">
-    <button type="submit" class="btn btn-primary">적용</button><br>
-    <button type="submit" class="btn btn-primary">주문하기</button><br>
-  </div>
 </body>
 </html>

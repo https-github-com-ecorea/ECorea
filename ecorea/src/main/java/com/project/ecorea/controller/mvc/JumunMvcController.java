@@ -1,5 +1,6 @@
 package com.project.ecorea.controller.mvc;
 
+
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.*;
@@ -15,12 +16,12 @@ import lombok.*;
 public class JumunMvcController {
 	private JumunService jumunService;
 	
-	
-	@PostMapping("/order/jumunsheets")
-	public ModelAndView cartToOrder(JumunDto params) {
+
+	@PostMapping("/order/preview/multiple")
+	public ModelAndView cartToOrder(JumunDto.ParamsList list) {
 		String memberId = "zzzzuny";
-		JumunDto.JumunSheet dto = jumunService.jumunList(params.getList(), memberId);
-		return new ModelAndView("order/pay").addObject("", dto);
+		JumunDto.JumunPreview dto = jumunService.jumunList(list.getParamsList(), memberId);
+		return new ModelAndView("order/pay").addObject("preview", dto);
 	}
-	
+		
 }

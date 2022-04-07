@@ -21,4 +21,6 @@ public interface AddressDao {
 	/* 선택한 배송지 정보 출력 */
 	public Address chosenAddress(String memberId, Integer ano);
 	
+	/* 기본배송지 정보 출력 */
+	public Address defaultAddress(String memberId);
 }
