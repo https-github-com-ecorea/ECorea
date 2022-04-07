@@ -29,9 +29,9 @@ public class QnaMvcController {
 	
 	/* 일반 회원 - 문의 상세 */
 	@GetMapping("/mypage/member/qnaDetail")
-	public ModelAndView memberQnaDetail(String loginId, Integer qqno, String imagepath, HttpSession session) {
+	public ModelAndView memberQnaDetail(String loginId, Integer qqno, HttpSession session) {
 		session.setAttribute("memberId", loginId);
-		return new ModelAndView("mypage/member/qnaDetail").addObject("memberQnaDetail", service.memberMypageDetail("ngoley6", qqno, imagepath));
+		return new ModelAndView("mypage/member/qnaDetail").addObject("memberQnaDetail", service.memberMypageDetail("ngoley6", qqno));
 	}
 	
 	/* 일반 회원 - 문의 등록 화면 */
@@ -79,8 +79,8 @@ public class QnaMvcController {
 
 	/* 기업 회원 - 문의 상세 화면 */
 	@GetMapping("/mypage/corp/qnaDetail")
-	public ModelAndView corpQnaDetail(String loginId, Integer qqno, String imagepath) {
-		return new ModelAndView("mypage/corp/qnaDetail").addObject("corpQnaDetail", service.corpMypageDetail(loginId, qqno, imagepath));
+	public ModelAndView corpQnaDetail(String loginId, Integer qqno) {
+		return new ModelAndView("mypage/corp/qnaDetail").addObject("corpQnaDetail", service.corpMypageDetail(loginId, qqno));
 	}
 	
 	/* 기업 회원 - 문의 답변 등록 */

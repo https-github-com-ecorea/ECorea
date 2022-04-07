@@ -9,7 +9,33 @@
   <link rel="stylesheet" href="/common.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script>
-  </script>
+    /* 상품 이미지 미리보기 */
+	function previewImage() {
+		const file = $("#cthumbnail")[0].files[0];
+		const maxSize = 1024*1024;
+		if (file.size > maxSize) {
+			Swal.fire('이미지 크기 오류!', '상품 이미지는 1MB를 넘을 수 없습니다.', 'error');
+			$('#cthumbnail').val('');
+			$('#thumbnail_img').removeAttr('src');
+			return false;
+		}
+		const reader = new FileReader();
+		reader.readAsDataURL(file);
+		reader.onload = function() {
+			$("#thumbnail_img").attr("src", reader.result);
+		}
+		return true;
+	}
+  
+  	$(document).ready(function() {
+  		$('#cthumbnail').change(function() {
+  			$('#thumbnail_img').css({
+  				'display': 'block'
+  			});
+  			previewImage();
+  		});
+  	});
+   </script>
   <style>
   * {box-sizing: border-box;}
 
@@ -35,7 +61,7 @@ input[type=text], select, textarea {
 <body>
   <h1>문의 작성</h1>
   <div class="container">
-      <form action="/mypage/member/qnaUpload" method="post">
+      <form action="/mypage/member/qnaUpload" method="post" enctype="multipart/form-data">
 
       <label for="choice">말머리</label>
       <select id="choice" name="qqcategory">
@@ -53,9 +79,9 @@ input[type=text], select, textarea {
       <label for="qqcontent">내용</label>
       <div class="mb-3">
         <input type="file" class="form-control" id="qqimg" name="qqimg" accept=".jpg,.jpeg,.png,.gif">
-        <!-- 
-      <img id="thumbnail_img" height="200px" style="display:none;">
-          -->
+        <img id="thumbnail_img" height="200px" style="display:none;">
+      </div>
+
       <textarea id="qqcontent" name="qqcontent" placeholder="내용을 입력해주세요." style="height:200px"></textarea>
       <button type="submit" class="btn btn-primary">등록</button>
     </form>

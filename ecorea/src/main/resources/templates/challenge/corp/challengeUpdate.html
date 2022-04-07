@@ -29,10 +29,6 @@ input[type=text], select, textarea {
 </style>
   <title>챌린지 수정</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script th:inline="javascript">
-  const data = /*[[${challenge}]]*/
-  console.log(data);
-  </script>
 </head>
 <body>
   <h1>챌린지 수정</h1>
@@ -53,27 +49,22 @@ input[type=text], select, textarea {
       <label for="goalpoint">보상포인트</label>
       <input type="text" id="goalpoint" name="cpoint" th:value="${challenge.cpoint}">
 
-      <label for="challdue">챌린지 기간</label><br><br>
-      <!-- 
-      <form action="event.jsp" id="mform">
-       -->
-        시작일<input type="date" name="cstartday" id="startDate" th:value="${challenge.cstartday}">
-        종료일<input type="date" name="cendday" id="endDate" th:value="${challenge.cendday}">
-        <!-- 
-        <input type="submit" value="전송">
-        </form>
-         -->
-        <!-- 수정가능기간 표시하는 태그 -->
-      <span style="color:red; font-size:10pxl"></span><br>
+        <label for="challdue">챌린지 기간</label><br><br>
+        시작일  <input type="date" name="cstartday" id="startDate" th:value="${challenge.cstartday}">  
+        종료일  <input type="date" name="cendday" id="endDate" th:value="${challenge.cendday}">  
+        <button type="button" id="isDate">확인</button><br>
       
-	  <!-- 
-      <label for="challthumbnail">썸네일용 이미지</label>
-      <button type="submit">첨부파일</button>
-      <input type="text" id="challthumbnail" name="challthumbnail">
-        -->
-        
+	  <div class="mb-3">
+      <label for="challthumbnail" style="margin-top: 20px;">썸네일용 이미지</label><br>
+        <input type="file" class="form-control" id="cthumbnail" name="cthumbnail" accept=".jpg,.jpeg,.png,.gif">
+        <img id="thumbnail_img" height="200px" style="display:none;">
+      </div>
+      
       <label for="challcontent">상세 설명</label>
-      <textarea id="challcontent" name="ccontent" style="height:200px" th:text="${challenge.ccontent}"></textarea>
+      <textarea id="challcontent" name="ccontent" style="height:200px" th:text="${challenge.ccontent}"></textarea><br>
+      
+      <!-- 수정가능기간 표시하는 태그 -->
+      <span style="color:red; font-size:10pxl">챌린지 수정은 작성일로부터 10일 이내에만 가능합니다.</span><br><br>
       
       <button type="submit" class="btn btn-primary">수정</button>
       <button type="submit" class="btn btn-primary" formaction="">취소</button>

@@ -85,11 +85,11 @@ public class QnaService {
 	}
 	
 	/* 일반 회원 : 문의 상세 */
-	public Object memberMypageDetail(String loginId, Integer qqno, String imagepath) {
+	public Object memberMypageDetail(String loginId, Integer qqno) {
 		QnaDto.QuestionDto question = dao.memberQuestionFindByQqno(loginId, qqno);
 		QnaDto.AnswerDto answer = dao.memberAnswerFindByQqno(loginId, qqno);
 		List<Object> qna = new ArrayList<>();
-		question.setQqimg((imagepath + question.getQqimg()));
+		question.setQqimg((imagePath + question.getQqimg()));
 		question.setMemberId(loginId);
 		qna.add(question);
 		qna.add(answer);
@@ -97,11 +97,11 @@ public class QnaService {
 	}
 	
 	/* 기업 회원 : 문의 상세 */
-	public Object corpMypageDetail(String loginId, Integer qqno, String imagepath) {
+	public Object corpMypageDetail(String loginId, Integer qqno) {
 		QnaDto.QuestionDto question = dao.corpQuestionFindByQqno(loginId, qqno);
 		QnaDto.AnswerDto answer = dao.corpAnswerFindByQqno(loginId, qqno);
 		List<Object> qna = new ArrayList<>();
-		question.setQqimg((imagepath + question.getQqimg()));
+		question.setQqimg((imagePath + question.getQqimg()));
 		qna.add(question);
 		qna.add(answer);
 		return qna;
@@ -114,7 +114,7 @@ public class QnaService {
 		question.setMemberId(loginId);
 		question.setPno(pno);
 		question.setQqimg(defaultImage);
-		if(qqimg!=null && qqimg.isEmpty()==false && qqimg.getContentType().toLowerCase().startsWith("image/")) {
+		if(qqimg != null && qqimg.isEmpty() == false && qqimg.getContentType().toLowerCase().startsWith("image/")) {
 			String qqimgName = UUID.randomUUID() + "-" + qqimg.getOriginalFilename();
 			File file = new File(imageFolder, qqimgName);
 			try {

@@ -51,6 +51,7 @@ public class ProductService {
 			lastRnum = count;
 		
 		List<ProductDto.productList> products = productDao.productListPaging(firstRnum, lastRnum, imagePath, catecode);
+		
 		int countOfPage = (count/PRODUCT_PER_PAGE) + 1;
 		if (count % PRODUCT_PER_PAGE == 0)
 			countOfPage--;
