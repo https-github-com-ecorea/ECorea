@@ -2,24 +2,6 @@
 ul, li{list-style: none;}
 a {outline: 0; text-decoration: none; color:rgba(0, 0, 0, 0.65);}
 
-header {
-height: 130px;
-}
-header .logo {
-  display: flex;
-  justify-content: center;
-  padding: 10px;
-}
-header span {
-  padding: 10px;
-  float: right;
-}
-header .logo a:hover {
-  color:rgba(0, 0, 0, 0.774);
-}
-header span a:hover {
-  color:rgba(0, 0, 0, 0.774);
-}
 .topnav {
 background-color: rgb(238, 240, 238);
 overflow: hidden;
