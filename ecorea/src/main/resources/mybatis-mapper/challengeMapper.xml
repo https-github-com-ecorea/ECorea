@@ -55,7 +55,7 @@
 		select cno,cname,cgoal,cstartday,cendday,cthumbnail,ccontent,cjoincnt, 
 			(select count(distinct p.member_id) from chprove p) as applycnt 
 		from challenge
-		where cno=1
+		where cno=#{cno}
 	</select>
 
 </mapper>

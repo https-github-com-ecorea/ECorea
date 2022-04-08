@@ -93,20 +93,12 @@ public class ChallengeService {
 	public List<ChallengeDto.ChallengeList> readchallengeList() {
 		List<ChallengeDto.ChallengeList> list = dao.findByCorpName();
 		
-		for(ChallengeDto.ChallengeList dto : list) {
-			Integer applyCnt = (int)(((double)dto.getCjoincnt()/(double)dto.getCgoal())*100);
-		}
-		
 		return list;
 	}
 
 	/* 기업 회원 : 챌린지 목록 출력*/ 
 	public List<ChallengeDto.ChallengeList> readCorpChallengeList(String loginId) {
 		List<ChallengeDto.ChallengeList> list = dao.findByCorpId(loginId);
-		
-		for(ChallengeDto.ChallengeList dto : list) {
-			Integer applyCnt = (int)(((double)dto.getCjoincnt()/(double)dto.getCgoal())*100);
-		}
 		
 		return list;
 	}

@@ -1,5 +1,7 @@
 package com.project.ecorea.dto;
 
+import org.springframework.web.multipart.*;
+
 import com.project.ecorea.entity.*;
 
 import lombok.*;
@@ -23,21 +25,27 @@ public class HugiDto {
 	@Data
 	public static class HugiUpload {
 		private Integer jno;
-		private Integer pno;
 		private String htitle;
 		private String hcontent;
 		
+		private MultipartFile himg;
+		
 		public Hugi toEntity() {
-			return Hugi.builder().htitle(htitle).hcontent(hcontent).jno(jno).pno(pno).build();
+			return Hugi.builder().htitle(htitle).hcontent(hcontent).jno(jno).build();
 		}
 	}
 	
 	/* 후기 변경 */
 	@Data
 	public static class HugiUpdate {
+		private Integer hno;
 		private String htitle;
 		private String hcontent;
-		private String himg;
+		private MultipartFile himg;
+		
+		public Hugi toEntity() {
+			return Hugi.builder().hno(hno).htitle(htitle).hcontent(hcontent).build();
+		}
 	}
 
 }
