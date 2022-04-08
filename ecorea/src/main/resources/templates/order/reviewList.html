@@ -23,27 +23,48 @@
     }
   </style>
   <script>
-  	function reviewUpdate() {
+  	function reviewUpdate(hno) {
 		const $form = $('<form>').attr('method','get').attr('action','/order/reviewUpdate').appendTo($('body'));
-		$('<input>').attr('type','hidden').attr('name','hno').val($('#hno').text()).appendTo($form);
+		$('<input>').attr('type','hidden').attr('name','hno').val(hno).appendTo($form);
 		$form.submit();
 	}
   	
   	function reviewDelete() {
 		const $form = $('<form>').attr('method','post').attr('action','/order/reviewDelete').appendTo($('body'));
-		$('<input>').attr('type','hidden').attr('name','hno').val($('#hno').text()).appendTo($form);
+		$('<input>').attr('type','hidden').attr('name','hno').val($('.hno').text()).appendTo($form);
 		$form.submit();
 	}
   	
   	$(function() {
-		$('#moveReviewUpdate').click(function() {			
+		/* $('.moveReviewUpdate').click(function() {			
 			if(confirm("수정 페이지로 이동하시겠습니까?"))
 				reviewUpdate();
 		});
-		$('#moveReviewDelete').click(function() {			
+		$('.moveReviewDelete').click(function() {			
 			if(confirm("후기를 삭제할까요?"))
 				reviewDelete();
-		});
+		}); */
+		
+		const moveReviewUpdate = document.getElementsByClassName('moveReviewUpdate');
+		const moveReviewDelete = document.getElementsByClassName('moveReviewDelete');
+		
+		for(let i=0; i<moveReviewUpdate.length; i++) {
+			moveReviewUpdate[i].addEventListener('click', function(e){
+			  if(confirm("수정 페이지로 이동하시겠습니까?")) {
+				let hno = this.dataset.hno;
+			  	reviewUpdate(hno);
+			  }
+			});
+		}
+		
+		for(let i=0; i<moveReviewDelete.length; i++) {
+			moveReviewDelete[i].addEventListener('click', function(e){
+			  if(confirm("후기를 삭제하시겠습니까?")) {
+				let hno = this.dataset.hno;
+			  	reviewDelete(hno);
+			  }
+			});
+		}
   	});
   </script>
 </head>
@@ -63,19 +84,18 @@
     </thead>
     <tbody>
     	<tr th:each="hugis : ${hugi}">
-	        <td id="hno" th:text="${hugis.hno}"></td>
+	        <td class="hno" th:text="${hugis.hno}"></td>
 			<td>
 				<img th:src="${hugis.himg}"/>
 			</td>
-
 	        <td th:text="${hugis.htitle}">
 	        </td>
           <td th:text="${hugis.hcontent}"></td>
           <td th:text="${hugis.hregday}"></td>
 	        <td>
-		        <button id="moveReviewUpdate" class="btn btn-primary">수정</button>
+		        <button class="btn btn-primary moveReviewUpdate" th:data-hno="${hugis.hno}">수정</button>
 		        <br>
-		        <button id="moveReviewDelete" class="btn btn-primary">삭제</button>
+		        <button class="btn btn-primary moveReviewDelete">삭제</button>
 	        </td>
     	</tr>
     </tbody>

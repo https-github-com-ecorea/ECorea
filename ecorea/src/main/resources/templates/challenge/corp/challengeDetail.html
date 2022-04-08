@@ -15,9 +15,11 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
   integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
   crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <link rel="stylesheet" href="/common.css">
   <link rel="stylesheet" href="/index.css">
   <link rel="icon" href="/image/favicon.png">
+
   <title>챌린지 상세</title>
   <style>
     h3 {
@@ -135,6 +137,18 @@ img {vertical-align: middle; height: 300px;}
   width: 300px;
 }
 </style>
+<script th:inline="javascript">
+	const challenge = /*[[${challenge}]]*/
+	
+	$(document).ready(function() {
+		const joincnt = challenge.cjoincnt;
+		const goal = challenge.cgoal;
+		let percentage = (parseInt(joincnt)/parseInt(goal))*100;
+		
+		$('.progress .progress-bar').css('width', percentage+"%").text(percentage+"%");
+		
+	});
+</script>
 </head>
 <body>
   <header>
@@ -168,10 +182,10 @@ img {vertical-align: middle; height: 300px;}
 
  
     <div class="product-info">
-      <p style="font-size:20px;">챌린지명</p><br>
-      <p>기한 <span></span></p>
-      <p>참여한 횟수 <span>0</span>회</p>
-      <p>인증 횟수 <span>0</span>회</p>
+      <p th:text="${challenge.cname}" style="font-size:20px;">챌린지명</p><br>
+      <p th:text="${challenge.cstartday} + ' ~ ' + ${challenge.cendday}">기한 <span></span></p>
+      <p>참여한 횟수 <span th:text="${challenge.applycnt}">0</span>회</p>
+      <p>인증 횟수 <span th:text="${challenge.cjoincnt}">0</span>회</p>
     
       <div class="progress">
         <div class="progress-bar" style="width:70%">70%</div>
@@ -186,7 +200,7 @@ img {vertical-align: middle; height: 300px;}
     </div>
 
     <div class="detail-product" id="content1">
-      <p>A, voluptas culpa? Ipsum excepturi at possimus magnam cum, aperiam rem nulla quaerat facere provident alias sunt tempore eveniet vitae praesentium, sed totam tempora ex sapiente beatae rerum? Aperiam blanditiis recusandae fugit, laboriosam consectetur et officia est pariatur provident, dicta itaque dolorem inventore debitis eveniet expedita nam ducimus vitae aliquid. Doloribus quia illum tempora unde quo. Illum provident fugit eius consequuntur, expedita, sapiente quos sed quam obcaecati dicta nulla esse quae iste id suscipit quibusdam maiores, saepe nostrum aspernatur veniam nemo? Itaque doloremque aliquid delectus illum iste quaerat libero vel veniam praesentium. Delectus exercitationem, doloremque sunt dolorum explicabo est nostrum amet officiis pariatur nulla quasi nisi dicta! Illum doloribus dolore neque fugiat quo animi. Quidem voluptate sint necessitatibus quibusdam nihil repellendus omnis corporis saepe ut harum molestiae, consequatur delectus consectetur dignissimos, fugiat numquam ab atque impedit? Cupiditate doloremque repudiandae doloribus officiis aliquam iusto minima a sit omnis eveniet incidunt sequi pariatur excepturi, ex, tempora quas ut aperiam. Fugit quibusdam ab voluptatibus ea cupiditate culpa aliquam iusto blanditiis possimus at. Numquam deserunt natus, animi assumenda consequatur nesciunt quos adipisci molestiae vel repellendus. Repellendus obcaecati nesciunt dignissimos nostrum illo quam, atque ipsum quaerat, impedit totam iusto nihil laudantium natus velit laborum dolor porro deserunt ea unde perferendis sunt error. Dolorum repudiandae reprehenderit rem at saepe ab quam minus voluptas sunt doloremque minima, repellendus asperiores error perspiciatis voluptatem tempora itaque odio impedit explicabo vitae? Ad iste pariatur mollitia atque.</p>
+      <p th:text="${challenge.ccontent}">A, voluptas culpa? Ipsum excepturi at possimus magnam cum, aperiam rem nulla quaerat facere provident alias sunt tempore eveniet vitae praesentium, sed totam tempora ex sapiente beatae rerum? Aperiam blanditiis recusandae fugit, laboriosam consectetur et officia est pariatur provident, dicta itaque dolorem inventore debitis eveniet expedita nam ducimus vitae aliquid. Doloribus quia illum tempora unde quo. Illum provident fugit eius consequuntur, expedita, sapiente quos sed quam obcaecati dicta nulla esse quae iste id suscipit quibusdam maiores, saepe nostrum aspernatur veniam nemo? Itaque doloremque aliquid delectus illum iste quaerat libero vel veniam praesentium. Delectus exercitationem, doloremque sunt dolorum explicabo est nostrum amet officiis pariatur nulla quasi nisi dicta! Illum doloribus dolore neque fugiat quo animi. Quidem voluptate sint necessitatibus quibusdam nihil repellendus omnis corporis saepe ut harum molestiae, consequatur delectus consectetur dignissimos, fugiat numquam ab atque impedit? Cupiditate doloremque repudiandae doloribus officiis aliquam iusto minima a sit omnis eveniet incidunt sequi pariatur excepturi, ex, tempora quas ut aperiam. Fugit quibusdam ab voluptatibus ea cupiditate culpa aliquam iusto blanditiis possimus at. Numquam deserunt natus, animi assumenda consequatur nesciunt quos adipisci molestiae vel repellendus. Repellendus obcaecati nesciunt dignissimos nostrum illo quam, atque ipsum quaerat, impedit totam iusto nihil laudantium natus velit laborum dolor porro deserunt ea unde perferendis sunt error. Dolorum repudiandae reprehenderit rem at saepe ab quam minus voluptas sunt doloremque minima, repellendus asperiores error perspiciatis voluptatem tempora itaque odio impedit explicabo vitae? Ad iste pariatur mollitia atque.</p>
   </div>
   <hr>
   <div class="reviewlist">

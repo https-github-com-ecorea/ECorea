@@ -20,6 +20,8 @@ public interface HugiDao {
 
 	public void reviewSave(Hugi hugi);
 
-	public void updateByReview(Integer hno, HugiUpdate update);
+	public void updateByReview(Hugi hugi);
+
+	public Hugi findByHno(Integer hno);
 	
 }
