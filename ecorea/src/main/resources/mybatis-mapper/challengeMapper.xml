@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.ecorea.dao.ChallengeDao">
+	<!-- 표기 변환 -->
+	<resultMap type="Challenge" id="namecheck">
+		<result property="corpId" column="corp_id"/>
+	</resultMap>
 
 	<!-- 기업 회원 : 챌린지 등록 -->
 	<insert id="challengeUpload" useGeneratedKeys="true" keyProperty="cno">
@@ -10,15 +14,21 @@
 		insert into challenge values(#{cno}, #{cname}, #{cgoal}, #{cpoint}, #{cregday}, #{cstartday}, #{cendday}, #{cthumbnail}, #{ccontent}, #{cjoincnt}, #{corpId})
 	</insert>
 	
+	
+	<!-- 기업 회원 : 챌린지 수정 화면  -->
+	<select id="challengeUpdateView" resultType="Challenge" resultMap="namecheck">
+		select * from challenge where cno=#{cno}
+	</select>
+	
 	<!-- 기업 회원 : 챌린지 수정 -->
 	<update id="challengeUpdate">
 		update challenge
 		<trim suffixOverrides="," prefix="set">
+			<if test="cname!=null">cname=#{cname},</if>
 			<if test="cgoal!=null">cgoal=#{cgoal},</if>
 			<if test="cpoint!=null">cpoint=#{cpoint},</if>
 			<if test="cthumbnail!=null">cthumbnail=#{cthumbnail},</if>
 			<if test="ccontent!=null">ccontent=#{ccontent},</if>
-			<if test="cjoincnt!=null">cjoincnt=#{cjoincnt},</if>
 		</trim>
 		where corp_id=#{corpId} and cno=#{cno}
 	</update>

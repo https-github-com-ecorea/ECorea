@@ -37,9 +37,10 @@ public class ChallengeService {
 	private final ChProveDao proveDao;
 	
 	/* 기업 회원 : 챌린지 등록 */
-	public void challengeUpload(ChallengeDto.challengeUpload challenge) {
+	public void challengeUpload(ChallengeDto.ChallengeUpload challenge, String loginId) {
 		Challenge challengeDto = challenge.toEntity();
 		MultipartFile cthumbnail = challenge.getCthumbnail();
+		challengeDto.setCorpId(loginId);
 		challengeDto.setCthumbnail(defaultImage);
 		if (cthumbnail != null && cthumbnail.isEmpty() == false && cthumbnail.getContentType().toLowerCase().startsWith("image/")) {
 			String imgname = UUID.randomUUID() + "-" + cthumbnail.getOriginalFilename();
@@ -54,6 +55,12 @@ public class ChallengeService {
 		dao.challengeUpload(challengeDto);
 	}
 
+	/* 기업 회원 : 챌린지 수정 화면 */
+	public Challenge challengeUpdateView(Integer cno) {
+		Challenge update = dao.challengeUpdateView(cno);
+		return update;
+	}
+	
 	/* 기업 회원 : 챌린지 수정 가능 날짜 확인 */
 	public boolean challengeUpdateisDate(Challenge challenge) {
 		LocalDate localRegday = challenge.getCregday();
@@ -99,7 +106,7 @@ public class ChallengeService {
 	/* 기업 회원 : 챌린지 목록 출력*/ 
 	public List<ChallengeDto.ChallengeList> readCorpChallengeList(String loginId) {
 		List<ChallengeDto.ChallengeList> list = dao.findByCorpId(loginId);
-		
+
 		return list;
 	}
 

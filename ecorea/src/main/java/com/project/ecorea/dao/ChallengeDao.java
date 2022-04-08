@@ -15,6 +15,9 @@ public interface ChallengeDao {
 	/* 기업 회원 : 챌린지 등록 */
 	public void challengeUpload(Challenge challenge);
   
+	/* 기업 회원 : 챌린지 수정 화면 */
+	public Challenge challengeUpdateView(Integer cno);
+	
 	/* 기업 회원 : 챌린지 수정 */
 	public Integer challengeUpdate(Challenge challenge);
 
@@ -25,6 +28,5 @@ public interface ChallengeDao {
 	public ChallengeDto.ChallengeDetail findBycno(Integer cno);
 
 	public List<ChallengeDto.ChallengeList> findByCorpName();
-
-  
+	
 }

@@ -1,35 +1,126 @@
-@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Bungee+Shade&family=Coming+Soon&family=Cutive+Mono&family=Faster+One&family=Gowun+Dodum&family=Gruppo&family=Londrina+Outline&family=Monofett&family=Rock+3D&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredericka+the+Great&family=Frijole&family=Gowun+Batang&family=Indie+Flower&family=Libre+Barcode+128+Text&family=Poor+Story&family=Rock+3D&family=Rubik+Moonrocks&display=swap');
 
 /*
-font-family: 'Amatic SC', cursive;
-font-family: 'Bungee Shade', cursive;
-font-family: 'Coming Soon', cursive;
-font-family: 'Cutive Mono', monospace;
-font-family: 'Faster One', cursive;
-font-family: 'Gowun Dodum', sans-serif;
-font-family: 'Gruppo', cursive;
-font-family: 'Londrina Outline', cursive;
-font-family: 'Monofett', cursive;
-font-family: 'Rock 3D', cursive; 
+font-family: 'Gowun Batang', serif;
+font-family: 'Poor Story', cursive;
+font-family: 'Rock 3D', cursive;
+font-family: 'Rubik Moonrocks', cursive;
 */
 
+* {margin: 0; padding: 0;}
+ul, li{list-style: none;}
+a {outline: 0; text-decoration: none; color:rgba(0, 0, 0, 0.496);}
 
-html body {
-  font-family: 'Gowun Dodum', sans-serif;
+body {
+  font-family: 'Gowun Batang', serif;
+  font-size: 20px;
+  position: relative;
 }
 
-h1 {
-  margin: 40px;
-  text-align: center;
+header {
+  width: 100%;
+  height: 100px;
+  margin: 20px 0;
+  position: fixed;
+  z-index: 1;
 }
 
-a:hover {
+.display-5 {
+  margin-top: 100px;
+}
+
+.leftnav {
+  font-family: 'Rubik Moonrocks', cursive;
+  font-size: 22px;
+  background-color: rgb(168, 252, 255);
+  border-radius: 50%;
+  padding: 10px;
+  float: left;
+  margin-right: 20px;
+  margin-top: 35px;
+}
+
+.leftnav:hover {
   color: black;
 }
 
-/* index.html */
-.logo {
-  font-family: 'Rock 3D', cursive;
-  font-size: 40px;
-  font-weight: bold;
+.leftnav:first-child {
+  margin-left: 20px;
+  background-color: white;
+}
+
+.leftnav:nth-child(4) {
+  margin-right: 200px;
+}
+
+.rightnav {
+  border: 1px solid white;
+  font-size: 20px;
+  background-color: white;
+  border-radius: 50%;
+  padding: 10px;
+  float: right;
+  margin-right: 20px;
+  margin-top: 35px;
+}
+
+.footer {
+  background-color: white;
+  color: black;
+}
+
+.catewrapper {
+  padding: 27px 0;
+  font-size: 30px;
+}
+
+.card-wrap .card {
+  font-family: 'Gowun Batang', serif;
+}
+
+.category ul {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-top: 100px;
+}
+
+.category ul li {
+  margin-left: 0;
+  padding-left: 0;
+  margin-right: 25px;
+}
+
+.mininav ul{
+  margin: 0;
+}
+
+.mininav ul li  {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 0;
+}
+
+.mininav ul li a {
+  font-size: 15px;
+}
+
+.mininav ul li:first-child {
+  margin-left: 50px;
+}
+
+.mininav ul li a:hover {
+  color: black;
+}
+
+.goupbtn {
+  top: 80%;
+  left: 94%;
+  width: 50px;
+  height: 50px;
+  border-radius: 80%;
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.638);
+  position: fixed;
+  z-index: 2;
 }
