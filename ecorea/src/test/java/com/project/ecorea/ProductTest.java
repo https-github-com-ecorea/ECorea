@@ -8,8 +8,12 @@ import org.springframework.test.context.web.*;
 
 import com.project.ecorea.service.*;
 
+import ch.qos.logback.classic.Logger;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
 import java.time.*;
 import java.util.*;
@@ -24,13 +28,13 @@ import org.springframework.transaction.annotation.*;
 
 import com.project.ecorea.dao.*;
 import com.project.ecorea.dto.*;
+import com.project.ecorea.dto.ProductDto.productList;
 import com.project.ecorea.entity.*;
 import com.project.ecorea.service.*;
 
-
-
 @SpringBootTest
 @WebAppConfiguration
+@Slf4j
 public class ProductTest {
 	
 	@Autowired
@@ -41,16 +45,28 @@ public class ProductTest {
 		System.out.println(service.productRead(10));
 	}
 	
-	@Test
+	// @Test
 	public void checkStockTest() {
 		System.out.println(service.checkStock(10, 5));
 	}
 	
-	// @Test
-	public void productListTest() {
-		System.out.println(service.productList(1, "22"));
-	}
-
+	 /* 게시판 목록(페이징 적용)테스트 */
+	 // @Test
+	 public void listPagingDaoTest() {
+	     Criteria cri = new Criteria();
+	     cri.setNowPage(2);
+	     List<productList> list = productDao.productPagingList(cri);
+	     list.forEach(element -> log.info("" + element));
+	     /* log.info 쓰려면 테스트 클래스 상단에 @Slf4j 선언해 줘야 함 */
+	 }
+	 
+	 @Test
+	 public void listPagingServiceTest() {
+		 Criteria cri = new Criteria();
+		 List<productList> list = service.productPagingList(cri);
+		 list.forEach(element -> log.info("" + element));
+	 }
+	 
 
 	@Autowired
 	ProductDao productDao;

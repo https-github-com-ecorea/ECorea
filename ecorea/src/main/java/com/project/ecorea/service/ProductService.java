@@ -26,50 +26,34 @@ public class ProductService {
 	/* Property 읽어 오기 */
 	@Value("${upload.image.path}") /* 경로 */
 	private String imagePath;
-
 	@Value("${upload.image.folder}")
 	private String imageFolder;
 	@Value("${default.image.name}")
 	private String defaultImage;
 	
 	private final ProductDao productDao;
-
 	private final HugiDao hugiDao;
 	private final QnaDao qnaDao;
 	
-	/* 상품 목록 페이징에 필요한 상수 */
-	private int PRODUCT_PER_PAGE = 9;
-	private int PAGE_PER_BLOCK = 5;
+	/* 상품 개수 */
+	public int getTotal() {
+		return productDao.getTotal();
+	}
 	
-	/* 상품 목록 페이징 */
-	public PageDto productList(int pageno, String catecode) {
-		
-		int count = productDao.productCnt(catecode);
-		int firstRnum = ((pageno - 1) * PRODUCT_PER_PAGE) + 1;
-		int lastRnum = (firstRnum + PRODUCT_PER_PAGE) - 1;
-		if (count < lastRnum)
-			lastRnum = count;
-		
-		List<ProductDto.productList> products = productDao.productListPaging(firstRnum, lastRnum, imagePath, catecode);
-		
-		int countOfPage = (count/PRODUCT_PER_PAGE) + 1;
-		if (count % PRODUCT_PER_PAGE == 0)
-			countOfPage--;
-
-		int blockNo = pageno/PAGE_PER_BLOCK;
-		if (pageno % PAGE_PER_BLOCK == 0)
-			blockNo--;
-		
-		int start = blockNo * PAGE_PER_BLOCK + 1;
-		int prev = start - 1;
-		int end = start + PAGE_PER_BLOCK - 1;
-		int next = end + 1;
-		if (end >= countOfPage) {
-			end = countOfPage;
-			next = 0;
+	/* 상품 목록 */
+	public List<ProductDto.productList> productList() {		
+		List<ProductDto.productList> productList = new ArrayList<>();
+		List<ProductDto.productList> entity = productDao.productList();
+		for (ProductDto.productList product : entity) {
+			product.setPthumbnail(imagePath + product.getPthumbnail());
+			productList.add(product);
 		}
-		
-		return new PageDto(prev, start, end, next, pageno, products);
+		return productList;
+	}
+	
+	/* 상품 목록 (페이징 적용) */
+	public List<ProductDto.productList> productPagingList(Criteria cri) {
+		return productDao.productPagingList(cri);
 	}
 	
 	/* 상품 상세 페이지 */

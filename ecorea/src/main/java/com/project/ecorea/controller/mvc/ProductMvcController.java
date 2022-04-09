@@ -4,31 +4,44 @@ package com.project.ecorea.controller.mvc;
 import org.springframework.web.bind.annotation.*;
 import com.project.ecorea.service.*;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
+import org.springframework.ui.Model;
 import org.springframework.web.servlet.*;
 import org.springframework.web.servlet.mvc.support.*;
 
-
+import com.project.ecorea.dao.ProductDao;
 import com.project.ecorea.dto.*;
 import com.project.ecorea.service.*;
 
 
 @Controller
 @AllArgsConstructor
+@Slf4j
 public class ProductMvcController {
 	
 	@Autowired
 	private ProductService productService;
 	
-	/* 상품 목록 화면 */
+	/* 상품 목록 화면
 	@GetMapping("/product/productList")
-	public ModelAndView productList(@RequestParam(defaultValue="1") Integer pageno, String catecode) {
-		PageDto page = productService.productList(pageno, catecode);
-		return new ModelAndView("product/productList").addObject("page", page);
+	public ModelAndView productList() {
+		return new ModelAndView("product/productList").addObject("list", productService.productList());
+	}
+	*/
+	
+	/* 상품 목록 화면 (페이징 적용) */
+	@GetMapping("product/productList")
+	public void productPagingList(Model model, Criteria cri) {
+		log.info("productPagingList");
+		model.addAttribute("list", productService.productPagingList(cri));
+		int total = productService.getTotal();
+		PageMakerDto pageMaker = new PageMakerDto(cri, total);
+		model.addAttribute("pageMaker", pageMaker);
 	}
 
 	/* 상품 상세 페이지 화면 */
