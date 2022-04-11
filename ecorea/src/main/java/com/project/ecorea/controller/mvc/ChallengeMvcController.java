@@ -32,7 +32,8 @@ public class ChallengeMvcController {
 	
 	/* 기업 회원 : 챌린지 등록 */
 	@PostMapping("/challenge/corp/challengeUpload")
-	public String challengeUpload(ChallengeDto.ChallengeUpload challenge, String loginId) {
+	public String challengeUpload(ChallengeDto.ChallengeUpload challenge) {
+		String loginId = "LG";
 		service.challengeUpload(challenge, loginId);
 		return "redirect:/challenge/corp/challengeList";
 	} 
@@ -59,7 +60,7 @@ public class ChallengeMvcController {
 	/* 기업 회원 : 챌린지 목록 출력 */
 	@GetMapping("/challenge/corp/challengeList")
 	public ModelAndView readCorpChallengeList(/*Principal principal*/) {
-		String loginId="LG";
+		String loginId = "LG";
 		return new ModelAndView("challenge/corp/challengeList").addObject("challenge", service.readCorpChallengeList(loginId));
 	}
 	

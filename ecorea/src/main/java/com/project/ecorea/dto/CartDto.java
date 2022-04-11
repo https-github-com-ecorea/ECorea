@@ -17,7 +17,7 @@ public class CartDto {
 		private String cartpname;
 		private String pthumbnail;
 		private Integer cartcnt;
-		private Integer price;		
+		private Integer price;
 	}
 	
 	@Data

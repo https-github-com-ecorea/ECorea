@@ -154,7 +154,7 @@
         <button type="submit" class="btn btn-primary" id="delete_all">전체삭제</button><br>
         <div id="list" th:each="list: ${cartList}">
             <h3 th:text="${list.corpName}"></h3>
-            <div class="container">            
+            <div class="container">
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -174,7 +174,7 @@
                                     <span>&nbsp;&nbsp;<span th:text="${product.pno}" name="pno" id="pno"></span></span>                                    
                                 </div>
                             </td>
-                            <td th:text="${product.pthumbnail}"></td>
+                            <td th:text="${product.pthumbnail}"></td> 
                             <td>
                                 <span name="cartpname" id="cartpname" th:text="${product.cartpname}"></span>
                                 <span>(&nbsp;<span name="price" id="price" th:text="${product.price}"></span>&nbsp;)</span>

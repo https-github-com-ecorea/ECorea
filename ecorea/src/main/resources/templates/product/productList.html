@@ -20,10 +20,13 @@
   <link rel="icon" href="/image/favicon.png">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script th:inline="javascript">
-  	const page = /*[[${page}]]*/
+  	const list = /*[[${list}]]*/
+  	var pagemaker = /*[[${pageMaker}]]*/
+  	console.log(pagemaker.cri.amount);
+  	console.log(list);
   	
   	/* 현재 url의 카테고리 코드 추출 */
-  	/* Code By Color Scripter™ */
+  	/* Code By Color Scripter™ 
     function getParameterByName(name, url) {
 	     if (!url) url = window.location.href;
 	     name = name.replace(/[\[\]]/g, "\\$&");
@@ -32,24 +35,25 @@
 	     return results[2];
     }
   	let catecode = getParameterByName('catecode');
-  	
+  	*/
+
   	/* 상품 목록 */
   	function productList() {
   		const $wrap = $(".card-wrap table");
   		let $tr;
-  		$.each(page.products, function(idx, product) {
+  		$.each(list, function(idx, product) {
   			if (idx % 3 == 0)
   				$tr = $('<tr>').appendTo($wrap);
 			const $td = $('<td>').appendTo($tr);
   			const $card = $('<div class="card">').appendTo($td);
   			const $a = $('<a>').attr('href', "/product/member/productDetail?pno=" + product.pno).attr('title', product.name).appendTo($card);
-  			$('<img>').attr('src', '../image/product.jpg').attr('alt', '상품').attr('style', 'width:80%').appendTo($a);
+  			$('<img>').attr('src', product.pthumbnail).attr('alt', '상품').attr('style', 'width:80%').appendTo($a);
   			$('<h1>').text(product.cname).appendTo($a);
   			$('<p>').attr('class', 'title').text(product.pname).appendTo($a);
   			$('<p>').attr('class', 'amount').text(product.price + " 원").appendTo($card);
   			const $btnwrapper = $('<div>').attr('class', 'btnwrapper').appendTo($card);
-  			$('<button>').attr('class', 'left-btn').text('바로구매').appendTo($btnwrapper);
-  			$('<button>').attr('class', 'right-btn').text('장바구니').appendTo($btnwrapper);
+  			$('<button>').attr('class', 'left-btn').attr('th:data-pno', product.pno).text('바로구매').appendTo($btnwrapper);
+  			$('<button>').attr('class', 'right-btn').attr('th:data-pno', product.pno).text('장바구니').appendTo($btnwrapper);
   		})
   	}
   	
@@ -57,25 +61,92 @@
   	function pagination() {
 		const $pagination = $('#pagination');
 		const $ul = $('<ul class="pagination">').appendTo($pagination);
-		if (page.prev > 0) {
+		if (pagemaker.prev == true) {
 			const $li = $('<li>').appendTo($ul);
-			$('<a>').attr('href', '/product/productList?pageno=' + page.prev + '&catecode=' + catecode).text("이전").appendTo($li);
+			$('<a>').attr('href', '/product/productList?nowPage=' + (pagemaker.start - 1) + '&amount=' + pagemaker.cri.amount + '&catecode=' + pagemaker.cri.catecode + '&sort=' + pagemaker.cri.sort).text("이전").appendTo($li);
 		}
-		for (let i = page.start; i <= page.end; i++) {
+		for (let i = pagemaker.start; i <= pagemaker.end; i++) {
 			const $li = $('<li>').appendTo($ul);
-			$('<a>').attr('href', '/product/productList?pageno=' + i + '&catecode=' + catecode).text(i).appendTo($li);
-			if (i == page.pageno)
+			$('<a>').attr('href', '/product/productList?nowPage=' + i + '&amount=' + pagemaker.cri.amount + '&catecode=' + pagemaker.cri.catecode + '&sort=' + pagemaker.cri.sort).text(i).appendTo($li);
+			if (i == pagemaker.nowPage)
 				$li.attr('class', 'active');
 		}
-		if (page.next > page.end) {
+		if (pagemaker.next == true) {
 			const $li = $('<li>').appendTo($ul);
-			$('<a>').attr('href', '/product/productList?pageno=' + page.next + '&catecode=' + catecode).text("다음").appendTo($li);
+			$('<a>').attr('href', '/product/productList?nowPage=' + (pagemaker.end + 1) + '&amount=' + pagemaker.cri.amount + '&catecode=' + pagemaker.cri.catecode + '&sort=' + pagemaker.cri.sort).text("다음").appendTo($li);
 		}
+  	}
+  	
+  	/* 장바구니 버튼 처리 */
+  	function cart() {
+  		$('<iframe>').attr('id', 'iframe1').attr('name', 'iframe1').attr('style', 'display:none').appendTo($('body'));
+		const $form = $('<form>').attr('method', 'post').attr('action', 'order/cart/add').attr('target', 'iframe1').appendTo($('body'));
+		$('<input>').attr('type', 'hidden').attr('name','pno').val($(this).attr('data-pno')).appendTo($form);
+		$('<input>').attr('type', 'hidden').attr('name','count').val(1).appendTo($form);
+		$form.submit();
+		const check = confirm("장바구니로 이동하시겠습니까?");
+		if (check == true) {
+			window.location.replace("/cart/list");
+		}
+  	}
+  	
+  	/* 신상순 정렬 버튼 처리 */
+  	function newest() {
+		let newUrl = window.location.search;
+		let url = new URLSearchParams(newUrl);
+		url.set("sort", "newest");
+		newUrl = url.toString();
+		console.log(newUrl);
+		location.href = "/product/productList?" + newUrl;
+  	}
+  	
+  	/* 높은 가격순 정렬 버튼 처리 */
+  	function highPrice() {
+		let newUrl = window.location.search;
+		let url = new URLSearchParams(newUrl);
+		url.set("sort", "highprice");
+		newUrl = url.toString();
+		console.log(newUrl);
+		location.href = "/product/productList?" + newUrl;
+  	}
+  	
+  	/* 낮은 가격순 정렬 버튼 처리 */
+  	function lowPrice() {
+		let newUrl = window.location.search;
+		let url = new URLSearchParams(newUrl);
+		url.set("sort", "lowprice");
+		newUrl = url.toString();
+		console.log(newUrl);
+		location.href = "/product/productList?" + newUrl;
   	}
   	
 	$(document).ready(function() {
 		productList();
 		pagination();
+		
+		/* 바로 구매 버튼 처리 */
+		$('.left-btn').click(function() {
+			
+		})
+		
+		/* 장바구니 버튼 처리 */
+		$('.right-btn').click(function() {
+			cart();
+		})
+		
+		/* 신상순 정렬 버튼 처리 */
+		$('#newest').click(function() {
+			newest();
+		})
+		/* 높은 가격순 정렬 버튼 처리 */
+		$('#highprice').click(function() {
+			highPrice();
+		})
+		/* 낮은 가격순 정렬 버튼 처리 */
+		$('#lowprice').click(function() {
+			lowPrice();
+		})
+		
 	})
   </script>
   <style>
@@ -168,156 +239,60 @@ li{
   <div class="catewrapper">
     <div class="category">
       <ul>
-        <li><a href="">All</a></li>
-        <li><a href="">반려용품</a></li>
-        <li><a href="">생활용품</a></li>
-        <li><a href="">제로웨이스트</a></li>
-        <li><a href="">원목소품</a></li>
-        <li><a href="">인테리어소품</a></li>
-        <li><a href="">DIY키트</a></li>
+      	<!-- ★ catecode는 카테고리 데이터 수정하는 대로 수정 필요! -->
+        <li><a href="/product/productList?nowPage=1&amount=9&catecode=&sort=">All</a></li>
+        <li><a href="/product/productList?nowPage=1&amount=9&catecode=3&sort=">반려용품</a></li>
+        <li><a href="/product/productList?nowPage=1&amount=9&catecode=4&sort=">생활용품</a></li>
+        <li><a href="/product/productList?nowPage=1&amount=9&catecode=5&sort=">제로웨이스트</a></li>
+        <li><a href="/product/productList?nowPage=1&amount=9&catecode=6&sort=">원목소품</a></li>
+        <li><a href="/product/productList?nowPage=1&amount=9&catecode=7&sort=">인테리어소품</a></li>
+        <li><a href="/product/productList?nowPage=1&amount=9&catecode=8&sort=">DIY키트</a></li>
       </ul>
     </div>
   </div>
 
   <div class="mininav">
     <ul>
-      <li><a href="">신상품</a></li>
-      <li><a href="">낮은가격순</a></li>
-      <li><a href="">높은가격순</a></li>
+      <li><button type="button" id="newest">신상품</button></li>
+      <li><button type="button" id="lowprice">낮은가격순</button></li>
+      <li><button type="button" id="highprice">높은가격순</button></li>
     </ul>
   </div>
-
-  <section class="card-wrap">
-    <table>
-      <tr>
-        <td>
-          <div class="card">
-            <a href="#"><img src="./image/product.jpg" alt="상품" style="width:100%"></a>
-            <a href="#"><h1>브랜드명</h1></a>
-            <a href="#"><p class="title">[업사이클링DIY] 업사이클링 티셔츠 손목 쿠션Kit</p></a>
-            <p class="amount">15,000원</p>
-            <div class="btnwrapper">
-            <p><button class="left-btn">바로구매</button></p>
-            <p><button class="right-btn">장바구니</button></p>
-            </div>
-          </div>
-        </td>
-        <td>
-          <div class="card">
-            <a href="#"><img src="./image/product.jpg" alt="상품" style="width:100%"></a>
-            <a href="#"><h1>브랜드명</h1></a>
-            <a href="#"><p class="title">[업사이클링DIY] 업사이클링 티셔츠 손목 쿠션Kit</p></a>
-            <p class="amount">15,000원</p>
-            <div class="btnwrapper">
-            <p><button class="left-btn">바로구매</button></p>
-            <p><button class="right-btn">장바구니</button></p>
-            </div>
-          </div>
-        </td>
-        <td>
-          <div class="card">
-            <a href="#"><img src="./image/product.jpg" alt="상품" style="width:100%"></a>
-            <a href="#"><h1>브랜드명</h1></a>
-            <a href="#"><p class="title">[업사이클링DIY] 업사이클링 티셔츠 손목 쿠션Kit</p></a>
-            <p class="amount">15,000원</p>
-            <div class="btnwrapper">
-            <p><button class="left-btn">바로구매</button></p>
-            <p><button class="right-btn">장바구니</button></p>
-            </div>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <div class="card">
-            <a href="#"><img src="./image/product.jpg" alt="상품" style="width:100%"></a>
-            <a href="#"><h1>브랜드명</h1></a>
-            <a href="#"><p class="title">[업사이클링DIY] 업사이클링 티셔츠 손목 쿠션Kit</p></a>
-            <p class="amount">15,000원</p>
-            <div class="btnwrapper">
-            <p><button class="left-btn">바로구매</button></p>
-            <p><button class="right-btn">장바구니</button></p>
-            </div>
-          </div>
-        </td>
-        <td>
-          <div class="card">
-            <a href="#"><img src="./image/product.jpg" alt="상품" style="width:100%"></a>
-            <a href="#"><h1>브랜드명</h1></a>
-            <a href="#"><p class="title">[업사이클링DIY] 업사이클링 티셔츠 손목 쿠션Kit</p></a>
-            <p class="amount">15,000원</p>
-            <div class="btnwrapper">
-            <p><button class="left-btn">바로구매</button></p>
-            <p><button class="right-btn">장바구니</button></p>
-            </div>
-          </div>
-        </td>
-        <td>
-          <div class="card">
-            <a href="#"><img src="./image/product.jpg" alt="상품" style="width:100%"></a>
-            <a href="#"><h1>브랜드명</h1></a>
-            <a href="#"><p class="title">[업사이클링DIY] 업사이클링 티셔츠 손목 쿠션Kit</p></a>
-            <p class="amount">15,000원</p>
-            <div class="btnwrapper">
-            <p><button class="left-btn">바로구매</button></p>
-            <p><button class="right-btn">장바구니</button></p>
-            </div>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <div class="card">
-            <a href="#"><img src="./image/product.jpg" alt="상품" style="width:100%"></a>
-            <a href="#"><h1>브랜드명</h1></a>
-            <a href="#"><p class="title">[업사이클링DIY] 업사이클링 티셔츠 손목 쿠션Kit</p></a>
-            <p class="amount">15,000원</p>
-            <div class="btnwrapper">
-            <p><button class="left-btn">바로구매</button></p>
-            <p><button class="right-btn">장바구니</button></p>
-            </div>
-          </div>
-        </td>
-        <td>
-          <div class="card">
-            <a href="#"><img src="./image/product.jpg" alt="상품" style="width:100%"></a>
-            <a href="#"><h1>브랜드명</h1></a>
-            <a href="#"><p class="title">[업사이클링DIY] 업사이클링 티셔츠 손목 쿠션Kit</p></a>
-            <p class="amount">15,000원</p>
-            <div class="btnwrapper">
-            <p><button class="left-btn">바로구매</button></p>
-            <p><button class="right-btn">장바구니</button></p>
-            </div>
-          </div>
-        </td>
-        <td>
-          <div class="card">
-            <a href="#"><img src="./image/product.jpg" alt="상품" style="width:100%"></a>
-            <a href="#"><h1>브랜드명</h1></a>
-            <a href="#"><p class="title">[업사이클링DIY] 업사이클링 티셔츠 손목 쿠션Kit</p></a>
-            <p class="amount">15,000원</p>
-            <div class="btnwrapper">
-            <p><button class="left-btn">바로구매</button></p>
-            <p><button class="right-btn">장바구니</button></p>
-            </div>
-          </div>
-        </td>
-      </tr>
-    </table>
-    <div id="pagination">
-    </div>
-  </section>
-
-  <input class="goupbtn" type="button" value="↑" onclick="clickme()"></div>
-
-  <footer class="footer">
-    <address style="font-size: 12px; display:inline-block;margin-top:10px;margin-left:20px;">
-      인천광역시 미추홀구<br>
-      이메일 : ecorea@gmail.com<br>
-      전화번호 : 032-000-0000
-    </address>
-  </footer>
-
+	
+	<section class="card-wrap">
+	  <table>
+	  <!-- 
+	  	<tr th:each="product : ${list}">
+	  		<td>
+	  			<div class="card">
+			  		<a th:href="@{/product/member/productDetail(pno=${product.pno})}"><img th:src="${product.pthumbnail}" alt="상품" style="width:100%"></a>
+		            <a th:href="@{/product/member/productDetail(pno=${product.pno})}"><h1 th:text="${product.cname}"></h1></a>
+		            <a th:href="@{/product/member/productDetail(pno=${product.pno})}"><p class="title" th:text="${product.pname}"></p></a>
+		            <p class="amount" th:text="${product.price} + ' 원'"></p>
+		            <div class="btnwrapper">
+		            <p><button class="left-btn">바로구매</button></p>
+		            <p><button class="right-btn">장바구니</button></p>
+	  			</div>
+	  		</td>
+	  	-->
+	  </table>
+	  <form id="sendData" method="get">
+	  	<input type="hidden" name="nowPage" value="${pageMaker.cri.nowPage}">
+	  	<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+	  	<input type="hidden" name="catecode" value="${pageMaker.cri.catecode}">
+	  	<input type="hidden" name="sort" value="${pageMaker.cri.sort}">
+	  </form>
+		<div id="pagination">
+		</div>
+	</section>
+	
+<footer>
+  <address style="font-size: 12px; display:inline-block;margin-top:10px;margin-left:20px;">
+    인천광역시 미추홀구<br>
+    이메일 : ecorea@gmail.com<br>
+    전화번호 : 032-000-0000
+  </address>
+</footer>
   <script src="./ECorea Team Project/index.js"></script>
 </body>
 </html>

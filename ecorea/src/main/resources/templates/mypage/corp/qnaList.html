@@ -48,32 +48,12 @@
 	        <td th:text="${qna.qqregday}"></td>
 	        <td th:text="${qna.isAnswer}"></td>
     	</tr>
-    	<tr>
-        <td></td>
-        <td></td>
-	      <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    	</tr>
-    	<tr>
-        <td></td>
-        <td></td>
-	      <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    	</tr>
-    	<tr>
-        <td></td>
-        <td></td>
-	      <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    	</tr>
     </tbody>
   </table>
+    <form id="sendData" method="get">
+  	<input type="hidden" name="nowPage" value="${pageMaker.cri.nowPage}">
+  	<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+  </form>
 </div>
 </body>
 </html>

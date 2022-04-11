@@ -1,24 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.ecorea.dao.ProductDao">
+	<!-- 정렬 -->
+	<sql id="sort">
+		<if test="sort == ''">
+			order by pno desc
+		</if>
+		<if test="sort == 'newest'">
+			order by pno desc
+		</if>
+		<if test="sort == 'lowprice'">
+			order by price
+		</if>
+		<if test="sort == 'highprice'">
+			order by price desc
+		</if>
+	</sql>
 
-	<!-- 카테고리별 상품 개수 -->
-	<select id="productCnt" resultType="int">
-		select /*+ index_ffs(product product_pk_pno) */ count(pno) from product
-		<where>
-			<if test="catecode!=null">catecode=#{catecode}</if>
-		</where>
+	<!-- 전체 상품 개수 -->
+	<select id="getTotal" resultType="int">
+		select count(*) from product_dto
 	</select>
 	
-	<!-- 페이징 -->
-	<select id="productListPaging" resultType="com.project.ecorea.dto.ProductDto$productList">
-		<![CDATA[
-			(select * from
-			    (select rownum as rnum, newdesc.* from
-			        (select /*+ index_desc(product product_pk_pno)*/ pno, catecode, cname, pname, price, #{imagePath} || pthumbnail as pthumbnail from product_dto where catecode=#{catecode}) newdesc
-			    where catecode=#{catecode} and rownum<=#{lastRnum})
-			where rnum>=#{firstRnum})
-		]]>
+	<!-- 카테고리별 상품 개수 -->
+	<select id="getCategoryTotal" resultType="int">
+		select count(*) from product_dto
+			<if test="catecode != null and !catecode.equals('')">where catecode = #{catecode}</if>
+	</select>
+
+	<!-- 상품 목록 출력 -->
+	<select id="productList" resultType="com.project.ecorea.dto.ProductDto$productList">
+		select /*+ index_desc(product product_pk_pno)*/ catecode, pno, cname, pthumbnail, pname, price
+		from product_dto
+	</select>
+	
+	<!-- 상품 목록 (페이징 적용) -->
+	<select id="productPagingList" resultType="com.project.ecorea.dto.ProductDto$productList">
+		select catecode, pno, cname, pthumbnail, pname, price from(
+			select catecode, pno, cname, pthumbnail, pname, price, row_number() over(<include refid="sort" />) rn
+            from product_dto where <![CDATA[rownum <= #{nowPage} * #{amount}]]> <if test="catecode != null and !catecode.equals('')">and catecode=#{catecode}</if>)
+       	where <![CDATA[rn > (#{nowPage} -1) * #{amount}]]>
 	</select>
 		
 	<!-- 상품 상세 페이지 -->

@@ -18,6 +18,11 @@ public class CartService {
 	private CartDao cartDao;
 	private ProductDao productDao;
 	
+	/* 장바구니 담기 */
+	public Boolean add(Integer pno, Integer count, String loginId) {
+		
+	}
+	
 	// 장바구니 목록 출력
 	public List<CartDto.CartList> readCart(String memberId) {
 		List<CartDto.CartList> cartList = cartDao.findByMemberId(memberId);

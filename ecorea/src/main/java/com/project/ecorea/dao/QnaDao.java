@@ -11,6 +11,15 @@ import com.project.ecorea.entity.QnaQ;
 @Mapper
 public interface QnaDao {
 	
+	/* 문의 개수 */
+	public int getTotal();
+	
+	/* 일반 회원 문의 개수 */
+	public int getMemberTotal(String loginId);
+	
+	/* 기업 회원 문의 개수 */
+	public int getCorpTotal(String loginId);
+	
 	/* 상품 상세 : 문의 목록 */
 	public List<QnaDto.QuestionDto> questionFindByPno(Integer pno);
 	
@@ -24,10 +33,10 @@ public interface QnaDao {
 	public int isAnswer(Integer qqno);
 	
 	/* 일반 회원 마이페이지 : 문의 목록 */
-	public List<QnaDto.QuestionDto> memberQuestionFindById(String loginId);
+	public List<QnaDto.QuestionDto> memberQuestionFindById(@Param("loginId")String loginId, @Param("cri")Criteria cri);
 	
 	/* 기업 회원 마이페이지 : 문의 목록 */
-	public List<QnaDto.QuestionDto> corpQuestionFindById(String loginId);
+	public List<QnaDto.QuestionDto> corpQuestionFindById(@Param("loginId")String loginId, @Param("cri")Criteria cri);
 	
 	/* 일반 회원 마이페이지 : 문의 상세 */
 	public QnaDto.QuestionDto memberQuestionFindByQqno(String loginId, Integer qqno);

@@ -47,9 +47,14 @@ input[type=text], select, textarea {
       <select id="qqcategory" name="qqcategory">
         <option value="selectoption">변경불가</option>
       </select>
-  
+
       <label for="qqtitle">제목</label>
       <input type="text" id="qqtitle" name="qqtitle" th:value="${corpQnaDetail[0].qqtitle}">
+  
+  	  <label for="qqimg">이미지</label>
+      <div th:if="${not #strings.isEmpty(corpQnaDetail[0].qqimg)}">
+      	<img id="qqimg" height="200px" th:src="${corpQnaDetail[0].qqimg}">
+      </div><br>
   
       <label for="qqcontent">내용(사유)</label>
       <textarea id="qqcontent" name="qqcontent" style="height:200px" th:text="${corpQnaDetail[0].qqcontent}"></textarea>
@@ -61,7 +66,7 @@ input[type=text], select, textarea {
 	 <div th:unless="${corpQnaDetail[1]} == null">
 	    <textarea id="qacontent" name="qacontent" style="height:200px" th:text="${corpQnaDetail[1].qacontent}"></textarea>
 	 </div>
-
+	 
 	  <button type="submit" class="btn btn-primary" id="upload">등록</button>
 	  <button type="button" class="btn btn-primary" onclick="location.href='/mypage/member/qnaList'">목록</button>
 	</form>

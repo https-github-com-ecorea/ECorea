@@ -56,7 +56,12 @@
       <input type='hidden' id='memberId' name='memberId' th:value='${memberQnaDetail[0].memberId}'>
       <label for="qqtitle">제목</label>
       <input type="text" id="qqtitle" name="qqtitle" placeholder="제목을 입력해주세요." th:value="${memberQnaDetail[0].qqtitle}">
-  
+      
+      <label for="qqimg">이미지</label>
+      <div th:if="${not #strings.isEmpty(memberQnaDetail[0].qqimg)}">
+      	<img id="qqimg" height="200px" th:src="${memberQnaDetail[0].qqimg}">
+      </div><br>
+      
       <label for="qqcontent">내용</label>
       <img id="thumbnail_img" height="200px" style="display:none;">
       <textarea id="qqcontent" name="qqcontent" placeholder="내용을 입력해주세요." style="height:200px" th:text="${memberQnaDetail[0].qqcontent}"></textarea>
