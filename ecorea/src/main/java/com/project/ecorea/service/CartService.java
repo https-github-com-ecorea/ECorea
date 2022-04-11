@@ -25,9 +25,7 @@ public class CartService {
 	
 	// 장바구니 목록 출력
 	public List<CartDto.CartList> readCart(String memberId) {
-		List<CartDto.CartList> cartList = cartDao.findByMemberId(memberId);
-		
-		return cartList;
+		return cartDao.findByMemberId(memberId);
 	}
 	
 	// 상품 갯수 증가
