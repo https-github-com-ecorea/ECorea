@@ -13,7 +13,6 @@ import lombok.experimental.Accessors;
 @Accessors(chain=true)
 public class Hugi {
 	
-	private Integer pno; /* 상품 번호 */
 	private Integer hno; /* 후기 번호 */
 	private Integer jno; /* 주문 번호 */
 	private String htitle; /* 제목 */

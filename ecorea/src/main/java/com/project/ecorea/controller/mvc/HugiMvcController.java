@@ -16,14 +16,8 @@ import lombok.*;
 
 @AllArgsConstructor
 @Controller
-public class OrderMvcController {
-	private OrderService orderService;
+public class HugiMvcController {
 	private HugiService hugiService;
-	
-	@PostMapping("/order/pay")
-	public void cartToOrder() {
-		
-	}
 
 	// 일반회원 후기 목록 페이지
 	@GetMapping("/order/reviewList")
@@ -36,7 +30,7 @@ public class OrderMvcController {
 	// 일반회원 후기 등록 페이지
 	@GetMapping("/order/reviewUpload")
 	public ModelAndView reviewUpload(Integer pno, Integer jno) {
-		return new ModelAndView("order/reviewUpload").addObject("pno", pno).addObject("jno", jno);
+		return new ModelAndView("order/reviewUpload").addObject("jno", jno);
 	}
 	
 	@PostMapping("/order/reviewUpload")
@@ -48,12 +42,12 @@ public class OrderMvcController {
 	
 	// 일반 회원 후기 수정 페이지
 	@GetMapping("/order/reviewUpdate")
-	public ModelAndView reviewUpdate() {
-		return new ModelAndView("order/reviewUpdate");
+	public ModelAndView reviewUpdate(Principal principal, Integer hno) {
+		return new ModelAndView("order/reviewUpdate").addObject("hugi", hugiService.readReviewUpdate(principal.getName(), hno));
 	}
 	
 	@PostMapping("/order/reviewUpdate")
-	public String reviewUpdate(Integer hno, HugiDto.HugiUpdate update) {
+	public String reviewUpdate(Integer hno, HugiDto.HugiUpdate update, Principal principal) {
 		hugiService.reviewUpdate(hno, update);
 		
 		return "redirect:/order/reviewList";

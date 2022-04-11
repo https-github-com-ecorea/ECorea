@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -17,6 +17,7 @@
   crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="/common.css">
   <link rel="stylesheet" href="/index.css">
+  <link rel="icon" href="/image/favicon.png">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script th:inline="javascript">
   	const list = /*[[${list}]]*/
@@ -148,7 +149,7 @@
 		
 	})
   </script>
-<style>
+  <style>
   .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   max-width: 380px;
@@ -292,5 +293,6 @@ li{
     전화번호 : 032-000-0000
   </address>
 </footer>
+  <script src="./ECorea Team Project/index.js"></script>
 </body>
 </html>
