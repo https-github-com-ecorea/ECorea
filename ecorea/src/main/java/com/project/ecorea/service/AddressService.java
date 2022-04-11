@@ -17,7 +17,6 @@ public class AddressService {
 	
 	/* 배송지 추가 */
 	public Boolean addAddress(String /*loginId*/username, Address address) {
-		username = "kpython2";
 		address.setMemberId(/*loginId*/username);
 		if (dao.checkAddressByMemberId(/*loginId*/username) <= 0) {
 			address.setAstandard(1);

@@ -17,7 +17,6 @@ import lombok.*;
 @AllArgsConstructor
 @Controller
 public class OrderMvcController {
-	private OrderService orderService;
 	private HugiService hugiService;
 	
 	@PostMapping("/order/pay")
