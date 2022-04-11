@@ -6,7 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="../../common.css">
+  <link rel="stylesheet" href="/common.css">
+  <link rel="icon" href="/image/favicon.png">
   <style>
   * {box-sizing: border-box;}
 
@@ -27,33 +28,57 @@ input[type=text], select, textarea {
   padding: 20px;
 }
 </style>
-
   <title>챌린지 등록</title>
-  <script type="text/javascript" src="./js/jquery-1.12.4.min.js"></script>
-  <script type="text/javascript">
-    $(function(){
-     $("#mform").submit(function(){
-            var startDate = $('#startDate').val();
-            var endDate = $('#endDate').val();
-            //-을 구분자로 연,월,일로 잘라내어 배열로 반환
-            var startArray = startDate.split('-');
-            var endArray = endDate.split('-');   
-            //배열에 담겨있는 연,월,일을 사용해서 Date 객체 생성
-            var start_date = new Date(startArray[0], startArray[1], startArray[2]);
-            var end_date = new Date(endArray[0], endArray[1], endArray[2]);
-                 //날짜를 숫자형태의 날짜 정보로 변환하여 비교한다.
-            if(start_date.getTime() > end_date.getTime()) {
-                alert("종료날짜보다 시작날짜가 작아야합니다.");
-                return false;
-            }
-         });
-    });
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script th:inline="javascript">
+    /* 상품 이미지 미리보기 */
+	function previewImage() {
+		const file = $("#cthumbnail")[0].files[0];
+		const maxSize = 1024*1024;
+		if (file.size > maxSize) {
+			Swal.fire('이미지 크기 오류!', '상품 이미지는 1MB를 넘을 수 없습니다.', 'error');
+			$('#cthumbnail').val('');
+			$('#thumbnail_img').removeAttr('src');
+			return false;
+		}
+		const reader = new FileReader();
+		reader.readAsDataURL(file);
+		reader.onload = function() {
+			$("#thumbnail_img").attr("src", reader.result);
+		}
+		return true;
+	}
+  
+  	$(document).ready(function() {
+  		$('#cthumbnail').change(function() {
+  			$('#thumbnail_img').css({
+  				'display': 'block'
+  			});
+  			previewImage();
+  		});
+  		
+  	     $("#isDate").click(function(){
+             var startDate = $('#startDate').val();
+             var endDate = $('#endDate').val();
+             //-을 구분자로 연,월,일로 잘라내어 배열로 반환
+             var startArray = startDate.split('-');
+             var endArray = endDate.split('-');   
+             //배열에 담겨있는 연,월,일을 사용해서 Date 객체 생성
+             var start_date = new Date(startArray[0], startArray[1], startArray[2]);
+             var end_date = new Date(endArray[0], endArray[1], endArray[2]);
+                  //날짜를 숫자형태의 날짜 정보로 변환하여 비교한다.
+             if(start_date.getTime() > end_date.getTime()) {
+                 alert("종료 날짜보다 시작 날짜가 작아야 합니다.");
+                 return false;
+             }
+    	 });
+  	});
    </script>
 </head>
 <body>
   <h1>챌린지 등록</h1>
   <div class="container">
-    <form action="/challenge/corp/challengeUpload" method="post">
+    <form action="/challenge/corp/challengeUpload" method="post" enctype="multipart/form-data">
     
       <label for="challtitle">챌린지명</label>
       <input type="text" id="challtitle" name="cname" placeholder="">
@@ -67,25 +92,25 @@ input[type=text], select, textarea {
       <label for="goalpoint">보상포인트</label>
       <input type="text" id="goalpoint" name="cpoint" placeholder="">
 
-
       <label for="challdue">챌린지 기간</label><br><br>
-      <form action="event.jsp" id="mform">
-        시작일<input type="date" name="startDate" id="startDate">
-        종료일<input type="date" name="endDate" id="endDate">
-        <input type="submit" value="전송">
-        </form>
-        <!-- 수정가능기간 표시하는 태그 -->
-      <span style="color:red; font-size:10pxl"></span><br>
-  
-      <label for="challthumbnail" style="margin-top: 20px;">썸네일용 이미지</label>
-      <button type="submit">첨부파일</button>
-      <input type="text" id="challthumbnail" name="cthumbnail">
-  
+        시작일  <input type="date" name="cstartday" id="startDate">  
+        종료일  <input type="date" name="cendday" id="endDate">  
+        <button type="button" id="isDate">확인</button><br>
+      
+	  <div class="mb-3">
+      <label for="challthumbnail" style="margin-top: 20px;">썸네일용 이미지</label><br>
+        <input type="file" class="form-control" id="cthumbnail" name="cthumbnail" accept=".jpg,.jpeg,.png,.gif">
+        <img id="thumbnail_img" height="200px" style="display:none;">
+      </div>
+      
       <label for="challcontent">상세 설명</label>
-      <textarea id="challcontent" name="ccontent" style="height:200px"></textarea>
+      <textarea id="challcontent" name="ccontent" style="height:200px"></textarea><br>
+      
+      <!-- 수정가능기간 표시하는 태그 -->
+      <span style="color:red; font-size:10pxl">챌린지 수정은 작성일로부터 10일 이내에만 가능합니다.</span><br><br>
       
       <button type="submit" class="btn btn-primary">등록</button>
-      <button type="submit" class="btn btn-primary" onclick="location.href='/challenge/corp/challengeList'">취소</button>
+      <button type="button" class="btn btn-primary" onclick="location.href='/challenge/corp/challengeList'">취소</button>
 
     </form>
   </div>

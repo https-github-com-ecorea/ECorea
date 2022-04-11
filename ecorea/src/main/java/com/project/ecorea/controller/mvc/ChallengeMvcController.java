@@ -8,6 +8,7 @@ import java.security.*;
 import javax.servlet.http.*;
 
 import org.springframework.stereotype.*;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.*;
 
@@ -24,7 +25,6 @@ public class ChallengeMvcController {
 	@Autowired
 	private ChallengeService service;
 
-	
 	/* 기업 회원 : 챌린지 등록 화면 */
 	@GetMapping("/challenge/corp/challengeUpload")
 	public void challengeUpload() {
@@ -32,22 +32,23 @@ public class ChallengeMvcController {
 	
 	/* 기업 회원 : 챌린지 등록 */
 	@PostMapping("/challenge/corp/challengeUpload")
-	public String challengeUpload(ChallengeDto.challengeUpload challenge) {
-		service.challengeUpload(challenge);
-		return "rediret:/challenge/challengeList";
+	public String challengeUpload(ChallengeDto.ChallengeUpload challenge) {
+		String loginId = "LG";
+		service.challengeUpload(challenge, loginId);
+		return "redirect:/challenge/corp/challengeList";
 	} 
 	
 	/* 기업 회원 : 챌린지 수정 화면 */
 	@GetMapping("/challenge/corp/challengeUpdate")
-	public ModelAndView challengeUpdate() {
-		return new ModelAndView("challenge/corp/challengeUpdate");
+	public ModelAndView challengeUpdate(Integer cno) {
+		return new ModelAndView().addObject("challenge", service.challengeUpdateView(123));
 	}
 	
 	/* 기업 회원 : 챌린지 수정 */
 	@PostMapping("/challenge/corp/challengeUpdate")
 	public String challengeUpdate(Challenge challenge) {
 		service.challengeUpdate(challenge);
-		return "rediret:/challenge/challengeList";
+		return "redirect:/challenge/corp/challengeList";
 	}
 	
 	/* 전체 유저 : 챌린지 목록 출력 */
@@ -58,8 +59,9 @@ public class ChallengeMvcController {
 	
 	/* 기업 회원 : 챌린지 목록 출력 */
 	@GetMapping("/challenge/corp/challengeList")
-	public ModelAndView readCorpChallengeList(Principal principal) {
-		return new ModelAndView("challenge/corp/challengeList").addObject("challenge", service.readCorpChallengeList(principal.getName()));
+	public ModelAndView readCorpChallengeList(/*Principal principal*/) {
+		String loginId = "LG";
+		return new ModelAndView("challenge/corp/challengeList").addObject("challenge", service.readCorpChallengeList(loginId));
 	}
 	
 	/* 전체 유저 : 챌린지 상세 페이지 출력 */

@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        >
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="../../common.css">
+  <link rel="stylesheet" href="/common.css">
+  <link rel="icon" href="/image/favicon.png">
   <style>
   * {box-sizing: border-box;}
 
@@ -28,36 +29,45 @@ input[type=text], select, textarea {
 }
 </style>
   <title>챌린지 수정</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
   <h1>챌린지 수정</h1>
   <div class="container">
     <form action="/challenge/corp/challengeUpdate" method="post">
+    <input type="hidden" id="regday" name="cregday" th:value="${challenge.cregday}">
+    <input type="hidden" id="cno" name="cno" th:value="${challenge.cno}">
     
       <label for="challtitle">챌린지명</label>
-      <input type="text" id="challtitle" name="challtitle" placeholder="">
+      <input type="text" id="challtitle" name="cname" th:value="${challenge.cname}">
 
       <label for="corpname">기업명</label>
-      <input type="text" id="corpname" name="corpname" placeholder="">
+      <input type="text" id="corpname" name="corpId" th:value="${challenge.corpId}">
 
       <label for="goal">달성목표</label>
-      <input type="text" id="goal" name="goal" placeholder="">
+      <input type="text" id="goal" name="cgoal" th:value="${challenge.cgoal}">
 
       <label for="goalpoint">보상포인트</label>
-      <input type="text" id="goalpoint" name="goalpoint" placeholder="">
+      <input type="text" id="goalpoint" name="cpoint" th:value="${challenge.cpoint}">
 
-      <label for="challdue">챌린지 기간</label>
-      <input type="text" id="challdue" name="challdue" placeholder=""><br>
-      <span style="color:red; font-size:10pxl"></span><br>
-  
-      <label for="challthumbnail">썸네일용 이미지</label>
-      <button type="submit">첨부파일</button>
-      <input type="text" id="challthumbnail" name="challthumbnail">
-  
-      <label for="challcontent">상세 설명</label>
-      <textarea id="challcontent" name="challcontent" style="height:200px"></textarea>
+        <label for="challdue">챌린지 기간</label><br><br>
+        시작일  <input type="date" name="cstartday" id="startDate" th:value="${challenge.cstartday}">  
+        종료일  <input type="date" name="cendday" id="endDate" th:value="${challenge.cendday}">  
+        <button type="button" id="isDate">확인</button><br>
       
-      <button type="submit" class="btn btn-primary" formaction="">수정</button>
+	  <div class="mb-3">
+      <label for="challthumbnail" style="margin-top: 20px;">썸네일용 이미지</label><br>
+        <input type="file" class="form-control" id="cthumbnail" name="cthumbnail" accept=".jpg,.jpeg,.png,.gif">
+        <img id="thumbnail_img" height="200px" style="display:none;">
+      </div>
+      
+      <label for="challcontent">상세 설명</label>
+      <textarea id="challcontent" name="ccontent" style="height:200px" th:text="${challenge.ccontent}"></textarea><br>
+      
+      <!-- 수정가능기간 표시하는 태그 -->
+      <span style="color:red; font-size:10pxl">챌린지 수정은 작성일로부터 10일 이내에만 가능합니다.</span><br><br>
+      
+      <button type="submit" class="btn btn-primary">수정</button>
       <button type="submit" class="btn btn-primary" formaction="">취소</button>
 
     </form>

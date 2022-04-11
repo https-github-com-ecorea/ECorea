@@ -32,6 +32,21 @@ public class QnaService {
 	
 	private final QnaDao dao;
 	
+	/* 전체 문의 개수 */
+	public int getTotal() {
+		return dao.getTotal();
+	}
+	
+	/* 일반 회원 문의 개수 */
+	public int getMemberTotal(String loginId) {
+		return dao.getMemberTotal(loginId);
+	}
+	
+	/* 기업 회원 문의 개수 */
+	public int getCorpTotal(String loginId) {
+		return dao.getCorpTotal(loginId);
+	}
+	
 	/* 상품 상세 : 문의 목록 */
 	public List<QnaDto.QuestionDto> productQuestionList(Integer pno, String imagepath) {
 		List<QnaDto.QuestionDto> dto = new ArrayList<>();
@@ -54,9 +69,9 @@ public class QnaService {
 	}
 	
 	/* 일반 회원 : 문의 목록 */
-	public List<QnaDto.QuestionDto> memberMyPageQuestionList(String loginId) {
+	public List<QnaDto.QuestionDto> memberMyPageQuestionList(String loginId, Criteria cri) {
 		List<QnaDto.QuestionDto> dto = new ArrayList<>();
-		List<QnaDto.QuestionDto> entity = dao.memberQuestionFindById(loginId);
+		List<QnaDto.QuestionDto> entity = dao.memberQuestionFindById(loginId, cri);
 		for (QnaDto.QuestionDto qna : entity) {
 			if (dao.isAnswer(qna.getQqno()) > 0) {
 				qna.setIsAnswer("O");
@@ -70,9 +85,9 @@ public class QnaService {
 	}
 	
 	/* 기업 회원 : 문의 목록 */
-	public List<QnaDto.QuestionDto> corpMyPageQuestionList(String loginId) {
+	public List<QnaDto.QuestionDto> corpMyPageQuestionList(String loginId, Criteria cri) {
 		List<QnaDto.QuestionDto> dto = new ArrayList<>();
-		List<QnaDto.QuestionDto> entity = dao.corpQuestionFindById(loginId);
+		List<QnaDto.QuestionDto> entity = dao.corpQuestionFindById(loginId, cri);
 		for (QnaDto.QuestionDto qna : entity) {
 			if (dao.isAnswer(qna.getQqno()) > 0) {
 				qna.setIsAnswer("O");
@@ -85,11 +100,11 @@ public class QnaService {
 	}
 	
 	/* 일반 회원 : 문의 상세 */
-	public Object memberMypageDetail(String loginId, Integer qqno, String imagepath) {
+	public Object memberMypageDetail(String loginId, Integer qqno) {
 		QnaDto.QuestionDto question = dao.memberQuestionFindByQqno(loginId, qqno);
 		QnaDto.AnswerDto answer = dao.memberAnswerFindByQqno(loginId, qqno);
 		List<Object> qna = new ArrayList<>();
-		question.setQqimg((imagepath + question.getQqimg()));
+		question.setQqimg((imagePath + question.getQqimg()));
 		question.setMemberId(loginId);
 		qna.add(question);
 		qna.add(answer);
@@ -97,11 +112,11 @@ public class QnaService {
 	}
 	
 	/* 기업 회원 : 문의 상세 */
-	public Object corpMypageDetail(String loginId, Integer qqno, String imagepath) {
+	public Object corpMypageDetail(String loginId, Integer qqno) {
 		QnaDto.QuestionDto question = dao.corpQuestionFindByQqno(loginId, qqno);
 		QnaDto.AnswerDto answer = dao.corpAnswerFindByQqno(loginId, qqno);
 		List<Object> qna = new ArrayList<>();
-		question.setQqimg((imagepath + question.getQqimg()));
+		question.setQqimg((imagePath + question.getQqimg()));
 		qna.add(question);
 		qna.add(answer);
 		return qna;
@@ -114,7 +129,7 @@ public class QnaService {
 		question.setMemberId(loginId);
 		question.setPno(pno);
 		question.setQqimg(defaultImage);
-		if(qqimg!=null && qqimg.isEmpty()==false && qqimg.getContentType().toLowerCase().startsWith("image/")) {
+		if(qqimg != null && qqimg.isEmpty() == false && qqimg.getContentType().toLowerCase().startsWith("image/")) {
 			String qqimgName = UUID.randomUUID() + "-" + qqimg.getOriginalFilename();
 			File file = new File(imageFolder, qqimgName);
 			try {
