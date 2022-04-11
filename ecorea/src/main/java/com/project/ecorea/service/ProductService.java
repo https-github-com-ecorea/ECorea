@@ -40,6 +40,11 @@ public class ProductService {
 		return productDao.getTotal();
 	}
 	
+	/* 전체 상품 개수 */
+	public int getCategoryTotal(String catecode) {
+		return productDao.getCategoryTotal(catecode);
+	}
+	
 	/* 상품 목록 */
 	public List<ProductDto.productList> productList() {		
 		List<ProductDto.productList> productList = new ArrayList<>();

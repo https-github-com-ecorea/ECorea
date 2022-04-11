@@ -16,6 +16,12 @@ public class Criteria {
 		this.amount = 9;
 	}
 	
+	/* 파라미터 두 개 */
+	public Criteria(int nowPage, int amount) {
+		this.nowPage = nowPage;
+		this.amount = amount;
+	}
+	
 	/* 파라미터 넣고 호출했을 때 */
 	public Criteria(int nowPage, int amount, String catecode, String sort) {
 		this.nowPage = nowPage;

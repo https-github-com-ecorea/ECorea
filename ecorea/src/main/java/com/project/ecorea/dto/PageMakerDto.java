@@ -16,6 +16,7 @@ public class PageMakerDto {
 		this.cri = cri;
 		this.total = total;
 		
+		/* 화면에 표시할 페이지 개수를 상수로 넣어 줌 */
 		this.end = (int)(Math.ceil(cri.getNowPage() / 5.0)) * 5;
 		this.start = this.end - 4;
 		

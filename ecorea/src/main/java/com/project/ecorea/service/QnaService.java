@@ -32,6 +32,21 @@ public class QnaService {
 	
 	private final QnaDao dao;
 	
+	/* 전체 문의 개수 */
+	public int getTotal() {
+		return dao.getTotal();
+	}
+	
+	/* 일반 회원 문의 개수 */
+	public int getMemberTotal(String loginId) {
+		return dao.getMemberTotal(loginId);
+	}
+	
+	/* 기업 회원 문의 개수 */
+	public int getCorpTotal(String loginId) {
+		return dao.getCorpTotal(loginId);
+	}
+	
 	/* 상품 상세 : 문의 목록 */
 	public List<QnaDto.QuestionDto> productQuestionList(Integer pno, String imagepath) {
 		List<QnaDto.QuestionDto> dto = new ArrayList<>();
@@ -54,9 +69,9 @@ public class QnaService {
 	}
 	
 	/* 일반 회원 : 문의 목록 */
-	public List<QnaDto.QuestionDto> memberMyPageQuestionList(String loginId) {
+	public List<QnaDto.QuestionDto> memberMyPageQuestionList(String loginId, Criteria cri) {
 		List<QnaDto.QuestionDto> dto = new ArrayList<>();
-		List<QnaDto.QuestionDto> entity = dao.memberQuestionFindById(loginId);
+		List<QnaDto.QuestionDto> entity = dao.memberQuestionFindById(loginId, cri);
 		for (QnaDto.QuestionDto qna : entity) {
 			if (dao.isAnswer(qna.getQqno()) > 0) {
 				qna.setIsAnswer("O");
@@ -70,9 +85,9 @@ public class QnaService {
 	}
 	
 	/* 기업 회원 : 문의 목록 */
-	public List<QnaDto.QuestionDto> corpMyPageQuestionList(String loginId) {
+	public List<QnaDto.QuestionDto> corpMyPageQuestionList(String loginId, Criteria cri) {
 		List<QnaDto.QuestionDto> dto = new ArrayList<>();
-		List<QnaDto.QuestionDto> entity = dao.corpQuestionFindById(loginId);
+		List<QnaDto.QuestionDto> entity = dao.corpQuestionFindById(loginId, cri);
 		for (QnaDto.QuestionDto qna : entity) {
 			if (dao.isAnswer(qna.getQqno()) > 0) {
 				qna.setIsAnswer("O");

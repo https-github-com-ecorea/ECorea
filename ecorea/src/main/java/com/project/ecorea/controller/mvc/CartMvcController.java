@@ -18,6 +18,15 @@ public class CartMvcController {
 	private final CartService cartService;
 	String memberId = "zzzzuny";
 	
+	/* 장바구니에 담기 */
+	@PostMapping("/order/cart/add")
+	public String add() {
+		Boolean result = cartService.add(pno, count, memberId);
+		if (result == false)
+			return "redirect:/product/productList";
+		return "redirect:/order/cart";
+	}
+	
 	// 장바구니 보기
 	@GetMapping("/order/cart")
 	public ModelAndView readCart() {
@@ -26,7 +35,6 @@ public class CartMvcController {
 		mav.addObject("cartList", cartList);
 		return mav;
 	}
-	
 	
 	// 장바구니에서 상품 한 개 삭제
 	@PostMapping("/order/cart/deleteOne")

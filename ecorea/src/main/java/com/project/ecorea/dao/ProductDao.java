@@ -10,8 +10,11 @@ import com.project.ecorea.dto.*;
 @Mapper
 public interface ProductDao {
 	
-	/* 상품 개수 */
+	/* 전체 상품 개수 */
 	public int getTotal();
+	
+	/* 카테고리별 상품 개수 */
+	public int getCategoryTotal(String catecode);
 	
 	/* 상품 목록 */
 	public List<ProductDto.productList> productList();

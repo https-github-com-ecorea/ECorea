@@ -17,12 +17,15 @@
 		</if>
 	</sql>
 
-	<!-- 상품 개수 -->
+	<!-- 전체 상품 개수 -->
 	<select id="getTotal" resultType="int">
 		select count(*) from product_dto
-		<where>
-			<if test="catecode!=null">catecode=#{catecode}</if>
-		</where>
+	</select>
+	
+	<!-- 카테고리별 상품 개수 -->
+	<select id="getCategoryTotal" resultType="int">
+		select count(*) from product_dto
+			<if test="catecode != null and !catecode.equals('')">where catecode = #{catecode}</if>
 	</select>
 
 	<!-- 상품 목록 출력 -->
@@ -35,7 +38,7 @@
 	<select id="productPagingList" resultType="com.project.ecorea.dto.ProductDto$productList">
 		select catecode, pno, cname, pthumbnail, pname, price from(
 			select catecode, pno, cname, pthumbnail, pname, price, row_number() over(<include refid="sort" />) rn
-            from product_dto where <![CDATA[rownum <= #{nowPage} * #{amount}]]> and catecode=#{catecode})
+            from product_dto where <![CDATA[rownum <= #{nowPage} * #{amount}]]> <if test="catecode != null and !catecode.equals('')">and catecode=#{catecode}</if>)
        	where <![CDATA[rn > (#{nowPage} -1) * #{amount}]]>
 	</select>
 		

@@ -39,7 +39,7 @@ public class ProductMvcController {
 	public void productPagingList(Model model, Criteria cri) {
 		log.info("productPagingList");
 		model.addAttribute("list", productService.productPagingList(cri));
-		int total = productService.getTotal();
+		int total = productService.getCategoryTotal(cri.getCatecode());
 		PageMakerDto pageMaker = new PageMakerDto(cri, total);
 		model.addAttribute("pageMaker", pageMaker);
 	}
