@@ -20,7 +20,6 @@ import lombok.*;
 public class JumunService {
 	private ProductDao productDao;
 	private UserDao memberDao;
-	private AddressDao addressDao;
 	
 	/* 상품 -> 바로 구매 */
 
@@ -36,8 +35,7 @@ public class JumunService {
 			products.add(jumunProduct);			
 		}
 		Member member = memberDao.memberFindById(memberId);
-		Address address = addressDao.defaultAddress(memberId);
-		JumunDto.JumunPreview jumunPreview = new JumunPreview(products, member.getPoint(), totalPrice, member.getName(), member.getEmail(), address);
+		JumunDto.JumunPreview jumunPreview = new JumunPreview(products, member.getPoint(), totalPrice, member.getName(), member.getEmail());
 		return jumunPreview;		
 	}
 	

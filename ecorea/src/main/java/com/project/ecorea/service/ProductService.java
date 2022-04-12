@@ -123,27 +123,27 @@ public class ProductService {
 	}
 	
 	// 장바구니에 상품 한 개 담기
-	   public Boolean shoppingCartOne(Integer pno, String memberId) {
-	      // cart에 이미 담겨있는 상품인지 확인 
-	      // 담겨있으면 수량 1증가, 아니면 saveOneProduct      
-	      Integer cartcnt = 1;
-	      Cart existProduct = cartDao.findByMemberIdAndPno(memberId, pno);
-	      if(existProduct==null) {
-	         Product product = productDao.findByPno(pno);
-	         Integer cartPrice = product.getPrice()*cartcnt;
-	         Cart cart = Cart.builder().memberId(memberId).pno(pno).cartcnt(cartcnt)
-	               .cartpname(product.getPname()).cartprice(cartPrice).build();
-	         if(cart==null) {
-	            return false;
-	         } else {
-	            cartDao.saveOneProduct(cart);
-	            return true;
-	         }         
-	      } else {
-	         cartService.plusCnt(memberId, pno);
-	         return true;
-	      }      
-	   }
+	public Boolean shoppingCartOne(Integer pno, String memberId) {
+		// cart에 이미 담겨있는 상품인지 확인 
+		// 담겨있으면 수량 1증가, 아니면 saveOneProduct		
+		Integer cartcnt = 1;
+		Cart existProduct = cartDao.findByMemberIdAndPno(memberId, pno);
+		if(existProduct==null) {
+			Product product = productDao.findByPno(pno);
+			Integer cartPrice = product.getPrice()*cartcnt;
+			Cart cart = Cart.builder().memberId(memberId).pno(pno).cartcnt(cartcnt)
+					.cartpname(product.getPname()).cartprice(cartPrice).build();
+			if(cart==null) {
+				return false;
+			} else {
+				cartDao.saveOneProduct(cart);
+				return true;
+			}			
+		} else {
+			cartService.plusCnt(memberId, pno);
+			return true;
+		}		
+	}
 
 	/* 장바구니에 상품 여러 개 담기 */
 	public Boolean shoppingCartMultiple(Integer pno, Integer count, String memberId) {
@@ -162,5 +162,4 @@ public class ProductService {
 			return true;
 		}
 	}
-	
 }
