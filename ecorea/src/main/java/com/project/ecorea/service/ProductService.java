@@ -3,13 +3,9 @@ package com.project.ecorea.service;
 import java.io.*;
 import java.util.*;
 
-
-import org.springframework.beans.factory.annotation.*;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.*;
 import org.springframework.web.multipart.*;
-
 
 import com.project.ecorea.dto.*;
 
@@ -34,6 +30,8 @@ public class ProductService {
 	private final ProductDao productDao;
 	private final HugiDao hugiDao;
 	private final QnaDao qnaDao;
+	private final CartDao cartDao;
+	private final CartService cartService;
 	
 	/* 상품 개수 */
 	public int getTotal() {
@@ -123,4 +121,46 @@ public class ProductService {
 		}
 		return true;
 	}
+	
+	// 장바구니에 상품 한 개 담기
+	   public Boolean shoppingCartOne(Integer pno, String memberId) {
+	      // cart에 이미 담겨있는 상품인지 확인 
+	      // 담겨있으면 수량 1증가, 아니면 saveOneProduct      
+	      Integer cartcnt = 1;
+	      Cart existProduct = cartDao.findByMemberIdAndPno(memberId, pno);
+	      if(existProduct==null) {
+	         Product product = productDao.findByPno(pno);
+	         Integer cartPrice = product.getPrice()*cartcnt;
+	         Cart cart = Cart.builder().memberId(memberId).pno(pno).cartcnt(cartcnt)
+	               .cartpname(product.getPname()).cartprice(cartPrice).build();
+	         if(cart==null) {
+	            return false;
+	         } else {
+	            cartDao.saveOneProduct(cart);
+	            return true;
+	         }         
+	      } else {
+	         cartService.plusCnt(memberId, pno);
+	         return true;
+	      }      
+	   }
+
+	/* 장바구니에 상품 여러 개 담기 */
+	public Boolean shoppingCartMultiple(Integer pno, Integer count, String memberId) {
+		Cart isExistProductInCart = cartDao.findByMemberIdAndPno(memberId, pno);
+		System.out.println(isExistProductInCart);
+		if (isExistProductInCart == null) {
+			Product product = productDao.findByPno(pno);
+			Integer cartPrice = product.getPrice() * count;
+			Cart cart = Cart.builder().memberId(memberId).pno(pno).cartcnt(count)
+					.cartpname(product.getPname()).cartprice(cartPrice).build();
+			System.out.println(cart);
+			cartDao.saveOneProduct(cart);
+			return true;
+		} else {
+			cartService.plusCnt(memberId, pno);
+			return true;
+		}
+	}
+	
 }
