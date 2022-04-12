@@ -14,9 +14,6 @@ import lombok.*;
 @AllArgsConstructor
 public class BookmarkService {
 	private BookmarkDao bookmarkDao;
-	private ProductDao productDao;
-	private CartDao cartDao;
-	private CartService cartService;
 	
 	// 관심상품 리스트 출력
 	public List<BookmarkDto.BookmarkList> readBookmark(String memberId) {
