@@ -50,6 +50,7 @@ public class ChProveDto {
 		private String cptitle;
 		private String cpcontent;
 		private String cpregday;
+		private String cpwriter;
 	}
 }
 

@@ -33,9 +33,25 @@ import lombok.AllArgsConstructor;
 public class UserMvcController {
 	private UserService service;
 	
+	@GetMapping("/")
+	public ModelAndView main(HttpSession session, HttpServletRequest servletRequest) {
+		if(session.getAttribute("login")==null) {
+			return new ModelAndView("/index");
+		}
+		
+		if(servletRequest.isUserInRole("ROLE_MEMBER")) {
+			return new ModelAndView("/index").addObject("role", "ROLE_MEMBER");
+		} else {
+			return new ModelAndView("/index").addObject("role", "ROLE_CORP");
+		}
+	}
+	
 	@PreAuthorize("isAnonymous()")
 	@GetMapping("/general/joinSelect")
-	public void joinSelect() {}
+	public String joinSelect(HttpSession session) {
+		session.setAttribute("login", null);
+		return "/general/joinSelect";
+	}
 	
 	// 일반회원가입 화면 이동
 	@PreAuthorize("isAnonymous()")
@@ -47,7 +63,6 @@ public class UserMvcController {
 	@PostMapping("/general/memberJoin")
 	public String memberJoin(@Valid MemberDto.Join dto, BindingResult bindingResult) {
 		service.memberJoin(dto);
-		
 		return "redirect:/general/checkcode";
 	}
 	
@@ -73,11 +88,14 @@ public class UserMvcController {
 	// 입력한 체크코드가 맞는지 확인
 	@PreAuthorize("isAnonymous()")
 	@PostMapping("/general/checkcode")
-	public String checkcodeJoin(String checkcode) {
+	public String checkcodeJoin(String checkcode, RedirectAttributes ra) {
 		Boolean result = service.checkcode(checkcode);
+		
 		if(result==true) {
+			ra.addFlashAttribute("msg", "회원가입이 완료되었습니다");
 			return "redirect:/general/login";
 		} else {
+			ra.addFlashAttribute("msg", "체크코드를 확인해주세요");
 			return "redirect:/general/checkcode";
 		}
 	}
@@ -86,7 +104,7 @@ public class UserMvcController {
 	@PreAuthorize("isAnonymous()")
 	@GetMapping("/general/login")
 	public ModelAndView login(HttpSession session) {
-		return new ModelAndView("general/login").addObject("msg", session.getAttribute("msg"));
+		return new ModelAndView("general/login").addObject("login", session.getAttribute("login"));
 	}
 	
 	// 아이디 찾기 페이지로 이동 (아이디 찾기 처리는 RestController)
@@ -98,21 +116,6 @@ public class UserMvcController {
 	@PreAuthorize("isAnonymous()")
 	@GetMapping("/general/findPassword")
 	public void resetUserPw() {}
-	
-	// 비밀번호 재발급 처리
-	@PreAuthorize("isAnonymous()")
-	@PostMapping("/general/findPassword")
-	public String resetUserPw(String id, String email, RedirectAttributes ra) {
-		Boolean result = service.resetUserPw(id, email);
-		
-		if(result==false) {
-			ra.addFlashAttribute("msg", "비밀번호를 찾지 못했습니다");
-			return "redirect:/general/findPassword";
-		} else {
-			ra.addFlashAttribute("msg", "임시비밀번호를 이메일로 전송했습니다");
-			return "general/login";
-		}
-	}
 	
 	// 일반회원정보보기 페이지로 이동
 	@PreAuthorize("isAuthenticated()")
@@ -185,11 +188,13 @@ public class UserMvcController {
 	// 비밀번호 확인
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/mypage/checkPassword")
-	public String checkPassword(Principal principal, String pw, HttpSession session) {
+	public String checkPassword(Principal principal, String pw, HttpSession session, RedirectAttributes ra) {
 		Boolean result = service.userCheckPassword(principal.getName(), pw);
+		System.out.println(result);
 		
 		if(result==false) {
-			return "/mypage/checkPassword?error";
+			ra.addFlashAttribute("failPassword", "비밀번호를 확인해주세요");
+			return "redirect:/mypage/checkPassword?error";
 		}
 		session.setAttribute("isPasswordCheck", true);
 		Member member = service.MemberCheck(principal.getName());
