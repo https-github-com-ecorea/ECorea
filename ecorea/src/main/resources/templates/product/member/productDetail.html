@@ -59,10 +59,19 @@
   	
   	/* 장바구니 버튼 */
   	function toCart() {
-		const $form = $('<form>').attr('method', 'post').attr('action', '/order/cart/add').appendTo($('body'));
-		$('<input>').attr('type', 'hidden').attr('name','pno').val(product.pno).appendTo($form);
-		$('<input>').attr('type', 'hidden').attr('name','count').val($('#p_num1').val()).appendTo($form);
-		$form.submit();
+  		const check = confirm("상품이 담겼습니다. 장바구니로 이동하시겠습니까?");
+  		if (check == true) {
+  			const $form = $('<form>').attr('method', 'post').attr('action', '/order/cart/add').appendTo($('body'));
+  			$('<input>').attr('type', 'hidden').attr('name','pno').val(product.pno).appendTo($form);
+  			$('<input>').attr('type', 'hidden').attr('name','count').val($('#p_num1').val()).appendTo($form);
+  			$form.submit();
+  		} else {
+  			$('<iframe>').attr('id', 'iframe1').attr('name', 'iframe1').attr('style', 'display:none').appendTo($('body'));  /* 화면 이동 없게 함 */
+  			const $form = $('<form>').attr('method', 'post').attr('action', '/order/cart/add').attr('target', 'iframe1').appendTo($('body'));
+  			$('<input>').attr('type', 'hidden').attr('name','pno').val(product.pno).appendTo($form);
+  			$('<input>').attr('type', 'hidden').attr('name','count').val($('#p_num1').val()).appendTo($form);
+  			$form.submit();
+  		}
   	}
   	
   	$(document).ready(function() {
