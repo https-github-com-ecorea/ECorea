@@ -34,7 +34,6 @@ public class JumunDto {
 		private Integer totalPrice;
 		private String memberName;
 		private String memberEmail;
-		private Address address;	
 	}	
 	
 	

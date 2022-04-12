@@ -17,7 +17,6 @@ import lombok.*;
 public class JumunService {
 	private ProductDao productDao;
 	private UserDao memberDao;
-	private AddressDao addressDao;
 	
 
 	public JumunDto.JumunPreview jumunList(List<Params> list, String memberId) {	
@@ -31,8 +30,7 @@ public class JumunService {
 			products.add(jumunProduct);			
 		}
 		Member member = memberDao.memberFindById(memberId);
-		Address address = addressDao.defaultAddress(memberId);
-		JumunDto.JumunPreview jumunPreview = new JumunPreview(products, member.getPoint(), totalPrice, member.getName(), member.getEmail(), address);
+		JumunDto.JumunPreview jumunPreview = new JumunPreview(products, member.getPoint(), totalPrice, member.getName(), member.getEmail());
 		return jumunPreview;		
 	}
 	
