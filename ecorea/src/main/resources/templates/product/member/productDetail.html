@@ -21,40 +21,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script th:inline="javascript">
   	const product = /*[[${product}]]*/
-  	
-  	/* 리뷰 목록 */
-	function reviewList() {
- 		$.each(product.hugis, function(idx, hugi) {
- 			const $tbody = $('.reviewlist .table tbody');
- 			const $tr = $('<tr>').appendTo($tbody);
- 			$('<td>').text(hugi.hno).appendTo($tr);
- 			$('<td>').text(hugi.htitle).appendTo($tr);
- 			$('<td>').text(hugi.hwriter).appendTo($tr);
- 			$('<td>').text(hugi.hregday).appendTo($tr);
- 		})
-	}
-	
-  	/* 문의 목록 */
-	function qnaQList() {
- 		$.each(product.qqnas, function(idx, qqna) {
- 			const $tbody = $('.qnalist .table tbody');
- 			const $qtr = $('<tr>').appendTo($tbody);
- 			$('<td>').text(qqna.qqno).appendTo($qtr);
- 			$('<td>').text(qqna.qqcategory).appendTo($qtr);
- 			$('<td>').text(qqna.qqtitle).appendTo($qtr);
- 			$('<td>').text(qqna.memberId).appendTo($qtr);
- 			$('<td>').text(qqna.qqregday).appendTo($qtr);
- 			$.each(product.aqnas, function(idx, aqna) {		/* 문의 번호(qqno)가 일치하는 답변 출력 */
- 				if (qqna.qqno == aqna.qqno) {
-	 	 			const $tbody = $('.qnalist .table tbody');
-	 	 			const $qtr = $('<tr>').appendTo($tbody);
-	 	 			$('<td>').text(aqna.qano).appendTo($qtr);
-	 	 			$('<td>').text(aqna.qacontent).appendTo($qtr);
-	 	 			$('<td>').text(aqna.corpId).appendTo($qtr);
- 				}
- 	 		})
- 		})
-	}
   		
   	/* 수량 추가 버튼 */
   	function plusCnt() {
@@ -100,14 +66,13 @@
   	}
   	
   	$(document).ready(function() {
-  		reviewList();
-  		qnaQList();
+  		// reviewList();
+  		// qnaQList();
   		$('#plus').click(plusCnt);
   		$('#minus').click(minusCnt);
   		$('#order').click(toOrder);
   		$('#cart').click(toCart);
-  	})
-  	
+   	})
   </script>
   <title>상품 상세페이지</title>
   <style>
@@ -312,21 +277,16 @@ img {vertical-align: middle; height: 300px;}
           <th>등록일</th>
         </tr>
       </thead>
-      <tbody>
-      <!--
-        <tr>
-          <td>번호</td>
-          <td>제목</td>
-          <td>작성자</td>
-          <td>등록일</td>
-        </tr>
-        <tr>
-          <td>번호</td>
-          <td>이미지</td>
-          <td>내용</td>
-          <td>등록일</td>
-        </tr>
-         -->
+      <tbody th:each="hugi : ${product.hugis}">
+      	<tr>
+	       	  <td th:text="${hugi.hno}">
+	       	  <td th:text="${hugi.htitle}" class="title">
+	       	  <td th:text="${hugi.hwriter}">
+	       	  <td th:text="${hugi.hregday}">
+	       	  <tr class="show" style="display: none">
+	             <td colspan="4" th:text="${hugi.hcontent}">본문</td>
+	          </tr>
+         </tr>
        </tbody>
     </table>
   </div>
@@ -336,37 +296,44 @@ img {vertical-align: middle; height: 300px;}
     <table class="table">
       <thead class="thead-light">
         <tr>
-          <th>번호</th>
-          <th>카테고리</th>
-          <th>제목</th>
-          <th>작성자</th>
-          <th>등록일</th>
+	          <th>번호</th>
+	          <th>카테고리</th>
+	          <th>제목</th>
+	          <th>작성자</th>
+	          <th>등록일</th>
         </tr>
       </thead>
-      <tbody>
-      <!-- 
-        <tr>
-          <td>번호</td>
-          <td>카테고리</td>
-          <td>제목</td>
-          <td>작성자</td>
-          <td>등록일</td>
-        </tr>
-        <tr>
-          <td>답변번호</td>
-          <td>이미지</td>
-          <td>내용</td>
-          <td>답변작성자</td>
-          <td>답변등록일</td>
-        </tr>
-         -->
+	   <tbody th:each="qqna : ${product.QQnas}">
+	     <tr>
+		     <td th:text="${qqna.qqno}">
+		     <td th:text="${qqna.qqcategory}">
+		     <td th:text="${qqna.qqtitle}" class="title">
+		     <td th:text="${qqna.memberId}">
+		     <td th:text="${qqna.qqregday}">
+		     <tr class="show" style="display: none">
+	             <td colspan="5" th:text="${qqna.qqcontent}"></td>
+	          </tr>
+	     </tr>
        </tbody>
     </table>
   </div>
   </div>
 
-
-  <script>
+  <script>  
+	  /* 제목 눌렀을 때 본문 출력 */
+	  let show = document.getElementsByClassName('show');
+	  let title = document.getElementsByClassName('title');
+	  
+	  for (let i=0; i<title.length; i++) {
+	    title[i].addEventListener('click', function(){
+	       if(show[i].style.display==='none') {
+	          show[i].style.display="";
+	       } else {
+	          show[i].style.display='none';
+	       }
+	    });
+	  }
+    
     let slideIndex = 1;
     showSlides(slideIndex);
     

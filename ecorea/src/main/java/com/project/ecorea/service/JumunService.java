@@ -26,8 +26,7 @@ public class JumunService {
 		Integer totalPrice = product.getPrice() * count;
 		products.add(new CartProduct(pno, product.getPname(), count, totalPrice, memberId));
 		Member member = memberDao.memberFindById(memberId);
-		Address address = addressDao.defaultAddress(memberId);
-		JumunDto.JumunPreview jumunPreview = new JumunPreview(products, member.getPoint(), totalPrice, member.getName(), member.getEmail(), address);
+		JumunDto.JumunPreview jumunPreview = new JumunPreview(products, member.getPoint(), totalPrice, member.getName(), member.getEmail());
 		return jumunPreview;
 	}
 
