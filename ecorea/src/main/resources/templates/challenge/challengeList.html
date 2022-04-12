@@ -16,8 +16,8 @@
   integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
   crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <link rel="stylesheet" href="/common.css">
-  <link rel="stylesheet" href="/index.css">
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/index.css">
   <link rel="icon" href="/image/favicon.png">
   <style>
     * {
@@ -96,33 +96,6 @@ h1 {
   color: white;
 }
   </style>
-  
-  <script th:inline="javascript">
-  	const $challenge = /*[[${challenge}]]*/	
-  
-  	$(document).ready(function() {
-      for(const challenges of $challenge) {
-    	  let cjoincnt = challenges.cjoincnt;
-    	  let cgoal = challenges.cgoal;
-    	  
-    	  let applycnt = (parseInt(cjoincnt)/parseInt(cgoal))*100;
-	      
-	      
-	      let $topParentsDiv = $('<div class="column nature">').attr('display', 'block').appendTo($('#row'));
-	      let $secondParentsDiv = $('<div class="content">').appendTo($topParentsDiv);
-	      		$('<span>').text(challenges.corpname).appendTo($secondParentsDiv);
-	      		let $a = $('<a href="#">').appendTo($secondParentsDiv);
-	      			$('<img alt="챌린지" style="width:100%">').attr('src', "./../image/ocean.jpeg").appendTo($a);
-	      		let $h4 = $('<h4>').text(challenges.cname).appendTo($secondParentsDiv);
-	      			$('<a>').attr('href', '#').appendTo($h4);
-	      		$('<p>').text(challenges.cstartday + " ~ " + challenges.cendday).appendTo($secondParentsDiv);
-	      		let $thirdParentsDiv = $('<div>').appendTo($secondParentsDiv);
-	      			let $progressDiv = $('<div class="progress">').appendTo($thirdParentsDiv);
-	      			$('<div class="progress-bar">').css('width', applycnt+"%").text(applycnt+"%").appendTo($progressDiv);
-	      		$('<button type="submit" class="btn btn-primary" formaction="">').text('신청하기').appendTo($secondParentsDiv);
-      }
-  	});
-  </script>
   <title>챌린지 목록</title>
 </head>
 <body>
@@ -147,7 +120,6 @@ h1 {
 
   <!-- Portfolio Gallery Grid -->
   <div class="row" id="row">
-  
     <!-- <div class="column nature">
       <div class="content">
       <span >브랜드명</span>
@@ -240,7 +212,7 @@ h1 {
   <!-- END MAIN -->
   </div>
   
-  <script>
+  <script th:inline="javascript">
   filterSelection("all")
   function filterSelection(c) {
     var x, i;
@@ -273,9 +245,31 @@ h1 {
     element.className = arr1.join(" ");
   }
   
+  const $challenge = /*[[${challenge}]]*/;	
+	  
+	      for(const challenges of $challenge) {
+	    	  let cjoincnt = challenges.cjoincnt;
+	    	  let cgoal = challenges.cgoal;
+	    	  
+	    	  let applycnt = (parseInt(cjoincnt)/parseInt(cgoal))*100;
+		      
+		      
+		      let $topParentsDiv = $('<div class="column nature">').attr('display', 'block').appendTo($('#row'));
+		      let $secondParentsDiv = $('<div class="content">').appendTo($topParentsDiv);
+		      		$('<span>').text(challenges.corpname).appendTo($secondParentsDiv);
+		      		let $a = $('<a href="#">').appendTo($secondParentsDiv);
+		      			$('<img alt="챌린지" style="width:100%">').attr('src', "./../image/ocean.jpeg").appendTo($a);
+		      		let $h4 = $('<h4>').text(challenges.cname).appendTo($secondParentsDiv);
+		      			$('<a>').attr('href', '#').appendTo($h4);
+		      		$('<p>').text(challenges.cstartday + " ~ " + challenges.cendday).appendTo($secondParentsDiv);
+		      		let $thirdParentsDiv = $('<div>').appendTo($secondParentsDiv);
+		      			let $progressDiv = $('<div class="progress">').appendTo($thirdParentsDiv);
+		      			$('<div class="progress-bar">').css('width', applycnt+"%").text(applycnt+"%").appendTo($progressDiv);
+		      		$('<button type="submit" class="btn btn-primary" formaction="">').text('신청하기').appendTo($secondParentsDiv);
+	      }
   
   // Add active class to the current button (highlight it)
-  /* var btnContainer = document.getElementById("myBtnContainer");
+  var btnContainer = document.getElementById("myBtnContainer");
   var btns = btnContainer.getElementsByClassName("btn");
   for (var i = 0; i < btns.length; i++) {
     btns[i].addEventListener("click", function(){
@@ -283,8 +277,8 @@ h1 {
       current[0].className = current[0].className.replace(" active", "");
       this.className += " active";
     });
-  } */
-  </script>
+  }
   
+  </script>
 </body>
 </html>

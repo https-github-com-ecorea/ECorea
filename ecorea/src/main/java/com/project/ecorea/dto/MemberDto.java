@@ -17,7 +17,7 @@ public class MemberDto {
 	@Builder
 	public static class Join {
 		@NotNull
-		@Pattern(regexp = "^[a-z0-9]{8,10}$", message = "아이디는 소문자나 숫자 5~20자 입니다")
+		@Pattern(regexp = "^[a-z0-9]{8,20}$", message = "아이디는 소문자나 숫자 8~20자 입니다")
 		private String id;
 		@NotNull
 		@Pattern(regexp = "(?=.*[!@#$%^&*])^[A-Za-z0-9!@#$%^&*]{8,10}$")
