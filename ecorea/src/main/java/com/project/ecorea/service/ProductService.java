@@ -56,7 +56,14 @@ public class ProductService {
 	
 	/* 상품 목록 (페이징 적용) */
 	public List<ProductDto.productList> productPagingList(Criteria cri) {
-		return productDao.productPagingList(cri);
+		List<ProductDto.productList> productList = new ArrayList<>();
+		List<ProductDto.productList> newList = productDao.productPagingList(cri);
+		for (ProductDto.productList element : newList) {
+			System.out.println("###### 썸네일 주소 : " + element.getPthumbnail());
+			element.setPthumbnail(imagePath + element.getPthumbnail());
+			productList.add(element);
+		}
+		return productList;
 	}
 	
 	/* 상품 상세 페이지 */
@@ -77,7 +84,7 @@ public class ProductService {
 
 	public void uploadProduct(ProductDto.Upload uploadDto) {
 		Product product = uploadDto.toEntity();
-		MultipartFile pthumbnail = uploadDto.getPthumnail();
+		MultipartFile pthumbnail = uploadDto.getPthumbnail();
 		product.setPthumbnail(defaultImage);
 		if(pthumbnail!=null && pthumbnail.isEmpty()==false && pthumbnail.getContentType().toLowerCase().startsWith("image/")) {
 			String pthumbnailName = UUID.randomUUID() + "-" + pthumbnail.getOriginalFilename();
@@ -95,7 +102,7 @@ public class ProductService {
 	// 등록 상품 리스트 출력
 	public List<ProductDto.CorpProductList> regProductsList(String corpId) {
 		List<ProductDto.CorpProductList> corpProductListDto = productDao.findByCorpId(corpId);
-		return corpProductListDto;		
+		return corpProductListDto;
 	}
 	
 	// 등록된 상품 상세정보 출력
