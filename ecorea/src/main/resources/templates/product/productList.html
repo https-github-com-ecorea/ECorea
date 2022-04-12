@@ -77,17 +77,27 @@
 		}
   	}
   	
-  	/* 장바구니 버튼 처리 */
-  	function cart() {
-  		$('<iframe>').attr('id', 'iframe1').attr('name', 'iframe1').attr('style', 'display:none').appendTo($('body'));
-		const $form = $('<form>').attr('method', 'post').attr('action', 'order/cart/add').attr('target', 'iframe1').appendTo($('body'));
-		$('<input>').attr('type', 'hidden').attr('name','pno').val($(this).attr('data-pno')).appendTo($form);
+  	/* 바로 구매 버튼 처리 */
+  	function toPay() {
+		const $form = $('<form>').attr('method', 'post').attr('action', '/order/preview/one').appendTo($('body'));
+		$('<input>').attr('type', 'hidden').attr('name','pno').val($(this).attr('th:data-pno')).appendTo($form);
 		$('<input>').attr('type', 'hidden').attr('name','count').val(1).appendTo($form);
 		$form.submit();
+  	}
+  	
+  	/* 장바구니 버튼 처리 */
+  	function toCart() {
+  		/* $('<iframe>').attr('id', 'iframe1').attr('name', 'iframe1').attr('style', 'display:none').appendTo($('body'));  화면 이동 없게 함 */
+		const $form = $('<form>').attr('method', 'post').attr('action', '/order/cart/add')/*.attr('target', 'iframe1')*/.appendTo($('body'));
+		$('<input>').attr('type', 'hidden').attr('name','pno').val($(this).attr('th:data-pno')).appendTo($form);
+		$('<input>').attr('type', 'hidden').attr('name','count').val(1).appendTo($form);
+		$form.submit();
+		/*
 		const check = confirm("장바구니로 이동하시겠습니까?");
 		if (check == true) {
-			window.location.replace("/cart/list");
+			window.location.replace("/order/cart/add");
 		}
+		*/
   	}
   	
   	/* 신상순 정렬 버튼 처리 */
@@ -125,27 +135,19 @@
 		pagination();
 		
 		/* 바로 구매 버튼 처리 */
-		$('.left-btn').click(function() {
-			
-		})
+		$('.left-btn').click(toPay);
 		
 		/* 장바구니 버튼 처리 */
-		$('.right-btn').click(function() {
-			cart();
-		})
+		$('.right-btn').click(toCart);
 		
 		/* 신상순 정렬 버튼 처리 */
-		$('#newest').click(function() {
-			newest();
-		})
+		$('#newest').click(newest);
+		
 		/* 높은 가격순 정렬 버튼 처리 */
-		$('#highprice').click(function() {
-			highPrice();
-		})
+		$('#highprice').click(highPrice);
+		
 		/* 낮은 가격순 정렬 버튼 처리 */
-		$('#lowprice').click(function() {
-			lowPrice();
-		})
+		$('#lowprice').click(lowPrice);
 		
 	})
   </script>

@@ -4,6 +4,9 @@ import java.util.*;
 
 import org.springframework.stereotype.*;
 
+import com.example.demo.dto.OrderDto;
+import com.example.demo.entity.OrderItem;
+import com.example.demo.entity.Product;
 import com.project.ecorea.dao.*;
 import com.project.ecorea.dto.*;
 import com.project.ecorea.dto.CartDto.*;
@@ -18,6 +21,8 @@ public class JumunService {
 	private ProductDao productDao;
 	private UserDao memberDao;
 	
+	/* 상품 -> 바로 구매 */
+
 
 	public JumunDto.JumunPreview jumunList(List<Params> list, String memberId) {	
 		Integer totalPrice = 0;

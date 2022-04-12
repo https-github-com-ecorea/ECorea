@@ -1,6 +1,5 @@
 package com.project.ecorea.controller.mvc;
 
-
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.*;
@@ -16,6 +15,11 @@ import lombok.*;
 public class JumunMvcController {
 	private JumunService jumunService;
 	
+	/* 상품 상세 -> 바로 구매 */
+	@PostMapping("/order/preview/one")
+	public void productToOrder() {
+		
+	}
 
 	@PostMapping("/order/preview/multiple")
 	public ModelAndView cartToOrder(JumunDto.ParamsList list) {

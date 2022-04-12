@@ -3,13 +3,9 @@ package com.project.ecorea.service;
 import java.io.*;
 import java.util.*;
 
-
-import org.springframework.beans.factory.annotation.*;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.*;
 import org.springframework.web.multipart.*;
-
 
 import com.project.ecorea.dto.*;
 
@@ -147,5 +143,23 @@ public class ProductService {
 			cartService.plusCnt(memberId, pno);
 			return true;
 		}		
+	}
+
+	/* 장바구니에 상품 여러 개 담기 */
+	public Boolean shoppingCartMultiple(Integer pno, Integer count, String memberId) {
+		Cart isExistProductInCart = cartDao.findByMemberIdAndPno(memberId, pno);
+		System.out.println(isExistProductInCart);
+		if (isExistProductInCart == null) {
+			Product product = productDao.findByPno(pno);
+			Integer cartPrice = product.getPrice() * count;
+			Cart cart = Cart.builder().memberId(memberId).pno(pno).cartcnt(count)
+					.cartpname(product.getPname()).cartprice(cartPrice).build();
+			System.out.println(cart);
+			cartDao.saveOneProduct(cart);
+			return true;
+		} else {
+			cartService.plusCnt(memberId, pno);
+			return true;
+		}
 	}
 }
