@@ -16,14 +16,15 @@ import lombok.*;
 @Controller
 public class CartMvcController {
 	private final CartService cartService;
+	private final ProductService productService;
 	String memberId = "zzzzuny";
 	
 	/* 장바구니에 담기 */
 	@PostMapping("/order/cart/add")
-	public String add() {
-		Boolean result = cartService.add(pno, count, memberId);
+	public String add(Integer pno, Integer count, String memberId) {
+		Boolean result = productService.shoppingCartMultiple(pno, count, "ngoley6");
 		if (result == false)
-			return "redirect:/product/productList";
+			return "redirect:/product/productList?page=1&amount=9&catecode=&sort=";
 		return "redirect:/order/cart";
 	}
 	
@@ -31,7 +32,7 @@ public class CartMvcController {
 	@GetMapping("/order/cart")
 	public ModelAndView readCart() {
 		ModelAndView mav = new ModelAndView("order/cart");
-		List<CartDto.CartList> cartList = cartService.readCart(memberId);
+		List<CartDto.CartList> cartList = cartService.readCart("ngoley6");
 		mav.addObject("cartList", cartList);
 		return mav;
 	}
