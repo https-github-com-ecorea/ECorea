@@ -42,7 +42,7 @@
                 $('<label for="atel" class="mr-sm-2">').text("휴대전화").appendTo($("#address_area"));
                 const $atel_input = $('<input type="text" class="form-control mb-2 mr-sm-2" id="atel">').appendTo($("#address_area"));
     			$.each(list, function(idx, address) {    				
-                    const $radio = $("<input type='radio' name='radio_adr' class='address'>").attr("data-addressNo", address.ano).appendTo($radio_div);
+                    const $radio = $("<input type='radio' name='radio_adr' class='radio_adr'>").attr("data-addressNo", address.ano).appendTo($radio_div);
                     $('<span>').text(address.aname).appendTo($radio_div);
                     
     				if(address.astandard==1) {
@@ -55,14 +55,27 @@
     		}
     	});    			
     }
+    
+    
+    function changeAddress() {
+    	const $addressNo = $(this).attr("data-addressNo");
+    	$.ajax("/mypage/member/chosenAddress/" + $addressNo).done(address=>{
+    		$("#address_detail").text('( '+address.azipcode+' )' + ' ' + address.aaddress1 + ' ' + address.aaddress2);
+    		$("#atoname").val(address.atoname);
+    		$("#atel").val(address.atel);
+    	});
+    }
+    
   
   	$(document).ready(function() {
   		printAddresses();
-  		$("#add_new_address").click(function() {
+  		$("#address_area").on("click", "#add_new_address", function() {
   			const popup = window.open("/mypage/member/newAddress","_blank","toolbar=yes, menubar=yes, width=700, height=500");
   			$(popup).on("beforeunload", printAddresses);
-  		})
+  		});
+  		$("#address_area").on("click", ".radio_adr", changeAddress);
   	})
+  	
   </script>
 </head>
 <body>

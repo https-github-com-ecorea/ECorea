@@ -13,7 +13,8 @@ import lombok.*;
 @Controller
 @AllArgsConstructor
 public class BookmarkMvcController {
-	private BookmarkService bookmarkService;	
+	private BookmarkService bookmarkService;
+	private ProductService productService;
 	
 	// 관심상품 목록 출력
 	@GetMapping("/mypage/member/bookmarkList")
@@ -51,7 +52,7 @@ public class BookmarkMvcController {
 	@PostMapping("/mypage/member/bookmarkList/shoppingOne")
 	public String shoppingCartOne(Integer pno) {		
 		String memberId = "zzzzuny";
-		bookmarkService.shoppingCartOne(pno, memberId);	
+		productService.shoppingCartOne(pno, memberId);	
 		return "redirect:/order/cart";
 	}	
 }
