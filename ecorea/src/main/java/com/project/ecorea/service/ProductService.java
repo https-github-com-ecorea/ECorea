@@ -3,13 +3,9 @@ package com.project.ecorea.service;
 import java.io.*;
 import java.util.*;
 
-
-import org.springframework.beans.factory.annotation.*;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.*;
 import org.springframework.web.multipart.*;
-
 
 import com.project.ecorea.dto.*;
 
@@ -26,49 +22,41 @@ public class ProductService {
 	/* Property 읽어 오기 */
 	@Value("${upload.image.path}") /* 경로 */
 	private String imagePath;
-
 	@Value("${upload.image.folder}")
 	private String imageFolder;
 	@Value("${default.image.name}")
 	private String defaultImage;
 	
 	private final ProductDao productDao;
-
 	private final HugiDao hugiDao;
 	private final QnaDao qnaDao;
+	private final CartDao cartDao;
+	private final CartService cartService;
 	
-	/* 상품 목록 페이징에 필요한 상수 */
-	private int PRODUCT_PER_PAGE = 9;
-	private int PAGE_PER_BLOCK = 5;
+	/* 상품 개수 */
+	public int getTotal() {
+		return productDao.getTotal();
+	}
 	
-	/* 상품 목록 페이징 */
-	public PageDto productList(int pageno, String catecode) {
-		
-		int count = productDao.productCnt(catecode);
-		int firstRnum = ((pageno - 1) * PRODUCT_PER_PAGE) + 1;
-		int lastRnum = (firstRnum + PRODUCT_PER_PAGE) - 1;
-		if (count < lastRnum)
-			lastRnum = count;
-		
-		List<ProductDto.productList> products = productDao.productListPaging(firstRnum, lastRnum, imagePath, catecode);
-		int countOfPage = (count/PRODUCT_PER_PAGE) + 1;
-		if (count % PRODUCT_PER_PAGE == 0)
-			countOfPage--;
-
-		int blockNo = pageno/PAGE_PER_BLOCK;
-		if (pageno % PAGE_PER_BLOCK == 0)
-			blockNo--;
-		
-		int start = blockNo * PAGE_PER_BLOCK + 1;
-		int prev = start - 1;
-		int end = start + PAGE_PER_BLOCK - 1;
-		int next = end + 1;
-		if (end >= countOfPage) {
-			end = countOfPage;
-			next = 0;
+	/* 전체 상품 개수 */
+	public int getCategoryTotal(String catecode) {
+		return productDao.getCategoryTotal(catecode);
+	}
+	
+	/* 상품 목록 */
+	public List<ProductDto.productList> productList() {		
+		List<ProductDto.productList> productList = new ArrayList<>();
+		List<ProductDto.productList> entity = productDao.productList();
+		for (ProductDto.productList product : entity) {
+			product.setPthumbnail(imagePath + product.getPthumbnail());
+			productList.add(product);
 		}
-		
-		return new PageDto(prev, start, end, next, pageno, products);
+		return productList;
+	}
+	
+	/* 상품 목록 (페이징 적용) */
+	public List<ProductDto.productList> productPagingList(Criteria cri) {
+		return productDao.productPagingList(cri);
 	}
 	
 	/* 상품 상세 페이지 */
@@ -132,5 +120,46 @@ public class ProductService {
 			return false;
 		}
 		return true;
+	}
+	
+	// 장바구니에 상품 한 개 담기
+	public Boolean shoppingCartOne(Integer pno, String memberId) {
+		// cart에 이미 담겨있는 상품인지 확인 
+		// 담겨있으면 수량 1증가, 아니면 saveOneProduct		
+		Integer cartcnt = 1;
+		Cart existProduct = cartDao.findByMemberIdAndPno(memberId, pno);
+		if(existProduct==null) {
+			Product product = productDao.findByPno(pno);
+			Integer cartPrice = product.getPrice()*cartcnt;
+			Cart cart = Cart.builder().memberId(memberId).pno(pno).cartcnt(cartcnt)
+					.cartpname(product.getPname()).cartprice(cartPrice).build();
+			if(cart==null) {
+				return false;
+			} else {
+				cartDao.saveOneProduct(cart);
+				return true;
+			}			
+		} else {
+			cartService.plusCnt(memberId, pno);
+			return true;
+		}		
+	}
+
+	/* 장바구니에 상품 여러 개 담기 */
+	public Boolean shoppingCartMultiple(Integer pno, Integer count, String memberId) {
+		Cart isExistProductInCart = cartDao.findByMemberIdAndPno(memberId, pno);
+		System.out.println(isExistProductInCart);
+		if (isExistProductInCart == null) {
+			Product product = productDao.findByPno(pno);
+			Integer cartPrice = product.getPrice() * count;
+			Cart cart = Cart.builder().memberId(memberId).pno(pno).cartcnt(count)
+					.cartpname(product.getPname()).cartprice(cartPrice).build();
+			System.out.println(cart);
+			cartDao.saveOneProduct(cart);
+			return true;
+		} else {
+			cartService.plusCnt(memberId, pno);
+			return true;
+		}
 	}
 }

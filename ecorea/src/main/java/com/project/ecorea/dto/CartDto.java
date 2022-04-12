@@ -12,20 +12,27 @@ import lombok.*;
 public class CartDto {
 	
 	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
+	@Builder
 	public static class CartProduct {
 		private Integer pno;
 		private String cartpname;
+		private Integer cartcnt;				
+		private Integer price;
 		private String pthumbnail;
-		private Integer cartcnt;
-		private Integer price;		
 	}
-	
+	 
 	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
+	@Builder
 	public static class CartList {
 		private String corpName;		
 		private List<CartProduct> cartProduct;
 	}
 		
+	
 	private List<CartList> cartList;
 	
 	@Data

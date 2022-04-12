@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -78,8 +78,7 @@
 			}).fail(()=>alert("최소 구매 수량은 1개 입니다."));
 		}
 		
-		
-		// 상품 한개 삭제
+		// 상품 한 개 삭제
 		function deleteOne() {
 			const result = confirm("상품을 장바구니에서 삭제하시겠습니까?");
 			if(result==true) {
@@ -88,7 +87,6 @@
 				$form.submit();
 			}
 		}
-		
 		
 		// 상품 전체 삭제
 		function deleteAll() {
@@ -122,14 +120,17 @@
 		function order() {
 			const result = confirm("선택한 상품을 주문하시겠습니까?");
 			if(result == true) {
-				const $form = $('<form>').attr('method','post').attr('action','/order/pay').appendTo($('body')); 
+				const $form = $('<form>').attr('method','post').attr('action','/order/preview/multiple').appendTo($('body')); 
 				$('.pno').each(function(idx, checkbox) {
 					if($(checkbox).prop('checked')==true) {
 						const pno = parseInt($(checkbox).attr('data-pno'));
-						const count = parseInt($(checkbox))
-						
+						const count = parseInt($(checkbox).parent().parent().next().next().next().find(".cartcnt").text());
+						$('<input>').attr('type','hidden').attr('name','paramsList['+ idx + '].pno').val(pno).appendTo($form);
+						$('<input>').attr('type','hidden').attr('name','paramsList['+ idx + '].cnt').val(count).appendTo($form);
 					}
 				});
+				console.log($form.serialize());
+				$form.submit();
 			}
 		}
 		
@@ -148,13 +149,14 @@
 	</script>
 </head>
 <body>
+	<div th:text="${cartList}"></div>
 	<h1>장바구니</h1>
     <div class="wrapper">
         <button type="submit" class="btn btn-primary" id="delete_selected">선택삭제</button>
         <button type="submit" class="btn btn-primary" id="delete_all">전체삭제</button><br>
         <div id="list" th:each="list: ${cartList}">
             <h3 th:text="${list.corpName}"></h3>
-            <div class="container">            
+            <div class="container">
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -174,7 +176,7 @@
                                     <span>&nbsp;&nbsp;<span th:text="${product.pno}" name="pno" id="pno"></span></span>                                    
                                 </div>
                             </td>
-                            <td th:text="${product.pthumbnail}"></td>
+                            <td th:text="${product.pthumbnail}"></td> 
                             <td>
                                 <span name="cartpname" id="cartpname" th:text="${product.cartpname}"></span>
                                 <span>(&nbsp;<span name="price" id="price" th:text="${product.price}"></span>&nbsp;)</span>

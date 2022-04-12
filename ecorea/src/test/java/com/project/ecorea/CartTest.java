@@ -138,10 +138,10 @@ public class CartTest {
 		assertEquals(result, 2);
 	}
 	
-	//@Test
+	@Test
 	public void saveTest() {
 		Integer pno = 5;
-		String memberId = "zzzzuny";
+		String memberId = "ngoley6";
 		Integer cartcnt = 1;
 		Product product = productDao.findByPno(pno);
 		System.out.println("#########################" + product);		
@@ -149,5 +149,5 @@ public class CartTest {
 		Cart cart = Cart.builder().memberId(memberId).cartpname(product.getPname()).pno(pno).cartcnt(1).cartprice(cartPrice).build();
 		System.out.println("#########################" + cart);
 		cartDao.saveOneProduct(cart);				
-	}	
+	}
 }

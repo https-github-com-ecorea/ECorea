@@ -4,34 +4,50 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.*;
 
+import com.project.ecorea.dto.Criteria;
+import com.project.ecorea.dto.PageMakerDto;
 import com.project.ecorea.dto.QnaDto;
 import com.project.ecorea.entity.QnaA;
 import com.project.ecorea.entity.QnaQ;
 import com.project.ecorea.service.QnaService;
 
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @AllArgsConstructor
+@Slf4j
 public class QnaMvcController {
 	
 	@Autowired
 	private QnaService service;
 	
-	/* 일반 회원 - 문의 목록 */
+	/* 일반 회원 - 문의 목록 
 	@GetMapping("/mypage/member/qnaList")
-	public ModelAndView memberQnaList(/*Principal principal*/String loginId) {
-		return new ModelAndView("mypage/member/qnaList").addObject("memberQnaList", service.memberMyPageQuestionList("ngoley6"));
+	public ModelAndView memberQnaList(/*Principal principalString loginId, Criteria cri) {
+		return new ModelAndView("mypage/member/qnaList").addObject("memberQnaList", service.memberMyPageQuestionList("ngoley6", cri));
+	}
+	*/
+	
+	/* 일반 회원 - 문의 목록 (페이징) */
+	@GetMapping("/mypage/member/qnaList")
+	public void memberQnaList(Model model, Criteria cri) {
+		log.info("memberMyPageQuestionList");
+		model.addAttribute("memberQnaList", service.memberMyPageQuestionList("ngoley6", cri));
+		int total = service.getMemberTotal("ngoley6");
+		PageMakerDto pageMaker = new PageMakerDto(cri, total);
+		model.addAttribute("pageMaker", pageMaker);
 	}
 	
 	/* 일반 회원 - 문의 상세 */
 	@GetMapping("/mypage/member/qnaDetail")
-	public ModelAndView memberQnaDetail(String loginId, Integer qqno, String imagepath, HttpSession session) {
+	public ModelAndView memberQnaDetail(String loginId, Integer qqno, HttpSession session) {
 		session.setAttribute("memberId", loginId);
-		return new ModelAndView("mypage/member/qnaDetail").addObject("memberQnaDetail", service.memberMypageDetail("ngoley6", qqno, imagepath));
+		return new ModelAndView("mypage/member/qnaDetail").addObject("memberQnaDetail", service.memberMypageDetail("ngoley6", qqno));
 	}
 	
 	/* 일반 회원 - 문의 등록 화면 */
@@ -71,16 +87,27 @@ public class QnaMvcController {
 		return "redirect:/mypage/member/qnaList";
 	}
 	
+	/* 기업 회원 - 문의 목록 
+	@GetMapping("/mypage/corp/qnaList")
+	public ModelAndView corpQnaList(/*Principal principalString loginId, Criteria cri) {
+		return new ModelAndView("mypage/corp/qnaList").addObject("corpQnaList", service.corpMyPageQuestionList("LG", cri));
+	}
+	*/
+	
 	/* 기업 회원 - 문의 목록 */
 	@GetMapping("/mypage/corp/qnaList")
-	public ModelAndView corpQnaList(/*Principal principal*/String loginId) {
-		return new ModelAndView("mypage/corp/qnaList").addObject("corpQnaList", service.corpMyPageQuestionList("LG"));
+	public void corpQnaList(Model model, Criteria cri) {
+		log.info("corpMyPageQuestionList");
+		model.addAttribute("corpQnaList", service.corpMyPageQuestionList("LG", cri));
+		int total = service.getCorpTotal("LG");
+		PageMakerDto pageMaker = new PageMakerDto(cri, total);
+		model.addAttribute("pageMaker", pageMaker);
 	}
 
 	/* 기업 회원 - 문의 상세 화면 */
 	@GetMapping("/mypage/corp/qnaDetail")
-	public ModelAndView corpQnaDetail(String loginId, Integer qqno, String imagepath) {
-		return new ModelAndView("mypage/corp/qnaDetail").addObject("corpQnaDetail", service.corpMypageDetail(loginId, qqno, imagepath));
+	public ModelAndView corpQnaDetail(String loginId, Integer qqno) {
+		return new ModelAndView("mypage/corp/qnaDetail").addObject("corpQnaDetail", service.corpMypageDetail(loginId, qqno));
 	}
 	
 	/* 기업 회원 - 문의 답변 등록 */

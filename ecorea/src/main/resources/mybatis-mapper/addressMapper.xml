@@ -29,5 +29,10 @@
 	<select id="chosenAddress" resultType="address" resultMap="namecheck">
 		select * from address where member_id=#{memberId} and ano=#{ano}
 	</select>
+	
+	<!-- 기본 배송지 정보 -->
+	<select id="defaultAddress" resultType="address">
+		select * from address where member_id=#{memberId} and astandard=1
+	</select>
 
 </mapper>

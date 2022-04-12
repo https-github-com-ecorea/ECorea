@@ -14,9 +14,6 @@ import lombok.*;
 @AllArgsConstructor
 public class BookmarkService {
 	private BookmarkDao bookmarkDao;
-	private ProductDao productDao;
-	private CartDao cartDao;
-	private CartService cartService;
 	
 	// 관심상품 리스트 출력
 	public List<BookmarkDto.BookmarkList> readBookmark(String memberId) {
@@ -47,29 +44,6 @@ public class BookmarkService {
 		if(deleteSelectedResult<=0)
 			return false;
 		return true;
-	}
-	
-	// 관심상품 한개 장바구니에 담기
-	public Boolean shoppingCartOne(Integer pno, String memberId) {
-		// cart에 이미 담겨있는 상품인지 확인 
-		// 담겨있으면 수량 1증가, 아니면 saveOneProduct		
-		Integer cartcnt = 1;
-		Cart existProduct = cartDao.findByMemberIdAndPno(memberId, pno);
-		if(existProduct==null) {
-			Product product = productDao.findByPno(pno);
-			Integer cartPrice = product.getPrice()*cartcnt;
-			Cart cart = Cart.builder().memberId(memberId).pno(pno).cartcnt(cartcnt)
-					.cartpname(product.getPname()).cartprice(cartPrice).build();
-			if(cart==null) {
-				return false;
-			} else {
-				cartDao.saveOneProduct(cart);
-				return true;
-			}			
-		} else {
-			cartService.plusCnt(memberId, pno);
-			return true;
-		}		
 	}
 	
 }

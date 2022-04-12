@@ -24,5 +24,9 @@ public interface CartDao {
 	
 	public Integer deleteAll(String membeId);
 	
+	/* 장바구니에 상품 하나 담기 */
 	public void saveOneProduct(Cart cart);
+	
+	/* 장바구니에 상품 수량 여러 개 담기 */
+	
 }
