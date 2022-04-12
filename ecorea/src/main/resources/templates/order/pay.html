@@ -26,6 +26,11 @@
     }
   </style>
   <script th:inline="javascript">
+  	const preview = /*[[${preview}]]*/
+  	
+  	
+  	
+  	// 배송주소록 출력
     function printAddresses() {
     	$.ajax("/mypage/member/addressListRest").done(list=>{
     		if(list=="") {
@@ -56,7 +61,7 @@
     	});    			
     }
     
-    
+    // radio 버튼 눌렀을때 주소 변경해서 출력
     function changeAddress() {
     	const $addressNo = $(this).attr("data-addressNo");
     	$.ajax("/mypage/member/chosenAddress/" + $addressNo).done(address=>{
@@ -66,14 +71,54 @@
     	});
     }
     
+    
+    
+    // 사용 포인트 적용
+    function usePoint() {
+    	$(".money").empty();
+    	let point = $("#use_point").val();
+    	const $usePoint = $('<h4>').text("사용 포인트 \u00a0\u00a0").appendTo($(".money"));
+    	$('<span id="span_use_point">').text(point).appendTo($usePoint);
+    	printPayAmount(point);
+    }
+        
+    
+    // 주문 금액 출력
+    function printPayAmount(point) {
+    	let payAmount = preview.totalPrice - point;
+    	if($("#use_point").val()=="") {
+    		$("#span_payAmount").text(preview.totalPrice + "\u00a0\u00a0원");
+    	} else {
+    		$("#span_payAmount").text(payAmount + "\u00a0\u00a0원");
+    	}
+    }
+    
+    
+    // 주문 하기
+    function order() {
+    	const $addressNo = $(".radio_adr:checked").attr("data-addressNo");
+		const $form = $("<form>").attr('method','post').attr('action','/order/new').appendTo($('body'));
+		$('<input>').attr('type','hidden').attr('name','addressNo').val($addressNo).appendTo($form);
+		$('<input>').attr('type','hidden').attr('name','usePoint').val($("#use_point").val()).appendTo($form);
+		$('<input>').attr('type','hidden').attr('name','shippingMsg').val($("#shipping_msg").val()).appendTo($form);
+		$form.submit();
+    }
+    
   
   	$(document).ready(function() {
   		printAddresses();
+  		printPayAmount();
+  		
   		$("#address_area").on("click", "#add_new_address", function() {
   			const popup = window.open("/mypage/member/newAddress","_blank","toolbar=yes, menubar=yes, width=700, height=500");
   			$(popup).on("beforeunload", printAddresses);
   		});
+  		
   		$("#address_area").on("click", ".radio_adr", changeAddress);
+  		
+  		$("#applyPoint").click(usePoint);
+  		
+  		$("#order").click(order);
   	})
   	
   </script>
@@ -98,7 +143,7 @@
                                 <td th:text="${product.pthumbnail}"></td>
                                 <td th:text="${product.cartpname}"></td>
                                 <td th:text="${product.cartcnt}"></td>
-                                <td th:text="${product.price*product.cartcnt}"></td>
+                                <td th:text="${product.price*product.cartcnt}" id="cartPrice"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -107,8 +152,6 @@
                 <input type="text" class="form-control mb-2 mr-sm-2" th:value="${preview.memberName}" id="order-person">
                 <label for="email" class="mr-sm-2">이메일</label>
                 <input type="email" class="form-control mb-2 mr-sm-2" th:value="${preview.memberEmail}" id="email">
-                <label for="phone" class="mr-sm-2">휴대전화</label>
-                <input type="text" class="form-control mb-2 mr-sm-2" placeholder="휴대전화" id="phone">
             </form>
             <hr>
         </div>
@@ -120,7 +163,7 @@
 	            <textarea class="form-control" rows="5" id="address_detail" name="text"></textarea>
 	            </div>
 	            <label for="message" class="mr-sm-2">배송 메시지</label>
-	            <input type="text" class="form-control mb-2 mr-sm-2" placeholder="배송 메시지" id="message">
+	            <input type="text" class="form-control mb-2 mr-sm-2" placeholder="배송 메시지" id="shipping_msg">
             <hr>
         </div>
         <div class="payment">
@@ -129,9 +172,13 @@
             <label for="point" class="mr-sm-2">보유 포인트</label>
             <input type="number" class="form-control mb-2 mr-sm-2" th:value="${preview.havePoint}" id="point" disabled>
             <label for="use-point" class="mr-sm-2">사용 포인트</label>
-            <input type="number" class="form-control mb-2 mr-sm-2" placeholder="사용 포인트" id="use-point">
-            <button type="button" class="btn btn-primary">적용</button><br>
-            <button type="button" class="btn btn-primary" id="order">주문하기</button><br>
+            <input type="number" class="form-control mb-2 mr-sm-2" placeholder="사용 포인트" id="use_point">
+            <button type="button" class="btn btn-primary" id="applyPoint">적용</button><br><hr>
+            <h4 id="orderAmount">주문 금액 &nbsp;&nbsp;<span th:text="|   ${preview.totalPrice}  원|"></span></h4>
+	        <div class="money">	            	            
+        	</div>
+        	<h4 id="payAmount">결제할 금액 &nbsp;&nbsp;<span id="span_payAmount"></span></h4>        	
+        	<button type="button" class="btn btn-primary" id="order">주문하기</button><br>
         </div>
     </div>
 </body>

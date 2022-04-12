@@ -48,7 +48,13 @@ public class JumunDto {
 		private Integer cnt;
 	}
 	
-	
+	@Data
+	@AllArgsConstructor
+	public static class JumunInput {
+		private Integer addressNo;
+		private Integer usePoint;
+		private String shippingMsg;		
+	}
 	
 	
 	/*
