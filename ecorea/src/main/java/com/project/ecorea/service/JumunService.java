@@ -4,9 +4,6 @@ import java.util.*;
 
 import org.springframework.stereotype.*;
 
-import com.example.demo.dto.OrderDto;
-import com.example.demo.entity.OrderItem;
-import com.example.demo.entity.Product;
 import com.project.ecorea.dao.*;
 import com.project.ecorea.dto.*;
 import com.project.ecorea.dto.CartDto.*;
@@ -22,7 +19,16 @@ public class JumunService {
 	private UserDao memberDao;
 	
 	/* 상품 -> 바로 구매 */
-
+	public JumunDto.JumunPreview jumunOne(Integer pno, Integer count, String memberId) {
+		Product product = productDao.findByPno(pno);
+		System.out.println(product);
+		List<CartDto.CartProduct> products = new ArrayList<>();
+		Integer totalPrice = product.getPrice() * count;
+		products.add(new CartProduct(pno, product.getPname(), count, totalPrice, memberId));
+		Member member = memberDao.memberFindById(memberId);
+		JumunDto.JumunPreview jumunPreview = new JumunPreview(products, member.getPoint(), totalPrice, member.getName(), member.getEmail());
+		return jumunPreview;
+	}
 
 	public JumunDto.JumunPreview jumunList(List<Params> list, String memberId) {	
 		Integer totalPrice = 0;
@@ -36,7 +42,7 @@ public class JumunService {
 		}
 		Member member = memberDao.memberFindById(memberId);
 		JumunDto.JumunPreview jumunPreview = new JumunPreview(products, member.getPoint(), totalPrice, member.getName(), member.getEmail());
-		return jumunPreview;		
+		return jumunPreview;
 	}
 	
 }

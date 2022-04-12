@@ -87,17 +87,19 @@
   	
   	/* 장바구니 버튼 처리 */
   	function toCart() {
-  		/* $('<iframe>').attr('id', 'iframe1').attr('name', 'iframe1').attr('style', 'display:none').appendTo($('body'));  화면 이동 없게 함 */
-		const $form = $('<form>').attr('method', 'post').attr('action', '/order/cart/add')/*.attr('target', 'iframe1')*/.appendTo($('body'));
-		$('<input>').attr('type', 'hidden').attr('name','pno').val($(this).attr('th:data-pno')).appendTo($form);
-		$('<input>').attr('type', 'hidden').attr('name','count').val(1).appendTo($form);
-		$form.submit();
-		/*
-		const check = confirm("장바구니로 이동하시겠습니까?");
-		if (check == true) {
-			window.location.replace("/order/cart/add");
-		}
-		*/
+  		const check = confirm("상품이 담겼습니다. 장바구니로 이동하시겠습니까?");
+  		if (check == true) {
+  			const $form = $('<form>').attr('method', 'post').attr('action', '/order/cart/add').appendTo($('body'));
+  			$('<input>').attr('type', 'hidden').attr('name','pno').val($(this).attr('th:data-pno')).appendTo($form);
+  			$('<input>').attr('type', 'hidden').attr('name','count').val(1).appendTo($form);
+  			$form.submit();
+  		} else {
+  			$('<iframe>').attr('id', 'iframe1').attr('name', 'iframe1').attr('style', 'display:none').appendTo($('body'));  /* 화면 이동 없게 함 */
+  			const $form = $('<form>').attr('method', 'post').attr('action', '/order/cart/add').attr('target', 'iframe1').appendTo($('body'));
+  			$('<input>').attr('type', 'hidden').attr('name','pno').val($(this).attr('th:data-pno')).appendTo($form);
+  			$('<input>').attr('type', 'hidden').attr('name','count').val(1).appendTo($form);
+  			$form.submit();
+  		}
   	}
   	
   	/* 신상순 정렬 버튼 처리 */
@@ -243,12 +245,12 @@ li{
       <ul>
       	<!-- ★ catecode는 카테고리 데이터 수정하는 대로 수정 필요! -->
         <li><a href="/product/productList?nowPage=1&amount=9&catecode=&sort=">All</a></li>
-        <li><a href="/product/productList?nowPage=1&amount=9&catecode=3&sort=">반려용품</a></li>
-        <li><a href="/product/productList?nowPage=1&amount=9&catecode=4&sort=">생활용품</a></li>
-        <li><a href="/product/productList?nowPage=1&amount=9&catecode=5&sort=">제로웨이스트</a></li>
-        <li><a href="/product/productList?nowPage=1&amount=9&catecode=6&sort=">원목소품</a></li>
-        <li><a href="/product/productList?nowPage=1&amount=9&catecode=7&sort=">인테리어소품</a></li>
-        <li><a href="/product/productList?nowPage=1&amount=9&catecode=8&sort=">DIY키트</a></li>
+        <li><a href="/product/productList?nowPage=1&amount=9&catecode=1&sort=">반려용품</a></li>
+        <li><a href="/product/productList?nowPage=1&amount=9&catecode=2&sort=">생활용품</a></li>
+        <li><a href="/product/productList?nowPage=1&amount=9&catecode=3&sort=">제로웨이스트</a></li>
+        <li><a href="/product/productList?nowPage=1&amount=9&catecode=4&sort=">원목소품</a></li>
+        <li><a href="/product/productList?nowPage=1&amount=9&catecode=5&sort=">인테리어소품</a></li>
+        <li><a href="/product/productList?nowPage=1&amount=9&catecode=6&sort=">DIY키트</a></li>
       </ul>
     </div>
   </div>

@@ -17,8 +17,9 @@ public class JumunMvcController {
 	
 	/* 상품 상세 -> 바로 구매 */
 	@PostMapping("/order/preview/one")
-	public void productToOrder() {
-		
+	public ModelAndView productToOrder(Integer pno, Integer count, String memberId) {
+		JumunDto.JumunPreview dto = jumunService.jumunOne(pno, count, "ngoley6");
+		return new ModelAndView("order/pay").addObject("preview", dto);
 	}
 
 	@PostMapping("/order/preview/multiple")
