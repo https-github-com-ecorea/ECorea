@@ -15,8 +15,9 @@ public class Jumun {
 	private Integer jCnt;
 	private ShippingStatus jStatus;
 	private Integer jPrice;
-	private Integer jTotal;
 	private Integer jUsePoint;
 	private LocalDate jDay;
 	private String memberId;
+	private Integer ano;
+	private String jShippingMsg;
 }

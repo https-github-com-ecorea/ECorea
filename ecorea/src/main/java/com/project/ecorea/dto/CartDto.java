@@ -19,7 +19,7 @@ public class CartDto {
 		private Integer pno;
 		private String cartpname;
 		private Integer cartcnt;				
-		private Integer price;
+		private Integer price;		/* 상품 한개 가격 */
 		private String pthumbnail;
 	}
 	 

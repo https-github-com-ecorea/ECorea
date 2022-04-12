@@ -1,5 +1,6 @@
 package com.project.ecorea.service;
 
+import java.time.*;
 import java.util.*;
 
 import org.springframework.stereotype.*;
@@ -17,6 +18,7 @@ import lombok.*;
 public class JumunService {
 	private ProductDao productDao;
 	private UserDao memberDao;
+	private JumunDao jumunDao;
 	
 	/* 상품 -> 바로 구매 */
 	public JumunDto.JumunPreview jumunOne(Integer pno, Integer count, String memberId) {
@@ -43,6 +45,17 @@ public class JumunService {
 		Member member = memberDao.memberFindById(memberId);
 		JumunDto.JumunPreview jumunPreview = new JumunPreview(products, member.getPoint(), totalPrice, member.getName(), member.getEmail());
 		return jumunPreview;
+	}
+	
+	
+	// 주문 정보 저장
+	public void newJumun(JumunInput input, JumunPreview dto, String memberId) {
+		List<CartProduct> products = dto.getProducts();
+		for(CartProduct product: products) {
+			Integer jPrice = product.getPrice() * product.getCartcnt();
+			Jumun jumun = new Jumun(null, product.getPno(), product.getCartcnt(), ShippingStatus.PAY, jPrice, input.getUsePoint(), LocalDate.now(), memberId, input.getAddressNo(), input.getShippingMsg());
+			jumunDao.saveJumun(jumun);
+		}		
 	}
 	
 }
