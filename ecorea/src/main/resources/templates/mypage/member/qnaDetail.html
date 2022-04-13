@@ -30,6 +30,9 @@
   }
   </style>
   <script th:inline="javascript">
+    const question = /*[[${memberQnaDetail[0]}]]*/
+	console.log(question);
+    
    	/* 삭제 버튼 처리 함수 */
   	function deleteBtn() {
   		const $form = $('<form>').attr('method', 'post').attr('action', '/mypage/member/qnaDelete').appendTo($('body'));
@@ -40,7 +43,7 @@
   	$(document).ready(function() {
   		/* 삭제 버튼 처리 */
 		$('#delete').click(function() {
-			const result = confirm("문의를 삭제할까요?")
+			const result = confirm("문의를 삭제하시겠습니까?")
 			if (result == true) {
 				deleteBtn();
 			}
@@ -52,8 +55,12 @@
 <body>
   <h1>문의글 상세</h1>
   <div class="container">
+    <!-- 
     <form th:action="@{/mypage/member/qnaUpdate?qqno={qqno}(qqno=${memberQnaDetail[0].qqno})}" method="post">
+     -->
+    <form th:action="@{/mypage/member/qnaUpdate}" method="post">
       <input type='hidden' id='memberId' name='memberId' th:value='${memberQnaDetail[0].memberId}'>
+      <input type='hidden' id='memberId' name='qqno' th:value='${memberQnaDetail[0].qqno}'>
       <label for="qqtitle">제목</label>
       <input type="text" id="qqtitle" name="qqtitle" placeholder="제목을 입력해주세요." th:value="${memberQnaDetail[0].qqtitle}">
       

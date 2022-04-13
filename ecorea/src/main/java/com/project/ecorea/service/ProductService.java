@@ -32,6 +32,7 @@ public class ProductService {
 	private final QnaDao qnaDao;
 	private final CartDao cartDao;
 	private final CartService cartService;
+	private final QnaService qnaService;
 	
 	/* 상품 개수 */
 	public int getTotal() {
@@ -70,7 +71,7 @@ public class ProductService {
 	public ProductDto.ProductRead productRead(Integer pno) {
 		ProductDto.ProductRead productDto = productDao.findByPno(pno).toDto(imagePath);
 		productDto.setHugis(hugiDao.findByPno(pno));
-		productDto.setQQnas(qnaDao.questionFindByPno(pno));
+		productDto.setQQnas(qnaService.productQuestionList(pno, imagePath));
 		productDto.setAQnas(qnaDao.answerFindByPno(pno));
 		return productDto;
 	}
