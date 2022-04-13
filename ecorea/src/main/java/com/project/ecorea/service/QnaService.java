@@ -52,6 +52,7 @@ public class QnaService {
 		List<QnaDto.QuestionDto> dto = new ArrayList<>();
 		List<QnaDto.QuestionDto> entity = dao.questionFindByPno(pno);
 		for (QnaDto.QuestionDto qna : entity) {
+			qna.setPno(pno);
 			qna.setQqimg(imagepath + qna.getQqimg());
 			dto.add(qna);
 		}
@@ -167,8 +168,8 @@ public class QnaService {
 	}
 	
 	/* 기업 회원 : 문의 답변 수정 */
-	public Boolean updateAnswer(QnaA questionDto) {
-		Integer result = dao.updateAnswer(questionDto);
+	public Boolean updateAnswer(QnaA answer) {
+		Integer result = dao.updateAnswer(answer);
 		if (result <= 0)
 			return false;
 		return true;		

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -23,6 +24,7 @@ import com.project.ecorea.dto.CorpDto;
 import com.project.ecorea.dto.MemberDto;
 import com.project.ecorea.entity.Corp;
 import com.project.ecorea.entity.Member;
+import com.project.ecorea.service.ProductService;
 import com.project.ecorea.service.UserService;
 
 import lombok.AllArgsConstructor;
@@ -33,16 +35,19 @@ import lombok.AllArgsConstructor;
 public class UserMvcController {
 	private UserService service;
 	
+	@Autowired
+	private ProductService productService;
+	
 	@GetMapping("/")
 	public ModelAndView main(HttpSession session, HttpServletRequest servletRequest) {
 		if(session.getAttribute("login")==null) {
-			return new ModelAndView("/index");
+			return new ModelAndView("index").addObject("list", productService.productList());
 		}
 		
 		if(servletRequest.isUserInRole("ROLE_MEMBER")) {
-			return new ModelAndView("/index").addObject("role", "ROLE_MEMBER");
+			return new ModelAndView("index").addObject("role", "ROLE_MEMBER").addObject("list", productService.productList());
 		} else {
-			return new ModelAndView("/index").addObject("role", "ROLE_CORP");
+			return new ModelAndView("index").addObject("role", "ROLE_CORP").addObject("list", productService.productList());
 		}
 	}
 	

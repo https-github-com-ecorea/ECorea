@@ -29,8 +29,8 @@ public class ProductMvcController {
 	
 	/* 상품 목록 화면 
 	@GetMapping("/")
-	public void productList(Model model) {
-		model.addAttribute("list", productService.productList());
+	public ModelAndView main() {
+		return new ModelAndView("/index").addObject("list", productService.productList());
 	}
 	*/
 	
@@ -76,7 +76,7 @@ public class ProductMvcController {
 	}
 
 	// 등록된 상품 리스트 보기
-	@GetMapping("/mypage/corp/productList")
+	@GetMapping("/mypage/corp/productList") 
 	public ModelAndView regProductList() {
 		String corpId = "녹색당";
 		return new ModelAndView("mypage/corp/productList").addObject("regProducts", productService.regProductsList(corpId));

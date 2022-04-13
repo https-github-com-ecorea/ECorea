@@ -19,7 +19,7 @@ import com.project.ecorea.service.*;
 public class QnaTest {
 
 	/* Property 읽어 오기 */
-	@Value("${product.image.path}") /* 경로 */
+	@Value("${upload.image.path}")
 	private String imagePath;
 	
 	@Autowired
@@ -77,6 +77,11 @@ public class QnaTest {
 	public void deleteAnswerTest() {
 		Integer result = dao.deleteAnswer("LG", 2);
 		System.out.println("결과 : " + result);
+	}
+	
+	@Test
+	public void selectQuestionTest() {
+		System.out.println(dao.questionFindByPno(1));
 	}
 	
 }
