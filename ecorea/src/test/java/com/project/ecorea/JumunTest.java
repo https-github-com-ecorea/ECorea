@@ -49,7 +49,7 @@ public class JumunTest {
 		jumunService.newJumun(input, dto, memberId);
 	}
 	
-	@Test
+	//@Test
 	public void readList() {
 		String memberId = "zzzzuny";
 		String imagePath = "/images/";
@@ -57,5 +57,11 @@ public class JumunTest {
 		System.out.println("###################################");
 		System.out.println("jumun list : " + jumunList);
 		System.out.println("###################################");
+	}
+	
+	@Test
+	public void checkPoint() {
+		Boolean result = jumunService.checkPoint(5, "zzzzuny");
+		assertEquals(result, true);
 	}
 }

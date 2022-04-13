@@ -75,5 +75,10 @@ public class JumunService {
 		}
 		return jumunList;
 	}
+
+	// 사용 가능 포인트 확인
+	public Boolean checkPoint(Integer usePoint, String id) {
+		return memberDao.memberFindById(id).getPoint()>=usePoint;
+	}
 	
 }
