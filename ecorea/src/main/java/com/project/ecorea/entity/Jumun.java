@@ -2,6 +2,8 @@ package com.project.ecorea.entity;
 
 import java.time.*;
 
+import com.project.ecorea.dto.*;
+
 import lombok.*;
 import lombok.experimental.*;
 
@@ -20,4 +22,9 @@ public class Jumun {
 	private String memberId;
 	private Integer ano;
 	private String jShippingMsg;
+	
+	public JumunDto.JumunList toJumunList() {
+		return JumunDto.JumunList.builder().jno(jno).pno(pno).pname(null).pthumbnail(null)
+				.price(jPrice).cnt(jCnt).jstatus(jStatus.getKorean()).build();
+	}
 }

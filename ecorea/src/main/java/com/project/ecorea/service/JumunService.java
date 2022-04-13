@@ -3,6 +3,7 @@ package com.project.ecorea.service;
 import java.time.*;
 import java.util.*;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.*;
 
 import com.project.ecorea.dao.*;
@@ -13,12 +14,15 @@ import com.project.ecorea.entity.*;
 
 import lombok.*;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class JumunService {
-	private ProductDao productDao;
-	private UserDao memberDao;
-	private JumunDao jumunDao;
+	@Value("${upload.image.path}")
+	private String imagePath;
+	
+	private final ProductDao productDao;
+	private final UserDao memberDao;
+	private final JumunDao jumunDao;
 	
 	/* 상품 -> 바로 구매 */
 	public JumunDto.JumunPreview jumunOne(Integer pno, Integer count, String memberId) {
@@ -56,6 +60,25 @@ public class JumunService {
 			Jumun jumun = new Jumun(null, product.getPno(), product.getCartcnt(), ShippingStatus.PAY, jPrice, input.getUsePoint(), LocalDate.now(), memberId, input.getAddressNo(), input.getShippingMsg());
 			jumunDao.saveJumun(jumun);
 		}		
+	}
+
+	// 주문 정보 출력
+	public List<JumunDto.JumunList> readJumunList(String memberId) {		
+		List<Jumun> jumuns = jumunDao.jumunFindByMemberId(memberId);
+		List<JumunDto.JumunList> jumunList = new ArrayList<>();
+		
+		for(Jumun jumun:jumuns) {
+			String status = jumun.getJStatus().getKorean();
+			JumunDto.JumunList dto = jumunDao.jumunFindByMemberIdAndJno(memberId, imagePath, jumun.getJno());
+			dto.setJstatus(status);
+			jumunList.add(dto);			
+		}
+		return jumunList;
+	}
+
+	// 사용 가능 포인트 확인
+	public Boolean checkPoint(Integer usePoint, String id) {
+		return memberDao.memberFindById(id).getPoint()>=usePoint;
 	}
 	
 }

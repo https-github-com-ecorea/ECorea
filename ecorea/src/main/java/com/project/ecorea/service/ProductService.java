@@ -102,7 +102,7 @@ public class ProductService {
 
 	// 등록 상품 리스트 출력
 	public List<ProductDto.CorpProductList> regProductsList(String corpId) {
-		List<ProductDto.CorpProductList> corpProductListDto = productDao.findByCorpId(corpId);
+		List<ProductDto.CorpProductList> corpProductListDto = productDao.findByCorpId(corpId, imagePath);
 		return corpProductListDto;
 	}
 	

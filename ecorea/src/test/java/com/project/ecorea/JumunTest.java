@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.context.*;
 
 import com.project.ecorea.dao.*;
+import com.project.ecorea.dto.*;
 import com.project.ecorea.dto.CartDto.*;
 import com.project.ecorea.dto.JumunDto.*;
 import com.project.ecorea.entity.*;
@@ -34,7 +35,7 @@ public class JumunTest {
 		assertEquals(result, 1);
 	}
 	
-	@Test
+	//@Test
 	public void saveServiceTest() {
 		JumunInput input = new JumunInput(21, 5, "문 앞에 놔주세요");
 		List<CartProduct> products = new ArrayList<>();
@@ -46,5 +47,21 @@ public class JumunTest {
 		String memberId = "zzzzuny";
 		
 		jumunService.newJumun(input, dto, memberId);
+	}
+	
+	//@Test
+	public void readList() {
+		String memberId = "zzzzuny";
+		String imagePath = "/images/";
+		List<JumunDto.JumunList> jumunList = jumunDao.findByMemberId(memberId, imagePath);
+		System.out.println("###################################");
+		System.out.println("jumun list : " + jumunList);
+		System.out.println("###################################");
+	}
+	
+	@Test
+	public void checkPoint() {
+		Boolean result = jumunService.checkPoint(5, "zzzzuny");
+		assertEquals(result, true);
 	}
 }
