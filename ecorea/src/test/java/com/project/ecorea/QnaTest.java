@@ -33,7 +33,7 @@ public class QnaTest {
 		// System.out.println(service.productAnswerList(10));
 		// System.out.println(service.memberMyPageQuestionList("ngoley6"));
 		// System.out.println(service.corpMyPageQuestionList("LG"));
-		System.out.println(service.memberMypageDetail("ngoley6", 3, "이미지 경로 + "));
+		// System.out.println(service.memberMypageDetail("ngoley6", 3, "이미지 경로 + "));
 		// System.out.println(service.corpMypageDetail("LG", 3));
 	}
 	

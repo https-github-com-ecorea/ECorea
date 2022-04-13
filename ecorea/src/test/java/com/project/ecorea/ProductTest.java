@@ -88,7 +88,7 @@ public class ProductTest {
 	
 	//@Test
 	public void findByCorpIdTest() {
-		List<ProductDto.CorpProductList> list = productDao.findByCorpId("samsung");
+		List<ProductDto.CorpProductList> list = productDao.findByCorpId("samsung", "/images/");
 
 		System.out.println("==============================");
 		System.out.println("findByCorpId : " + list);

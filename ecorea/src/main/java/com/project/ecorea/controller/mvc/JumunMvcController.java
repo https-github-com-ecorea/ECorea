@@ -9,6 +9,7 @@ import org.springframework.web.servlet.mvc.support.*;
 import org.springframework.web.servlet.support.*;
 
 import com.project.ecorea.dto.*;
+import com.project.ecorea.entity.*;
 import com.project.ecorea.service.*;
 
 import javax.servlet.http.*;
@@ -55,6 +56,14 @@ public class JumunMvcController {
 		if(flashMap==null)
 			return "redirect:/";
 		return "order/complete";
+	}
+	
+	// 주문 목록 보기
+	@GetMapping("/order/orderList")
+	public ModelAndView orderList() {
+		String memberId = "zzzzuny";
+		List<JumunDto.JumunList> jumunList = jumunService.readJumunList(memberId);
+		return new ModelAndView("/order/orderList").addObject("jumunList", jumunList);
 	}
 		
 }
