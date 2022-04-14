@@ -3,8 +3,10 @@ package com.project.ecorea.service;
 import java.time.*;
 import java.util.*;
 
+import org.apache.commons.lang3.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.*;
+import org.springframework.transaction.annotation.*;
 
 import com.project.ecorea.dao.*;
 import com.project.ecorea.dto.*;
@@ -36,15 +38,20 @@ public class JumunService {
 		return jumunPreview;
 	}
 
-	public JumunDto.JumunPreview jumunList(List<Params> list, String memberId) {	
+	// 주문 미리보기
+	public JumunDto.JumunPreview jumunPreview(List<Params> list, String memberId) {	
 		Integer totalPrice = 0;
 		List<CartDto.CartProduct> products = new ArrayList<>();
 		for(Params param: list) {
-			Product product = productDao.findByPno(param.getPno());
-			CartDto.CartProduct jumunProduct = CartProduct.builder().pno(param.getPno()).cartpname(product.getPname())
-					.pthumbnail(product.getPthumbnail()).cartcnt(param.getCnt()).price(product.getPrice()).build();
-			totalPrice = totalPrice + (product.getPrice()*param.getCnt());
-			products.add(jumunProduct);			
+			if(param.getPno()!=null && param.getCnt()!=null) {
+				Product product = productDao.findByPno(param.getPno());
+				if(param.getCnt()<=product.getPstock()) {
+					CartDto.CartProduct jumunProduct = CartProduct.builder().pno(param.getPno()).cartpname(product.getPname())
+							.pthumbnail(product.getPthumbnail()).cartcnt(param.getCnt()).price(product.getPrice()).build();
+					totalPrice = totalPrice + (product.getPrice()*param.getCnt());
+					products.add(jumunProduct);
+				}				
+			}						
 		}
 		Member member = memberDao.memberFindById(memberId);
 		JumunDto.JumunPreview jumunPreview = new JumunPreview(products, member.getPoint(), totalPrice, member.getName(), member.getEmail());
@@ -53,13 +60,19 @@ public class JumunService {
 	
 	
 	// 주문 정보 저장
+	@Transactional
 	public void newJumun(JumunInput input, JumunPreview dto, String memberId) {
 		List<CartProduct> products = dto.getProducts();
+		Member member = memberDao.memberFindById(memberId);
+		if(input.getUsePoint()<=member.getPoint()) {
+			memberDao.memberUsePointUpdate(memberId, input.getUsePoint());
+		}
 		for(CartProduct product: products) {
 			Integer jPrice = product.getPrice() * product.getCartcnt();
 			Jumun jumun = new Jumun(null, product.getPno(), product.getCartcnt(), ShippingStatus.PAY, jPrice, input.getUsePoint(), LocalDate.now(), memberId, input.getAddressNo(), input.getShippingMsg());
-			jumunDao.saveJumun(jumun);
-		}		
+			productDao.updateStock(product.getCartcnt(), product.getPno());
+			jumunDao.saveJumun(jumun);			
+		}
 	}
 
 	// 주문 정보 출력

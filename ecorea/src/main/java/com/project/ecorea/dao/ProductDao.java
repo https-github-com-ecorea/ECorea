@@ -39,5 +39,8 @@ public interface ProductDao {
 	
 	// 상품 삭제
 	public Integer deleteProduct(String corpId, Integer pno);
+	
+	// 구매후 제품 수량 변경
+	public Integer updateStock(Integer cnt, Integer pno);
 
 }
