@@ -33,7 +33,7 @@ public class JumunMvcController {
 	@PostMapping("/order/preview/multiple")
 	public ModelAndView cartToOrder(JumunDto.ParamsList list, HttpSession session) {
 		String memberId = "zzzzuny";
-		JumunDto.JumunPreview dto = jumunService.jumunList(list.getParamsList(), memberId);
+		JumunDto.JumunPreview dto = jumunService.jumunPreview(list.getParamsList(), memberId);
 		session.setAttribute("dto", dto);
 		return new ModelAndView("order/pay").addObject("preview", dto);
 	}

@@ -112,11 +112,14 @@
     // 주문 하기
     function order() {
     	const $addressNo = $(".radio_adr:checked").attr("data-addressNo");
-    	const $usePoint = $("#use_point").val();
+    	let $usePoint = $("#use_point").val();
+    	if($usePoint=="") {
+    		$usePoint = 0;
+    	}
 		const $form = $("<form>").attr('method','post').attr('action','/order/new').appendTo($('body'));
 		$('<input>').attr('type','hidden').attr('name','addressNo').val($addressNo).appendTo($form);
 		$('<input>').attr('type','hidden').attr('name','usePoint').val($usePoint).appendTo($form);
-		$('<input>').attr('type','hidden').attr('name','shippingMsg').val($("#shipping_msg").val()).appendTo($form);
+		const msg = $('<input>').attr('type','hidden').attr('name','shippingMsg').val($("#shipping_msg").val()).appendTo($form);
 		$form.submit();
     }
     

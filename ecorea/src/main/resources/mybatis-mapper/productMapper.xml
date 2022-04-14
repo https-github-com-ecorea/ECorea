@@ -93,4 +93,9 @@
 	<delete id="deleteProduct">
 		delete from product where corp_id=#{corpId} and pno=#{pno}
 	</delete>
+	
+	<!-- 일반회원 - 구매후 제품 수량 변경 -->
+	<update id="updateStock">
+		update product set pstock=pstock-#{cnt} where pno=#{pno}		
+	</update>
 </mapper>
