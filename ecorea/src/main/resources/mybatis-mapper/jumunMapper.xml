@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.ecorea.dao.JumunDao">
+		
 	<!-- 주문 정보 저장 -->
 	<insert id="saveJumun" useGeneratedKeys="true" keyProperty="jno">
 		<selectKey keyProperty="jno" order="BEFORE" resultType="int">
@@ -10,8 +11,56 @@
 		into jumun (jno, jcnt, jstatus, jprice, jusepoint, jday, pno, member_id, ano, jshippingmsg) 
 		values(#{jno}, #{jCnt}, #{jStatus}, #{jPrice}, #{jUsePoint}, #{jDay}, #{pno}, #{memberId}, #{ano}, #{jShippingMsg})
 	</insert>
-
 	
+	<!-- 주문 목록 출력 -->
+	<select id="findByMemberId" resultType="com.project.ecorea.dto.JumunDto$JumunList">
+		select j.jno, j.pno, p.pname, #{imagePath} || p.pthumbnail as pthumbnail, j.jprice as price, j.jcnt as cnt, j.jstatus
+		from jumun j
+			left join product p
+			on j.pno = p.pno
+		where member_id = #{memberId}
+	</select>
 	
-
+	<!-- 주문 select -->
+	<select id="jumunFindByMemberId" resultType="com.project.ecorea.entity.Jumun">
+		select *
+		from jumun
+		where member_id=#{memberId}
+	</select>	
+	
+	<select id="jumunFindByMemberIdAndJno" resultType="com.project.ecorea.dto.JumunDto$JumunList">
+		select j.jno, j.pno, p.pname, #{imagePath} || p.pthumbnail as pthumbnail, j.jprice as price, j.jcnt as cnt, j.jstatus
+		from jumun j
+			left join product p
+			on j.pno = p.pno
+		where member_id=#{memberId} and jno=#{jno}
+	</select>
+	
 </mapper>
+
+<!-- 
+	<resultMap type="com.project.ecorea.dto.JumunDto$JumunProduct" id="[1] : jumunProductResultMap">
+		<id column="jno" property="jno"/>
+		<result column="pno" property="pno"/>
+		<result column="pname" property="pname"/>
+		<result column="pthumbnail" property="pthumbnail"/>
+		<result column="price" property="price"/>
+		<result column="jcnt" property="cnt"/>
+	</resultMap>
+	
+	<select id="selectJumunProductByMemberId" resultMap="[1] : jumunProductResultMap">
+		select 
+			j.jno, p.pno, p.pname, #{imagePath} || p.pthumbnail as pthumbnail, p.price, j.jcnt
+		from jumun j
+			left join product p
+			on j.pno = p.pno
+		where member_id = #{memberId}
+	</select>
+	
+	<resultMap id="mapForJumunList" type="com.project.ecorea.dto.JumunDto$JumunList">
+		<result column="jstatus" property="jstatus"/>
+		<association column="" property="jumunProduct" select="[1] : jumunProductResultMap" />		
+	</resultMap>
+	
+ -->
+

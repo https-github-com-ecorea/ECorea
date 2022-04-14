@@ -1,15 +1,16 @@
 package com.project.ecorea.controller.rest;
 
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import com.project.ecorea.service.*;
 
+import lombok.*;
+
+@RequiredArgsConstructor
 @RestController
 public class CartRestController {
-	@Autowired
-	CartService cartService;
+	private final CartService cartService;
 	String memberId = "zzzzuny";
 	
 	@PatchMapping("/order/cart/plusProduct/{pno}")
