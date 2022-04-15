@@ -14,6 +14,9 @@ public interface QnaDao {
 	/* 문의 개수 */
 	public int getTotal();
 	
+	/* 상품 상세 문의 개수 */
+	public int getProductDetailTotal(Integer pno);
+
 	/* 일반 회원 문의 개수 */
 	public int getMemberTotal(String loginId);
 	
@@ -31,6 +34,9 @@ public interface QnaDao {
 	
 	/* 답변 여부 */
 	public int isAnswer(Integer qqno);
+	
+	/* 상품 상세 : 문의 목록 */
+	public List<QnaDto.QuestionDto> productDetailQuestionFindbyPno(Criteria cri);
 	
 	/* 일반 회원 마이페이지 : 문의 목록 */
 	public List<QnaDto.QuestionDto> memberQuestionFindById(@Param("loginId")String loginId, @Param("cri")Criteria cri);

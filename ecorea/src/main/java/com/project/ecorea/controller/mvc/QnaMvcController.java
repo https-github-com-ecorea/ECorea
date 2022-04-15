@@ -3,6 +3,7 @@ package com.project.ecorea.controller.mvc;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.*;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,7 @@ import org.springframework.web.servlet.*;
 
 import com.project.ecorea.dto.Criteria;
 import com.project.ecorea.dto.PageMakerDto;
+import com.project.ecorea.dto.PagingQnaDto;
 import com.project.ecorea.dto.QnaDto;
 import com.project.ecorea.entity.QnaA;
 import com.project.ecorea.entity.QnaQ;
