@@ -76,6 +76,7 @@
   	
   	/* 문의 출력 */
   	function makeQna(obj) {
+  		console.log(obj.list);
   		if (obj.list.length === 0) {
             $(".qnazero").html('<span>문의가 없습니다.</span>');
             $(".qnalist").html('');
@@ -109,7 +110,7 @@
   	  			reply_pageMaker += '<a href="'+ prev_num +'">이전</a>';
   	  			reply_pageMaker += '</li>';	
   	  		}
-  	  		/* numbre btn */
+  	  		/* number btn */
   	  		for(let i = pf.start; i < pf.end+1; i++){
   	  			reply_pageMaker += '<li class="pageMaker_btn ';
   	  			if(pf.cri.pageNum === i){
@@ -133,7 +134,7 @@
   	
 	/* 문의 정보 */
   	const cri = {
-		bookId : product.pno,
+		pno : product.pno,
 		nowPage : 1,
 		amount : 10
 	}
@@ -149,8 +150,13 @@
   		e.preventDefault();
   		let page = $(this).attr("href");
   		cri.nowPage = page;
+  		$('#qna_tbody').empty();
   		requestQna();
 	});
+  	
+  	$(document).on('click', '#qna_tbody .title', function() {
+  		alert();
+  	});
 	
   	$(document).ready(function() {
       // reviewList();
@@ -161,13 +167,10 @@
   	  $('#cart').click(toCart);
  		
       /* 페이징 */
-      const pno = product.pno;
-      
+      const pno = product.pno;      
       $.getJSON("/productDetail/qnalist?", {pno : pno}, function(obj) {
     	  makeQna(obj);
       });
-      
-      
       
 	  /* 제목 눌렀을 때 본문 출력      
 	  let show = document.getElementsByClassName('show');
@@ -374,8 +377,10 @@ img {vertical-align: middle; height: 300px;}
     <p th:text='${product.pcontent}'></p>
   </div>
   <hr>
+  <h3 style="text-align: center;" id="content2">구매 후기</h3>
+  <div class="reviewzero">
+  </div>
   <div class="reviewlist">
-    <h3 style="text-align: center;" id="content2">구매 후기</h3>
     <table class="table">
       <thead class="thead-light">
         <tr>
@@ -408,10 +413,10 @@ img {vertical-align: middle; height: 300px;}
   <div class="hugiPageMaker">
   </div>
   <hr>
+  <h3 style="text-align: center;" id="content3">상품 문의</h3>
   <div class="qnazero">
   </div>
   <div class="qnalist">
-    <h3 style="text-align: center;" id="content3">상품 문의</h3>
       <table class="table">
         <thead class="thead-light">
           <tr>
@@ -422,7 +427,7 @@ img {vertical-align: middle; height: 300px;}
             <th>등록일</th>
           </tr>
         </thead>
-        <tbody id="qna_tbody" th:each="qqna : ${product.QQnas}">
+        <tbody id="qna_tbody">
           <!--
           <tr>
             <td th:text="${qqna.qqno}">

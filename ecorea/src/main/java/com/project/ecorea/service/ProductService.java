@@ -72,7 +72,6 @@ public class ProductService {
 		ProductDto.ProductRead productDto = productDao.findByPno(pno).toDto(imagePath);
 		productDto.setHugis(hugiDao.findByPno(pno));
 		productDto.setQQnas(qnaService.productQuestionList(pno, imagePath));
-		productDto.setAQnas(qnaDao.answerFindByPno(pno));
 		return productDto;
 	}
 	

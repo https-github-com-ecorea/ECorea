@@ -62,9 +62,9 @@
 	</select>
 	
 	<!-- 상품 상세 : 문의 목록 (페이징) -->
-	<select id="productDetailQuestionFindbyPno" resultType="com.project.ecorea.dto.QnaDto$QuestionDto">
+	<select id="productDetailQuestionFindbyPno" resultType="com.project.ecorea.dto.QnaDto$QuestionDto" resultMap="namecheckQuestion">
 	   	select qqno, qqcategory, qqtitle, qqcontent, qqimg, qqregday, member_id from(
-	   		select qqno, qqcategory, qqtitle, qqcontent, qqimg, qqregday, member_id, row_number() over(order by qqno desc) rn
+	   		select row_number() over(order by qqno desc) rn, qqno, qqcategory, qqtitle, qqcontent, qqimg, qqregday, member_id
 	   		from qna_q where <![CDATA[rownum <= #{nowPage} * #{amount}]]> and pno=#{pno})
    		where <![CDATA[rn > (#{nowPage} -1) * #{amount}]]>
 	</select>
