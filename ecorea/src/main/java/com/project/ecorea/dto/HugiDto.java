@@ -2,6 +2,7 @@ package com.project.ecorea.dto;
 
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.*;
 
 import com.project.ecorea.entity.*;
@@ -18,6 +19,7 @@ public class HugiDto {
 		private String htitle; /* 제목 */
 		private String hcontent; /* 내용 */
 		private String hwriter; /* 작성자 */
+		@DateTimeFormat(pattern = "yyyy-MM-dd")
 		private LocalDate hregday; /* 등록일 */
 		private String himg; /* 이미지 */
 	}

@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.project.ecorea.dao.*;
 import com.project.ecorea.dto.*;
+import com.project.ecorea.dto.QnaDto.QuestionDto;
 import com.project.ecorea.entity.QnaA;
 import com.project.ecorea.entity.QnaQ;
 
@@ -66,6 +67,18 @@ public class QnaService {
 		for (QnaDto.AnswerDto qna : entity) {
 			dto.add(qna);
 		}
+		return dto;
+	}
+	
+	/* 상품 상세 : 문의 목록 (페이징) */
+	public PagingQnaDto productDetailQuestionList(Criteria cri) {
+		PagingQnaDto dto = new PagingQnaDto();
+		List<QuestionDto> entity = dao.productDetailQuestionFindbyPno(cri);
+		for (QuestionDto qna : entity) {
+			qna.setQqimg(imagePath + qna.getQqimg());
+		}
+		dto.setList(entity);
+		dto.setPageInfo(new PageMakerDto(cri, dao.getProductDetailTotal(cri.getPno())));
 		return dto;
 	}
 	

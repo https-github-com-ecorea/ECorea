@@ -74,14 +74,199 @@
   		}
   	}
   	
+	/* 페이지 정보 */
+  	const cri = {
+		pno : product.pno,
+		nowPage : 1,
+		amount : 10
+	}
+	
+  	/* 후기 출력 (페이징) */
+  	function makeHugi(obj) {
+		console.log(obj.list);
+  		if (obj.list.length === 0) {
+            $(".hugizero").html('<span>후기가 없습니다. (≡^∇^≡)</span>');
+            $(".hugilist").html('');
+  		  	$(".hugiPageMaker").html('');
+          } else {
+            const list = obj.list;
+            const pf = obj.pageInfo;
+            $(list).each(function(i, obj) {
+              const $tbody = $('#hugi_tbody');
+              const $tr = $('<tr>').appendTo($tbody);
+              $('<td>').text(obj.hno).appendTo($tr);
+              $('<td>').text(obj.htitle).attr('class', 'title').appendTo($tr);
+              $('<td>').text(obj.hwriter).appendTo($tr);
+              $('<td>').text(obj.hregday).appendTo($tr);
+              let $show = $('<tr>').attr('class', 'show').attr('style', 'display: none').appendTo($tr);
+              if (obj.himg != null) {
+                let $td = $('<td>').attr('colspan', '2').appendTo($show);
+                $('<img>').attr('src', obj.himg).appendTo($td)
+                $('<td>').attr('colspan', '2').text(obj.qqcontent).appendTo($show);
+              } else {
+                $('<td>').attr('colspan', '4').text(obj.qqcontent).appendTo($show);
+              }
+            });
+              
+            let reply_pageMaker = '';	
+            
+            /* prev */
+  	  		if (pf.prev) {
+  	  			let prev_num = pf.start -1;
+  	  			reply_pageMaker += '<li class="hugiPageMaker_btn prev">';
+  	  			reply_pageMaker += '<a href="'+ prev_num +'">이전</a>';
+  	  			reply_pageMaker += '</li>';	
+  	  		}
+  	  		/* number btn */
+  	  		for(let i = pf.start; i < pf.end+1; i++){
+  	  			reply_pageMaker += '<li class="hugiPageMaker_btn ';
+  	  			if(pf.cri.pageNum === i){
+  	  				reply_pageMaker += 'active';
+  	  			}
+  	  			reply_pageMaker += '">';
+  	  			reply_pageMaker += '<a href="' + i + '">' + i + '</a>';
+  	  			reply_pageMaker += '</li>';
+  	  		}
+  	  		/* next */
+  	  		if(pf.next){
+  	  			let next_num = pf.end +1;
+  	  			reply_pageMaker += '<li class="hugiPageMaker_btn next">';
+  	  			reply_pageMaker += '<a href="'+ next_num +'">다음</a>';
+  	  			reply_pageMaker += '</li>';	
+  	  		}
+  	  		
+  	  		$(".hugiPageMaker").html(reply_pageMaker);	
+          };
+  	}
+  	
+	/* 후기 데이터 요청 */
+	function requestHugi() {
+  		$.getJSON("/productDetail/hugilist?", cri, function(obj) {
+      	  makeHugi(obj);
+        });
+	}
+	
+	/* 후기 페이징 버튼 */
+  	$(document).on('click', '.hugiPageMaker_btn a', function(e){
+  		e.preventDefault();
+  		let page = $(this).attr("href");
+  		cri.nowPage = page;
+  		$('#hugi_tbody').empty();
+  		requestHugi();
+	});
+  	
+  	/* 문의 출력 (페이징) */
+  	function makeQna(obj) {
+  		if (obj.list.length === 0) {
+            $(".qnazero").html('<span>문의가 없습니다. (≡^∇^≡)</span>');
+            $(".qnalist").html('');
+  		  	$(".qnaPageMaker").html('');
+          } else {
+            const list = obj.list;
+            const pf = obj.pageInfo;
+            $(list).each(function(i, obj) {
+              const $tbody = $('#qna_tbody');
+              const $tr = $('<tr>').appendTo($tbody);
+              $('<td>').text(obj.qqno).appendTo($tr);
+              $('<td>').text(obj.qqcategory).appendTo($tr);
+              $('<td>').text(obj.qqtitle).attr('class', 'title').appendTo($tr);
+              $('<td>').text(obj.memberId).appendTo($tr);
+              $('<td>').text(obj.qqregday).appendTo($tr);
+              let $show = $('<tr>').attr('class', 'show').attr('style', 'display: none').appendTo($tr);
+              if (obj.qqimg != null) {
+                let $td = $('<td>').attr('colspan', '2').appendTo($show);
+                $('<img>').attr('src', obj.qqimg).appendTo($td)
+                $('<td>').attr('colspan', '3').text(obj.qqcontent).appendTo($show);
+              } else {
+                $('<td>').attr('colspan', '5').text(obj.qqcontent).appendTo($show);
+              }
+            });
+              
+            let reply_pageMaker = '';	
+              /* prev */
+  	  		if (pf.prev) {
+  	  			let prev_num = pf.start -1;
+  	  			reply_pageMaker += '<li class="qnaPageMaker_btn prev">';
+  	  			reply_pageMaker += '<a href="'+ prev_num +'">이전</a>';
+  	  			reply_pageMaker += '</li>';	
+  	  		}
+  	  		/* number btn */
+  	  		for(let i = pf.start; i < pf.end+1; i++){
+  	  			reply_pageMaker += '<li class="qnaPageMaker_btn ';
+  	  			if(pf.cri.pageNum === i){
+  	  				reply_pageMaker += 'active';
+  	  			}
+  	  			reply_pageMaker += '">';
+  	  			reply_pageMaker += '<a href="' + i + '">' + i + '</a>';
+  	  			reply_pageMaker += '</li>';
+  	  		}
+  	  		/* next */
+  	  		if(pf.next){
+  	  			let next_num = pf.end +1;
+  	  			reply_pageMaker += '<li class="qnaPageMaker_btn next">';
+  	  			reply_pageMaker += '<a href="'+ next_num +'">다음</a>';
+  	  			reply_pageMaker += '</li>';	
+  	  		}
+  	  		
+  	  		$(".qnaPageMaker").html(reply_pageMaker);	
+          };
+  	}
+	
+	/* 문의 데이터 요청 */
+	function requestQna() {
+  		$.getJSON("/productDetail/qnalist?", cri, function(obj) {
+      	  makeQna(obj);
+        });
+	}
+	
+	/* 문의 페이징 버튼 */
+  	$(document).on('click', '.qnaPageMaker_btn a', function(e){
+  		e.preventDefault();
+  		let page = $(this).attr("href");
+  		cri.nowPage = page;
+  		$('#qna_tbody').empty();
+  		requestQna();
+	});
+  	
+  	$(document).on('click', '#qna_tbody .title', function() {
+  		alert();
+  	});
+	
   	$(document).ready(function() {
-  		// reviewList();
-  		// qnaQList();
-  		$('#plus').click(plusCnt);
-  		$('#minus').click(minusCnt);
-  		$('#order').click(toOrder);
-  		$('#cart').click(toCart);
-   	})
+      // reviewList();
+  	  // qnaQList();
+  	  $('#plus').click(plusCnt);
+  	  $('#minus').click(minusCnt);
+  	  $('#order').click(toOrder);
+  	  $('#cart').click(toCart);
+ 		
+      const pno = product.pno;
+      
+      /* 문의 출력 */
+      $.getJSON("/productDetail/qnalist?", {pno : pno}, function(obj) {
+    	  makeQna(obj);
+      });
+      
+      /* 후기 출력 */
+      $.getJSON("/productDetail/hugilist?", {pno : pno}, function(obj) {
+    	  makeHugi(obj);
+      });
+      
+	  /* 제목 눌렀을 때 본문 출력      
+	  let show = document.getElementsByClassName('show');
+	  let title = document.getElementsByClassName('title');
+	  
+	  for (let i=0; i<title.length; i++) {
+	    title[i].addEventListener('click', function(){
+	       if(show[i].style.display==='none') {
+	          show[i].style.display="";
+	       } else {
+	          show[i].style.display='none';
+	       }
+	    });
+	  }
+	  */
+	});
   </script>
   <title>상품 상세페이지</title>
   <style>
@@ -272,8 +457,10 @@ img {vertical-align: middle; height: 300px;}
     <p th:text='${product.pcontent}'></p>
   </div>
   <hr>
-  <div class="reviewlist">
-    <h3 style="text-align: center;" id="content2">구매 후기</h3>
+  <h3 style="text-align: center;" id="content2">구매 후기</h3>
+  <div class="hugizero">
+  </div>
+  <div class="hugilist">
     <table class="table">
       <thead class="thead-light">
         <tr>
@@ -283,7 +470,8 @@ img {vertical-align: middle; height: 300px;}
           <th>등록일</th>
         </tr>
       </thead>
-      <tbody th:each="hugi : ${product.hugis}">
+      <tbody id="hugi_tbody">
+      <!-- 
       	<tr>
 	       	  <td th:text="${hugi.hno}">
 	       	  <td th:text="${hugi.htitle}" class="title">
@@ -300,58 +488,54 @@ img {vertical-align: middle; height: 300px;}
 	             <td colspan="4" th:text="${hugi.hcontent}">본문</td>
 	          </tr>
          </tr>
+         -->
        </tbody>
     </table>
+  </div>
+  <div class="hugiPageMaker">
   </div>
   <hr>
-  <div class="qnalist">
-    <h3 style="text-align: center;" id="content3">상품 문의</h3>
-    <table class="table">
-      <thead class="thead-light">
-        <tr>
-	          <th>번호</th>
-	          <th>카테고리</th>
-	          <th>제목</th>
-	          <th>작성자</th>
-	          <th>등록일</th>
-        </tr>
-      </thead>
-	   <tbody th:each="qqna : ${product.QQnas}">
-	     <tr>
-		     <td th:text="${qqna.qqno}">
-		     <td th:text="${qqna.qqcategory}">
-		     <td th:text="${qqna.qqtitle}" class="title">
-		     <td th:text="${qqna.memberId}">
-		     <td th:text="${qqna.qqregday}">
-		     <tr class="show" style="display: none">
-				 <div th:if="${not #strings.isEmpty(qqna.qqimg)}">
-			     	 <td colspan="2"> <img th:src="${qqna.qqimg}"></td>
-		             <td colspan="3" th:text="${qqna.qqcontent}"></td>
-				 </div>
-				 <div th:unless="${not #strings.isEmpty(qqna.qqimg)}">
-		             <td colspan="5" th:text="${qqna.qqcontent}"></td>
-				 </div>
-	         </tr>
-	     </tr>
-       </tbody>
-    </table>
+  <h3 style="text-align: center;" id="content3">상품 문의</h3>
+  <div class="qnazero">
   </div>
+  <div class="qnalist">
+      <table class="table">
+        <thead class="thead-light">
+          <tr>
+            <th>번호</th>
+            <th>카테고리</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>등록일</th>
+          </tr>
+        </thead>
+        <tbody id="qna_tbody">
+          <!--
+          <tr>
+            <td th:text="${qqna.qqno}">
+            <td th:text="${qqna.qqcategory}">
+            <td th:text="${qqna.qqtitle}" class="title">
+            <td th:text="${qqna.memberId}">
+            <td th:text="${qqna.qqregday}">
+            <tr class="show" style="display: none">
+              <div th:if="${not #strings.isEmpty(qqna.qqimg)}">
+                <td colspan="2"> <img th:src="${qqna.qqimg}"></td>
+                <td colspan="3" th:text="${qqna.qqcontent}"></td>
+              </div>
+              <div th:unless="${not #strings.isEmpty(qqna.qqimg)}">
+                <td colspan="5" th:text="${qqna.qqcontent}"></td>
+              </div>
+            </tr>
+          </tr>
+          -->
+        </tbody>
+      </table>
+    </div>
+    <div class="qnaPageMaker">
+    </div>
   </div>
 
-  <script>  
-	  /* 제목 눌렀을 때 본문 출력 */
-	  let show = document.getElementsByClassName('show');
-	  let title = document.getElementsByClassName('title');
-	  
-	  for (let i=0; i<title.length; i++) {
-	    title[i].addEventListener('click', function(){
-	       if(show[i].style.display==='none') {
-	          show[i].style.display="";
-	       } else {
-	          show[i].style.display='none';
-	       }
-	    });
-	  }
+  <script>
     
     let slideIndex = 1;
     showSlides(slideIndex);

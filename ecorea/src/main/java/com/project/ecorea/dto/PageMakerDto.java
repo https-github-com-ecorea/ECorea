@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class PageMakerDto {
+	/* PageMakerDto : 페이지 정보 */
 
 	private int start; /* 화면에 표시되는 페이지 시작 번호 */
 	private int end; /* 화면에 표시되는 페이지 마지막 번호 */

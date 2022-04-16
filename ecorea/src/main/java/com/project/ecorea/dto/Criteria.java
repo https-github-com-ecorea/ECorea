@@ -8,7 +8,9 @@ public class Criteria {
 	private int nowPage; /* 현재 페이지 */
 	private int amount; /* 한 페이지당 보여질 게시물 개수 */
 	private String catecode; /* 카테고리 */
-	private String sort; /* 정렬 */ 
+	private String sort; /* 정렬 */
+	
+	private int pno; /* 상품 번호 (상품 상세 페이지에서 사용) */
 	
 	/* 파라미터 없이 호출했을 때 (기본 값) */
 	public Criteria() {

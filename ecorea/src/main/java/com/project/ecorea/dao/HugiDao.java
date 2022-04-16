@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.apache.ibatis.annotations.*;
 
+import com.project.ecorea.dto.Criteria;
 import com.project.ecorea.dto.HugiDto;
 import com.project.ecorea.dto.HugiDto.*;
 import com.project.ecorea.entity.*;
@@ -13,6 +14,12 @@ public interface HugiDao {
 	
 	/* 후기 목록 출력 */
 	public List<HugiDto.HugiList> findByPno(Integer pno);
+	
+	/* 상품 상세 : 후기 개수 */
+	public int getProductDetailTotal(Integer pno);
+	
+	/* 상품 상세 : 후기 목록 (페이징) */
+	public List<HugiDto.HugiList> productDetailHugiFindbyPno(Criteria cri);
 
 	public List<HugiDto.HugiList> findByhwriter(String loginId);
 
