@@ -67,7 +67,7 @@
 	</resultMap>
 	
 	<select id="findByCorpId" resultMap="regProduct">
-		select * from product where corp_id=#{corpId}
+		select pno, price, pname, pstock, pcontent, #{imagePath} || pthumbnail as pthumbnail, pordercnt, pregday, corp_id, catecode from product where corp_id=#{corpId}
 	</select>
 	
 
