@@ -97,4 +97,12 @@
 	<delete id="corpDeleteById">
 		delete from corp where corp_id=#{id}
 	</delete>
+	
+	<update id="memberUsePointUpdate">
+		update member set member_point=member_point-#{point} where member_id=#{id}
+	</update>
+	
+	<update id="memberGetPointUpdate">
+		update member set member_point=member_point+#{point} where member_id=#{id}
+	</update>
 </mapper>

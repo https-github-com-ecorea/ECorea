@@ -101,7 +101,7 @@ public class ProductService {
 
 	// 등록 상품 리스트 출력
 	public List<ProductDto.CorpProductList> regProductsList(String corpId) {
-		List<ProductDto.CorpProductList> corpProductListDto = productDao.findByCorpId(corpId);
+		List<ProductDto.CorpProductList> corpProductListDto = productDao.findByCorpId(corpId, imagePath);
 		return corpProductListDto;
 	}
 	
@@ -129,7 +129,7 @@ public class ProductService {
 		return true;
 	}
 	
-	// 장바구니에 상품 한 개 담기
+	// 장바구니에 한 상품 한 개 담기
 	public Boolean shoppingCartOne(Integer pno, String memberId) {
 		// cart에 이미 담겨있는 상품인지 확인 
 		// 담겨있으면 수량 1증가, 아니면 saveOneProduct		
@@ -149,19 +149,17 @@ public class ProductService {
 		} else {
 			cartService.plusCnt(memberId, pno);
 			return true;
-		}		
+		}
 	}
 
-	/* 장바구니에 상품 여러 개 담기 */
+	/* 장바구니에 한 상품 여러 개 담기 */
 	public Boolean shoppingCartMultiple(Integer pno, Integer count, String memberId) {
 		Cart isExistProductInCart = cartDao.findByMemberIdAndPno(memberId, pno);
-		System.out.println(isExistProductInCart);
 		if (isExistProductInCart == null) {
 			Product product = productDao.findByPno(pno);
 			Integer cartPrice = product.getPrice() * count;
 			Cart cart = Cart.builder().memberId(memberId).pno(pno).cartcnt(count)
 					.cartpname(product.getPname()).cartprice(cartPrice).build();
-			System.out.println(cart);
 			cartDao.saveOneProduct(cart);
 			return true;
 		} else {

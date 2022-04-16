@@ -1,5 +1,6 @@
 package com.project.ecorea.dto;
 
+import java.time.format.*;
 import java.util.*;
 
 import com.project.ecorea.dto.CartDto.*;
@@ -48,9 +49,28 @@ public class JumunDto {
 		private Integer cnt;
 	}
 	
+	@Data
+	@AllArgsConstructor
+	public static class JumunInput {
+		private Integer addressNo;
+		private Integer usePoint;
+		private String shippingMsg;		
+	}
 	
 	
-	
+	@Data
+	@AllArgsConstructor
+	@Builder
+	public static class JumunList {
+		private Integer jno;
+		private Integer pno;
+		private String pname;
+		private String pthumbnail;
+		private Integer price;
+		private Integer cnt;
+		private String jstatus;
+	}
+
 	/*
 	
 	@Data
