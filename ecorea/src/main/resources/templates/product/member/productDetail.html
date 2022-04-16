@@ -74,13 +74,93 @@
   		}
   	}
   	
-  	/* 문의 출력 */
-  	function makeQna(obj) {
-  		console.log(obj.list);
+	/* 페이지 정보 */
+  	const cri = {
+		pno : product.pno,
+		nowPage : 1,
+		amount : 10
+	}
+	
+  	/* 후기 출력 (페이징) */
+  	function makeHugi(obj) {
+		console.log(obj.list);
   		if (obj.list.length === 0) {
-            $(".qnazero").html('<span>문의가 없습니다.</span>');
+            $(".hugizero").html('<span>후기가 없습니다. (≡^∇^≡)</span>');
+            $(".hugilist").html('');
+  		  	$(".hugiPageMaker").html('');
+          } else {
+            const list = obj.list;
+            const pf = obj.pageInfo;
+            $(list).each(function(i, obj) {
+              const $tbody = $('#hugi_tbody');
+              const $tr = $('<tr>').appendTo($tbody);
+              $('<td>').text(obj.hno).appendTo($tr);
+              $('<td>').text(obj.htitle).attr('class', 'title').appendTo($tr);
+              $('<td>').text(obj.hwriter).appendTo($tr);
+              $('<td>').text(obj.hregday).appendTo($tr);
+              let $show = $('<tr>').attr('class', 'show').attr('style', 'display: none').appendTo($tr);
+              if (obj.himg != null) {
+                let $td = $('<td>').attr('colspan', '2').appendTo($show);
+                $('<img>').attr('src', obj.himg).appendTo($td)
+                $('<td>').attr('colspan', '2').text(obj.qqcontent).appendTo($show);
+              } else {
+                $('<td>').attr('colspan', '4').text(obj.qqcontent).appendTo($show);
+              }
+            });
+              
+            let reply_pageMaker = '';	
+            
+            /* prev */
+  	  		if (pf.prev) {
+  	  			let prev_num = pf.start -1;
+  	  			reply_pageMaker += '<li class="hugiPageMaker_btn prev">';
+  	  			reply_pageMaker += '<a href="'+ prev_num +'">이전</a>';
+  	  			reply_pageMaker += '</li>';	
+  	  		}
+  	  		/* number btn */
+  	  		for(let i = pf.start; i < pf.end+1; i++){
+  	  			reply_pageMaker += '<li class="hugiPageMaker_btn ';
+  	  			if(pf.cri.pageNum === i){
+  	  				reply_pageMaker += 'active';
+  	  			}
+  	  			reply_pageMaker += '">';
+  	  			reply_pageMaker += '<a href="' + i + '">' + i + '</a>';
+  	  			reply_pageMaker += '</li>';
+  	  		}
+  	  		/* next */
+  	  		if(pf.next){
+  	  			let next_num = pf.end +1;
+  	  			reply_pageMaker += '<li class="hugiPageMaker_btn next">';
+  	  			reply_pageMaker += '<a href="'+ next_num +'">다음</a>';
+  	  			reply_pageMaker += '</li>';	
+  	  		}
+  	  		
+  	  		$(".hugiPageMaker").html(reply_pageMaker);	
+          };
+  	}
+  	
+	/* 후기 데이터 요청 */
+	function requestHugi() {
+  		$.getJSON("/productDetail/hugilist?", cri, function(obj) {
+      	  makeHugi(obj);
+        });
+	}
+	
+	/* 후기 페이징 버튼 */
+  	$(document).on('click', '.hugiPageMaker_btn a', function(e){
+  		e.preventDefault();
+  		let page = $(this).attr("href");
+  		cri.nowPage = page;
+  		$('#hugi_tbody').empty();
+  		requestHugi();
+	});
+  	
+  	/* 문의 출력 (페이징) */
+  	function makeQna(obj) {
+  		if (obj.list.length === 0) {
+            $(".qnazero").html('<span>문의가 없습니다. (≡^∇^≡)</span>');
             $(".qnalist").html('');
-  		  	$(".pageMaker").html('');
+  		  	$(".qnaPageMaker").html('');
           } else {
             const list = obj.list;
             const pf = obj.pageInfo;
@@ -106,13 +186,13 @@
               /* prev */
   	  		if (pf.prev) {
   	  			let prev_num = pf.start -1;
-  	  			reply_pageMaker += '<li class="pageMaker_btn prev">';
+  	  			reply_pageMaker += '<li class="qnaPageMaker_btn prev">';
   	  			reply_pageMaker += '<a href="'+ prev_num +'">이전</a>';
   	  			reply_pageMaker += '</li>';	
   	  		}
   	  		/* number btn */
   	  		for(let i = pf.start; i < pf.end+1; i++){
-  	  			reply_pageMaker += '<li class="pageMaker_btn ';
+  	  			reply_pageMaker += '<li class="qnaPageMaker_btn ';
   	  			if(pf.cri.pageNum === i){
   	  				reply_pageMaker += 'active';
   	  			}
@@ -123,7 +203,7 @@
   	  		/* next */
   	  		if(pf.next){
   	  			let next_num = pf.end +1;
-  	  			reply_pageMaker += '<li class="pageMaker_btn next">';
+  	  			reply_pageMaker += '<li class="qnaPageMaker_btn next">';
   	  			reply_pageMaker += '<a href="'+ next_num +'">다음</a>';
   	  			reply_pageMaker += '</li>';	
   	  		}
@@ -131,13 +211,6 @@
   	  		$(".qnaPageMaker").html(reply_pageMaker);	
           };
   	}
-  	
-	/* 문의 정보 */
-  	const cri = {
-		pno : product.pno,
-		nowPage : 1,
-		amount : 10
-	}
 	
 	/* 문의 데이터 요청 */
 	function requestQna() {
@@ -146,7 +219,8 @@
         });
 	}
 	
-  	$(document).on('click', '.pageMaker_btn a', function(e){
+	/* 문의 페이징 버튼 */
+  	$(document).on('click', '.qnaPageMaker_btn a', function(e){
   		e.preventDefault();
   		let page = $(this).attr("href");
   		cri.nowPage = page;
@@ -166,10 +240,16 @@
   	  $('#order').click(toOrder);
   	  $('#cart').click(toCart);
  		
-      /* 페이징 */
-      const pno = product.pno;      
+      const pno = product.pno;
+      
+      /* 문의 출력 */
       $.getJSON("/productDetail/qnalist?", {pno : pno}, function(obj) {
     	  makeQna(obj);
+      });
+      
+      /* 후기 출력 */
+      $.getJSON("/productDetail/hugilist?", {pno : pno}, function(obj) {
+    	  makeHugi(obj);
       });
       
 	  /* 제목 눌렀을 때 본문 출력      
@@ -378,9 +458,9 @@ img {vertical-align: middle; height: 300px;}
   </div>
   <hr>
   <h3 style="text-align: center;" id="content2">구매 후기</h3>
-  <div class="reviewzero">
+  <div class="hugizero">
   </div>
-  <div class="reviewlist">
+  <div class="hugilist">
     <table class="table">
       <thead class="thead-light">
         <tr>
@@ -390,7 +470,8 @@ img {vertical-align: middle; height: 300px;}
           <th>등록일</th>
         </tr>
       </thead>
-      <tbody th:each="hugi : ${product.hugis}">
+      <tbody id="hugi_tbody">
+      <!-- 
       	<tr>
 	       	  <td th:text="${hugi.hno}">
 	       	  <td th:text="${hugi.htitle}" class="title">
@@ -407,6 +488,7 @@ img {vertical-align: middle; height: 300px;}
 	             <td colspan="4" th:text="${hugi.hcontent}">본문</td>
 	          </tr>
          </tr>
+         -->
        </tbody>
     </table>
   </div>

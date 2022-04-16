@@ -71,7 +71,7 @@ public class QnaService {
 	}
 	
 	/* 상품 상세 : 문의 목록 (페이징) */
-	public PagingQnaDto productDetailPageQuestionList(Criteria cri) {
+	public PagingQnaDto productDetailQuestionList(Criteria cri) {
 		PagingQnaDto dto = new PagingQnaDto();
 		List<QuestionDto> entity = dao.productDetailQuestionFindbyPno(cri);
 		for (QuestionDto qna : entity) {
