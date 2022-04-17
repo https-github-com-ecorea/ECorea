@@ -15,12 +15,12 @@
 		delete from hugi where hno=#{hno}
 	</delete>
 	
-	<insert id="saveReviwe" useGeneratedKeys="true" keyProperty="hno">
+	<insert id="reviewSave" useGeneratedKeys="true" keyProperty="hno">
 		<selectKey keyProperty="hno" order="BEFORE" resultType="int">
 			select hugi_seq.nextval from dual
 		</selectKey>
 		insert into hugi
-		values (#{pno}, #{hno}, #{jno}, #{htitle}, #{hregday}, #{hwriter}, #{hcontent}, #{himg})
+		values(#{hno}, #{jno}, #{htitle}, #{hregday}, #{hwriter}, #{hcontent}, #{himg})
 	</insert>
 	
 	<update id="updateByReview">
@@ -32,5 +32,9 @@
 		</trim>
 		where hno=#{hno}
 	</update>
+	
+	<select id="findByHno" resultType="hugi">
+		select * from hugi where hno=#{hno}
+	</select>
 	
 </mapper>

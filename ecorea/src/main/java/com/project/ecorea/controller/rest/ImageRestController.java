@@ -21,6 +21,7 @@ public class ImageRestController {
 	public ResponseEntity<byte[]> showImage(@PathVariable String imagename) {
 		// System.out.println("################# RESTcontroller start ################");
 		// System.out.println("imagename : " + imagename);
+
 		File file = new File(CKFolder, imagename);
 		if(file.exists()==false)
 			file = new File(imgFolder, imagename);

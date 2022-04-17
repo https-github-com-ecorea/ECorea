@@ -33,5 +33,8 @@ public interface UserDao {
 	public void memberDeleteById(String id);
 
 	public void corpDeleteById(String loginId);
-
+	
+	public Integer memberUsePointUpdate(String id, Integer point);
+	
+	public Integer memberGetPointUpdate(String id, Integer point);
 }
