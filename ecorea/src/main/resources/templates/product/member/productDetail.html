@@ -95,16 +95,16 @@
               const $tbody = $('#hugi_tbody');
               const $tr = $('<tr>').appendTo($tbody);
               $('<td>').text(obj.hno).appendTo($tr);
-              $('<td>').text(obj.htitle).attr('class', 'title').appendTo($tr);
+              $('<td>').text(obj.htitle).attr('class', 'title').data('num', obj.hno).appendTo($tr);
               $('<td>').text(obj.hwriter).appendTo($tr);
               $('<td>').text(obj.hregday).appendTo($tr);
               let $show = $('<tr>').attr('class', 'show').attr('style', 'display: none').appendTo($tr);
               if (obj.himg != null) {
                 let $td = $('<td>').attr('colspan', '2').appendTo($show);
                 $('<img>').attr('src', obj.himg).appendTo($td)
-                $('<td>').attr('colspan', '2').text(obj.qqcontent).appendTo($show);
+                $('<td>').attr('colspan', '2').text(obj.hcontent).appendTo($show);
               } else {
-                $('<td>').attr('colspan', '4').text(obj.qqcontent).appendTo($show);
+                $('<td>').attr('colspan', '4').text(obj.hcontent).appendTo($show);
               }
             });
               
@@ -169,7 +169,7 @@
               const $tr = $('<tr>').appendTo($tbody);
               $('<td>').text(obj.qqno).appendTo($tr);
               $('<td>').text(obj.qqcategory).appendTo($tr);
-              $('<td>').text(obj.qqtitle).attr('class', 'title').appendTo($tr);
+              $('<td>').text(obj.qqtitle).attr('class', 'title').data('num', obj.qqno).appendTo($tr);
               $('<td>').text(obj.memberId).appendTo($tr);
               $('<td>').text(obj.qqregday).appendTo($tr);
               let $show = $('<tr>').attr('class', 'show').attr('style', 'display: none').appendTo($tr);
@@ -227,10 +227,6 @@
   		$('#qna_tbody').empty();
   		requestQna();
 	});
-  	
-  	$(document).on('click', '#qna_tbody .title', function() {
-  		alert();
-  	});
 	
   	$(document).ready(function() {
       // reviewList();
@@ -251,21 +247,6 @@
       $.getJSON("/productDetail/hugilist?", {pno : pno}, function(obj) {
     	  makeHugi(obj);
       });
-      
-	  /* 제목 눌렀을 때 본문 출력      
-	  let show = document.getElementsByClassName('show');
-	  let title = document.getElementsByClassName('title');
-	  
-	  for (let i=0; i<title.length; i++) {
-	    title[i].addEventListener('click', function(){
-	       if(show[i].style.display==='none') {
-	          show[i].style.display="";
-	       } else {
-	          show[i].style.display='none';
-	       }
-	    });
-	  }
-	  */
 	});
   </script>
   <title>상품 상세페이지</title>
@@ -536,7 +517,31 @@ img {vertical-align: middle; height: 300px;}
   </div>
 
   <script>
-    
+  	/* 제목 클릭 시 본문 출력 */
+	$(document).on('click', '.title', function() {
+		console.log($(this).next().next().next().attr('style'));
+		if ($(this).next().next().next().attr('style') == 'display: none') {
+			$(this).next().next().next().attr('style', 'display: ');
+		} else {
+			$(this).next().next().next().attr('style', 'display: none');
+		}
+	})
+  
+	  /* 제목 눌렀을 때 본문 출력      
+	  let show = document.getElementsByClassName('show');
+	  let title = document.getElementsByClassName('title');
+	  
+	  for (let i=0; i<title.length; i++) {
+	    title[i].addEventListener('click', function(){
+	       if(show[i].style.display==='none') {
+	          show[i].style.display="";
+	       } else {
+	          show[i].style.display='none';
+	       }
+	    });
+	  }
+	  */
+  
     let slideIndex = 1;
     showSlides(slideIndex);
     
