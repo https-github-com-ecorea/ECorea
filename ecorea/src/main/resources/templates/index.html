@@ -23,6 +23,7 @@
   	const role = /*[[${role}]]*/
   	const list = /*[[${list}]]*/
   	
+  	
   	function productList() {
   		const $wrap = $('#slick-slide');
   		$.each(list, function(idx, product) {
@@ -31,11 +32,12 @@
   			$a = $('<a>').attr('href', './product/productList?nowPage=1&amount=9&catecode=&sort=').appendTo($card);
   			$('<img>').attr('src', product.pthumbnail).attr('alt', '상품').attr('class', 'card-img-top').appendTo($a);
   			$cardbody = $('<div>').attr('class', 'card-body').appendTo($card);
-  			$('<p>').attr('class', 'card-title').attr('style', 'color: crimson;').text('브랜드명').appendTo($cardbody);
+  			$('<p>').attr('class', 'card-title').attr('style', 'color: crimson;').text(product.cname).appendTo($cardbody);
   			$('<p>').attr('class', 'card-text fw-light mb-4').text(product.pname).appendTo($cardbody);
   			$('<span>').attr('style', 'color:black; font-size: 20px;').text(product.price + " 원").appendTo($cardbody);
   		})
   	}
+  	
   	
   	$(document).ready(function() {
   		if(role=="ROLE_MEMBER") {
@@ -117,7 +119,7 @@
 
 
     <footer class="footer">
-      <address style="font-size: 12px; display:inline-block;margin-top:10px;margin-left:20px;">
+      <address style="font-size: 12px; display:inline-block;margin-top:20px;margin-left:30px;">
         인천광역시 미추홀구<br>
         이메일 : ecorea@gmail.com<br>
         전화번호 : 032-000-0000
