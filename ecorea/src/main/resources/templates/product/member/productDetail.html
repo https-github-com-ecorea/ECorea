@@ -251,91 +251,20 @@
   </script>
   <title>상품 상세페이지</title>
   <style>
-    h3 {
+  * {box-sizing: border-box}
+  h3 {
       text-align: center;
       margin-top: 20px;
     }
-    .productinfo {
-      width: 900px;
-      height: 350px;
-      margin: 0 auto;
-      
-    }
-    .product-img {
-      float: left;
-      margin: 10px;
-    }
-* {box-sizing: border-box}
-body {font-family: Verdana, sans-serif; margin:0}
-.mySlides {display: none}
-img {vertical-align: middle; height: 300px;}
-
-/* Slideshow container */
-.slideshow-container {
-  width: 350px;
-  position: relative;
-  margin: auto;
+.product-info.left {
+  float: left;
+  height: 350px;
+  width: 500px;
+  /* padding: 10px; */
+  margin: 10px;
+  text-align: start;
 }
-
-/* Next & previous buttons */
-.prev, .next {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  width: auto;
-  padding: 16px;
-  margin-top: -22px;
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-  transition: 0.6s ease;
-  border-radius: 0 3px 3px 0;
-  user-select: none;
-}
-
-/* Position the "next button" to the right */
-.next {
-  right: 0;
-  border-radius: 3px 0 0 3px;
-}
-
-/* On hover, add a black background color with a little bit see-through */
-.prev:hover, .next:hover {
-  background-color: rgba(0,0,0,0.8);
-}
-
-/* The dots/bullets/indicators */
-.dot {
-  cursor: pointer;
-  height: 15px;
-  width: 15px;
-  margin: 0 2px;
-  background-color: #bbb;
-  border-radius: 50%;
-  display: inline-block;
-  transition: background-color 0.6s ease;
-}
-
-.active, .dot:hover {
-  background-color: #717171;
-}
-
-/* Fading animation */
-.fade {
-  animation-name: fade;
-  animation-duration: 1.5s;
-}
-
-@keyframes fade {
-  from {opacity: .4} 
-  to {opacity: 1}
-}
-
-/* On smaller screens, decrease text size */
-@media only screen and (max-width: 300px) {
-  .prev, .next,.text {font-size: 11px}
-}
-.product-info {
+.product-info.right {
   float: right;
   height: 350px;
   width: 500px;
@@ -361,52 +290,28 @@ img {vertical-align: middle; height: 300px;}
 </style>
 </head>
 <body>
-  <header>
-    <div class="logo"><a href="index.html">ECorea</a></div>
+  <header class="navwrapper">
+    <span class="leftnav"><a href="/">ECorea</a></span>
+    <span class="leftnav"><a href="/product/productList?nowPage=1&amount=9&catecode=&sort=">SHOP</a></span>
+    <span class="leftnav"><a href="/">CHALLENGE</a></span>
+    <span class="leftnav"><a href="/">ABOUT</a></span>
+    <span class="rightnav all"><a href="/general/joinSelect">JOIN</a></span> 
+    <span class="rightnav all"><a href="/general/login">LOGIN</a></span>
+	<span class="rightnav member corp" style="display: none;"><a href="/general/logout">LOGOUT</a></span>
+	<span class="rightnav member" style="display: none;"><a href="/mypage/member/memberMypage">MYPAGE</a></span>
+	<span class="rightnav member" style="display: none;"><a href="/order/cart">CART</a></span> 
+   	<span class="rightnav corp" style="display: none;"><a href="/mypage/corp/corpMypage">MYPAGE</a></span>
   </header>
+  
   <h3>상품 상세페이지</h3><br>
-  <nav>
-    <div class="topnav">
-      <a href="#">생활</a>
-      <a href="#">제로웨이스트</a>
-      <a href="#">소품</a>
-      <a href="#">DIY</a>
-      <div class="topnav-right">
-        <a href="#">챌린지</a>
-        <a href="#">브랜드 소개</a>
-      </div>
-    </div>
-  </nav>
 
-  <div class="productinfo">
+
+  <div class="product-info left">
     <div class="product-img">
-      <div class="slideshow-container">
-
-        <div class="mySlides fade">
-          <img th:src="${product.pthumbnail}" alt="상품" style="width:100%">
-        </div>
-        
-        <div class="mySlides fade">
-          <img src="../../image/product.jpg" alt="상품" style="width:100%">
-        </div>
-        
-        <div class="mySlides fade">
-          <img src="../../image/product.jpg" alt="상품" style="width:100%">
-        </div>
-        
-        <a class="prev" onclick="plusSlides(-1)">❮</a>
-        <a class="next" onclick="plusSlides(1)">❯</a>
-        
-        </div>
-        <br>
-        
-        <div style="text-align:center">
-          <span class="dot" onclick="currentSlide(1)"></span> 
-          <span class="dot" onclick="currentSlide(2)"></span> 
-          <span class="dot" onclick="currentSlide(3)"></span> 
-        </div>
+    <img th:src="${product.pthumbnail}" alt="상품" style="width:100%">
+     </div> 
     </div>
-    <div class="product-info">
+    <div class="product-info right">
       <p style="font-size:20px;" th:text="${product.pname}">상품명</p><br>
       <span>판매가격 : <span id="price" th:text="${product.price}"></span> 원</span><br>
       <!--
@@ -429,11 +334,13 @@ img {vertical-align: middle; height: 300px;}
       <button type="button" class="btn btn-primary" id="cart" value="장바구니 담기">장바구니 담기</button>
       <button type="button" class="btn btn-primary" value="관심상품 등록" formaction="#">관심상품 등록</button>
     </div>
+
       <div class="inside-product topnav topnav-right">
       <a href="#content1">상품 상세정보</a>
       <a href="#content2">구매 후기</a>
       <a href="#content3">상품 문의</a>
     </div>
+    
     <div class="detail-product" id="content1">
     <p th:text='${product.pcontent}'></p>
   </div>

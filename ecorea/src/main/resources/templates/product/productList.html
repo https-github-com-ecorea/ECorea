@@ -16,9 +16,9 @@
   integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
   crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-  <link rel="stylesheet" href="/static/css/common.css">
-  <link rel="stylesheet" href="/static/css/index.css">
-  <link rel="icon" href="/static/image/favicon.png">
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/index.css">
+  <link rel="icon" href="/image/favicon.png">
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script th:inline="javascript">
@@ -175,7 +175,7 @@
 button {
   outline: 0;
   color: white;
-  background-color: #000;
+  background-color: black;
   text-align: center;
   cursor: pointer;
   font-size: 18px;
@@ -259,9 +259,9 @@ li{
 
   <div class="mininav">
     <ul>
-      <li><button type="button" id="newest">신상품</button></li>
-      <li><button type="button" id="lowprice">낮은가격순</button></li>
-      <li><button type="button" id="highprice">높은가격순</button></li>
+      <li><a href="#" id="newest">신상품</a></li>
+      <li><a href="#" id="lowprice">낮은가격순</a></li>
+      <li><a href="#" id="highprice">높은가격순</a></li>
     </ul>
   </div>
 	
@@ -292,6 +292,8 @@ li{
 		</div>
 	</section>
 	
+	<input class="goupbtn" type="button" value="↑" onclick="clickme()"></div>
+	
 <footer>
   <address style="font-size: 12px; display:inline-block;margin-top:10px;margin-left:20px;">
     인천광역시 미추홀구<br>
@@ -299,6 +301,6 @@ li{
     전화번호 : 032-000-0000
   </address>
 </footer>
-  <script src="/static/js/index.js"></script>
+  <script src="/js/index.js"></script>
 </body>
 </html>
