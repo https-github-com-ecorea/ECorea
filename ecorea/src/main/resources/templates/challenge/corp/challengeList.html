@@ -16,8 +16,8 @@
   integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
   crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <link rel="stylesheet" href="/common.css">
-  <link rel="stylesheet" href="/index.css">
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/index.css">
   <link rel="icon" href="/image/favicon.png">
   <style>
     * {
@@ -102,32 +102,6 @@ h1 {
   margin-bottom: 50px;
 }
   </style>
-  <script th:inline="javascript">
-  	const $challenge = /*[[${challenge}]]*/	
-  
-  	$(document).ready(function() {
-      for(const challenges of $challenge) {
-    	  let cjoincnt = challenges.cjoincnt;
-    	  let cgoal = challenges.cgoal;
-    	  
-    	  let percentage = (parseInt(cjoincnt)/parseInt(cgoal))*100;
-	      
-	      let $topParentsDiv = $('<div class="column nature">').appendTo($('.row'));
-	      let $secondParentsDiv = $('<div class="content">').appendTo($topParentsDiv);
-	      		$('<span>').text(challenges.corpname).appendTo($secondParentsDiv);
-	      		let $a = $('<a href="#">').appendTo($secondParentsDiv);
-	      			$('<img alt="챌린지" style="width:100%">').attr('src', "/image/ocean.jpeg").appendTo($a);
-	      		let $h4 = $('<h4>').text(challenges.cname).appendTo($secondParentsDiv);
-	      			$('<a>').attr('href', '#').appendTo($h4);
-	      		$('<p>').text(challenges.cstartday + " ~ " + challenges.cendday).appendTo($secondParentsDiv);
-	      		let $thirdParentsDiv = $('<div>').appendTo($secondParentsDiv);
-	      			let $progressDiv = $('<div class="progress">').appendTo($thirdParentsDiv);
-	      			$('<div class="progress-bar">').css('width', percentage+"%").text(percentage+"%").appendTo($progressDiv);
-	      		$('<button type="submit" class="btn btn-primary" formaction="">').text('수정').appendTo($secondParentsDiv);
-	      		$('<button type="submit" class="btn btn-primary" formaction="">').css('margin-left', '5px').text('삭제').appendTo($secondParentsDiv);
-      }
-  	});
-  </script>
   <title>챌린지 목록</title>
 </head>
 <body>
@@ -210,7 +184,30 @@ h1 {
   <!-- END MAIN -->
   </div>
   
-  <script>
+  <script th:inline="javascript">
+  
+  	const $challenge = /*[[${challenge}]]*/;  	
+  	for(const challenges of $challenge) {
+	   	  let cjoincnt = challenges.cjoincnt;
+	   	  let cgoal = challenges.cgoal;
+	    	  
+	   	  let percentage = (parseInt(cjoincnt)/parseInt(cgoal))*100;
+		      
+	      let $topParentsDiv = $('<div class="column nature">').appendTo($('.row'));
+	      let $secondParentsDiv = $('<div class="content">').appendTo($topParentsDiv);
+	      		$('<span>').text(challenges.corpname).appendTo($secondParentsDiv);
+	      		let $a = $('<a href="#">').appendTo($secondParentsDiv);
+	      			$('<img alt="챌린지" style="width:100%">').attr('src', "/image/ocean.jpeg").appendTo($a);
+	      		let $h4 = $('<h4>').text(challenges.cname).appendTo($secondParentsDiv);
+	      			$('<a>').attr('href', '#').appendTo($h4);
+	      		$('<p>').text(challenges.cstartday + " ~ " + challenges.cendday).appendTo($secondParentsDiv);
+	      		let $thirdParentsDiv = $('<div>').appendTo($secondParentsDiv);
+	      			let $progressDiv = $('<div class="progress">').appendTo($thirdParentsDiv);
+	      			$('<div class="progress-bar">').css('width', percentage+"%").text(percentage+"%").appendTo($progressDiv);
+	      		$('<button type="submit" class="btn btn-primary" formaction="">').text('수정').appendTo($secondParentsDiv);
+	      		$('<button type="submit" class="btn btn-primary" formaction="">').css('margin-left', '5px').text('삭제').appendTo($secondParentsDiv);
+	}
+  
   filterSelection("all")
   function filterSelection(c) {
     var x, i;
