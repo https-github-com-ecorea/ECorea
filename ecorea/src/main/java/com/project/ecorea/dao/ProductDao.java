@@ -29,7 +29,7 @@ public interface ProductDao {
 	public void save(Product product);
 	
 	// 기업회원 - 등록된 상품 목록 출력
-	public List<ProductDto.CorpProductList> findByCorpId(String corpId);
+	public List<ProductDto.CorpProductList> findByCorpId(String corpId, String imagePath);
 	
 	// 상품 수정페이지에서 등록된 상품상세 정보 보여주기
 	public ProductDto.ProductDetailForUpdate findByCorpIdAndPno(String corpId, Integer pno);
@@ -39,5 +39,8 @@ public interface ProductDao {
 	
 	// 상품 삭제
 	public Integer deleteProduct(String corpId, Integer pno);
+	
+	// 구매후 제품 수량 변경
+	public Integer updateStock(Integer cnt, Integer pno);
 
 }

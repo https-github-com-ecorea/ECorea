@@ -11,6 +11,7 @@ import org.springframework.web.multipart.*;
 import com.project.ecorea.dao.*;
 import com.project.ecorea.dto.*;
 import com.project.ecorea.dto.HugiDto.*;
+import com.project.ecorea.dto.QnaDto.QuestionDto;
 import com.project.ecorea.entity.*;
 
 import lombok.*;
@@ -31,6 +32,18 @@ public class HugiService {
 	public List<HugiDto.HugiList> hugiList(Integer pno) {
 		List<HugiDto.HugiList> hugis = dao.findByPno(pno);
 		return hugis;
+	}
+	
+	/* 상품 상세 : 후기 목록 (페이징) */
+	public PagingHugiDto productDetailHugiList(Criteria cri) {
+		PagingHugiDto dto = new PagingHugiDto();
+		List<HugiDto.HugiList> entity = dao.productDetailHugiFindbyPno(cri);
+		for (HugiDto.HugiList hugi : entity) {
+			hugi.setHimg(imagePath + hugi.getHimg());
+		}
+		dto.setList(entity);
+		dto.setPageInfo(new PageMakerDto(cri, dao.getProductDetailTotal(cri.getPno())));
+		return dto;
 	}
 	
 	/* 일반 회원 후기 목록 출력 */

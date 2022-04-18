@@ -21,40 +21,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script th:inline="javascript">
   	const product = /*[[${product}]]*/
-  	
-  	/* 리뷰 목록 */
-	function reviewList() {
- 		$.each(product.hugis, function(idx, hugi) {
- 			const $tbody = $('.reviewlist .table tbody');
- 			const $tr = $('<tr>').appendTo($tbody);
- 			$('<td>').text(hugi.hno).appendTo($tr);
- 			$('<td>').text(hugi.htitle).appendTo($tr);
- 			$('<td>').text(hugi.hwriter).appendTo($tr);
- 			$('<td>').text(hugi.hregday).appendTo($tr);
- 		})
-	}
-	
-  	/* 문의 목록 */
-	function qnaQList() {
- 		$.each(product.qqnas, function(idx, qqna) {
- 			const $tbody = $('.qnalist .table tbody');
- 			const $qtr = $('<tr>').appendTo($tbody);
- 			$('<td>').text(qqna.qqno).appendTo($qtr);
- 			$('<td>').text(qqna.qqcategory).appendTo($qtr);
- 			$('<td>').text(qqna.qqtitle).appendTo($qtr);
- 			$('<td>').text(qqna.memberId).appendTo($qtr);
- 			$('<td>').text(qqna.qqregday).appendTo($qtr);
- 			$.each(product.aqnas, function(idx, aqna) {		/* 문의 번호(qqno)가 일치하는 답변 출력 */
- 				if (qqna.qqno == aqna.qqno) {
-	 	 			const $tbody = $('.qnalist .table tbody');
-	 	 			const $qtr = $('<tr>').appendTo($tbody);
-	 	 			$('<td>').text(aqna.qano).appendTo($qtr);
-	 	 			$('<td>').text(aqna.qacontent).appendTo($qtr);
-	 	 			$('<td>').text(aqna.corpId).appendTo($qtr);
- 				}
- 	 		})
- 		})
-	}
   		
   	/* 수량 추가 버튼 */
   	function plusCnt() {
@@ -93,21 +59,195 @@
   	
   	/* 장바구니 버튼 */
   	function toCart() {
-		const $form = $('<form>').attr('method', 'post').attr('action', '/order/cart/add').appendTo($('body'));
-		$('<input>').attr('type', 'hidden').attr('name','pno').val(product.pno).appendTo($form);
-		$('<input>').attr('type', 'hidden').attr('name','count').val($('#p_num1').val()).appendTo($form);
-		$form.submit();
+  		const check = confirm("상품이 담겼습니다. 장바구니로 이동하시겠습니까?");
+  		if (check == true) {
+  			const $form = $('<form>').attr('method', 'post').attr('action', '/order/cart/add').appendTo($('body'));
+  			$('<input>').attr('type', 'hidden').attr('name','pno').val(product.pno).appendTo($form);
+  			$('<input>').attr('type', 'hidden').attr('name','count').val($('#p_num1').val()).appendTo($form);
+  			$form.submit();
+  		} else {
+  			$('<iframe>').attr('id', 'iframe1').attr('name', 'iframe1').attr('style', 'display:none').appendTo($('body'));  /* 화면 이동 없게 함 */
+  			const $form = $('<form>').attr('method', 'post').attr('action', '/order/cart/add').attr('target', 'iframe1').appendTo($('body'));
+  			$('<input>').attr('type', 'hidden').attr('name','pno').val(product.pno).appendTo($form);
+  			$('<input>').attr('type', 'hidden').attr('name','count').val($('#p_num1').val()).appendTo($form);
+  			$form.submit();
+  		}
   	}
   	
-  	$(document).ready(function() {
-  		reviewList();
-  		qnaQList();
-  		$('#plus').click(plusCnt);
-  		$('#minus').click(minusCnt);
-  		$('#order').click(toOrder);
-  		$('#cart').click(toCart);
-  	})
+	/* 페이지 정보 */
+  	const cri = {
+		pno : product.pno,
+		nowPage : 1,
+		amount : 10
+	}
+	
+  	/* 후기 출력 (페이징) */
+  	function makeHugi(obj) {
+		console.log(obj.list);
+  		if (obj.list.length === 0) {
+            $(".hugizero").html('<span>후기가 없습니다. (≡^∇^≡)</span>');
+            $(".hugilist").html('');
+  		  	$(".hugiPageMaker").html('');
+          } else {
+            const list = obj.list;
+            const pf = obj.pageInfo;
+            $(list).each(function(i, obj) {
+              const $tbody = $('#hugi_tbody');
+              const $tr = $('<tr>').appendTo($tbody);
+              $('<td>').text(obj.hno).appendTo($tr);
+              $('<td>').text(obj.htitle).attr('class', 'title').data('num', obj.hno).appendTo($tr);
+              $('<td>').text(obj.hwriter).appendTo($tr);
+              $('<td>').text(obj.hregday).appendTo($tr);
+              let $show = $('<tr>').attr('class', 'show').attr('style', 'display: none').appendTo($tr);
+              if (obj.himg != null) {
+                let $td = $('<td>').attr('colspan', '2').appendTo($show);
+                $('<img>').attr('src', obj.himg).appendTo($td)
+                $('<td>').attr('colspan', '2').text(obj.hcontent).appendTo($show);
+              } else {
+                $('<td>').attr('colspan', '4').text(obj.hcontent).appendTo($show);
+              }
+            });
+              
+            let reply_pageMaker = '';	
+            
+            /* prev */
+  	  		if (pf.prev) {
+  	  			let prev_num = pf.start -1;
+  	  			reply_pageMaker += '<li class="hugiPageMaker_btn prev">';
+  	  			reply_pageMaker += '<a href="'+ prev_num +'">이전</a>';
+  	  			reply_pageMaker += '</li>';	
+  	  		}
+  	  		/* number btn */
+  	  		for(let i = pf.start; i < pf.end+1; i++){
+  	  			reply_pageMaker += '<li class="hugiPageMaker_btn ';
+  	  			if(pf.cri.pageNum === i){
+  	  				reply_pageMaker += 'active';
+  	  			}
+  	  			reply_pageMaker += '">';
+  	  			reply_pageMaker += '<a href="' + i + '">' + i + '</a>';
+  	  			reply_pageMaker += '</li>';
+  	  		}
+  	  		/* next */
+  	  		if(pf.next){
+  	  			let next_num = pf.end +1;
+  	  			reply_pageMaker += '<li class="hugiPageMaker_btn next">';
+  	  			reply_pageMaker += '<a href="'+ next_num +'">다음</a>';
+  	  			reply_pageMaker += '</li>';	
+  	  		}
+  	  		
+  	  		$(".hugiPageMaker").html(reply_pageMaker);	
+          };
+  	}
   	
+	/* 후기 데이터 요청 */
+	function requestHugi() {
+  		$.getJSON("/productDetail/hugilist?", cri, function(obj) {
+      	  makeHugi(obj);
+        });
+	}
+	
+	/* 후기 페이징 버튼 */
+  	$(document).on('click', '.hugiPageMaker_btn a', function(e){
+  		e.preventDefault();
+  		let page = $(this).attr("href");
+  		cri.nowPage = page;
+  		$('#hugi_tbody').empty();
+  		requestHugi();
+	});
+  	
+  	/* 문의 출력 (페이징) */
+  	function makeQna(obj) {
+  		if (obj.list.length === 0) {
+            $(".qnazero").html('<span>문의가 없습니다. (≡^∇^≡)</span>');
+            $(".qnalist").html('');
+  		  	$(".qnaPageMaker").html('');
+          } else {
+            const list = obj.list;
+            const pf = obj.pageInfo;
+            $(list).each(function(i, obj) {
+              const $tbody = $('#qna_tbody');
+              const $tr = $('<tr>').appendTo($tbody);
+              $('<td>').text(obj.qqno).appendTo($tr);
+              $('<td>').text(obj.qqcategory).appendTo($tr);
+              $('<td>').text(obj.qqtitle).attr('class', 'title').data('num', obj.qqno).appendTo($tr);
+              $('<td>').text(obj.memberId).appendTo($tr);
+              $('<td>').text(obj.qqregday).appendTo($tr);
+              let $show = $('<tr>').attr('class', 'show').attr('style', 'display: none').appendTo($tr);
+              if (obj.qqimg != null) {
+                let $td = $('<td>').attr('colspan', '2').appendTo($show);
+                $('<img>').attr('src', obj.qqimg).appendTo($td)
+                $('<td>').attr('colspan', '3').text(obj.qqcontent).appendTo($show);
+              } else {
+                $('<td>').attr('colspan', '5').text(obj.qqcontent).appendTo($show);
+              }
+            });
+              
+            let reply_pageMaker = '';	
+              /* prev */
+  	  		if (pf.prev) {
+  	  			let prev_num = pf.start -1;
+  	  			reply_pageMaker += '<li class="qnaPageMaker_btn prev">';
+  	  			reply_pageMaker += '<a href="'+ prev_num +'">이전</a>';
+  	  			reply_pageMaker += '</li>';	
+  	  		}
+  	  		/* number btn */
+  	  		for(let i = pf.start; i < pf.end+1; i++){
+  	  			reply_pageMaker += '<li class="qnaPageMaker_btn ';
+  	  			if(pf.cri.pageNum === i){
+  	  				reply_pageMaker += 'active';
+  	  			}
+  	  			reply_pageMaker += '">';
+  	  			reply_pageMaker += '<a href="' + i + '">' + i + '</a>';
+  	  			reply_pageMaker += '</li>';
+  	  		}
+  	  		/* next */
+  	  		if(pf.next){
+  	  			let next_num = pf.end +1;
+  	  			reply_pageMaker += '<li class="qnaPageMaker_btn next">';
+  	  			reply_pageMaker += '<a href="'+ next_num +'">다음</a>';
+  	  			reply_pageMaker += '</li>';	
+  	  		}
+  	  		
+  	  		$(".qnaPageMaker").html(reply_pageMaker);	
+          };
+  	}
+	
+	/* 문의 데이터 요청 */
+	function requestQna() {
+  		$.getJSON("/productDetail/qnalist?", cri, function(obj) {
+      	  makeQna(obj);
+        });
+	}
+	
+	/* 문의 페이징 버튼 */
+  	$(document).on('click', '.qnaPageMaker_btn a', function(e){
+  		e.preventDefault();
+  		let page = $(this).attr("href");
+  		cri.nowPage = page;
+  		$('#qna_tbody').empty();
+  		requestQna();
+	});
+	
+  	$(document).ready(function() {
+      // reviewList();
+  	  // qnaQList();
+  	  $('#plus').click(plusCnt);
+  	  $('#minus').click(minusCnt);
+  	  $('#order').click(toOrder);
+  	  $('#cart').click(toCart);
+ 		
+      const pno = product.pno;
+      
+      /* 문의 출력 */
+      $.getJSON("/productDetail/qnalist?", {pno : pno}, function(obj) {
+    	  makeQna(obj);
+      });
+      
+      /* 후기 출력 */
+      $.getJSON("/productDetail/hugilist?", {pno : pno}, function(obj) {
+    	  makeHugi(obj);
+      });
+	});
   </script>
   <title>상품 상세페이지</title>
   <style>
@@ -243,7 +383,7 @@ img {vertical-align: middle; height: 300px;}
       <div class="slideshow-container">
 
         <div class="mySlides fade">
-          <img src="../../image/product.jpg" alt="상품" style="width:100%">
+          <img th:src="${product.pthumbnail}" alt="상품" style="width:100%">
         </div>
         
         <div class="mySlides fade">
@@ -284,10 +424,10 @@ img {vertical-align: middle; height: 300px;}
         <option>2</option>
         <option>3</option>
       </select><br>
-      <span>총 합계 : </span><span><span id='totalPrice'></span>&nbsp;원</span><span> (<span id='totalCnt'></span>&nbsp;개)</span><br><br>
-      <button type="button" class="btn btn-primary" id="order" value="바로구매"></button>
-      <button type="button" class="btn btn-primary" id="cart" value="장바구니 담기"></button>
-      <button type="button" class="btn btn-primary" value="관심상품 등록" formaction="#"></button>
+      <span>총 합계 : </span><span><span id='totalPrice' th:text="${product.price}"></span>&nbsp;원</span><span> (<span id='totalCnt'>1</span>&nbsp;개)</span><br><br>
+      <button type="button" class="btn btn-primary" id="order" value="바로구매">바로구매</button>
+      <button type="button" class="btn btn-primary" id="cart" value="장바구니 담기">장바구니 담기</button>
+      <button type="button" class="btn btn-primary" value="관심상품 등록" formaction="#">관심상품 등록</button>
     </div>
       <div class="inside-product topnav topnav-right">
       <a href="#content1">상품 상세정보</a>
@@ -295,14 +435,13 @@ img {vertical-align: middle; height: 300px;}
       <a href="#content3">상품 문의</a>
     </div>
     <div class="detail-product" id="content1">
-    <p th:text='${product.pcontent}'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores unde pariatur nisi repudiandae quam. A, voluptas culpa? Ipsum excepturi at possimus magnam cum, aperiam rem nulla quaerat facere provident alias sunt tempore eveniet vitae praesentium, sed totam tempora ex sapiente beatae rerum? Aperiam blanditiis recusandae fugit, laboriosam consectetur et officia est pariatur provident, dicta itaque dolorem inventore debitis eveniet expedita nam ducimus vitae aliquid. Doloribus quia illum tempora unde quo. Illum provident fugit eius consequuntur, expedita, sapiente quos sed quam obcaecati dicta nulla esse quae iste id suscipit quibusdam maiores, saepe nostrum aspernatur veniam nemo? Itaque doloremque aliquid delectus illum iste quaerat libero vel veniam praesentium. Delectus exercitationem, doloremque sunt dolorum explicabo est nostrum amet officiis pariatur nulla quasi nisi dicta! Illum doloribus dolore neque fugiat quo animi. Quidem voluptate sint necessitatibus quibusdam nihil repellendus omnis corporis saepe ut harum molestiae, consequatur delectus consectetur dignissimos, fugiat numquam ab atque impedit? Cupiditate doloremque repudiandae doloribus officiis aliquam iusto minima a sit omnis eveniet incidunt sequi pariatur excepturi, ex, tempora quas ut aperiam. Fugit quibusdam ab voluptatibus ea cupiditate culpa aliquam iusto blanditiis possimus at. Numquam deserunt natus, animi assumenda consequatur nesciunt quos adipisci molestiae vel repellendus. Repellendus obcaecati nesciunt dignissimos nostrum illo quam, atque ipsum quaerat, impedit totam iusto nihil laudantium natus velit laborum dolor porro deserunt ea unde perferendis sunt error. Dolorum repudiandae reprehenderit rem at saepe ab quam minus voluptas sunt doloremque minima, repellendus asperiores error perspiciatis voluptatem tempora itaque odio impedit explicabo vitae? Ad iste pariatur mollitia atque.</p>    
-    <!-- 
-    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores unde pariatur nisi repudiandae quam. A, voluptas culpa? Ipsum excepturi at possimus magnam cum, aperiam rem nulla quaerat facere provident alias sunt tempore eveniet vitae praesentium, sed totam tempora ex sapiente beatae rerum? Aperiam blanditiis recusandae fugit, laboriosam consectetur et officia est pariatur provident, dicta itaque dolorem inventore debitis eveniet expedita nam ducimus vitae aliquid. Doloribus quia illum tempora unde quo. Illum provident fugit eius consequuntur, expedita, sapiente quos sed quam obcaecati dicta nulla esse quae iste id suscipit quibusdam maiores, saepe nostrum aspernatur veniam nemo? Itaque doloremque aliquid delectus illum iste quaerat libero vel veniam praesentium. Delectus exercitationem, doloremque sunt dolorum explicabo est nostrum amet officiis pariatur nulla quasi nisi dicta! Illum doloribus dolore neque fugiat quo animi. Quidem voluptate sint necessitatibus quibusdam nihil repellendus omnis corporis saepe ut harum molestiae, consequatur delectus consectetur dignissimos, fugiat numquam ab atque impedit? Cupiditate doloremque repudiandae doloribus officiis aliquam iusto minima a sit omnis eveniet incidunt sequi pariatur excepturi, ex, tempora quas ut aperiam. Fugit quibusdam ab voluptatibus ea cupiditate culpa aliquam iusto blanditiis possimus at. Numquam deserunt natus, animi assumenda consequatur nesciunt quos adipisci molestiae vel repellendus. Repellendus obcaecati nesciunt dignissimos nostrum illo quam, atque ipsum quaerat, impedit totam iusto nihil laudantium natus velit laborum dolor porro deserunt ea unde perferendis sunt error. Dolorum repudiandae reprehenderit rem at saepe ab quam minus voluptas sunt doloremque minima, repellendus asperiores error perspiciatis voluptatem tempora itaque odio impedit explicabo vitae? Ad iste pariatur mollitia atque.</p>
-     -->
+    <p th:text='${product.pcontent}'></p>
   </div>
   <hr>
-  <div class="reviewlist">
-    <h3 style="text-align: center;" id="content2">구매 후기</h3>
+  <h3 style="text-align: center;" id="content2">구매 후기</h3>
+  <div class="hugizero">
+  </div>
+  <div class="hugilist">
     <table class="table">
       <thead class="thead-light">
         <tr>
@@ -312,61 +451,97 @@ img {vertical-align: middle; height: 300px;}
           <th>등록일</th>
         </tr>
       </thead>
-      <tbody>
-      <!--
-        <tr>
-          <td>번호</td>
-          <td>제목</td>
-          <td>작성자</td>
-          <td>등록일</td>
-        </tr>
-        <tr>
-          <td>번호</td>
-          <td>이미지</td>
-          <td>내용</td>
-          <td>등록일</td>
-        </tr>
-         -->
-       </tbody>
-    </table>
-  </div>
-  <hr>
-  <div class="qnalist">
-    <h3 style="text-align: center;" id="content3">상품 문의</h3>
-    <table class="table">
-      <thead class="thead-light">
-        <tr>
-          <th>번호</th>
-          <th>카테고리</th>
-          <th>제목</th>
-          <th>작성자</th>
-          <th>등록일</th>
-        </tr>
-      </thead>
-      <tbody>
+      <tbody id="hugi_tbody">
       <!-- 
-        <tr>
-          <td>번호</td>
-          <td>카테고리</td>
-          <td>제목</td>
-          <td>작성자</td>
-          <td>등록일</td>
-        </tr>
-        <tr>
-          <td>답변번호</td>
-          <td>이미지</td>
-          <td>내용</td>
-          <td>답변작성자</td>
-          <td>답변등록일</td>
-        </tr>
+      	<tr>
+	       	  <td th:text="${hugi.hno}">
+	       	  <td th:text="${hugi.htitle}" class="title">
+	       	  <td th:text="${hugi.hwriter}">
+	       	  <td th:text="${hugi.hregday}">
+	       	  <tr class="show" style="display: none">
+  				 <div th:if="${not #strings.isEmpty(hugi.himg)}">
+			     	 <td colspan="2"> <img th:src="${hugi.himg}"></td>
+		             <td colspan="3" th:text="${hugi.hcontent}"></td>
+				 </div>
+				 <div th:unless="${not #strings.isEmpty(hugi.himg)}">
+		             <td colspan="5" th:text="${hugi.hcontent}"></td>
+				 </div>
+	             <td colspan="4" th:text="${hugi.hcontent}">본문</td>
+	          </tr>
+         </tr>
          -->
        </tbody>
     </table>
   </div>
+  <div class="hugiPageMaker">
   </div>
-
+  <hr>
+  <h3 style="text-align: center;" id="content3">상품 문의</h3>
+  <div class="qnazero">
+  </div>
+  <div class="qnalist">
+      <table class="table">
+        <thead class="thead-light">
+          <tr>
+            <th>번호</th>
+            <th>카테고리</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>등록일</th>
+          </tr>
+        </thead>
+        <tbody id="qna_tbody">
+          <!--
+          <tr>
+            <td th:text="${qqna.qqno}">
+            <td th:text="${qqna.qqcategory}">
+            <td th:text="${qqna.qqtitle}" class="title">
+            <td th:text="${qqna.memberId}">
+            <td th:text="${qqna.qqregday}">
+            <tr class="show" style="display: none">
+              <div th:if="${not #strings.isEmpty(qqna.qqimg)}">
+                <td colspan="2"> <img th:src="${qqna.qqimg}"></td>
+                <td colspan="3" th:text="${qqna.qqcontent}"></td>
+              </div>
+              <div th:unless="${not #strings.isEmpty(qqna.qqimg)}">
+                <td colspan="5" th:text="${qqna.qqcontent}"></td>
+              </div>
+            </tr>
+          </tr>
+          -->
+        </tbody>
+      </table>
+    </div>
+    <div class="qnaPageMaker">
+    </div>
+  </div>
 
   <script>
+  	/* 제목 클릭 시 본문 출력 */
+	$(document).on('click', '.title', function() {
+		console.log($(this).next().next().next().attr('style'));
+		if ($(this).next().next().next().attr('style') == 'display: none') {
+			$(this).next().next().next().attr('style', 'display: ');
+		} else {
+			$(this).next().next().next().attr('style', 'display: none');
+		}
+	})
+  
+	  /* 제목 눌렀을 때 본문 출력      
+	  let show = document.getElementsByClassName('show');
+	  let title = document.getElementsByClassName('title');
+	  
+	  for (let i=0; i<title.length; i++) {
+	    title[i].addEventListener('click', function(){
+	       if(show[i].style.display==='none') {
+	          show[i].style.display="";
+	       } else {
+	          show[i].style.display='none';
+	       }
+	    });
+	  }
+	  */
+  
     let slideIndex = 1;
     showSlides(slideIndex);
     

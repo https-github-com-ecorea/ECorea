@@ -32,6 +32,7 @@ public class ProductService {
 	private final QnaDao qnaDao;
 	private final CartDao cartDao;
 	private final CartService cartService;
+	private final QnaService qnaService;
 	
 	/* 상품 개수 */
 	public int getTotal() {
@@ -56,15 +57,21 @@ public class ProductService {
 	
 	/* 상품 목록 (페이징 적용) */
 	public List<ProductDto.productList> productPagingList(Criteria cri) {
-		return productDao.productPagingList(cri);
+		List<ProductDto.productList> productList = new ArrayList<>();
+		List<ProductDto.productList> newList = productDao.productPagingList(cri);
+		for (ProductDto.productList element : newList) {
+			System.out.println("###### 썸네일 주소 : " + element.getPthumbnail());
+			element.setPthumbnail(imagePath + element.getPthumbnail());
+			productList.add(element);
+		}
+		return productList;
 	}
 	
 	/* 상품 상세 페이지 */
 	public ProductDto.ProductRead productRead(Integer pno) {
 		ProductDto.ProductRead productDto = productDao.findByPno(pno).toDto(imagePath);
 		productDto.setHugis(hugiDao.findByPno(pno));
-		productDto.setQQnas(qnaDao.questionFindByPno(pno));
-		productDto.setAQnas(qnaDao.answerFindByPno(pno));
+		productDto.setQQnas(qnaService.productQuestionList(pno, imagePath));
 		return productDto;
 	}
 	
@@ -77,7 +84,7 @@ public class ProductService {
 
 	public void uploadProduct(ProductDto.Upload uploadDto) {
 		Product product = uploadDto.toEntity();
-		MultipartFile pthumbnail = uploadDto.getPthumnail();
+		MultipartFile pthumbnail = uploadDto.getPthumbnail();
 		product.setPthumbnail(defaultImage);
 		if(pthumbnail!=null && pthumbnail.isEmpty()==false && pthumbnail.getContentType().toLowerCase().startsWith("image/")) {
 			String pthumbnailName = UUID.randomUUID() + "-" + pthumbnail.getOriginalFilename();
@@ -94,8 +101,8 @@ public class ProductService {
 
 	// 등록 상품 리스트 출력
 	public List<ProductDto.CorpProductList> regProductsList(String corpId) {
-		List<ProductDto.CorpProductList> corpProductListDto = productDao.findByCorpId(corpId);
-		return corpProductListDto;		
+		List<ProductDto.CorpProductList> corpProductListDto = productDao.findByCorpId(corpId, imagePath);
+		return corpProductListDto;
 	}
 	
 	// 등록된 상품 상세정보 출력
@@ -122,7 +129,7 @@ public class ProductService {
 		return true;
 	}
 	
-	// 장바구니에 상품 한 개 담기
+	// 장바구니에 한 상품 한 개 담기
 	public Boolean shoppingCartOne(Integer pno, String memberId) {
 		// cart에 이미 담겨있는 상품인지 확인 
 		// 담겨있으면 수량 1증가, 아니면 saveOneProduct		
@@ -142,19 +149,17 @@ public class ProductService {
 		} else {
 			cartService.plusCnt(memberId, pno);
 			return true;
-		}		
+		}
 	}
 
-	/* 장바구니에 상품 여러 개 담기 */
+	/* 장바구니에 한 상품 여러 개 담기 */
 	public Boolean shoppingCartMultiple(Integer pno, Integer count, String memberId) {
 		Cart isExistProductInCart = cartDao.findByMemberIdAndPno(memberId, pno);
-		System.out.println(isExistProductInCart);
 		if (isExistProductInCart == null) {
 			Product product = productDao.findByPno(pno);
 			Integer cartPrice = product.getPrice() * count;
 			Cart cart = Cart.builder().memberId(memberId).pno(pno).cartcnt(count)
 					.cartpname(product.getPname()).cartprice(cartPrice).build();
-			System.out.println(cart);
 			cartDao.saveOneProduct(cart);
 			return true;
 		} else {

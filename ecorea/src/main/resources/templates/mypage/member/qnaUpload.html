@@ -12,11 +12,11 @@
   <script>
     /* 상품 이미지 미리보기 */
 	function previewImage() {
-		const file = $("#cthumbnail")[0].files[0];
+		const file = $("#qqimg")[0].files[0];
 		const maxSize = 1024*1024;
 		if (file.size > maxSize) {
 			Swal.fire('이미지 크기 오류!', '상품 이미지는 1MB를 넘을 수 없습니다.', 'error');
-			$('#cthumbnail').val('');
+			$('#qqimg').val('');
 			$('#thumbnail_img').removeAttr('src');
 			return false;
 		}
@@ -29,7 +29,7 @@
 	}
   
   	$(document).ready(function() {
-  		$('#cthumbnail').change(function() {
+  		$('#qqimg').change(function() {
   			$('#thumbnail_img').css({
   				'display': 'block'
   			});
@@ -67,11 +67,11 @@ input[type=text], select, textarea {
       <label for="choice">말머리</label>
       <select id="choice" name="qqcategory">
         <option selected disabled value="selectoption">선택해주세요</option>
-        <option value="australia">배송문의</option>
-        <option value="canada">상품문의</option>
-        <option value="canada">교환문의</option>
-        <option value="canada">환불문의</option>
-        <option value="canada">주문취소</option>
+        <option value="배송문의">배송문의</option>
+        <option value="상품문의">상품문의</option>
+        <option value="교환문의">교환문의</option>
+        <option value="환불문의">환불문의</option>
+        <option value="주문취소">주문취소</option>
       </select>
 
       <label for="qqtitle">제목</label>

@@ -54,7 +54,7 @@
 			select product_seq.nextval from dual
 		</selectKey>
 		insert into product
-		values (#{pno}, #{pcategory}, #{price}, #{pname}, #{pstock}, #{pcontent}, #{pthumbnail}, #{pordercnt}, #{pregday}, #{corpId})
+		values (#{pno}, #{price}, #{pname}, #{pstock}, #{pcontent}, #{pthumbnail}, #{pordercnt}, #{pregday}, #{corpId}, #{catecode})
 	</insert>
 	
 	<!-- 기업 회원 - 등록된 상품 목록 출력 -->
@@ -67,7 +67,7 @@
 	</resultMap>
 	
 	<select id="findByCorpId" resultMap="regProduct">
-		select * from product where corp_id=#{corpId}
+		select pno, price, pname, pstock, pcontent, #{imagePath} || pthumbnail as pthumbnail, pordercnt, pregday, corp_id, catecode from product where corp_id=#{corpId}
 	</select>
 	
 
@@ -93,4 +93,9 @@
 	<delete id="deleteProduct">
 		delete from product where corp_id=#{corpId} and pno=#{pno}
 	</delete>
+	
+	<!-- 일반회원 - 구매후 제품 수량 변경 -->
+	<update id="updateStock">
+		update product set pstock=pstock-#{cnt} where pno=#{pno}		
+	</update>
 </mapper>

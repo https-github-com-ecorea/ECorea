@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.project.ecorea.dao.*;
 import com.project.ecorea.dto.*;
+import com.project.ecorea.dto.QnaDto.QuestionDto;
 import com.project.ecorea.entity.QnaA;
 import com.project.ecorea.entity.QnaQ;
 
@@ -52,6 +53,7 @@ public class QnaService {
 		List<QnaDto.QuestionDto> dto = new ArrayList<>();
 		List<QnaDto.QuestionDto> entity = dao.questionFindByPno(pno);
 		for (QnaDto.QuestionDto qna : entity) {
+			qna.setPno(pno);
 			qna.setQqimg(imagepath + qna.getQqimg());
 			dto.add(qna);
 		}
@@ -65,6 +67,18 @@ public class QnaService {
 		for (QnaDto.AnswerDto qna : entity) {
 			dto.add(qna);
 		}
+		return dto;
+	}
+	
+	/* 상품 상세 : 문의 목록 (페이징) */
+	public PagingQnaDto productDetailQuestionList(Criteria cri) {
+		PagingQnaDto dto = new PagingQnaDto();
+		List<QuestionDto> entity = dao.productDetailQuestionFindbyPno(cri);
+		for (QuestionDto qna : entity) {
+			qna.setQqimg(imagePath + qna.getQqimg());
+		}
+		dto.setList(entity);
+		dto.setPageInfo(new PageMakerDto(cri, dao.getProductDetailTotal(cri.getPno())));
 		return dto;
 	}
 	
@@ -167,8 +181,8 @@ public class QnaService {
 	}
 	
 	/* 기업 회원 : 문의 답변 수정 */
-	public Boolean updateAnswer(QnaA questionDto) {
-		Integer result = dao.updateAnswer(questionDto);
+	public Boolean updateAnswer(QnaA answer) {
+		Integer result = dao.updateAnswer(answer);
 		if (result <= 0)
 			return false;
 		return true;		

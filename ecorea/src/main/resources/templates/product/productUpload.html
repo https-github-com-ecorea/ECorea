@@ -79,28 +79,25 @@
 <body>
   <h1>상품 등록</h1>
   <div class="wrapper">
-  <form action="/product/productUpload" method="post">
+  <form action="/product/productUpload" method="post" enctype="multipart/form-data">
   	<div>
-  		<select name="" id="">
+  		<select name="catecode" id="catecode">
   			<option selected disabled value="선택">선택</option>
-  			<option value="생활">생활</option>
-  			<option value="제로웨이스트">제로웨이스트</option>
-  			<option value="소품">소품</option>
-  			<option value="DIY">DIY</option>
-  		</select>
-  		<select name="" id="">
-  			<option selected disabled value="선택">선택</option>
-  			<option value="반려용품">반려용품</option>
-  			<option value="생활가전">생활가전</option>
+  			<option value="1">반려용품</option>
+  			<option value="2">생활용품</option>
+  			<option value="3">제로웨이스트</option>
+  			<option value="4">원목소품</option>
+  			<option value="5">인테리어소품</option>
+  			<option value="6">DIY키트</option>
   		</select>
   	</div>
     <div class="mb-3 mt-3">
       <label for="product-name" class="form-label">상품명</label>
-      <input type="text" class="form-control" id="product-name" placeholder="상품명 입력" name="product-name">
+      <input type="text" class="form-control" id="product-name" placeholder="상품명 입력" name="pname">
     </div>
     <div class="mb-3">
       <label for="corpid" class="form-label">기업명</label>
-      <input type="text" class="form-control" id="corpid" placeholder="아이디 입력" name="corpid">
+      <input type="text" class="form-control" id="corpid" placeholder="아이디 입력" name="corpId">
     </div>
     <div class="mb-3">
       <label for="price" class="form-label">가격</label>
@@ -108,7 +105,7 @@
     </div>
     <div class="mb-3">
       <label for="stock" class="form-label">재고</label>
-      <input type="text" class="form-control" id="stock" name="stock">
+      <input type="text" class="form-control" id="stock" name="pstock">
     </div>
     <div class="mb-3">
       <label for="pimg" class="form-label">썸네일 이미지</label>

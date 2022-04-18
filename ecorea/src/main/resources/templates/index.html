@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -21,6 +21,21 @@
   <link rel="icon" href="/image/favicon.png">
   <script th:inline="javascript">
   	const role = /*[[${role}]]*/
+  	const list = /*[[${list}]]*/
+  	
+  	function productList() {
+  		const $wrap = $('#slick-slide');
+  		$.each(list, function(idx, product) {
+  			$outer = $('<div>').attr('class', 'services-col mx-2 my-3').appendTo($wrap);
+  			$card = $('<div>').attr('class', 'card').appendTo($outer);
+  			$a = $('<a>').attr('href', './product/productList?nowPage=1&amount=9&catecode=&sort=').appendTo($card);
+  			$('<img>').attr('src', product.pthumbnail).attr('alt', '상품').attr('class', 'card-img-top').appendTo($a);
+  			$cardbody = $('<div>').attr('class', 'card-body').appendTo($card);
+  			$('<p>').attr('class', 'card-title').attr('style', 'color: crimson;').text('브랜드명').appendTo($cardbody);
+  			$('<p>').attr('class', 'card-text fw-light mb-4').text(product.pname).appendTo($cardbody);
+  			$('<span>').attr('style', 'color:black; font-size: 20px;').text(product.price + " 원").appendTo($cardbody);
+  		})
+  	}
   	
   	$(document).ready(function() {
   		if(role=="ROLE_MEMBER") {
@@ -30,14 +45,15 @@
   			$('.corp').css('display','block');
   			$('.all').css('display','none');
   		}
+  		productList();
   	});
   </script>
   <title>ECorea</title>
 </head>
 <body>
-  <header>
+  <header class="navwrapper">
     <span class="leftnav"><a href="/">ECorea</a></span>
-    <span class="leftnav"><a href="/">SHOP</a></span>
+    <span class="leftnav"><a href="/product/productList?nowPage=1&amount=9&catecode=&sort=">SHOP</a></span>
     <span class="leftnav"><a href="/">CHALLENGE</a></span>
     <span class="leftnav"><a href="/">ABOUT</a></span>
     <span class="rightnav all"><a href="/general/joinSelect">JOIN</a></span> 
@@ -55,90 +71,7 @@
           <p class="display-5">최신 상품</p>
         </div>
         <div id="slick-slide" class="sercives-body">
-          <div class="services-col mx-2 my-3">
-            <div class="card">
-              <a href="./product/productList">
-                <img src="/image/product.jpg" alt="상품" class="card-img-top">
-              </a>
-              <div class="card-body">
-                <p class="card-title" style="color: crimson;">브랜드명</p>
-                <p class="card-text fw-light mb-4">
-                  [업사이클링 DIY] 업사이클링 티셔츠 손목 쿠션 Kit
-                </p>
-                <span style="color:black; font-size: 20px;">15,000원</span>
-              </div>
-            </div>
-          </div>
-          <div class="services-col mx-2 my-3">
-            <div class="card">
-              <a href="./product/productList">
-                <img src="/image/product.jpg" alt="상품" class="card-img-top">
-              </a>
-              <div class="card-body">
-                <p class="card-title" style="color: crimson;">브랜드명</p>
-                <p class="card-text fw-light mb-4">
-                  [업사이클링 DIY] 업사이클링 티셔츠 손목 쿠션 Kit
-                </p>
-                <span style="color:black; font-size: 20px;">15,000원</span>
-              </div>
-            </div>
-          </div>
-          <div class="services-col mx-2 my-3">
-            <div class="card">
-              <a href="./product/productList">
-                <img src="/image/product.jpg" alt="상품" class="card-img-top">
-              </a>
-              <div class="card-body">
-                <p class="card-title" style="color: crimson;">브랜드명</p>
-                <p class="card-text fw-light mb-4">
-                  [업사이클링 DIY] 업사이클링 티셔츠 손목 쿠션 Kit
-                </p>
-                <span style="color:black; font-size: 20px;">15,000원</span>
-              </div>
-            </div>
-          </div>
-          <div class="services-col mx-2 my-3">
-            <div class="card">
-              <a href="./product/productList">
-                <img src="/image/product.jpg" alt="상품" class="card-img-top">
-              </a>
-              <div class="card-body">
-                <p class="card-title" style="color: crimson;">브랜드명</p>
-                <p class="card-text fw-light mb-4">
-                  [업사이클링 DIY] 업사이클링 티셔츠 손목 쿠션 Kit
-                </p>
-                <span style="color:black; font-size: 20px;">15,000원</span>
-              </div>
-            </div>
-          </div>
-          <div class="services-col mx-2 my-3">
-            <div class="card">
-              <a href="./product/productList">
-                <img src="/image/product.jpg" alt="상품" class="card-img-top">
-              </a>
-              <div class="card-body">
-                <p class="card-title" style="color: crimson;">브랜드명</p>
-                <p class="card-text fw-light mb-4">
-                  [업사이클링 DIY] 업사이클링 티셔츠 손목 쿠션 Kit
-                </p>
-                <span style="color:black; font-size: 20px;">15,000원</span>
-              </div>
-            </div>
-          </div>
-          <div class="services-col mx-2 my-3">
-            <div class="card">
-              <a href="./product/productList">
-                <img src="/image/product.jpg" alt="상품" class="card-img-top">
-              </a>
-              <div class="card-body">
-                <p class="card-title" style="color: crimson;">브랜드명</p>
-                <p class="card-text fw-light mb-4">
-                  [업사이클링 DIY] 업사이클링 티셔츠 손목 쿠션 Kit
-                </p>
-                <span style="color:black; font-size: 20px;">15,000원</span>
-              </div>
-            </div>
-          </div>
+		<!-- 상품 목록 -->
         </div>
       </div>
     </div>

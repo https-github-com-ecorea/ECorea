@@ -3,6 +3,7 @@ package com.project.ecorea.controller.mvc;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.*;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,7 @@ import org.springframework.web.servlet.*;
 
 import com.project.ecorea.dto.Criteria;
 import com.project.ecorea.dto.PageMakerDto;
+import com.project.ecorea.dto.PagingQnaDto;
 import com.project.ecorea.dto.QnaDto;
 import com.project.ecorea.entity.QnaA;
 import com.project.ecorea.entity.QnaQ;
@@ -37,8 +39,8 @@ public class QnaMvcController {
 	@GetMapping("/mypage/member/qnaList")
 	public void memberQnaList(Model model, Criteria cri) {
 		log.info("memberMyPageQuestionList");
-		model.addAttribute("memberQnaList", service.memberMyPageQuestionList("ngoley6", cri));
-		int total = service.getMemberTotal("ngoley6");
+		model.addAttribute("memberQnaList", service.memberMyPageQuestionList("haramiee", cri));
+		int total = service.getMemberTotal("haramiee");
 		PageMakerDto pageMaker = new PageMakerDto(cri, total);
 		model.addAttribute("pageMaker", pageMaker);
 	}
@@ -47,7 +49,7 @@ public class QnaMvcController {
 	@GetMapping("/mypage/member/qnaDetail")
 	public ModelAndView memberQnaDetail(String loginId, Integer qqno, HttpSession session) {
 		session.setAttribute("memberId", loginId);
-		return new ModelAndView("mypage/member/qnaDetail").addObject("memberQnaDetail", service.memberMypageDetail("ngoley6", qqno));
+		return new ModelAndView("mypage/member/qnaDetail").addObject("memberQnaDetail", service.memberMypageDetail("haramiee", qqno));
 	}
 	
 	/* 일반 회원 - 문의 등록 화면 */
@@ -58,7 +60,7 @@ public class QnaMvcController {
 	/* 일반 회원 - 문의 등록 */
 	@PostMapping("/mypage/member/qnaUpload")
 	public String uploadQnaQ(QnaDto.uploadQuestion questionUpDto, String loginId, Integer pno) {
-		service.uploadQuestion(questionUpDto, "ngoley6", 10);
+		service.uploadQuestion(questionUpDto, "haramiee", 12);
 		return "redirect:/mypage/member/qnaList";
 	}
 	
@@ -83,7 +85,7 @@ public class QnaMvcController {
 	@PostMapping("/mypage/member/qnaDelete")
 	public String deleteQuestion(String loginId, Integer qqno, HttpSession session) {
 		session.setAttribute("session", session);
-		service.deleteQuestion("ngoley6", qqno);
+		service.deleteQuestion("haramiee", qqno);
 		return "redirect:/mypage/member/qnaList";
 	}
 	
@@ -98,8 +100,8 @@ public class QnaMvcController {
 	@GetMapping("/mypage/corp/qnaList")
 	public void corpQnaList(Model model, Criteria cri) {
 		log.info("corpMyPageQuestionList");
-		model.addAttribute("corpQnaList", service.corpMyPageQuestionList("LG", cri));
-		int total = service.getCorpTotal("LG");
+		model.addAttribute("corpQnaList", service.corpMyPageQuestionList("아나바다", cri));
+		int total = service.getCorpTotal("녹색당");
 		PageMakerDto pageMaker = new PageMakerDto(cri, total);
 		model.addAttribute("pageMaker", pageMaker);
 	}
@@ -107,13 +109,13 @@ public class QnaMvcController {
 	/* 기업 회원 - 문의 상세 화면 */
 	@GetMapping("/mypage/corp/qnaDetail")
 	public ModelAndView corpQnaDetail(String loginId, Integer qqno) {
-		return new ModelAndView("mypage/corp/qnaDetail").addObject("corpQnaDetail", service.corpMypageDetail(loginId, qqno));
+		return new ModelAndView("mypage/corp/qnaDetail").addObject("corpQnaDetail", service.corpMypageDetail("아나바다", qqno));
 	}
 	
 	/* 기업 회원 - 문의 답변 등록 */
 	@PostMapping("/mypage/corp/answerUpload")
 	public String uploadQnaA(QnaDto.AnswerDto answerUpDto, Integer pno, String loginId) {
-		service.uploadAnswer(answerUpDto, pno, "LG");
+		service.uploadAnswer(answerUpDto, pno, "아나바다");
 		return "redirect:/mypage/corp/qnaList";
 	}
 	
@@ -127,7 +129,7 @@ public class QnaMvcController {
 	/* 기업 회원 - 문의 답변 삭제 */
 	@PostMapping("/mypage/corp/answerDelete")
 	public String deleteAnswer(String loginId, Integer qano) {
-		service.deleteAnswer(loginId, qano);
+		service.deleteAnswer("아나바다", qano);
 		return "redirect:/mypage/corp/qnaList";
 	}
 	

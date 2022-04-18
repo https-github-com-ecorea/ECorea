@@ -2,29 +2,9 @@
 ul, li{list-style: none;}
 a {outline: 0; text-decoration: none; color:rgba(0, 0, 0, 0.65);}
 
-header {
-height: 130px;
-}
-header .logo {
-  display: flex;
-  justify-content: center;
-  padding: 10px;
-}
-header span {
-  padding: 10px;
-  float: right;
-}
-header .logo a:hover {
-  color:rgba(0, 0, 0, 0.774);
-}
-header span a:hover {
-  color:rgba(0, 0, 0, 0.774);
-}
 .topnav {
 background-color: rgb(238, 240, 238);
 overflow: hidden;
-/* position: fixed;
-width: 100%; */
 }
 .topnav a {
 float: left;
@@ -40,7 +20,8 @@ color: black;
 }
 .topnav-right {
 float: right;
-}
+} 
+
 .carousel-inner {
 height: 300px;
 }
@@ -130,6 +111,7 @@ transition: hover 0.4s ease;
 #intro .intro-first-card .overlay a:hover {
 color: #fafa6f;
 }
+
 
 #services .services-col .card {
 transition: 0.4s ease;
