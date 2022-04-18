@@ -194,4 +194,21 @@ public class UserService {
 			return null;
 		}
 	}
+
+	public Boolean findOverlapId(String id) {
+		Member member = dao.memberFindById(id);
+		Corp corp = null;
+		
+		
+		if(member==null) {
+			corp = dao.corpFindById(id);
+			
+			if(corp!=null)
+				return false;
+		} else {
+			return false;
+		}
+		
+		return true;
+	}
 }

@@ -9,6 +9,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <link rel="stylesheet" href="/css/common.css">
   <link rel="icon" href="/image/favicon.png">
+  <script src="/js/check.js"></script>
   <style>
     h1 {
       text-align: center;
@@ -36,6 +37,10 @@
       float: right;
       margin-right: 20px;
     }
+    .fail { 
+		color: red; 
+		font-size: 0.75em; 
+	}
   </style>
   <script type="text/javascript">
   	$(function() {
@@ -58,7 +63,7 @@
 <body>
     <h1>회원 정보 수정</h1>
     <div class="wrapper">
-  <form action="/mypage/member/info" method="post" class="was-validated">
+  <form action="/mypage/member/info" method="post" class="was-validated" id="update_form">
     <div class="mb-3 mt-3">
       <label for="name" class="form-label">이름</label>
       <input type="text" class="form-control" id="name" placeholder="이름" name="name" th:value="${member.name}" required>
@@ -70,18 +75,27 @@
     <div class="mb-3">
       <label for="pw" class="form-label">비밀번호</label>
       <input type="password" class="form-control" id="pw" placeholder="비밀번호" name="pw" required>
+      <span id="pw_msg"></span>
     </div>
     <div class="mb-3">
-      <label for="pw" class="form-label">비밀번호 확인</label>
-      <input type="password" class="form-control" id="pw" placeholder="비밀번호 확인" required>
+      <label for="pw2" class="form-label">비밀번호 확인</label>
+      <input type="password" class="form-control" id="pw2" placeholder="비밀번호 확인" required>
+      <span id="pw2_msg"></span>
     </div>
     <div class="mb-3">
       <label for="email" class="form-label">이메일</label>
       <input type="email" class="form-control" id="email" placeholder="이메일" name="email" th:value="${member.email}" required>
     </div>
     <button type="button" class="btn btn-primary outbtn">탈퇴하기</button>
-    <button type="submit" class="btn btn-primary">수정하기</button>
+    <button type="button" class="btn btn-primary" id="update">수정하기</button>
   </form>
 </div>
+<script>
+  	$('#update').click(function() {
+		if(pwCheck() && pw2Check()==false)
+			return false;
+		$('#update_form').submit();
+	});
+  </script>
 </body>
 </html>

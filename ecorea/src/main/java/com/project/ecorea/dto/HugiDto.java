@@ -34,7 +34,7 @@ public class HugiDto {
 		private MultipartFile himg;
 		
 		public Hugi toEntity() {
-			return Hugi.builder().htitle(htitle).hcontent(hcontent).jno(jno).build();
+			return Hugi.builder().htitle(htitle).hcontent(hcontent).jno(1).build();
 		}
 	}
 	
