@@ -1,5 +1,8 @@
 package com.project.ecorea.controller.mvc;
 
+import java.security.*;
+
+import org.springframework.security.access.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.*;
@@ -14,15 +17,15 @@ import lombok.*;
 
 @Controller
 @AllArgsConstructor
+@Secured("ROLE_MEMBER")
 public class ChProveMvcController {
 	private ChProveService proveService;
 	
 	// 나의 챌린지 목록 보기
 	@GetMapping("/challenge/member/challengeList")
-	public ModelAndView readProve() {
-		String memberId = "zzzzuny";
+	public ModelAndView readProve(Principal principal) {
 		ModelAndView mav = new ModelAndView("challenge/member/challengeList");
-		mav.addObject("proveList", proveService.readProve(memberId));
+		mav.addObject("proveList", proveService.readProve(principal.getName()));
 		return mav;
 	}
 	
@@ -33,25 +36,22 @@ public class ChProveMvcController {
 	
 	// 챌린지 인증 등록	
 	@PostMapping("/challenge/member/challengeProveUpload")
-	public String UploadProve(ChProveDto.InputProve dto) {	
-		String memberId = "zzzzuny";
-		proveService.UploadChProve(dto, memberId);
+	public String UploadProve(ChProveDto.InputProve dto, Principal principal) {	
+		proveService.UploadChProve(dto, principal.getName());
 		return "redirect:/challenge/member/challengeList";
 	}
 	
 	// 챌린지 인증 삭제
 	@PostMapping("/challenge/member/deleteOne")
-	public String deleteChProve(Integer cpno) {
-		String memberId = "zzzzuny";
-		proveService.deleteChProve(memberId, cpno);
+	public String deleteChProve(Integer cpno, Principal principal) {
+		proveService.deleteChProve(principal.getName(), cpno);
 		return "redirect:/challenge/member/challengeList";
 	}
 	
 	// 일반회원 : 챌린지 신청 취소
 	@PostMapping("/challenge/member/cancel")
-	public String cancelJoin(Integer cno) {
-		String memberId = "zzzzuny";
-		proveService.cancelJoin(memberId, cno);
+	public String cancelJoin(Integer cno, Principal principal) {
+		proveService.cancelJoin(principal.getName(), cno);
 		return "redirect:/challenge/member/challengeList";
 		/*
 			챌린지 신청 취소하면 바뀌어야 할것들..?			
