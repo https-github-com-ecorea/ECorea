@@ -34,7 +34,9 @@
     function printAddresses() {
     	$.ajax("/mypage/member/addressListRest").done(list=>{
     		if(list=="") {
-    			$("#address_msg").text("등록된 배송지가 없습니다. 배송지를 등록하세요.");
+    			$("#address_area").empty();
+    			$('<button type="button" class="btn btn-primary">').attr("id","add_new_address").text("새 배송지").appendTo($("#address_area"));
+    			$("<span>").text("등록된 배송지가 없습니다. 배송지를 등록하세요.").css("color","red").appendTo("#address_area");
     			$('#order').prop("disabled",true);
     		} else {
     			$("#address_area").empty();
@@ -130,7 +132,7 @@
   		
   		$("#address_area").on("click", "#add_new_address", function() {
   			const popup = window.open("/mypage/member/newAddress","_blank","toolbar=yes, menubar=yes, width=700, height=500");
-  			$(popup).on("beforeunload", printAddresses);
+  			$(popup).on("beforeunload", $('#order').prop("disabled",false), printAddresses);
   		});
   		
   		$("#address_area").on("click", ".radio_adr", changeAddress);
@@ -159,7 +161,9 @@
                         </thead>
                         <tbody>
                             <tr th:each="product: ${preview.products}">
-                                <td th:text="${product.pthumbnail}"></td>
+                                <td>
+                                	<img th:src="${product.pthumbnail}" width="100">
+                                </td>
                                 <td th:text="${product.cartpname}"></td>
                                 <td th:text="${product.cartcnt}"></td>
                                 <td th:text="${product.price*product.cartcnt}" id="cartPrice"></td>

@@ -91,7 +91,9 @@
       				<span th:text="${list.pno}"></span>
       			</div>
       		</td>
-            <td th:text="${list.pthumbnail}"></td>
+            <td>
+            	<img alt="상품 이미지" th:src="${list.pthumbnail}">
+            </td>
             <td th:text="${list.pname}"></td>
             <td th:text="${list.price}"></td>
             <td>

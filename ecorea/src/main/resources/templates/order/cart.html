@@ -105,7 +105,7 @@
 			if(result==true) {
 				const $form = $('<form>').attr('method','post').attr('action','/order/cart/deleteSelected').appendTo($('body'));
 				$('<input>').attr('type','hidden').attr('name','confirm').val("confirm").appendTo($form);
-				$('.pno').each(function(idx, checkbox) {
+				$('.check_pno').each(function(idx, checkbox) {
 					if($(this).prop('checked')==true) {
 						$('<input>').attr('type','hidden').attr('name','pnos').val($(this).attr('data-pno')).appendTo($form);
 					}
@@ -122,9 +122,9 @@
 			if(result == true) {
 				const $form = $('<form>').attr('method','post').attr('action','/order/preview/multiple').appendTo($('body')); 
 				$('.check_pno').each(function(idx, checkbox) {
-					if($(checkbox).prop('checked')==true) {
-						const pno = parseInt($(checkbox).attr('data-pno'));
-						const count = parseInt($(checkbox).parent().parent().next().next().next().find(".cartcnt").text());
+					if($(this).prop('checked')==true) {
+						const pno = parseInt($(this).attr('data-pno'));
+						const count = parseInt($(this).parent().parent().next().next().next().find(".cartcnt").text());
 						$('<input>').attr('type','hidden').attr('name','paramsList['+ idx + '].pno').val(pno).appendTo($form);
 						$('<input>').attr('type','hidden').attr('name','paramsList['+ idx + '].cnt').val(count).appendTo($form);
 					}
@@ -171,11 +171,13 @@
                         <tr th:each="product: ${list.cartProduct}">
                             <td>
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input check_pno" th:data-pno="${product.pno}" value="">
+                                    <input type="checkbox" class="form-check-input check_pno" th:data-pno="${product.pno}">
                                     <span>&nbsp;&nbsp;<span th:text="${product.pno}" name="pno" id="pno"></span></span>                                    
                                 </div>
                             </td>
-                            <td th:text="${product.pthumbnail}"></td> 
+                            <td>
+                            	<img th:src="${product.pthumbnail}" width="200">
+                            </td> 
                             <td>
                                 <span name="cartpname" id="cartpname" th:text="${product.cartpname}"></span>
                                 <span>(&nbsp;<span name="price" id="price" th:text="${product.price}"></span>&nbsp;)</span>

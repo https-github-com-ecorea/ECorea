@@ -12,7 +12,7 @@ public interface CartDao {
 	
 	public Cart findByMemberIdAndPno(String memberId, Integer pno); 
 	
-	public List<CartDto.CartList> findByMemberId(String memberId);
+	public List<CartDto.CartList> findByMemberId(String memberId, String imagePath);
 	
 	public Integer updateCntPlus(Cart cart);
 	
