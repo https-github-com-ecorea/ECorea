@@ -6,12 +6,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <link rel="stylesheet" href="/css/common.css">
   <link rel="icon" href="/image/favicon.png">
+  <script src="/js/check.js"></script>
   <style>
     h1 {
       text-align: center;
       margin-bottom: 20px;
+      margin-top: 50px;
+    }
+    #join {
+    float: right;
     }
     .form-control {
       width: 400px;
@@ -27,37 +33,76 @@
       position:absolute;
       left: 30%;
     }
+    
+    /* 입력값 체크 성공, 실패 메시지에 대한 클래스*/
+	.success { 
+		color: blue; 
+		font-size: 0.75em; 
+	}
+	.fail { 
+		color: red; 
+		font-size: 0.75em; 
+	}
   </style>
   <script>
-  	
+  	$(document).ready(function() {
+  		$('#id').focusout(function() {
+				if(idCheck()==false)
+					return false;
+				$.ajax("/user/overlap/id?id="+$('#id').val())
+					.done(()=>$('#id_msg').text('사용가능한 아이디입니다').attr('class','success'))
+					.fail(()=>$('#id_msg').text('사용중인 아이디입니다').attr('class','fail'));
+			});
+			
+			$('#pw').focusout(pwCheck);
+			$('#pw2').focusout(pw2Check);
+			$('#name').focusout(nameCheck);
+			$('#email').focusout(emailCheck);
+
+			$('#join').click(function() {
+				if((idCheck() && pwCheck() && pw2Check() && emailCheck() && nameCheck())==false)
+					return false;
+				
+				$.ajax("/user/overlap/id?id="+$('#id').val())
+					.done(()=>{
+						$('#join_form').submit();
+					})
+				.fail(()=>$('#id_msg').text('사용중인 아이디입니다').attr('class','fail'));
+			});
+  	})
   </script>
   <title>일반 회원 가입</title>
 </head>
 <body>
     <h1>일반 회원 가입</h1>
     <div class="wrapper">
-  <form action="/general/memberJoin" method="post" class="was-validated">
+  <form action="/general/memberJoin" method="post" class="was-validated" id="join_form">
     <div class="mb-3 mt-3">
       <label for="name" class="form-label">이름</label>
       <input type="text" class="form-control" id="name" placeholder="이름" name="name" required>
+      <span id="name_msg"></span>
     </div>
     <div class="mb-3 mt-3">
       <label for="id" class="form-label">아이디</label>
       <input type="text" class="form-control" id="id" placeholder="아이디" name="id" required>
+      <span id="id_msg"></span>
     </div>
     <div class="mb-3">
       <label for="pw" class="form-label">비밀번호</label>
       <input type="password" class="form-control" id="pw" placeholder="비밀번호" name="pw" required>
+      <span id="pw_msg"></span>
     </div>
     <div class="mb-3">
-      <label for="pw" class="form-label">비밀번호 확인</label>
-      <input type="password" class="form-control" id="pw" placeholder="비밀번호 확인" required>
+      <label for="pw2" class="form-label">비밀번호 확인</label>
+      <input type="password" class="form-control" id="pw2" placeholder="비밀번호 확인" required>
+      <span id="pw2_msg"></span>
     </div>
     <div class="mb-3">
       <label for="email" class="form-label">이메일</label>
       <input type="email" class="form-control" id="email" placeholder="이메일" name="email" required>
+      <span id="email_msg"></span>
     </div>
-    <button type="submit" class="btn btn-primary">회원가입</button>
+    <button type="button" class="btn btn-primary" id="join">회원가입</button>
   </form>
 </div>
 </body>

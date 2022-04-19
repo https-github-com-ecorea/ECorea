@@ -99,6 +99,9 @@ public class ChallengeService {
 	/* 전체 회원 : 챌린지 목록 출력 */
 	public List<ChallengeDto.ChallengeList> readchallengeList() {
 		List<ChallengeDto.ChallengeList> list = dao.findByCorpName();
+		for(ChallengeDto.ChallengeList lists : list) {
+			lists.setCthumbnail(imagePath + lists.getCthumbnail());
+		}
 		
 		return list;
 	}
@@ -106,15 +109,17 @@ public class ChallengeService {
 	/* 기업 회원 : 챌린지 목록 출력*/ 
 	public List<ChallengeDto.ChallengeList> readCorpChallengeList(String loginId) {
 		List<ChallengeDto.ChallengeList> list = dao.findByCorpId(loginId);
+		for(ChallengeDto.ChallengeList lists : list) {
+			lists.setCthumbnail(imagePath + lists.getCthumbnail());
+		}
 
 		return list;
 	}
 
 	/* 전체 회원 : 챌린지 상세 페이지 출력 */
 	public ChallengeDto.ChallengeDetail readUserDetail(Integer cno) {
-		ChallengeDto.ChallengeDetail detail = dao.findBycno(cno);
-		List<ChProveDto.ChallengeDetailProveList> proveList = proveDao.findByProveAll();
-		// detail.setChProveList(proveList);
+		ChallengeDto.ChallengeDetail detail = dao.findByCno(cno);
+		detail.setCthumbnail(imagePath + detail.getCthumbnail());
 		
 		return detail;
 	}

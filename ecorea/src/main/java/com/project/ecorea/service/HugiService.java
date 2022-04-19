@@ -49,6 +49,9 @@ public class HugiService {
 	/* 일반 회원 후기 목록 출력 */
 	public List<HugiDto.HugiList> memberHugiList(String loginId) {
 		List<HugiDto.HugiList> memberHugis = dao.findByhwriter(loginId);
+		for(HugiDto.HugiList hugi : memberHugis) {
+			hugi.setHimg(imagePath + hugi.getHimg());
+		}
 		
 		return memberHugis;
 	}

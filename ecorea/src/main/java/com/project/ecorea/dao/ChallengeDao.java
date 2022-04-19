@@ -25,7 +25,7 @@ public interface ChallengeDao {
 
 	public List<ChallengeDto.ChallengeList> findByCorpId(String id);
 
-	public ChallengeDto.ChallengeDetail findBycno(Integer cno);
+	public ChallengeDto.ChallengeDetail findByCno(Integer cno);
 
 	public List<ChallengeDto.ChallengeList> findByCorpName();
 	

@@ -32,12 +32,14 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 		String id = authentication.getName();
 		
 		Member member = dao.memberFindById(id);
-		if(member!=null)
+		Corp corp = null;
+		if(member!=null) {
 			dao.memberInfoUpdate(Member.builder().id(id).failcnt(0).build());
-		
-		Corp corp = dao.corpFindById(id);
-		if(corp!=null)
-			dao.corpFindById(id);
+		} else if(member == null) {
+			corp = dao.corpFindById(id);
+			if(corp!=null)
+				dao.corpInfoUpdate(Corp.builder().id(id).failcnt(0).build());			
+		}
 		
 		SavedRequest savedRequest = new HttpSessionRequestCache().getRequest(request, response);
 		String password = request.getParameter("pw");

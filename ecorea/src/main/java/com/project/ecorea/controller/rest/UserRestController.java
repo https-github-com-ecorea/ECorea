@@ -17,6 +17,17 @@ import lombok.AllArgsConstructor;
 public class UserRestController {
 	private UserService service;
 	
+	@PreAuthorize("isAnonymous()")
+	@GetMapping("/user/overlap/id")
+	public ResponseEntity<String> findOverlapId(String id, Principal principal) {
+		if(principal!=null)
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("잘못된 접근입니다");
+		
+		if(service.findOverlapId(id)==false)
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("사용이 불가능한 아이디입니다");
+		return ResponseEntity.status(HttpStatus.OK).body("사용가능한 아이디입니다");
+	}
+	
 	/* 아이디 찾기 */
 	@PreAuthorize("isAnonymous()")
 	@GetMapping("/user/find/id")

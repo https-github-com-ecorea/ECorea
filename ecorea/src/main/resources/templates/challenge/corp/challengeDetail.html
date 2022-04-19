@@ -16,8 +16,8 @@
   integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
   crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <link rel="stylesheet" href="/common.css">
-  <link rel="stylesheet" href="/index.css">
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/index.css">
   <link rel="icon" href="/image/favicon.png">
 
   <title>챌린지 상세</title>
@@ -137,18 +137,6 @@ img {vertical-align: middle; height: 300px;}
   width: 300px;
 }
 </style>
-<script th:inline="javascript">
-	const challenge = /*[[${challenge}]]*/
-	
-	$(document).ready(function() {
-		const joincnt = challenge.cjoincnt;
-		const goal = challenge.cgoal;
-		let percentage = (parseInt(joincnt)/parseInt(goal))*100;
-		
-		$('.progress .progress-bar').css('width', percentage+"%").text(percentage+"%");
-		
-	});
-</script>
 </head>
 <body>
   <header>
@@ -209,50 +197,45 @@ img {vertical-align: middle; height: 300px;}
       <thead class="thead-light">
         <tr>
           <th>이미지</th>
-          <th>인증내용</th>
+          <th>제목</th>
+          <th>작성자</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody th:each="proveLists : ${proveList}">
         <tr>
-          <td></td>
-          <td></td>
+          <td th:text="${proveLists.cpimg}">임</td>
+          <td th:text="${proveLists.cptitle}" class="title">제</td>
+          <td th:text="${proveLists.cpwriter}">작</td>
+          <tr class="show" style="display: none;">
+	          <td colspan="3" th:text="${proveLists.cpcontent}">본문</td>
+          </tr>
         </tr>
-        <tr>
-          <td></td>
-          <td></td>
-        </tr>
+      </tbody>
     </table>
   </div>
   </div>
-
-
-  <script>
-    let slideIndex = 1;
-    showSlides(slideIndex);
-    
-    function plusSlides(n) {
-      showSlides(slideIndex += n);
-    }
-    
-    function currentSlide(n) {
-      showSlides(slideIndex = n);
-    }
-    
-    function showSlides(n) {
-      let i;
-      let slides = document.getElementsByClassName("mySlides");
-      let dots = document.getElementsByClassName("dot");
-      if (n > slides.length) {slideIndex = 1}    
-      if (n < 1) {slideIndex = slides.length}
-      for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";  
-      }
-      for (i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" active", "");
-      }
-      slides[slideIndex-1].style.display = "block";  
-      dots[slideIndex-1].className += " active";
-    }
+  <script th:inline="javascript">
+    const challenge = /*[[${challenge}]]*/;
+    	
+    	const joincnt = challenge.cjoincnt;
+    	const goal = challenge.cgoal;
+    	let percentage = (parseInt(joincnt)/parseInt(goal))*100;
+    		
+    	$('.progress .progress-bar').css('width', percentage+"%").text(percentage+"%");
+    	
+    	/* 인증글 제목 클릭 시 본문 보이게 하는 코드 */
+    	let show = document.getElementsByClassName('show');
+    	let title = document.getElementsByClassName('title');
+    	
+    	for(let i=0; i<title.length; i++) {
+			title[i].addEventListener('click', function(){
+				if(show[i].style.display==='none') {
+					show[i].style.display="";
+				} else {
+					show[i].style.display='none';
+				}
+			});
+		}
     </script>
 </body>
 </html>
