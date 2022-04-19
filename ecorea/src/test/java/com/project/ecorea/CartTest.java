@@ -33,7 +33,8 @@ public class CartTest {
 	//@Test
 	public void readCartServiceTest() {
 		String memberId = "zzzzuny";
-		List<CartDto.CartList> cartList = cartDao.findByMemberId(memberId);
+		String imagePath = "/images/";
+		List<CartDto.CartList> cartList = cartDao.findByMemberId(memberId, imagePath);
 		System.out.println("==============================");
 		System.out.println("cartList : " + cartList);
 		System.out.println("==============================");

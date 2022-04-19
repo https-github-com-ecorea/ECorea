@@ -46,12 +46,20 @@ public class BookmarkTest {
 	}
 	
 	@Transactional
-	@Test
+	//@Test
 	public void deleteSelectedTest() {
 		String memberId = "zzzzuny";
 		List<Integer> pnos = new ArrayList<>(Arrays.asList(1,3));
 		Integer result = bookmarkDao.deleteSelected(memberId, pnos);
 		assertEquals(result, 2);
 		
+	}
+	
+	@Transactional
+	@Test
+	public void saveTest() {
+		String memberId = "spring11";
+		Integer result = bookmarkDao.saveBookmark(1, memberId);
+		assertEquals(result, 1);
 	}
 }
