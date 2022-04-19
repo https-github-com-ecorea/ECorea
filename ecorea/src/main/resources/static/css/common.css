@@ -7,14 +7,13 @@ font-family: 'Rock 3D', cursive;
 font-family: 'Rubik Moonrocks', cursive;
 */
 
-* {margin: 0; padding: 0;}
+* {margin: 0; padding: 0; box-sizing: border-box;}
 ul, li{list-style: none;}
 a {outline: 0; text-decoration: none; color:rgba(0, 0, 0, 0.496);}
 
 body {
   font-family: 'Gowun Batang', serif;
   font-size: 20px;
-  position: relative;  
 }
 
 h1 {
@@ -28,7 +27,7 @@ a:hover {
 header {
   width: 100%;
   height: 100px;
-  margin: 20px 0;
+  top: 0;
   position: fixed;
   z-index: 1;
 }
@@ -75,6 +74,7 @@ header {
 .footer {
   background-color: white;
   color: black;
+  bottom: 0;
 }
 
 .catewrapper {

@@ -1,5 +1,6 @@
 history.scrollRestoration = "auto"
 
+
 const slickSlide = jQuery('#slick-slide')
 
 if (slickSlide) {
@@ -26,6 +27,7 @@ if (slickSlide) {
     ]
   })
 }
+
 
 function clickme() {
   window.scrollTo({top:0, left:0, behavior:'smooth'});
