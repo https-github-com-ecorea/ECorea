@@ -52,8 +52,9 @@ public class ProductMvcController {
 	}
 	
 	// 기업회원 상품 상세페이지
-	@GetMapping("/product/corp/productDetail/{pno}")
-	public ModelAndView corpProductDetail(@PathVariable Integer pno) {
+	@GetMapping("/product/corp/productDetail")
+	public ModelAndView corpProductDetail(Integer pno, HttpSession session) {
+		session.setAttribute("pno", pno);
 		return new ModelAndView("product/corp/productDetail").addObject("product", productService.productRead(pno));
 	}
 	
