@@ -60,7 +60,6 @@ public class ProductService {
 		List<ProductDto.productList> productList = new ArrayList<>();
 		List<ProductDto.productList> newList = productDao.productPagingList(cri);
 		for (ProductDto.productList element : newList) {
-			System.out.println("###### 썸네일 주소 : " + element.getPthumbnail());
 			element.setPthumbnail(imagePath + element.getPthumbnail());
 			productList.add(element);
 		}

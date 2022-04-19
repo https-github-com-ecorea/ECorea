@@ -83,6 +83,7 @@
 	
   	/* 후기 출력 (페이징) */
   	function makeHugi(obj) {
+  		console.log("############### 후기 목록")
 		console.log(obj.list);
   		if (obj.list.length === 0) {
             $(".hugizero").html('<span>후기가 없습니다. (≡^∇^≡)</span>');
@@ -157,6 +158,8 @@
   	
   	/* 문의 출력 (페이징) */
   	function makeQna(obj) {
+  		console.log("############### 문의 목록")
+  		console.log(obj.list);
   		if (obj.list.length === 0) {
             $(".qnazero").html('<span>문의가 없습니다. (≡^∇^≡)</span>');
             $(".qnalist").html('');
