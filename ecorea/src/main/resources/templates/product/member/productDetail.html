@@ -251,13 +251,16 @@
   </script>
   <title>상품 상세페이지</title>
   <style>
-  * {box-sizing: border-box}
+  * {box-sizing: border-box;}
   h3 {
       text-align: center;
       margin-top: 20px;
     }
+.product-info {
+ display: inline-block;
+ vertical-align: top;
+}
 .product-info.left {
-  float: left;
   height: 350px;
   width: 500px;
   /* padding: 10px; */
@@ -265,7 +268,6 @@
   text-align: start;
 }
 .product-info.right {
-  float: right;
   height: 350px;
   width: 500px;
   /* padding: 10px; */
@@ -273,10 +275,11 @@
   text-align: start;
 }
 .inside-product {
-  width: 900px;
+  width: 90%;
   display: flex;
   justify-content: space-around;
   margin-bottom: 20px;
+  margin-right: 60px;
 }
 .reviewlist {
   width: 900px;
@@ -286,7 +289,15 @@
   width: 900px;
   text-align: center;
 }
-
+.productwrap {
+ display: flex;
+ justify-content: center;
+ margin-top: 120px;
+}
+.etc:hover {
+	border: 1px solid black;
+	border-radius: 50px;
+}
 </style>
 </head>
 <body>
@@ -302,18 +313,17 @@
 	<span class="rightnav member" style="display: none;"><a href="/order/cart">CART</a></span> 
    	<span class="rightnav corp" style="display: none;"><a href="/mypage/corp/corpMypage">MYPAGE</a></span>
   </header>
-  
-  <h3>상품 상세페이지</h3><br>
-
-
+ 
+  <div class="productwrap">
   <div class="product-info left">
     <div class="product-img">
     <img th:src="${product.pthumbnail}" alt="상품" style="width:100%">
      </div> 
     </div>
+    
     <div class="product-info right">
       <p style="font-size:20px;" th:text="${product.pname}">상품명</p><br>
-      <span>판매가격 : <span id="price" th:text="${product.price}"></span> 원</span><br>
+      <span>판매가격 : <span id="price" th:text="${product.price}"></span> 원</span><br><br>
       <!--
       <p style="font-size:20px;">상품명</p><br>
       <span>판매가격 : <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;원</span></span><br>
@@ -322,25 +332,22 @@
         <span>수량 : </span>&nbsp;&nbsp;&nbsp;<button type="button" id="minus">-</button>
         <input type="text" name="p_num1" id="p_num1" size="2" maxlength="4" class="p_num" value="1">
         <button type="button" id="plus">+</button>
-      </div>
-      <span>옵션 : </span><select class="form-select form-select-sm" style="width: 200px;">
-        <option selected disabled>옵션을 선택하세요</option>
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-      </select><br>
-      <span>총 합계 : </span><span><span id='totalPrice' th:text="${product.price}"></span>&nbsp;원</span><span> (<span id='totalCnt'>1</span>&nbsp;개)</span><br><br>
+      </div><br>
+      <span>총 합계 : </span><span><span id='totalPrice' th:text="${product.price}"></span>&nbsp;원</span><span> (<span id='totalCnt'>1</span>&nbsp;개)</span><br><br><br>
       <button type="button" class="btn btn-primary" id="order" value="바로구매">바로구매</button>
       <button type="button" class="btn btn-primary" id="cart" value="장바구니 담기">장바구니 담기</button>
       <button type="button" class="btn btn-primary" value="관심상품 등록" formaction="#">관심상품 등록</button>
     </div>
+</div>
 
-      <div class="inside-product topnav topnav-right">
-      <a href="#content1">상품 상세정보</a>
-      <a href="#content2">구매 후기</a>
-      <a href="#content3">상품 문의</a>
+    <div class="inside-product topnav topnav-right">
+      <a href="#content1" class="etc">상품 상세정보</a>
+      <a href="#content2" class="etc">구매 후기</a>
+      <a href="#content3" class="etc">상품 문의</a>
     </div>
-    
+  
+ 
+<!--    <div class="wrapper">
     <div class="detail-product" id="content1">
     <p th:text='${product.pcontent}'></p>
   </div>
@@ -358,7 +365,7 @@
           <th>등록일</th>
         </tr>
       </thead>
-      <tbody id="hugi_tbody">
+      <tbody id="hugi_tbody"> -->
       <!-- 
       	<tr>
 	       	  <td th:text="${hugi.hno}">
@@ -377,7 +384,7 @@
 	          </tr>
          </tr>
          -->
-       </tbody>
+<!--        </tbody>
     </table>
   </div>
   <div class="hugiPageMaker">
@@ -397,7 +404,7 @@
             <th>등록일</th>
           </tr>
         </thead>
-        <tbody id="qna_tbody">
+        <tbody id="qna_tbody"> -->
           <!--
           <tr>
             <td th:text="${qqna.qqno}">
@@ -416,13 +423,13 @@
             </tr>
           </tr>
           -->
-        </tbody>
+<!--         </tbody>
       </table>
     </div>
     <div class="qnaPageMaker">
     </div>
   </div>
-
+ -->
   <script>
   	/* 제목 클릭 시 본문 출력 */
 	$(document).on('click', '.title', function() {

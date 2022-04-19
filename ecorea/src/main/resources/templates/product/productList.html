@@ -175,12 +175,17 @@
 button {
   outline: 0;
   color: white;
-  background-color: black;
+  background-color: gray;
   text-align: center;
   cursor: pointer;
   font-size: 18px;
   display: inline-block;
   width: 50%;
+  border: none;
+  border-right: 1px solid white;
+}
+button:hover {
+  color: black;
 }
 .btnwrapper {
  clear: both;
@@ -202,11 +207,11 @@ button {
 
 a {
   text-decoration: none;
-  font-size: 20px;
+  font-size: 22px;
 }
 
 .card h1 {
-	font-size: 15px;
+  font-size: 15px;
   color: crimson;
   padding-top: 10px;
 }
@@ -228,21 +233,21 @@ li{
 
 .category ul li a:hover {
   color: black;
-}
-  </style>
-  <title>상품 목록</title>
+} 
+ </style>
+ <title>상품 목록</title>
 </head>
 <body>
   <header>
     <span class="leftnav"><a href="/">ECorea</a></span>
-    <span class="leftnav"><a href="/">SHOP</a></span>
-    <span class="leftnav"><a href="/">CHALLENGE</a></span>
+    <span class="leftnav"><a href="/product/productList?nowPage=1&amount=9&catecode=&sort=">SHOP</a></span>
+    <span class="leftnav"><a href="/challenge/challengeList">CHALLENGE</a></span>
     <span class="leftnav"><a href="/">ABOUT</a></span>
     <span class="rightnav"><a href="/general/joinSelect">JOIN</a></span> 
     <span class="rightnav"><a href="/general/login">LOGIN</a></span>
   </header>
 
-  <div class="catewrapper">
+
     <div class="category">
       <ul>
       	<!-- ★ catecode는 카테고리 데이터 수정하는 대로 수정 필요! -->
@@ -255,7 +260,7 @@ li{
         <li><a href="/product/productList?nowPage=1&amount=9&catecode=6&sort=">DIY키트</a></li>
       </ul>
     </div>
-  </div>
+
 
   <div class="mininav">
     <ul>
@@ -266,7 +271,7 @@ li{
   </div>
 	
 	<section class="card-wrap">
-	  <table>
+	  <table class="twrap">
 	  <!-- 
 	  	<tr th:each="product : ${list}">
 	  		<td>
@@ -288,14 +293,14 @@ li{
 	  	<input type="hidden" name="catecode" value="${pageMaker.cri.catecode}">
 	  	<input type="hidden" name="sort" value="${pageMaker.cri.sort}">
 	  </form>
-		<div id="pagination">
-		</div>
 	</section>
+		<div id="pagination" style="display:flex; justify-content:center;">
+		</div>
 	
 	<input class="goupbtn" type="button" value="↑" onclick="clickme()"></div>
 	
 <footer>
-  <address style="font-size: 12px; display:inline-block;margin-top:10px;margin-left:20px;">
+  <address style="font-size:12px; display:inline-block;margin-top:10px;margin-left:20px;">
     인천광역시 미추홀구<br>
     이메일 : ecorea@gmail.com<br>
     전화번호 : 032-000-0000

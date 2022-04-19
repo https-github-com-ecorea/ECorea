@@ -2,6 +2,10 @@
 ul, li{list-style: none;}
 a {outline: 0; text-decoration: none; color:rgba(0, 0, 0, 0.65);}
 
+article {
+	margin-bottom: 25px;
+}
+
 .navwrapper a:hover {
 color: black;
 }
@@ -20,11 +24,6 @@ text-decoration: none;
 font-size: 17px;
 }
 
-.topnav a:hover {
-background-color: rgb(238, 240, 238);
-color: black;
-}
-
 .topnav-right {
 float: right;
 } 
@@ -33,31 +32,16 @@ float: right;
 height: 300px;
 }
 
-section {
-width: 100%;
-height: 100%;
-}
-
 footer {
 width: 100%;
 height: 100px;
 background-color: white;
-color:  rgba(0, 0, 0, 0.65);
+color: rgba(0, 0, 0, 0.65);
 }
 
 /* Global */
 .section-content {
 padding: 4rem 0;
-}
-
-/* Top Section */
-#top {
-background-image: url('../images/bg-top.jpg');
-background-position: center;
-background-repeat: no-repeat;
-background-size: cover;
-height: 80vh;
-position: relative;
 }
 
 #top .overlay {
@@ -92,9 +76,6 @@ background-size: cover;
 height: 15rem;
 }
 
-#intro .col-6:nth-of-type(1) .intro-first-card {
-background-image: url('../images/bg1.jpg');
-}
 
 #services .services-col .card {
 transition: 0.4s ease;
@@ -106,7 +87,9 @@ box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
 }
 
 #services .services-col img {
-height: 11rem;
+height: 15rem;
 object-fit: cover;
 object-position: center;
 }
+
+
