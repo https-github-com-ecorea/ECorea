@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>403 page not found</title>
+<title>ERROR!</title>
 </head>
 <body>
-<p>403 ERROR 발생!</p>
+<div class="errorPage">
+	<p th:text="${msg}"></p>
+</div>
 </body>
 </html>
