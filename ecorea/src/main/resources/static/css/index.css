@@ -10,11 +10,6 @@ article {
 color: black;
 }
 
-.topnav {
-background-color: rgb(238, 240, 238);
-overflow: hidden;
-}
-
 .topnav a {
 float: left;
 color: #1b1b1baf;

@@ -21,4 +21,9 @@ public class MemberMvcController {
 	public void addAddressMvc() {
 	}
 	
+	/* 마이 페이지 화면 */
+	@GetMapping("/mypage/member/memberMypage")
+	public void readMypage() {
+		
+	}
 }
