@@ -30,5 +30,10 @@
 	<!-- 관심상품 등록 -->
 	<insert id="saveBookmark">
 		insert into bookmark values(#{memberId}, #{pno})
-	</insert>	
+	</insert>
+	
+	<!-- 관심상품 한 개 찾기 -->
+	<select id="findByPnoAndMemberId" resultType="int">
+		select count(*) from bookmark where member_id=#{memberId} and pno=#{pno} and rownum=1
+	</select>
 </mapper>

@@ -12,7 +12,7 @@ import lombok.*;
 
 @RequiredArgsConstructor
 @RestController
-@Secured("ROLE_USER")
+@Secured("ROLE_MEMBER")
 public class CartRestController {
 	private final CartService cartService;
 	
