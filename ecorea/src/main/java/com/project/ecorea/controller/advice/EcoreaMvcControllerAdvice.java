@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
 @ControllerAdvice(basePackages = "com.project.ecorea.controller.mvc")
 public class EcoreaMvcControllerAdvice {
 	
@@ -19,14 +18,12 @@ public class EcoreaMvcControllerAdvice {
 		return "redirect:/system/error";
 	}
 	
-	
 	@ExceptionHandler(NullPointerException.class)
 	public String nullPointException(NullPointerException e, RedirectAttributes ra) {
 		ra.addFlashAttribute("errormsg","잘못된 접근입니다. " + e.getClass());
 		return "redirect:/system/error";
 	}
-	
-	
+		
 	@ExceptionHandler(SQLException.class) 
 	public String sqlException(SQLException e, RedirectAttributes ra) {
 		ra.addFlashAttribute("errormsg", "서버 오류입니다." + e.toString());

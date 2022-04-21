@@ -298,6 +298,7 @@
   justify-content: space-around;
   margin-bottom: 20px;
   margin-right: 60px;
+  margin-left: 60px;
 }
 .reviewlist {
   width: 900px;
@@ -312,10 +313,21 @@
  justify-content: center;
  margin-top: 120px;
 }
-.etc:hover {
-	border: 1px solid black;
-	border-radius: 50px;
+.etc {
+transition:0.2s;
 }
+.etc:hover {
+	color: black;
+}
+.topnav {
+	background-color: #ecf0f1;
+}
+p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
 </style>
 </head>
 <body>
@@ -365,9 +377,9 @@
     </div>
   
  
-<!--    <div class="wrapper">
+ <div class="wrapper">
     <div class="detail-product" id="content1">
-    <p th:text='${product.pcontent}'></p>
+    <p th:utext='${product.pcontent}'></p>
   </div>
   <hr>
   <h3 style="text-align: center;" id="content2">구매 후기</h3>
@@ -383,7 +395,7 @@
           <th>등록일</th>
         </tr>
       </thead>
-      <tbody id="hugi_tbody"> -->
+      <tbody id="hugi_tbody">
       <!-- 
       	<tr>
 	       	  <td th:text="${hugi.hno}">
@@ -402,7 +414,7 @@
 	          </tr>
          </tr>
          -->
-<!--        </tbody>
+ </tbody>
     </table>
   </div>
   <div class="hugiPageMaker">
@@ -422,7 +434,7 @@
             <th>등록일</th>
           </tr>
         </thead>
-        <tbody id="qna_tbody"> -->
+        <tbody id="qna_tbody">
           <!--
           <tr>
             <td th:text="${qqna.qqno}">
@@ -441,13 +453,23 @@
             </tr>
           </tr>
           -->
-<!--         </tbody>
+  </tbody>
       </table>
     </div>
     <div class="qnaPageMaker">
     </div>
   </div>
- -->
+  
+      <input class="goupbtn" type="button" value="↑" onclick="clickme()"></div>
+
+    <footer class="footer">
+      <address style="font-size: 12px; display:inline-block;margin-top:20px;margin-left:30px;">
+        인천광역시 미추홀구<br>
+        이메일 : ecorea@gmail.com<br>
+        전화번호 : 032-000-0000
+      </address>
+    </footer>
+
   <script>
   	/* 제목 클릭 시 본문 출력 */
 	$(document).on('click', '.title', function() {
@@ -501,5 +523,6 @@
       dots[slideIndex-1].className += " active";
     }
     </script>
+    <script src="/js/index.js"></script>
 </body>
 </html>

@@ -24,8 +24,10 @@
   <script th:inline="javascript">
   	const list = /*[[${list}]]*/
   	var pagemaker = /*[[${pageMaker}]]*/
+  	const role = /*[[${role}]]*/
   	console.log(pagemaker.cri.amount);
   	console.log(list);
+  	console.log(role);
   	
   	/* 현재 url의 카테고리 코드 추출 */
   	/* Code By Color Scripter™ 
@@ -48,7 +50,12 @@
   				$tr = $('<tr>').appendTo($wrap);
 			const $td = $('<td>').appendTo($tr);
   			const $card = $('<div class="card">').appendTo($td);
-  			const $a = $('<a>').attr('href', "/product/member/productDetail?pno=" + product.pno).attr('title', product.name).appendTo($card);
+  			let $a;
+  			if (role == "ROLE_MEMBER") {
+	  			$a = $('<a>').attr('href', "/product/member/productDetail?pno=" + product.pno).attr('title', product.name).appendTo($card);  				
+  			} else if (role == "ROLE_CORP") {
+	  			$a = $('<a>').attr('href', "/product/corp/productDetail?pno=" + product.pno).attr('title', product.name).appendTo($card);  				  				
+  			}
   			$('<img>').attr('src', product.pthumbnail).attr('alt', '상품').attr('style', 'width:80%').appendTo($a);
   			$('<h1>').text(product.cname).appendTo($a);
   			$('<p>').attr('class', 'title').text(product.pname).appendTo($a);
