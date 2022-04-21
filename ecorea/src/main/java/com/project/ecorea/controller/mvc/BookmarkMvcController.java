@@ -7,6 +7,8 @@ import org.springframework.security.access.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.*;
+import org.springframework.web.servlet.mvc.support.*;
+
 import com.project.ecorea.dto.*;
 import com.project.ecorea.service.*;
 
@@ -56,8 +58,15 @@ public class BookmarkMvcController {
 	
 	// 상품상세 -> 관심상품 등록
 	@PostMapping("/bookmark/add")
-	public String addBookmark(Integer pno, Principal principal) {
-		bookmarkService.addBookmark(pno, principal.getName());
-		return "redirect:/mypage/member/bookmarkList";
+	public String addBookmark(Integer pno, Principal principal, RedirectAttributes ra) {
+		String resultMsg = bookmarkService.addBookmark(pno, principal.getName()); 
+		if(resultMsg.equals("exist")) {
+			ra.addFlashAttribute("msg", "이미 등록된 상품입니다.");
+			return "redirect:/product/member/productDetail?pno="+pno;
+		} else if(resultMsg.equals("fail")) {
+			ra.addFlashAttribute("msg", "관심상품 등록에 실패했습니다.");
+			return "redirect:/product/member/productDetail?pno="+pno;
+		} else
+			return "redirect:/mypage/member/bookmarkList";
 	}
 }

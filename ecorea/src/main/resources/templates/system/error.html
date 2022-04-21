@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>page not found!</title>
+<script th:inline="javascript">
+	const msg = /*[[${errormsg}]]*/
+	console.log(msg);
+</script>
+</head>
+<body>
+<div class="container" style="max-width: 600px">
+	<h1>에러페이지 만들었습니다.</h1>
+	<div th:text="${errormsg}"></div>
+		<p th:text="|timestamp: ${timestamp}|"></p>
+		<p th:text="|path: ${path}|"></p>
+		<p th:text="|status: ${status}|"></p>
+		<p th:text="|message: ${message}|"></p>
+		<p th:text="|trace: ${trace}|"></p>
+</div>
+</body>
+</html>

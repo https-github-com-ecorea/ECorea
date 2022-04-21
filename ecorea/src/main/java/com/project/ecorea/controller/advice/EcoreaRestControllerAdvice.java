@@ -1,19 +1,26 @@
 package com.project.ecorea.controller.advice;
 
-import javax.validation.ConstraintViolationException;
+import java.sql.*;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import javax.validation.*;
+
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RestControllerAdvice(basePackages = "com.project.ecorea.controller.rest")
 public class EcoreaRestControllerAdvice {
-
-	/* 메소드의 파라미터나 리턴 값에 문제가 있을 때의 오류 (500) */
 	@ExceptionHandler(ConstraintViolationException.class)
-	public ResponseEntity<String> constraintVoilationException(ConstraintViolationException e, RedirectAttributes ra) {
-		return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+	public ResponseEntity<String> constraintViolationException(ConstraintViolationException e) {
+		return  ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
 	}
-
+	
+	@ExceptionHandler(NullPointerException.class)
+	public ResponseEntity<String> nullPointerException(NullPointerException e) {
+		return ResponseEntity.status(HttpStatus.CONFLICT).body(e.toString());
+	}
+	
+	@ExceptionHandler(SQLException.class)
+	public ResponseEntity<String> sqlException(SQLException e) {
+		return ResponseEntity.status(HttpStatus.CONFLICT).body("Internal Error");
+	}
 }

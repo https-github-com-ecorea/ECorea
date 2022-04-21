@@ -50,12 +50,18 @@ public class BookmarkService {
 	}
 
 	// 상품상세 -> 관심상품 등록
-	public Boolean addBookmark(Integer pno, String memberId) {
-		Integer result = bookmarkDao.saveBookmark(pno, memberId);
-		if(result<=0) {
-			return false;
+	public String addBookmark(Integer pno, String memberId) {
+		String resultMsg;
+		Integer findBookmark = bookmarkDao.findByPnoAndMemberId(pno, memberId);
+		if(findBookmark==1) {
+			return resultMsg="exist";
+		} else {
+			Integer result = bookmarkDao.saveBookmark(pno, memberId);			
+			if(result<=0) {
+				return resultMsg="fail";
+			}
+			return resultMsg="success";
 		}
-		return true;
 	}
 	
 }

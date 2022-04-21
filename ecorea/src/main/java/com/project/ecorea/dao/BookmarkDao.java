@@ -24,4 +24,8 @@ public interface BookmarkDao {
 	// 관심상품 등록
 	public Integer saveBookmark(Integer pno, String memberId);
 	
+	// 관심상품 찾기
+	public Integer findByPnoAndMemberId(Integer pno, String memberId);
+	
+	
 }
