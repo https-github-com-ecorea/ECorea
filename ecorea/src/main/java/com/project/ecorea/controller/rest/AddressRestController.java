@@ -4,6 +4,7 @@ import java.security.*;
 import java.util.List;
 
 import org.springframework.http.*;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import com.project.ecorea.entity.*;
@@ -13,6 +14,7 @@ import lombok.*;
 
 @RestController
 @RequiredArgsConstructor
+@Secured("ROLE_USER")
 public class AddressRestController {
 
 	private final AddressService service;

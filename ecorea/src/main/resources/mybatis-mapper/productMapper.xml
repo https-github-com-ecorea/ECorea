@@ -54,7 +54,7 @@
 			select product_seq.nextval from dual
 		</selectKey>
 		insert into product
-		values (#{pno}, #{price}, #{pname}, #{pstock}, #{pcontent}, #{pthumbnail}, #{pordercnt}, #{pregday}, #{corpId}, #{catecode})
+		values (#{pno}, #{catecode}, #{price}, #{pname}, #{pstock}, #{pcontent}, #{pthumbnail}, #{pordercnt}, #{pregday}, #{corpId})
 	</insert>
 	
 	<!-- 기업 회원 - 등록된 상품 목록 출력 -->
