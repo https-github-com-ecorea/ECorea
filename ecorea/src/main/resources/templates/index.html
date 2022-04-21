@@ -22,6 +22,9 @@
   <script th:inline="javascript">
   	const role = /*[[${role}]]*/
   	const list = /*[[${list}]]*/
+  	const msg = /*[[${errormsg}]]*/
+  	
+  	
   	
   	
   	function productList() {
@@ -49,6 +52,11 @@
   			$('.all').css('display','none');
   		}
   		productList();
+  		
+  		
+  		if(msg!=null) {
+  			alert(msg);
+  		}
   	});
   </script>
   <title>ECorea</title>

@@ -21,6 +21,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script th:inline="javascript">
   	const product = /*[[${product}]]*/
+  	const msg = /*[[${msg}]]*/
   		
   	/* 수량 추가 버튼 */
   	function plusCnt() {
@@ -81,6 +82,9 @@
   			const $form = $('<form>').attr('method','post').attr('action', '/bookmark/add').appendTo($('body'));
   			$("<input>").attr("type","hidden").attr("name","pno").val(product.pno).appendTo($form);
   			$form.submit();
+  		}
+  		if(msg!=null) {
+  			alert(msg);
   		}
   	}
   	

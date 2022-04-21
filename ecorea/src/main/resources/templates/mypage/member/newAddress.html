@@ -53,7 +53,7 @@
               data: params
            }).done(() => {
                window.close();
-           }).fail(() => alert("주소를 추가하지 못했습니다."));
+           }).fail((response) => alert("주소를 추가하지 못했습니다. \n Code : " + response.status + " - " + response.responseText));
         })
      })
   </script>

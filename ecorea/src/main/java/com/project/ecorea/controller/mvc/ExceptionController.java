@@ -24,4 +24,8 @@ public class ExceptionController {
 		return pageError;
 	}
 	
+	@GetMapping("/system/error")
+	public void systemError() {
+	}
+	
 }
