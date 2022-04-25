@@ -1,14 +1,13 @@
 package com.project.ecorea.dto;
 
+import java.util.*;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import com.project.ecorea.entity.Member;
+import com.project.ecorea.entity.*;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberDto {
@@ -53,5 +52,12 @@ public class MemberDto {
 		private String id;
 		private String name;
 		private String email;
+	}
+	
+	@Data
+	@AllArgsConstructor
+	public static class Mypage {
+		private Integer point;
+		private List<JumunDto.JumunStatus> jumunStatusList;
 	}
 }

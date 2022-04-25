@@ -59,13 +59,26 @@
   		const $form = $('<form>').attr('method','post').attr('action','/mypage/member/bookmarkList/shoppingOne').appendTo($('body'));
   		$('<input>').attr('type','hidden').attr('name','pno').val($(this).attr('data-pno')).appendTo($form);
   		$form.submit();
-  	}  	
+  	} 
+  	
+  	// 선택상품 장바구니에 담기
+  	function shoppingSelected() {
+  		const $form = $("<form>").attr("method","post").attr("action","/mypage/member/bookmarkList/shoppingMultiple").appendTo($('body'));
+  		$(".pno").each(function(idx, checkbox) {
+  			if($(this).prop('checked')==true) {
+  				$("<input>").attr("type","hidden").attr("name","pnos").val($(this).attr('data-pno')).appendTo($form);  				
+  			}
+  		});
+  		if($form.serialize()!="")
+  			$form.submit();
+  	}
   	
   	$(document).ready(function() {  		
   		$('.deleteOne').click(deleteOne);
   		$('#deleteAll').click(deleteAll);
   		$('#deleteSelected').click(deleteSelected);
-  		$('.shoppingOne').click(shoppingOne);  		
+  		$('.shoppingOne').click(shoppingOne);
+  		$("#shoppingSelected").click(shoppingSelected);
   	})
   </script>
 </head>
@@ -93,7 +106,7 @@
       			</div>
       		</td>
             <td>
-            	<img alt="상품 이미지" th:src="${list.pthumbnail}">
+            	<img alt="상품 이미지" th:src="${list.pthumbnail}" width="100px">
             </td>
             <td th:text="${list.pname}"></td>
             <td th:text="${list.price}"></td>
@@ -104,7 +117,7 @@
           </tr>
       </tbody>
     </table>
-    <button type="button" class="btn btn-primary">선택상품 장바구니 담기</button>
+    <button type="button" id="shoppingSelected" class="btn btn-primary">선택상품 장바구니 담기</button>
   </div>
 </body>
 </html>

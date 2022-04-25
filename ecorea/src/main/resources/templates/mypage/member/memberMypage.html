@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8"  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <link rel="stylesheet" href="/css/common.css">
   <link rel="stylesheet" href="/css/index.css">
   <link rel="icon" href="/image/favicon.png">
@@ -94,29 +95,32 @@
    	<span class="rightnav corp" style="display: none;"><a href="/mypage/corp/corpMypage">MYPAGE</a></span>
   </header>
   <h1>마이페이지</h1>
+  <div th:text="${mypage}"></div>
   <div class="wrapper">
-  <div class="point">
-    <p>보상포인트</p>
-    </div>
-  <div class="order">
-    <p>주문 처리 현황</p>
-    <div class="order-process">
-      <span>주문 완료</span><br>
-      <a href="#">0</a>
-    </div>
-    <div class="order-process">
-      <span>배송 준비</span><br>
-      <a href="#">0</a>
-    </div>
-    <div class="order-process">
-      <span>배송중</span><br>
-      <a href="#">0</a>
-    </div>
-    <div class="order-process">
-      <span>배송 완료</span><br>
-      <a href="#">0</a>
-    </div>
-  </div>
+	<div class="wrapper">
+        <div class="point">
+            <p>보상포인트</p>
+            <span th:text="${mypage.point}"></span>
+        </div>
+        <div class="order">
+            <p>주문 처리 현황</p>
+            <div class="order-process">
+                <span>주문 완료</span><br>
+                <a href="/order/orderList"></a>
+            </div>
+            <div class="order-process">
+                <span>배송중</span><br>
+                <a href="/order/orderList"></a>
+            </div>
+            <div class="order-process">
+                <span>배송 완료</span><br>
+                <a href="/order/orderList"></a>
+            </div>
+            <div class="order-process">
+                <span>취소 / 환불</span><br>
+                <a href="/order/orderList"></a>
+            </div>
+        </div>
 
   <a href="/mypage/member/info"><button type="text" class="btn btn-primary">회원정보 보기</button></a>
   <a href="/order/orderList"><button type="text" class="btn btn-primary">주문 내역 조회</button></a>
@@ -124,7 +128,7 @@
   <a href="/mypage/member/qnaList"><button type="text" class="btn btn-primary">문의 목록</button></a>
   <a href="mypage/member/newAddress"><button type="text" class="btn btn-primary">주소록 관리</button></a>
   <a href="/order/reviewList?nowPage=1&amount=9"><button type="text" class="btn btn-primary">내가 쓴 후기</button></a>
-  <a href="#"><button type="text" class="btn btn-primary">나의 챌린지</button></a>
+  <a href="/challenge/member/challengeList"><button type="text" class="btn btn-primary">나의 챌린지</button></a>
 
 </div>
 

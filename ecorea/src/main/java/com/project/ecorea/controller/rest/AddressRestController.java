@@ -14,7 +14,7 @@ import lombok.*;
 
 @RestController
 @RequiredArgsConstructor
-@Secured("ROLE_USER")
+@Secured("ROLE_MEMBER")
 public class AddressRestController {
 
 	private final AddressService service;

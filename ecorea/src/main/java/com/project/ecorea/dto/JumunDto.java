@@ -70,6 +70,13 @@ public class JumunDto {
 		private Integer cnt;
 		private String jstatus;
 	}
+	
+	@Data
+	@AllArgsConstructor
+	public static class JumunStatus {
+		private String jstatus;
+		private Integer statusCnt;
+	}
 
 	/*
 	
