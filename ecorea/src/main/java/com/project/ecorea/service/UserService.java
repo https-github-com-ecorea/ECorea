@@ -151,8 +151,12 @@ public class UserService {
 	}
 
 	// 일반 회원 탈퇴
-	public void memberInfoDelete(String loginId) {
-		dao.memberDeleteById(loginId);
+	public Boolean memberInfoDelete(String loginId) {
+		if(dao.memberDeleteById(loginId)==true) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	// 기업 회원 정보 보기

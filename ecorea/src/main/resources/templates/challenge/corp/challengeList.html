@@ -214,26 +214,31 @@ h1 {
   
   <script th:inline="javascript">
   
-  	const $challenge = /*[[${challenge}]]*/;  	
+  	const $challenge = /*[[${challenge}]]*/;
+  	
   	for(const challenges of $challenge) {
 	   	  let cjoincnt = challenges.cjoincnt;
 	   	  let cgoal = challenges.cgoal;
-	    	  
+	   	  
 	   	  let percentage = (parseInt(cjoincnt)/parseInt(cgoal))*100;
-		      
+		  
+	   	  
+	   	  
 	      let $topParentsDiv = $('<div class="column nature">').appendTo($('.row'));
 	      let $secondParentsDiv = $('<div class="content">').appendTo($topParentsDiv);
 	      		$('<span>').text(challenges.corpname).appendTo($secondParentsDiv);
-	      		let $a = $('<a href="#">').appendTo($secondParentsDiv);
+	      		let $a = $('<a>').attr('href', "/challenge/member/challengeDetail?cno=" + challenges.cno).appendTo($secondParentsDiv);
 	      			$('<img alt="챌린지" style="width:100%">').attr('src', challenges.cthumbnail).appendTo($a);
 	      		let $h4 = $('<h4>').text(challenges.cname).appendTo($secondParentsDiv);
-	      			$('<a>').attr('href', '#').appendTo($h4);
+	      			$('<a>').attr('href', "/challenge/member/challengeDetail?cno=" + challenges.cno).appendTo($h4);
 	      		$('<p>').text(challenges.cstartday + " ~ " + challenges.cendday).appendTo($secondParentsDiv);
 	      		let $thirdParentsDiv = $('<div>').appendTo($secondParentsDiv);
 	      			let $progressDiv = $('<div class="progress">').appendTo($thirdParentsDiv);
 	      			$('<div class="progress-bar">').css('width', percentage+"%").text(percentage+"%").appendTo($progressDiv);
-	      		$('<button type="submit" class="btn btn-primary" formaction="">').text('수정').appendTo($secondParentsDiv);
-	      		$('<button type="submit" class="btn btn-primary" formaction="">').css('margin-left', '5px').text('삭제').appendTo($secondParentsDiv);
+	      		/* let $update = $('<a id="update">').attr('href', '/challenge/corp/challengeUpdate?cno=' + challenges.cno).appendTo($secondParentsDiv); */
+   				$('<a type="submit" class="btn btn-primary">').attr('href', '/challenge/corp/challengeUpdate?cno=' + challenges.cno).text('수정').appendTo($secondParentsDiv);
+	      		$('<a type="submit" class="btn btn-primary">').css('margin-left', '5px').text('삭제').appendTo($secondParentsDiv);
+	      
 	}
   
   filterSelection("all")
