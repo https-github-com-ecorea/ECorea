@@ -144,6 +144,7 @@ public class UserMvcController {
 			return "redirect:/";
 		}
 		
+		ra.addFlashAttribute("msg", "회원정보가 변경되었습니다");
 		service.memberInfoUpdate(dto, principal.getName());
 		return "redirect:/mypage/member/info";
 	}
@@ -181,6 +182,7 @@ public class UserMvcController {
 			return "redirect:/";
 		}
 		
+		ra.addFlashAttribute("msg", "회원정보가 변경되었습니다");
 		service.corpInfoUpdate(dto, principal.getName());
 		return "redirect:/mypage/corp/info";
 	}

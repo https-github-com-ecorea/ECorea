@@ -135,4 +135,6 @@ public class ChallengeService {
 	public int getCorpListTotal(String loginId) {
 		return dao.getCorpListTotal(loginId);
 	}
+	
+	
 }
