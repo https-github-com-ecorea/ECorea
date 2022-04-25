@@ -6,6 +6,7 @@ import com.project.ecorea.service.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
+
 import java.security.Principal;
 
 import javax.servlet.http.HttpServletRequest;
@@ -57,18 +58,27 @@ public class ProductMvcController {
 	/* 일반 회원 : 상품 상세 페이지 화면 */
 	@Secured("ROLE_MEMBER")
 	@GetMapping("/product/member/productDetail")
-	public ModelAndView productRead(Integer pno, HttpSession session) {
+	public ModelAndView productRead(Integer pno, HttpSession session, HttpServletRequest request, Principal principal) {
 		session.setAttribute("pno", pno);
-		return new ModelAndView("product/member/productDetail").addObject("product", productService.productRead(pno));
+		if(principal==null || request.isUserInRole("ROLE_MEMBER"))
+			return new ModelAndView("product/member/productDetail").addObject("product", productService.productRead(pno));
+		else 
+			return new ModelAndView("product/corp/productDetail").addObject("product", productService.productRead(pno));
 	}
 	
+//	// 기업회원 상품 상세페이지
+//	@GetMapping("/product/corp/productDetail/{pno}")
+//	public ModelAndView corpProductDetail(@PathVariable Integer pno) {
+//		return new ModelAndView("product/corp/productDetail").addObject("product", productService.productRead(pno));
+//	}
+
 	// 기업회원 상품 상세페이지
-	@Secured("ROLE_CORP")
-	@GetMapping("/product/corp/productDetail")
-	public ModelAndView corpProductDetail(Integer pno, HttpSession session) {
-		session.setAttribute("pno", pno);
-		return new ModelAndView("product/corp/productDetail").addObject("product", productService.productRead(pno));
-	}
+	// @Secured("ROLE_CORP")
+	// @GetMapping("/product/corp/productDetail")
+	// public ModelAndView corpProductDetail(Integer pno, HttpSession session) {
+	// 	session.setAttribute("pno", pno);
+	// 	return new ModelAndView("product/corp/productDetail").addObject("product", productService.productRead(pno));
+	// }
 	
 	/* 문의 작성 버튼 */
 	@Secured("ROLE_MEMBER")

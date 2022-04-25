@@ -23,7 +23,30 @@
     margin-bottom: 5px;
     }
   </style>
-  <script>
+  <script th:inline="javascript">
+  
+  var pagemaker = /*[[${pageMaker}]]*/
+	  	
+		/* 페이징 */
+	  	function pagination() {
+			const $pagination = $('#pagination');
+			const $ul = $('<ul class="pagination">').appendTo($pagination);
+			if (pagemaker.prev == true) {
+				const $li = $('<li>').appendTo($ul);
+				$('<a>').attr('href', '/order/reviewList?nowPage=' + (pagemaker.start - 1) + '&amount=' + pagemaker.cri.amount).text("이전").appendTo($li);
+			}
+			for (let i = pagemaker.start; i <= pagemaker.end; i++) {
+				const $li = $('<li>').appendTo($ul);
+				$('<a>').attr('href', '/order/reviewList?nowPage=' + i + '&amount=' + pagemaker.cri.amount).text(i).appendTo($li);
+				if (i == pagemaker.nowPage)
+					$li.attr('class', 'active');
+			}
+			if (pagemaker.next == true) {
+				const $li = $('<li>').appendTo($ul);
+				$('<a>').attr('href', '/order/reviewList?nowPage=' + (pagemaker.end + 1) + '&amount=' + pagemaker.cri.amount).text("다음").appendTo($li);
+			}
+	  	}
+  
   	function reviewUpdate(hno) {
 		const $form = $('<form>').attr('method','get').attr('action','/order/reviewUpdate').appendTo($('body'));
 		$('<input>').attr('type','hidden').attr('name','hno').val(hno).appendTo($form);
@@ -45,9 +68,12 @@
 			if(confirm("후기를 삭제할까요?"))
 				reviewDelete();
 		}); */
+		/* 페이징 실행 */
+		pagination();
 		
 		const moveReviewUpdate = document.getElementsByClassName('moveReviewUpdate');
 		const moveReviewDelete = document.getElementsByClassName('moveReviewDelete');
+		
 		
 		for(let i=0; i<moveReviewUpdate.length; i++) {
 			moveReviewUpdate[i].addEventListener('click', function(e){
@@ -87,7 +113,7 @@
     	<tr th:each="hugis : ${hugi}">
 	        <td class="hno" th:text="${hugis.hno}"></td>
 			<td>
-				<img th:src="${hugis.himg}"/>
+				<img th:src="${hugis.himg}" width="100px" height="100px"/>
 			</td>
 	        <td th:text="${hugis.htitle}">
 	        </td>
@@ -101,6 +127,8 @@
     	</tr>
     </tbody>
   </table>
+  <div id="pagination">
+  </div>
 </div>
 </body>
 </html>

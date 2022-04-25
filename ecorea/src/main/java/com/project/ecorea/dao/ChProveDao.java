@@ -14,10 +14,12 @@ public interface ChProveDao {
 	
 	public void saveChProve(ChProve chProve);
   
-	public List<ChProveDto.ChallengeDetailProveList> findByProveAll();
+	public List<ChProveDto.ChallengeDetailProveList> findByProveAll(Criteria cri);
 	
 	public Integer deleteByMemberIdAndCpno(String memberId, Integer cpno);
 	
 	public Integer deleteByMemberIdAndCno(String memberId, Integer cno);
+
+	public int getChallengeDetailTotal(Integer cno);
 
 }

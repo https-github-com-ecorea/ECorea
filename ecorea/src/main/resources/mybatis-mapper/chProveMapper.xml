@@ -41,12 +41,29 @@
 		<result column="cpcontent" property="cpcontent"/>
 	</resultMap>
 	
-	<select id="findByProveAll" resultMap="detailProveList">
+	<!-- <select id="findByProveAll" resultMap="detailProveList">
 		select c.cname, p.cpno, p.cptitle, p.cpregday, p.cpimg, p.cpcontent, p.member_id as cpwriter
 		from chprove p
     		left join challenge c 
         		on(c.cno=p.cno)
 		order by p.cpno desc
+	</select> -->
+  
+  	<select id="findByProveAll" resultMap="detailProveList">
+	   	select cname, cpno, cptitle, cpregday, cpimg, cpcontent, cpwriter
+	   	from(
+	   		select row_number() over(order by cpno desc) rn, c.cname, p.cpno, p.cptitle, p.cpregday, p.cpimg, p.cpcontent, p.member_id as cpwriter
+	   		from chprove p
+    		inner join challenge c 
+        		on(c.cno=p.cno) where <![CDATA[rownum <= #{nowPage} * #{amount}]]> and c.cno=#{cno})
+   		where <![CDATA[rn > (#{nowPage} -1) * #{amount}]]>
+	</select>
+
+	<select id="getChallengeDetailTotal" resultType="int">
+		select count(*)
+		from chprove p
+    		left join challenge c 
+        		on(c.cno=p.cno)
 	</select>
   
 	<!-- 챌린지 인증 삭제 -->

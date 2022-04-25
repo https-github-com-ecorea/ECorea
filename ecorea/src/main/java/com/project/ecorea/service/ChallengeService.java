@@ -97,8 +97,8 @@ public class ChallengeService {
 	}
 	
 	/* 전체 회원 : 챌린지 목록 출력 */
-	public List<ChallengeDto.ChallengeList> readchallengeList() {
-		List<ChallengeDto.ChallengeList> list = dao.findByCorpName();
+	public List<ChallengeDto.ChallengeList> readchallengeList(Criteria cri) {
+		List<ChallengeDto.ChallengeList> list = dao.challengePagingList(cri);
 		for(ChallengeDto.ChallengeList lists : list) {
 			lists.setCthumbnail(imagePath + lists.getCthumbnail());
 		}
@@ -107,13 +107,17 @@ public class ChallengeService {
 	}
 
 	/* 기업 회원 : 챌린지 목록 출력*/ 
-	public List<ChallengeDto.ChallengeList> readCorpChallengeList(String loginId) {
-		List<ChallengeDto.ChallengeList> list = dao.findByCorpId(loginId);
-		for(ChallengeDto.ChallengeList lists : list) {
-			lists.setCthumbnail(imagePath + lists.getCthumbnail());
+	public List<Challenge> readCorpChallengeList(String loginId, Criteria cri) {
+		List<Challenge> corpList = new ArrayList<>();
+		List<Challenge> list = dao.challengePagingCorpList(cri);
+		for(Challenge lists : list) {
+			if(lists.getCorpId().equals(loginId)) {
+				lists.setCthumbnail(imagePath + lists.getCthumbnail());
+				corpList.add(lists);
+			}
 		}
 
-		return list;
+		return corpList;
 	}
 
 	/* 전체 회원 : 챌린지 상세 페이지 출력 */
@@ -122,5 +126,13 @@ public class ChallengeService {
 		detail.setCthumbnail(imagePath + detail.getCthumbnail());
 		
 		return detail;
+	}
+
+	public int getListTotal() {
+		return dao.getListTotal();
+	}
+
+	public int getCorpListTotal(String loginId) {
+		return dao.getCorpListTotal(loginId);
 	}
 }

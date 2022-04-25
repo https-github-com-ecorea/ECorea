@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <link rel="stylesheet" href="/css/common.css">
   <link rel="icon" href="/image/favicon.png">
   <style>
@@ -31,25 +32,70 @@ input[type=text], select, textarea {
   padding: 20px;
 }
 </style>
+<script>
+	//자바스크립트를 이용해 상품 이미지 미리보기
+	function previewImage() {
+		const file = $("#himg")[0].files[0];
+		
+		// 이미지의 크기 제한 : 1MB
+		const maxSize = 1024*1024;
+		if(file.size>maxSize) {
+			Swal.fire('이미지 크기 오류', '상품이미지는 1MB를 넘을 수 없습니다', 'error');
+			// input과 이미지 미리보기 영역을 초기화
+			$('#himg').val('');
+			$('#show_himg').removeAttr('src');
+			return false;
+		}
+		
+		const reader = new FileReader();
+		
+		reader.readAsDataURL(file);
+		reader.onload = function() {
+			$("#show_himg").attr("src", reader.result);
+		}
+		return true;
+	}
+  
+  	$(document).ready(function() {
+  		$('#himg').change(function() {
+  			console.log($('#himg').val());
+  			if($('#himg').val()==='') {
+  				$('#show_himg').css({
+  	  				'display': 'none'
+  	  			});
+  			} else {
+	  			$('#show_himg').css({
+	  				'display': 'block'
+	  			});  				
+  			}
+  			previewImage();
+  		});
+  		
+  		$('.btn').click(function() {
+  			if(confirm('글을 수정하시겠습니까 ?')) {
+  				$('#update_form').submit();
+  			}
+  		});
+  	});
+  </script>
   <title>후기 수정</title>
 </head>
 <body>
   <h1>후기 수정</h1>
   <div class="container">
-    <form action="/order/reviewUpdate" method="post" enctype="multipart/form-data">
+    <form action="/order/reviewUpdate" method="post" enctype="multipart/form-data" id="update_form">
       <input type="hidden" name="hno" th:value="${hugi.hno}" />
       <label for="htitle">제목</label>
-      <input type="text" id="htitle" name="htitle" placeholder="제목을 입력해주세요.">
+      <input type="text" id="htitle" name="htitle" th:value="${hugi.htitle}" placeholder="제목을 입력해주세요.">
   
       <div class="mb-3">
         <label for="himg" class="form-label">썸네일 이미지</label>
-        <input type="file" class="form-control" id="himg" name="himg" th:value="${hugi.himg}" accept=".jpg,.jpeg,.png,.gif">
+        <input type="file" class="form-control" id="himg" name="himg" accept=".jpg,.jpeg,.png,.gif">
       </div>
-
+	  <img th:src="${hugi.himg}" id="show_himg" height="200px" style="display: block"/>
       <label for="hcontent">내용</label>
       <textarea id="hcontent" name="hcontent" placeholder="내용을 입력해주세요." th:text="${hugi.hcontent}" style="height:200px"></textarea>
-  
-      <button type="submit" class="btn btn-primary">수정</button>
+      <button type="button" class="btn btn-primary">수정</button>
     </form>
   </div>
 </body>

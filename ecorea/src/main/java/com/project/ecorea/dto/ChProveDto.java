@@ -1,5 +1,6 @@
 package com.project.ecorea.dto;
 
+import java.time.*;
 import java.util.*;
 
 import org.springframework.format.annotation.*;
@@ -49,7 +50,8 @@ public class ChProveDto {
 		private String cpimg;
 		private String cptitle;
 		private String cpcontent;
-		private String cpregday;
+		@DateTimeFormat(pattern = "yyyy-MM-dd")
+		private LocalDate cpregday;
 		private String cpwriter;
 	}
 }
