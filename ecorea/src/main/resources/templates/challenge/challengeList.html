@@ -69,7 +69,44 @@ margin-top: 100px;
   width: 300px;
   margin-top: 5px;
 }
- </style>
+
+.btn:hover {
+  background-color: rgb(127, 109, 208);
+}
+
+.btn.active {
+  background-color: #666;
+  color: white;
+}
+  </style>
+  <script th:inline="javascript">
+  	var pagemaker = /*[[${pageMaker}]]*/
+  	
+  		/* 페이징 */
+  	  	function pagination() {
+  			const $pagination = $('#pagination');
+  			const $ul = $('<ul class="pagination">').appendTo($pagination);
+  			if (pagemaker.prev == true) {
+  				const $li = $('<li>').appendTo($ul);
+  				$('<a>').attr('href', '/challenge/challengeList?nowPage=' + (pagemaker.start - 1) + '&amount=' + pagemaker.cri.amount).text("이전").appendTo($li);
+  			}
+  			for (let i = pagemaker.start; i <= pagemaker.end; i++) {
+  				const $li = $('<li>').appendTo($ul);
+  				$('<a>').attr('href', '/challenge/challengeList?nowPage=' + i + '&amount=' + pagemaker.cri.amount).text(i).appendTo($li);
+  				if (i == pagemaker.nowPage)
+  					$li.attr('class', 'active');
+  			}
+  			if (pagemaker.next == true) {
+  				const $li = $('<li>').appendTo($ul);
+  				$('<a>').attr('href', '/challenge/challengeList?nowPage=' + (pagemaker.end + 1) + '&amount=' + pagemaker.cri.amount).text("다음").appendTo($li);
+  			}
+  	  	}
+  	
+  	$(document).ready(function() {
+		pagination();
+  	});
+  </script>
+
   <title>챌린지 목록</title>
 </head>
 <body>
@@ -180,7 +217,8 @@ margin-top: 100px;
     </div> -->
   <!-- END GRID -->
   </div>
-  
+  <div id="pagination">
+  </div>
   <!-- END MAIN -->
   </div>
   
@@ -242,7 +280,7 @@ margin-top: 100px;
 		      let $secondParentsDiv = $('<div class="content">').appendTo($topParentsDiv);
 		      		$('<span>').text(challenges.corpname).appendTo($secondParentsDiv);
 		      		let $a = $('<a href="#">').appendTo($secondParentsDiv);
-		      			$('<img alt="챌린지" style="width:100%">').attr('src', "./../image/ocean.jpeg").appendTo($a);
+		      			$('<img alt="챌린지" style="width:100%">').attr('src', challenges.cthumbnail).appendTo($a);
 		      		let $h4 = $('<h4>').text(challenges.cname).appendTo($secondParentsDiv);
 		      			$('<a>').attr('href', '#').appendTo($h4);
 		      		$('<p>').text(challenges.cstartday + " ~ " + challenges.cendday).appendTo($secondParentsDiv);

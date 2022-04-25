@@ -28,5 +28,13 @@ public interface ChallengeDao {
 	public ChallengeDto.ChallengeDetail findByCno(Integer cno);
 
 	public List<ChallengeDto.ChallengeList> findByCorpName();
+
+	public List<ChallengeDto.ChallengeList> challengePagingList(Criteria cri);
+
+	public int getListTotal();
+
+	public int getCorpListTotal(String id);
+
+	public List<Challenge> challengePagingCorpList(Criteria cri);
 	
 }

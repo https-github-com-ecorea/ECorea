@@ -47,13 +47,17 @@ public class HugiService {
 	}
 	
 	/* 일반 회원 후기 목록 출력 */
-	public List<HugiDto.HugiList> memberHugiList(String loginId) {
-		List<HugiDto.HugiList> memberHugis = dao.findByhwriter(loginId);
-		for(HugiDto.HugiList hugi : memberHugis) {
-			hugi.setHimg(imagePath + hugi.getHimg());
+	public List<HugiDto.HugiList> memberHugiList(String loginId, Criteria cri) {
+		List<HugiDto.HugiList> memberHugiList = new ArrayList<>();
+		List<HugiDto.HugiList> hugiPaging = dao.findByhwriter(cri);
+		for(HugiDto.HugiList hugi : hugiPaging) {
+			if(hugi.getHwriter().equals(loginId)) {
+				hugi.setHimg(imagePath + hugi.getHimg());
+				memberHugiList.add(hugi);
+			}
 		}
 		
-		return memberHugis;
+		return memberHugiList;
 	}
 
 	/* 일반 회원 후기 삭제 */
@@ -105,6 +109,11 @@ public class HugiService {
 
 	public Hugi readReviewUpdate(String loginId, Integer hno) {
 		Hugi hugi = dao.findByHno(hno);
+		hugi.setHimg(imagePath + hugi.getHimg());
 		return hugi;
+	}
+
+	public int getHugiListTotal(String loginId) {
+		return dao.findHugiList(loginId);
 	}
 }

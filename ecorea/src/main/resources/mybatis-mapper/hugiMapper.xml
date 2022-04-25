@@ -21,9 +21,9 @@
    		where <![CDATA[rn > (#{nowPage} -1) * #{amount}]]>
 	</select>
 
-	<select id="findByhwriter" resultType="com.project.ecorea.dto.HugiDto$HugiList">
+	<!-- <select id="findByhwriter" resultType="com.project.ecorea.dto.HugiDto$HugiList">
 		select h.* from hugi h inner join jumun j on h.jno=j.jno where h.hwriter=#{loginId} order by hno
-	</select>
+	</select> -->
 	
 	<delete id="deleteByHno">
 		delete from hugi where hno=#{hno}
@@ -49,6 +49,18 @@
 	
 	<select id="findByHno" resultType="hugi">
 		select * from hugi where hno=#{hno}
+	</select>
+	
+	<select id="findByhwriter" resultType="com.project.ecorea.dto.HugiDto$HugiList">
+		select h.hno, h.jno, h.htitle, h.hregday, h.hwriter, h.hcontent, h.himg
+		from(
+			select hno, jno, htitle, hregday, hwriter, hcontent, himg, row_number() over(order by hno desc) rn
+            from hugi where <![CDATA[rownum <= #{nowPage} * #{amount}]]>) h inner join jumun j on h.jno=j.jno
+       	where <![CDATA[rn > (#{nowPage} -1) * #{amount}]]> order by hno desc
+	</select>
+	
+	<select id="findHugiList" resultType="int">
+		select count(*) from hugi where hwriter=#{id}
 	</select>
 	
 </mapper>

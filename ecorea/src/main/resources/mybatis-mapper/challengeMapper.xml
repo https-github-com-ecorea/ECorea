@@ -68,4 +68,35 @@
 		where cno=#{cno}
 	</select>
 
+	<select id="challengePagingList" resultType="com.project.ecorea.dto.ChallengeDto$ChallengeList">
+		select c.corp_name as corpname, ch.cno, ch.cname, ch.cregday, ch.cstartday, ch.cendday, ch.cthumbnail, ch.cgoal, ch.cjoincnt 
+		from(
+			select cno, cname, cregday, cstartday, cendday, cthumbnail, cgoal, cjoincnt, corp_id, row_number() over(order by cno desc) rn
+            from challenge where <![CDATA[rownum <= #{nowPage} * #{amount}]]>) ch left join corp c on(c.corp_id=ch.corp_id)
+       	where <![CDATA[rn > (#{nowPage} -1) * #{amount}]]> order by cno desc
+	</select>
+
+	<select id="challengePagingCorpList" resultType="challenge">
+		select cno,cname,cgoal,cpoint,cregday,cstartday,cendday,cthumbnail,ccontent,cjoincnt,corpid
+		from(
+			select cno,cname,cgoal,cpoint,cregday,cstartday,cendday,cthumbnail,ccontent,cjoincnt,corp_id as corpid, row_number() over(order by cno desc) rn
+            from challenge where <![CDATA[rownum <= #{nowPage} * #{amount}]]>)
+       	where <![CDATA[rn > (#{nowPage} -1) * #{amount}]]> order by cno desc
+	</select>
+	
+	<!-- <select id="productPagingList" resultType="com.project.ecorea.dto.ProductDto$productList">
+		select catecode, pno, cname, pthumbnail, pname, price from(
+			select catecode, pno, cname, pthumbnail, pname, price, row_number() over(<include refid="sort" />) rn
+            from product_dto where <![CDATA[rownum <= #{nowPage} * #{amount}]]> <if test="catecode != null and !catecode.equals('')">and catecode=#{catecode}</if>)
+       	where <![CDATA[rn > (#{nowPage} -1) * #{amount}]]>
+	</select> -->
+	
+	<select id="getListTotal" resultType="int">
+		select count(*) from challenge
+	</select>
+	
+	<select id="getCorpListTotal" resultType="int">
+		select count(*) from challenge where corp_id=#{id}
+	</select>
+	
 </mapper>

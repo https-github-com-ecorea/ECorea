@@ -11,6 +11,7 @@ public class Criteria {
 	private String sort; /* 정렬 */
 	
 	private int pno; /* 상품 번호 (상품 상세 페이지에서 사용) */
+	private int cno; /* 챌린지 번호 (챌린지 상세 페이지에서 사용) */
 	
 	/* 파라미터 없이 호출했을 때 (기본 값) */
 	public Criteria() {
