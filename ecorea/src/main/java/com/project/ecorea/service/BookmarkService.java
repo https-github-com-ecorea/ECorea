@@ -2,22 +2,25 @@ package com.project.ecorea.service;
 
 import java.util.*;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.*;
 
 import com.project.ecorea.dao.*;
 import com.project.ecorea.dto.*;
-import com.project.ecorea.entity.*;
 
 import lombok.*;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class BookmarkService {
-	private BookmarkDao bookmarkDao;
+	@Value("${upload.image.path}")
+	private String imagePath;
+	
+	private final BookmarkDao bookmarkDao;
 	
 	// 관심상품 리스트 출력
 	public List<BookmarkDto.BookmarkList> readBookmark(String memberId) {
-		List<BookmarkDto.BookmarkList> list = bookmarkDao.findByMemberId(memberId);
+		List<BookmarkDto.BookmarkList> list = bookmarkDao.findByMemberId(memberId, imagePath);
 		return list;
 	}
 	
@@ -44,6 +47,21 @@ public class BookmarkService {
 		if(deleteSelectedResult<=0)
 			return false;
 		return true;
+	}
+
+	// 상품상세 -> 관심상품 등록
+	public String addBookmark(Integer pno, String memberId) {
+		String resultMsg;
+		Integer findBookmark = bookmarkDao.findByPnoAndMemberId(pno, memberId);
+		if(findBookmark==1) {
+			return resultMsg="exist";
+		} else {
+			Integer result = bookmarkDao.saveBookmark(pno, memberId);			
+			if(result<=0) {
+				return resultMsg="fail";
+			}
+			return resultMsg="success";
+		}
 	}
 	
 }

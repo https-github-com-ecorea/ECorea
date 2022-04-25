@@ -1,7 +1,7 @@
 package com.project.ecorea.controller.mvc;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 
 import java.security.*;
 import java.util.*;
@@ -27,25 +27,28 @@ public class ChallengeMvcController {
 	private ChallengeService service;
 	
 	/* 기업 회원 : 챌린지 등록 화면 */
+	@Secured("ROLE_CORP")
 	@GetMapping("/challenge/corp/challengeUpload")
 	public void challengeUpload() {
 	}
 	
 	/* 기업 회원 : 챌린지 등록 */
+	@Secured("ROLE_CORP")
 	@PostMapping("/challenge/corp/challengeUpload")
-	public String challengeUpload(ChallengeDto.ChallengeUpload challenge) {
-		String loginId = "녹색당";
-		service.challengeUpload(challenge, loginId);
+	public String challengeUpload(ChallengeDto.ChallengeUpload challenge, Principal principal) {
+		service.challengeUpload(challenge, principal.getName());
 		return "redirect:/challenge/corp/challengeList";
 	} 
 	
 	/* 기업 회원 : 챌린지 수정 화면 */
+	@Secured("ROLE_CORP")
 	@GetMapping("/challenge/corp/challengeUpdate")
 	public ModelAndView challengeUpdate(Integer cno) {
-		return new ModelAndView().addObject("challenge", service.challengeUpdateView(123));
+		return new ModelAndView().addObject("challenge", service.challengeUpdateView(cno));
 	}
 	
 	/* 기업 회원 : 챌린지 수정 */
+	@Secured("ROLE_CORP")
 	@PostMapping("/challenge/corp/challengeUpdate")
 	public String challengeUpdate(Challenge challenge) {
 		service.challengeUpdate(challenge);
@@ -59,9 +62,9 @@ public class ChallengeMvcController {
 	}
 	
 	/* 기업 회원 : 챌린지 목록 출력 */
+	@Secured("ROLE_CORP")
 	@GetMapping("/challenge/corp/challengeList")
 	public ModelAndView readCorpChallengeList(Principal principal, Criteria cri) {
-		String loginId = "녹색당";
 		return new ModelAndView("challenge/corp/challengeList").addObject("challenge", service.readCorpChallengeList(principal.getName(), cri)).addObject("pageMaker", new PageMakerDto(cri, service.getCorpListTotal(principal.getName())));
 	}
 	

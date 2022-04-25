@@ -3,6 +3,7 @@ package com.project.ecorea.service;
 
 import java.util.*;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.*;
 
 import com.project.ecorea.dao.*;
@@ -11,16 +12,18 @@ import com.project.ecorea.entity.*;
 
 import lombok.*;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class CartService {
+	@Value("${upload.image.path}")
+	private String imagePath;
 	
-	private CartDao cartDao;
-	private ProductDao productDao;
+	private final CartDao cartDao;
+	private final ProductDao productDao;
 	
 	// 장바구니 목록 출력
 	public List<CartDto.CartList> readCart(String memberId) {
-		return cartDao.findByMemberId(memberId);
+		return cartDao.findByMemberId(memberId, imagePath);
 	}
 	
 	// 상품 갯수 증가
@@ -58,7 +61,9 @@ public class CartService {
 	
 	// 선택상품 삭제
 	public Integer deleteSelected(String memberId, CartDto.DeleteSelected dto) {
-		Integer deleteSelectedResult = cartDao.deleteSelected(memberId, dto.getPnos());
+		List<Integer> list = dto.getPnos();
+		list.removeAll(Collections.singleton(null));
+		Integer deleteSelectedResult = cartDao.deleteSelected(memberId, list);			
 		return deleteSelectedResult;		
 	}
 }

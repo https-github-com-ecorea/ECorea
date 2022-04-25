@@ -29,10 +29,11 @@ public class JumunService {
 	/* 상품 -> 바로 구매 */
 	public JumunDto.JumunPreview jumunOne(Integer pno, Integer count, String memberId) {
 		Product product = productDao.findByPno(pno);
+		product.setPthumbnail(imagePath+product.getPthumbnail());
 		System.out.println(product);
 		List<CartDto.CartProduct> products = new ArrayList<>();
 		Integer totalPrice = product.getPrice() * count;
-		products.add(new CartProduct(pno, product.getPname(), count, totalPrice, memberId));
+		products.add(new CartProduct(pno, product.getPname(), count, totalPrice, product.getPthumbnail()));
 		Member member = memberDao.memberFindById(memberId);
 		JumunDto.JumunPreview jumunPreview = new JumunPreview(products, member.getPoint(), totalPrice, member.getName(), member.getEmail());
 		return jumunPreview;
@@ -47,7 +48,7 @@ public class JumunService {
 				Product product = productDao.findByPno(param.getPno());
 				if(param.getCnt()<=product.getPstock()) {
 					CartDto.CartProduct jumunProduct = CartProduct.builder().pno(param.getPno()).cartpname(product.getPname())
-							.pthumbnail(product.getPthumbnail()).cartcnt(param.getCnt()).price(product.getPrice()).build();
+							.pthumbnail(imagePath+product.getPthumbnail()).cartcnt(param.getCnt()).price(product.getPrice()).build();
 					totalPrice = totalPrice + (product.getPrice()*param.getCnt());
 					products.add(jumunProduct);
 				}				

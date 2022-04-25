@@ -16,7 +16,7 @@
 	</resultMap>
 
 	<select id="findByMemberId" resultMap="mapForCartList">
-		select c.pno, c.cartcnt, p.price, p.pname, p.pthumbnail, e.corp_name 
+		select c.pno, c.cartcnt, p.price, p.pname, #{imagePath} || p.pthumbnail as pthumbnail, e.corp_name 
 		from cart c 
     		inner join product p 
         		on(c.pno=p.pno)

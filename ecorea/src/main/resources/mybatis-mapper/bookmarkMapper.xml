@@ -3,7 +3,7 @@
 <mapper namespace="com.project.ecorea.dao.BookmarkDao">
 	<!-- 관심상품 list 출력 -->
 	<select id="findByMemberId" resultType="com.project.ecorea.dto.BookmarkDto$BookmarkList">
-		select p.pno, p.catecode, p.pname, p.price, p.pthumbnail
+		select p.pno, p.catecode, p.pname, p.price, #{imagePath} || p.pthumbnail as pthumbnail
 		from bookmark b 
 			left join product p
 		on b.pno=p.pno
@@ -25,5 +25,15 @@
 		<foreach collection="pnos" item="pno" open="(" separator="," close=")">
 			#{pno}
 		</foreach>
-	</delete>	
+	</delete>
+	
+	<!-- 관심상품 등록 -->
+	<insert id="saveBookmark">
+		insert into bookmark values(#{memberId}, #{pno})
+	</insert>
+	
+	<!-- 관심상품 한 개 찾기 -->
+	<select id="findByPnoAndMemberId" resultType="int">
+		select count(*) from bookmark where member_id=#{memberId} and pno=#{pno} and rownum=1
+	</select>
 </mapper>
