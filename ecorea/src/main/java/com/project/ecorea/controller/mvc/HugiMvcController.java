@@ -21,10 +21,10 @@ public class HugiMvcController {
 
 	// 일반회원 후기 목록 페이지
 	@GetMapping("/order/reviewList")
-	public ModelAndView reviewList(Principal principal) {
-		List<HugiDto.HugiList> hugiList = hugiService.memberHugiList(principal.getName());
-		
-		return new ModelAndView("order/reviewList").addObject("hugi", hugiList);
+	public ModelAndView reviewList(Principal principal, Criteria cri) {
+		System.out.println("######### 진입 ##############");
+		List<HugiDto.HugiList> hugiList = hugiService.memberHugiList(principal.getName(), cri);
+		return new ModelAndView("order/reviewList").addObject("hugi", hugiList).addObject("pageMaker", new PageMakerDto(cri, hugiService.getHugiListTotal(principal.getName())));
 	}
 	
 	// 일반회원 후기 등록 페이지

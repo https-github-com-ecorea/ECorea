@@ -161,7 +161,7 @@ img {vertical-align: middle; height: 300px;}
     <div class="product-img">
       <div class="slideshow-container">
         <div>
-          <img src="../../image/ocean.jpeg" alt="챌린지" style="width:100%; height: 330px;">
+          <img th:src="${challenge.cthumbnail}" alt="챌린지" style="width:100%; height: 330px;">
         </div>
       </div>
       <br>
@@ -188,7 +188,9 @@ img {vertical-align: middle; height: 300px;}
       <p th:text="${challenge.ccontent}">A, voluptas culpa? Ipsum excepturi at possimus magnam cum, aperiam rem nulla quaerat facere provident alias sunt tempore eveniet vitae praesentium, sed totam tempora ex sapiente beatae rerum? Aperiam blanditiis recusandae fugit, laboriosam consectetur et officia est pariatur provident, dicta itaque dolorem inventore debitis eveniet expedita nam ducimus vitae aliquid. Doloribus quia illum tempora unde quo. Illum provident fugit eius consequuntur, expedita, sapiente quos sed quam obcaecati dicta nulla esse quae iste id suscipit quibusdam maiores, saepe nostrum aspernatur veniam nemo? Itaque doloremque aliquid delectus illum iste quaerat libero vel veniam praesentium. Delectus exercitationem, doloremque sunt dolorum explicabo est nostrum amet officiis pariatur nulla quasi nisi dicta! Illum doloribus dolore neque fugiat quo animi. Quidem voluptate sint necessitatibus quibusdam nihil repellendus omnis corporis saepe ut harum molestiae, consequatur delectus consectetur dignissimos, fugiat numquam ab atque impedit? Cupiditate doloremque repudiandae doloribus officiis aliquam iusto minima a sit omnis eveniet incidunt sequi pariatur excepturi, ex, tempora quas ut aperiam. Fugit quibusdam ab voluptatibus ea cupiditate culpa aliquam iusto blanditiis possimus at. Numquam deserunt natus, animi assumenda consequatur nesciunt quos adipisci molestiae vel repellendus. Repellendus obcaecati nesciunt dignissimos nostrum illo quam, atque ipsum quaerat, impedit totam iusto nihil laudantium natus velit laborum dolor porro deserunt ea unde perferendis sunt error. Dolorum repudiandae reprehenderit rem at saepe ab quam minus voluptas sunt doloremque minima, repellendus asperiores error perspiciatis voluptatem tempora itaque odio impedit explicabo vitae? Ad iste pariatur mollitia atque.</p>
   </div>
   <hr>
-  <div class="reviewlist">
+  <div class="provezero">
+  </div>
+  <div class="provelist">
     <h3 style="text-align: center;" id="content2">인증 댓글</h3>
     <table class="table">
       <thead class="thead-light">
@@ -198,17 +200,19 @@ img {vertical-align: middle; height: 300px;}
           <th>작성자</th>
         </tr>
       </thead>
-      <tbody th:each="proveLists : ${proveList}">
-        <tr>
+      <tbody id="prove_tbody">
+        <!-- <tr>
           <td th:text="${proveLists.cpimg}">임</td>
           <td th:text="${proveLists.cptitle}" class="title">제</td>
           <td th:text="${proveLists.cpwriter}">작</td>
           <tr class="show" style="display: none;">
 	          <td colspan="3" th:text="${proveLists.cpcontent}">본문</td>
           </tr>
-        </tr>
+        </tr> -->
       </tbody>
     </table>
+  </div>
+  <div class="provePageMaker">
   </div>
   </div>
   <script th:inline="javascript">
@@ -221,7 +225,7 @@ img {vertical-align: middle; height: 300px;}
     	$('.progress .progress-bar').css('width', percentage+"%").text(percentage+"%");
     	
     	/* 인증글 제목 클릭 시 본문 보이게 하는 코드 */
-    	let show = document.getElementsByClassName('show');
+    	/* let show = document.getElementsByClassName('show');
     	let title = document.getElementsByClassName('title');
     	
     	for(let i=0; i<title.length; i++) {
@@ -232,7 +236,97 @@ img {vertical-align: middle; height: 300px;}
 					show[i].style.display='none';
 				}
 			});
-		}
+		} */
+    	
+    	/* 제목 클릭 시 본문 출력 */
+    	$(document).on('click', '.title', function() {
+    		console.log($(this).next().attr('style'));
+    		if ($(this).next().next().attr('style') == 'display: none') {
+    			$(this).next().next().attr('style', 'display: ');
+    		} else {
+    			$(this).next().next().attr('style', 'display: none');
+    		}
+    	})
+    	
+    	/* 페이지 정보 */
+		const cri = {
+		cno : challenge.cno,
+		nowPage : 1,
+		amount : 10
+	}
+	
+	/* 후기 출력 (페이징) */
+	function makeProve(obj) {
+	console.log(obj.list);
+		if (obj.list.length === 0) {
+	    $(".provezero").html('<span>후기가 없습니다. (≡^∇^≡)</span>');
+	    $(".provelist").html('');
+		  	$(".provePageMaker").html('');
+	  } else {
+	    const list = obj.list;
+	    const pf = obj.pageInfo;
+	    $(list).each(function(i, obj) {
+	      const $tbody = $('#prove_tbody');
+	      const $tr = $('<tr>').appendTo($tbody);
+	      $('<img>').attr('src', obj.cpimg).attr('class', 'title').appendTo($tr);
+	      $('<td>').text(obj.cptitle).attr('class', 'title').data('num', obj.cpno).appendTo($tr);
+	      $('<td>').text(obj.cpwriter).appendTo($tr);
+	      let $show = $('<tr>').attr('class', 'show').attr('style', 'display: none').appendTo($tr);
+          $('<td>').attr('colspan', '3').text(obj.cpcontent).appendTo($show);
+	    });
+	      
+	    let reply_pageMaker = '';	
+	    
+	    /* prev */
+	  		if (pf.prev) {
+	  			let prev_num = pf.start -1;
+	  			reply_pageMaker += '<li class="provePageMaker_btn prev">';
+	  			reply_pageMaker += '<a href="'+ prev_num +'">이전</a>';
+	  			reply_pageMaker += '</li>';	
+	  		}
+	  		/* number btn */
+	  		for(let i = pf.start; i < pf.end+1; i++){
+	  			reply_pageMaker += '<li class="provePageMaker_btn ';
+	  			if(pf.cri.pageNum === i){
+	  				reply_pageMaker += 'active';
+	  			}
+	  			reply_pageMaker += '">';
+	  			reply_pageMaker += '<a href="' + i + '">' + i + '</a>';
+	  			reply_pageMaker += '</li>';
+	  		}
+	  		/* next */
+	  		if(pf.next){
+	  			let next_num = pf.end +1;
+	  			reply_pageMaker += '<li class="provePageMaker_btn next">';
+	  			reply_pageMaker += '<a href="'+ next_num +'">다음</a>';
+	  			reply_pageMaker += '</li>';	
+	  		}
+	  		
+	  		$(".provePageMaker").html(reply_pageMaker);	
+	  };
+	}
+	function requestProve() {
+			$.getJSON("/challengeDetail/provelist?", cri, function(obj) {
+	  	  makeProve(obj);
+	    });
+	}
+	/* 후기 페이징 버튼 */
+	$(document).on('click', '.provePageMaker_btn a', function(e){
+			e.preventDefault();
+			let page = $(this).attr("href");
+			cri.nowPage = page;
+			$('#prove_tbody').empty();
+			requestProve();
+	});
+	
+	
+	$(document).ready(function() {
+		const cno = challenge.cno;
+		/* 후기 출력 */
+	    $.getJSON("/challengeDetail/provelist?", {cno : cno}, function(obj) {
+	      makeProve(obj);
+	    });    		
+	})
     </script>
 </body>
 </html>

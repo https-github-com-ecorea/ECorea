@@ -65,4 +65,16 @@ public class ChProveService {
 		return result;
 	}
 	
+	/* 챌린지 상세 : 인증 목록 (페이징) */
+	public PagingChProveDto challengeDetailProveList(Criteria cri) {
+		PagingChProveDto dto = new PagingChProveDto();
+		List<ChProveDto.ChallengeDetailProveList> entity = proveDao.findByProveAll(cri);
+		for (ChProveDto.ChallengeDetailProveList prove : entity) {
+			prove.setCpimg(imagePath + prove.getCpimg());
+		}
+		dto.setList(entity);
+		dto.setPageInfo(new PageMakerDto(cri, proveDao.getChallengeDetailTotal(cri.getCno())));
+		return dto;
+	}
+	
 }

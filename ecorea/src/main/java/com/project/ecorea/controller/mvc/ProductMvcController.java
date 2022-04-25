@@ -6,7 +6,9 @@ import com.project.ecorea.service.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.servlet.http.HttpSession;
+import java.security.*;
+
+import javax.servlet.http.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
@@ -46,16 +48,19 @@ public class ProductMvcController {
 
 	/* 상품 상세 페이지 화면 */
 	@GetMapping("/product/member/productDetail")
-	public ModelAndView productRead(Integer pno, HttpSession session) {
+	public ModelAndView productRead(Integer pno, HttpSession session, HttpServletRequest request, Principal principal) {
 		session.setAttribute("pno", pno);
-		return new ModelAndView("product/member/productDetail").addObject("product", productService.productRead(pno));
+		if(principal==null || request.isUserInRole("ROLE_MEMBER"))
+			return new ModelAndView("product/member/productDetail").addObject("product", productService.productRead(pno));
+		else 
+			return new ModelAndView("product/corp/productDetail").addObject("product", productService.productRead(pno));
 	}
 	
-	// 기업회원 상품 상세페이지
-	@GetMapping("/product/corp/productDetail/{pno}")
-	public ModelAndView corpProductDetail(@PathVariable Integer pno) {
-		return new ModelAndView("product/corp/productDetail").addObject("product", productService.productRead(pno));
-	}
+//	// 기업회원 상품 상세페이지
+//	@GetMapping("/product/corp/productDetail/{pno}")
+//	public ModelAndView corpProductDetail(@PathVariable Integer pno) {
+//		return new ModelAndView("product/corp/productDetail").addObject("product", productService.productRead(pno));
+//	}
 	
 	/* 문의 작성 버튼 */
 	@GetMapping("/product/member/qnaUpload")

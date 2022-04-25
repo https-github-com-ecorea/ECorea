@@ -30,5 +30,9 @@ public interface HugiDao {
 	public void updateByReview(Hugi hugi);
 
 	public Hugi findByHno(Integer hno);
+
+	public List<HugiDto.HugiList> findByhwriter(Criteria cri);
+
+	public int findHugiList(String id);
 	
 }

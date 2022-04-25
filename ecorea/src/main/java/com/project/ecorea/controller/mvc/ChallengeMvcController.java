@@ -25,7 +25,6 @@ import lombok.*;
 public class ChallengeMvcController {
 	
 	private ChallengeService service;
-	private ChProveDao chProveDao;
 	
 	/* 기업 회원 : 챌린지 등록 화면 */
 	@GetMapping("/challenge/corp/challengeUpload")
@@ -55,29 +54,28 @@ public class ChallengeMvcController {
 	
 	/* 전체 유저 : 챌린지 목록 출력 */
 	@GetMapping("/challenge/challengeList")
-	public ModelAndView readchallengeList() {
-		return new ModelAndView().addObject("challenge", service.readchallengeList());
+	public ModelAndView readchallengeList(Criteria cri) {
+		return new ModelAndView().addObject("challenge", service.readchallengeList(cri)).addObject("pageMaker", new PageMakerDto(cri, service.getListTotal()));
 	}
 	
 	/* 기업 회원 : 챌린지 목록 출력 */
 	@GetMapping("/challenge/corp/challengeList")
-	public ModelAndView readCorpChallengeList(/*Principal principal*/) {
+	public ModelAndView readCorpChallengeList(Principal principal, Criteria cri) {
 		String loginId = "녹색당";
-		return new ModelAndView("challenge/corp/challengeList").addObject("challenge", service.readCorpChallengeList(loginId));
+		return new ModelAndView("challenge/corp/challengeList").addObject("challenge", service.readCorpChallengeList(principal.getName(), cri)).addObject("pageMaker", new PageMakerDto(cri, service.getCorpListTotal(principal.getName())));
 	}
 	
 	/* 전체 유저 : 챌린지 상세 페이지 출력 */
 	@GetMapping("/challenge/member/challengeDetail")
 	public ModelAndView readUserDetail(Integer cno, HttpSession session, HttpServletRequest request) {
-		List<ChProveDto.ChallengeDetailProveList> proveList = chProveDao.findByProveAll();
 		if(session.getAttribute("login")==null) {
-			return new ModelAndView("challenge/member/challengeDetail").addObject("challenge", service.readUserDetail(cno)).addObject("proveList", proveList);
+			return new ModelAndView("challenge/member/challengeDetail").addObject("challenge", service.readUserDetail(cno));
 		}
 		
 		if(request.isUserInRole("ROLE_MEMBER")) {
-			return new ModelAndView("challenge/member/challengeDetail").addObject("challenge", service.readUserDetail(cno)).addObject("proveList", proveList);
+			return new ModelAndView("challenge/member/challengeDetail").addObject("challenge", service.readUserDetail(cno));
 		} else {
-			return new ModelAndView("challenge/corp/challengeDetail").addObject("challenge", service.readUserDetail(cno)).addObject("proveList", proveList);
+			return new ModelAndView("challenge/corp/challengeDetail").addObject("challenge", service.readUserDetail(cno));
 		}
 	}
 }

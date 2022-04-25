@@ -21,4 +21,13 @@ public class MemberMvcController {
 	public void addAddressMvc() {
 	}
 	
+	@GetMapping("/mypage/member/memberMypage")
+	public void readMemberMypage() {
+		
+	}
+	
+	@GetMapping("/mypage/corp/corpMypage")
+	public void readCorpMypage() {
+		
+	}
 }
