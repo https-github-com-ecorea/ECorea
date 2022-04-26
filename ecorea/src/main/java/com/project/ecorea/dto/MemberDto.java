@@ -58,6 +58,9 @@ public class MemberDto {
 	@AllArgsConstructor
 	public static class Mypage {
 		private Integer point;
-		private List<JumunDto.JumunStatus> jumunStatusList;
+		private Integer payCnt;
+		private Integer shippingCnt;
+		private Integer completeCnt;
+		private Integer cancelCnt;
 	}
 }

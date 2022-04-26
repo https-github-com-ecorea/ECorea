@@ -96,7 +96,6 @@
   </header>
   <h1>마이페이지</h1>
   <div th:text="${mypage}"></div>
-  <div class="wrapper">
 	<div class="wrapper">
         <div class="point">
             <p>보상포인트</p>
@@ -106,19 +105,19 @@
             <p>주문 처리 현황</p>
             <div class="order-process">
                 <span>주문 완료</span><br>
-                <a href="/order/orderList"></a>
+                <a href="/order/orderList"><span th:text="${mypage.payCnt}">0</span></a>
             </div>
             <div class="order-process">
                 <span>배송중</span><br>
-                <a href="/order/orderList"></a>
+                <a href="/order/orderList"><span th:text="${mypage.shippingCnt}">0</span></a>
             </div>
             <div class="order-process">
                 <span>배송 완료</span><br>
-                <a href="/order/orderList"></a>
+                <a href="/order/orderList"><span th:text="${mypage.completeCnt}">0</span></a>
             </div>
             <div class="order-process">
                 <span>취소 / 환불</span><br>
-                <a href="/order/orderList"></a>
+                <a href="/order/orderList"><span th:text="${mypage.cancelCnt}">0</span></a>
             </div>
         </div>
 
@@ -136,3 +135,26 @@
 
 </body>
 </html>
+
+
+<!-- 
+        <div class="order" th:each="list, idx: ${mypage.jumunStatusList}" th:switch="${list.getJstatus().toString()}">
+            <p>주문 처리 현황</p>
+            <div class="order-process">
+                <span>주문 완료</span><br>
+                <a href="/order/orderList"><span th:case="PAY" th:text="${list.statusCnt}">0</span></a>
+            </div>
+            <div class="order-process">
+                <span>배송중</span><br>
+                <a href="/order/orderList"><span th:case="SHIPPING" th:text="${list.statusCnt}">0</span></a>
+            </div>
+            <div class="order-process">
+                <span>배송 완료</span><br>
+                <a href="/order/orderList"><span th:case="COMPLETE" th:text="${list.statusCnt}">0</span></a>
+            </div>
+            <div class="order-process">
+                <span>취소 / 환불</span><br>
+                <a href="/order/orderList"></a>
+            </div>
+        </div>
+ -->

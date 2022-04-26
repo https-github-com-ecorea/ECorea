@@ -43,7 +43,10 @@
           <td th:text="${list.pname}"></td>
           <td th:text="${list.cnt}"></td>
           <td th:text="${list.price}"></td>
-          <td th:text="${list.jstatus}"></td>
+          <td>
+          	<span th:text="${list.jstatus}"></span>
+          	<a href="/order/reviewUpload" th:if="${list.getJstatus.toString}=='배송완료'" class="btn btn-primary">후기 작성</a>
+          </td>
           <td>
             <a href="#" class="btn btn-primary">취소/교환/반품</a>
           </td>
