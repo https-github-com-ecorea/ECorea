@@ -30,7 +30,7 @@ public interface UserDao {
 
 	public Corp corpFindById(String id);
 
-	public void memberDeleteById(String id);
+	public Boolean memberDeleteById(String id);
 
 	public void corpDeleteById(String loginId);
 	

@@ -38,10 +38,6 @@
       float: right;
       margin-right: 20px;
     }
-    .fail { 
-		color: red; 
-		font-size: 0.75em; 
-	}
   </style>
   <script type="text/javascript">
   	$(function() {
@@ -49,10 +45,8 @@
   			if(confirm("탈퇴하시겠습니까?")==true) {
   				if(confirm("정말 탈퇴하시겠습니까?")==true) {
   					if(confirm("정말정말 탈퇴하시겠습니까?")==true) {
-  					  	$("#memberDelete").click(function(){
   							const $form = $("<form>").attr("action","/mypage/member/delete").attr("method", "post").appendTo($('body'));
   					  		$form.submit();
-  					  	});
   					}
   				}
   			}
@@ -76,12 +70,10 @@
     <div class="mb-3">
       <label for="pw" class="form-label">비밀번호</label>
       <input type="password" class="form-control" id="pw" placeholder="비밀번호" name="pw" required>
-      <span id="pw_msg"></span>
     </div>
     <div class="mb-3">
       <label for="pw2" class="form-label">비밀번호 확인</label>
       <input type="password" class="form-control" id="pw2" placeholder="비밀번호 확인" required>
-      <span id="pw2_msg"></span>
     </div>
     <div class="mb-3">
       <label for="email" class="form-label">이메일</label>
@@ -91,11 +83,18 @@
     <button type="button" class="btn btn-primary" id="update">수정하기</button>
   </form>
 </div>
-<script>
+<script th:inline="javascript">
+    const msg = /*[[${msg}]]*/;
+    if(msg != null) {
+    	alert(msg);
+    }
   	$('#update').click(function() {
-		if(pwCheck() && pw2Check()==false)
+		if((pwCheck() && pw2Check())==false) {
+			alert('변경할 내용이 없습니다');
 			return false;
-		$('#update_form').submit();
+		} else {
+			$('#update_form').submit();
+		}
 	});
   </script>
 </body>

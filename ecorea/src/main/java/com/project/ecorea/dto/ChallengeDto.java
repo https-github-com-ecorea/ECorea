@@ -3,6 +3,7 @@ package com.project.ecorea.dto;
 import java.time.*;
 import java.util.*;
 
+import org.apache.tomcat.jni.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -62,5 +63,4 @@ public class ChallengeDto {
 		private Integer cgoal; /* 목표 */
 		private Integer cjoincnt; /* 참여 인원 */
 	}
-  
 }
