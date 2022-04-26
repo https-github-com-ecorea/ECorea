@@ -201,6 +201,11 @@
       text-align: center;
       margin-top: 20px;
     }
+p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    text-align: center;
+}
 .product-info {
  display: inline-block;
  vertical-align: top;
@@ -225,6 +230,7 @@
   justify-content: space-around;
   margin-bottom: 20px;
   margin-right: 60px;
+  margin-left: 60px;
 }
 .reviewlist {
   width: 900px;
@@ -240,8 +246,34 @@
  margin-top: 120px;
 }
 .etc:hover {
-	border: 1px solid black;
-	border-radius: 50px;
+	color:black;
+}
+.topnav {
+	background-color: #ecf0f1;
+}
+hr {
+width: 1125px;
+text-align: center;
+margin: 0px auto;
+}
+.hugizero,.qnazero {
+width: 900px;
+display: flex;
+justify-content: center;
+margin: 0 auto;
+}
+.qnabtn {
+float: right;
+display: inline-block;
+margin-right: 60px;
+}
+.qnalist, .hugilist {
+    width: 1100px;
+    text-align: center;
+    margin: 0 auto;
+}
+.qnaPageMaker {
+text-align: center;
 }
 </style>
 </head>
@@ -263,7 +295,7 @@
     </div>
     
     <div class="product-info right">
-      <p style="font-size:20px;" th:text="${product.pname}">상품명</p><br>
+      <p style="font-size:25px; font-weight:bold;" th:text="${product.pname}">상품명</p><br>
       <span>판매가격 : <span id="price" th:text="${product.price}"></span> 원</span><br><br>
       <!--
       <p style="font-size:20px;">상품명</p><br>
@@ -370,7 +402,7 @@
     </div>
     <div class="qnaPageMaker">
     </div>
-    <button type="button" class="btn btn-primary" onclick="location.href='/mypage/member/qnaUpload'">등록</button>
+    <button type="button" class="btn btn-primary qnabtn" onclick="location.href='/mypage/member/qnaUpload'">등록</button>
   </div>
   <script>
   	/* 제목 클릭 시 본문 출력 */

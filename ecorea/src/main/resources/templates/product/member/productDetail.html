@@ -321,9 +321,6 @@
  justify-content: center;
  margin-top: 120px;
 }
-.etc {
-transition:0.2s;
-}
 .etc:hover {
 	color: black;
 }
@@ -335,15 +332,38 @@ p {
     margin-bottom: 1rem;
     text-align: center;
 }
-
+hr {
+width: 1100px;
+text-align: center;
+margin: 0px auto;
+}
+.hugizero,.qnazero {
+width: 900px;
+display: flex;
+justify-content: center;
+margin: 0 auto;
+}
+.qnabtn {
+float: right;
+display: inline-block;
+margin-right: 60px;
+}
+.qnalist, .hugilist {
+    width: 1100px;
+    text-align: center;
+    margin: 0 auto;
+}
+.qnaPageMaker {
+text-align: center;
+}
 </style>
 </head>
 <body>
   <header class="navwrapper">
     <span class="leftnav"><a href="/">ECorea</a></span>
     <span class="leftnav"><a href="/product/productList?nowPage=1&amount=9&catecode=&sort=">SHOP</a></span>
-    <span class="leftnav"><a href="/">CHALLENGE</a></span>
-    <span class="leftnav"><a href="/">ABOUT</a></span>
+    <span class="leftnav"><a href="/challenge/challengeList">CHALLENGE</a></span>
+    <span class="leftnav"><a href="/about">ABOUT</a></span>
 	<span class="rightnav member corp" style="display: none;"><a href="/general/logout">LOGOUT</a></span>
 	<span class="rightnav member" style="display: none;"><a href="/mypage/member/memberMypage">MYPAGE</a></span>
 	<span class="rightnav member" style="display: none;"><a href="/order/cart">CART</a></span>
@@ -464,7 +484,7 @@ p {
     <div class="qnaPageMaker">
     </div>
     <br>
-    <button type="button" class="btn btn-primary" id="qnaUpload">문의 등록</button><br>
+    <button type="button" class="btn btn-primary qnabtn" id="qnaUpload">문의 등록</button><br>
   </div>
   
       <input class="goupbtn" type="button" value="↑" onclick="clickme()"></div>
