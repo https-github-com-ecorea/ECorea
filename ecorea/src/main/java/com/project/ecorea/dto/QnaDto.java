@@ -62,5 +62,21 @@ public class QnaDto {
 					.qqtitle(qqtitle).qqcontent(qqcontent).qqregday(LocalDate.now()).memberId(memberId).build();
 		}
 	}
+	
+	/* 문의 수정 */
+	@Data 
+	@AllArgsConstructor
+	@NoArgsConstructor
+	public static class updateQuestion {
+		private Integer qqno; /* 문의 번호 */
+		private MultipartFile qqimg; /* 이미지 */
+		private String qqtitle; /* 제목 */
+		private String qqcontent; /* 내용 */
+		private String memberId; /* 작성자 */
+		
+		public QnaQ toEntity() {
+			return QnaQ.builder().qqno(qqno).qqtitle(qqtitle).qqcontent(qqcontent).memberId(memberId).build();
+		}
+	}
 
 }

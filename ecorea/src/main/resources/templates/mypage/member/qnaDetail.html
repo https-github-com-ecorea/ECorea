@@ -40,6 +40,24 @@
   		$('<input>').attr('type', 'hidden').attr('name', 'qqno').val(question.qqno).appendTo($form);
   		$form.submit();
   	}
+   	
+   	/* 썸네일 처리 함수 */
+    function previewImage() {
+		const file = $("#qqimg")[0].files[0];
+		const maxSize = 1024*1024;
+		if (file.size > maxSize) {
+			Swal.fire('이미지 크기 오류!', '상품 이미지는 1MB를 넘을 수 없습니다.', 'error');
+			$('#qqimg').val('');
+			$('#thumbnail_img').removeAttr('src');
+			return false;
+		}
+		const reader = new FileReader();
+		reader.readAsDataURL(file);
+		reader.onload = function() {
+			$("#thumbnail_img").attr("src", reader.result);
+		}
+		return true;
+	}
 
   	$(document).ready(function() {
   		/* 삭제 버튼 처리 */
@@ -48,6 +66,14 @@
 			if (result == true) {
 				deleteBtn();
 			}
+		});
+  		
+  		/* 썸네일 처리 */
+		$('#qqimg').change(function() {
+			$('#thumbnail_img').css({
+				'display': 'block'
+			});
+			previewImage();
 		});
   	});
   </script>
@@ -59,16 +85,18 @@
     <!-- 
     <form th:action="@{/mypage/member/qnaUpdate?qqno={qqno}(qqno=${memberQnaDetail[0].qqno})}" method="post">
      -->
-    <form th:action="@{/mypage/member/qnaUpdate}" method="post">
+    <form th:action="@{/mypage/member/qnaUpdate}" method="post" enctype="multipart/form-data">
       <input type='hidden' id='memberId' name='memberId' th:value='${memberQnaDetail[0].memberId}'>
       <input type='hidden' id='memberId' name='qqno' th:value='${memberQnaDetail[0].qqno}'>
       <label for="qqtitle">제목</label>
       <input type="text" id="qqtitle" name="qqtitle" placeholder="제목을 입력해주세요." th:value="${memberQnaDetail[0].qqtitle}">
       
       <label for="qqimg">이미지</label>
-      <div th:if="${not #strings.isEmpty(memberQnaDetail[0].qqimg)}">
-      	<img id="qqimg" height="200px" th:src="${memberQnaDetail[0].qqimg}">
-      </div><br>
+      	<input type="file" class="form-control" id="qqimg" name="qqimg" accept=".jpg,.jpeg,.png,.gif">
+      	<div th:if="${not #strings.isEmpty(memberQnaDetail[0].qqimg)}">
+      		<img id="thumbnail_img" height="200px" th:src="${memberQnaDetail[0].qqimg}">
+      	</div>
+   	  <br>
       
       <label for="qqcontent">내용</label>
       <img id="thumbnail_img" height="200px" style="display:none;">

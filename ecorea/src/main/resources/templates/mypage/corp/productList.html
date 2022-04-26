@@ -59,10 +59,10 @@
     	<tr th:each="regProducts : ${regProducts}">
 	        <td id="pno" th:text="${regProducts.pno}"></td>
 			<td>
-				<img th:src="${regProducts.pthumbnail}"/>
+				<img th:src="${regProducts.pthumbnail}" style="width: 250px">
 			</td>
 	        <td>
-	        	<a th:href="@{/product/corp/productDetail/{pno}(pno=${regProducts.pno})}" id="moveProductDetail" th:text="${regProducts.pname}"></a>
+	        	<a th:href="@{/product/corp/productDetail(pno=${regProducts.pno})}" id="moveProductDetail" th:text="${regProducts.pname}"></a>
 	        </td>
 	        <td>
 		        <button id="moveProductUpdate" class="btn btn-primary">수정</button>
@@ -72,7 +72,8 @@
     	</tr>
     </tbody>
   </table>
-  <button type="button" class="btn btn-primary" style="float:right;">제품 등록</button>
+  <button type="button" class="btn btn-primary" onclick="location.href='/product/productUpload'">제품 등록</button>
+  <button type="button" class="btn btn-primary" onclick="location.href='/mypage/corp/corpMypage'">마이 페이지로</button>
 </div>
 </body>
 </html>

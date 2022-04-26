@@ -11,6 +11,9 @@
   <link rel="icon" href="/image/favicon.png">
   <title>마이페이지 - 기업회원</title>
   <style>
+    body {
+  background: url('/image/bg.png');
+  }
     h1 {
       text-align: center;
       margin-top: 100px;
@@ -18,14 +21,14 @@
     .btn {
       width: 150px;
       height: 150px;
-      background-color: white;
-      border-color: white;
+      background-color:white;
+      border: 1px solid black;
       margin: 25px;
       color: black;
     }
     .btn:hover {
       background-color: #ecf0f1;
-      border-color: #ecf0f1;
+      border-color: black;
       color: black;
     }
     a {
@@ -39,25 +42,23 @@
   </style>
 </head>
 <body>
-  <header>
+  <header class="navwrapper">
     <span class="leftnav"><a href="/">ECorea</a></span>
     <span class="leftnav"><a href="/product/productList?nowPage=1&amount=9&catecode=&sort=">SHOP</a></span>
-    <span class="leftnav"><a href="/challenge/challengeList">CHALLENGE</a></span>
+    <span class="leftnav"><a href="/challenge/challengeList?nowPage=1&amount=9">CHALLENGE</a></span>
     <span class="leftnav"><a href="/">ABOUT</a></span>
-    <span class="rightnav all"><a href="/general/joinSelect">JOIN</a></span> 
-    <span class="rightnav all"><a href="/general/login">LOGIN</a></span>
-	<span class="rightnav member corp" style="display: none;"><a href="/general/logout">LOGOUT</a></span>
-	<span class="rightnav member" style="display: none;"><a href="/mypage/member/memberMypage">MYPAGE</a></span>
-	<span class="rightnav member" style="display: none;"><a href="/order/cart">CART</a></span> 
-   	<span class="rightnav corp" style="display: none;"><a href="/mypage/corp/corpMypage">MYPAGE</a></span>
+	<span class="rightnav member corp"><a href="/general/logout">LOGOUT</a></span>
+   	<span class="rightnav corp"><a href="/mypage/corp/corpMypage">MYPAGE</a></span>
   </header>
   <h1>마이페이지 - 기업회원</h1>
   <div class="wrapper">
   <a href="/mypage/corp/info"><button type="text" class="btn btn-primary">기업정보 보기</button></a>
   <a href="/challenge/corp/challengeList?nowPage=1&amount=9"><button type="text" class="btn btn-primary">챌린지 목록</button></a>
-  <a href="/mypate/productList"><button type="text" class="btn btn-primary">상품 목록</button></a>
+  <a href="/mypage/corp/productList"><button type="text" class="btn btn-primary">상품 목록</button></a>
   <a href="/mypage/corp/qnaList"><button type="text" class="btn btn-primary">문의 목록</button></a>
   <a href="#"><button type="text" class="btn btn-primary">통계</button></a>
 </div>
+
+<input class="goupbtn" type="button" value="↑" onclick="clickme()"></div>
 </body>
 </html>

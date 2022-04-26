@@ -9,6 +9,9 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <link rel="stylesheet" href="/css/common.css">
   <style>
+    body {
+  background: url('/image/bg.png');
+  }
     #comment {
       width: 400px;
     }
@@ -27,7 +30,10 @@
 				$("<span>").text(address.aname).appendTo($("#radio_btn_area"));
 				if (address.astandard == 1) { /* 기존 배송지 우선 선택 */
 					$radio.prop("checked", true);
-					$('#chosen_address_info').text("(" + address.azipcode + ") " + address.aaddress1 + " " + address.aaddress2);
+					if (address.aaddress2 != null)
+						$('#chosen_address_info').text("(" + address.azipcode + ") " + address.aaddress1 + ", " + address.aaddress2);
+					else
+						$('#chosen_address_info').text("(" + address.azipcode + ") " + address.aaddress1);
 				}
 			})
 		})
@@ -47,7 +53,10 @@
 		$('#radio_btn_area').on("click", ".address", function() {
 			const $ano = $(this).attr("data-ano");
 			$.ajax("/mypage/member/chosenAddress/" + $ano).done(address => {
-				$('#chosen_address_info').text("(" + address.azipcode + ") " + address.aaddress1 + " " + address.aaddress2)
+				if (address.aaddress2 != null)
+					$('#chosen_address_info').text("(" + address.azipcode + ") " + address.aaddress1 + ", " + address.aaddress2);
+				else
+					$('#chosen_address_info').text("(" + address.azipcode + ") " + address.aaddress1);
 			})
 		})
 	})
