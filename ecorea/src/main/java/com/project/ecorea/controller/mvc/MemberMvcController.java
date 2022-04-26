@@ -23,7 +23,6 @@ public class MemberMvcController {
 	
 	@GetMapping("/mypage/corp/corpMypage")
 	public void readCorpMypage() {
-
 	}
 
 	/* 마이 페이지 화면 */

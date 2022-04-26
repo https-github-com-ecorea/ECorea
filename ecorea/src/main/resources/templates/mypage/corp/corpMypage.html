@@ -11,6 +11,9 @@
   <link rel="icon" href="/image/favicon.png">
   <title>마이페이지 - 기업회원</title>
   <style>
+    body {
+  background: url('/image/bg.png');
+  }
     h1 {
       text-align: center;
       margin-top: 100px;
@@ -18,14 +21,14 @@
     .btn {
       width: 150px;
       height: 150px;
-      background-color: white;
-      border-color: white;
+      background-color:white;
+      border: 1px solid black;
       margin: 25px;
       color: black;
     }
     .btn:hover {
       background-color: #ecf0f1;
-      border-color: #ecf0f1;
+      border-color: black;
       color: black;
     }
     a {
@@ -55,5 +58,7 @@
   <a href="/mypage/corp/qnaList"><button type="text" class="btn btn-primary">문의 목록</button></a>
   <a href="#"><button type="text" class="btn btn-primary">통계</button></a>
 </div>
+
+<input class="goupbtn" type="button" value="↑" onclick="clickme()"></div>
 </body>
 </html>
