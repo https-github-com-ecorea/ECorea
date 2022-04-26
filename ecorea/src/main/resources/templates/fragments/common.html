@@ -1,45 +1,52 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head th:replace="fragments/common::html-head">
-</head>
-<script th:inline="javascript">
-  	const role = /*[[${role}]]*/
-  	const list = /*[[${list}]]*/
-  	const msg = /*[[${errormsg}]]*/  	
-  	
-  	function productList() {
-  		const $wrap = $('#slick-slide');
-  		$.each(list, function(idx, product) {
-  			$outer = $('<div>').attr('class', 'services-col mx-2 my-3').appendTo($wrap);
-  			$card = $('<div>').attr('class', 'card').appendTo($outer);
-  			$a = $('<a>').attr('href', './product/productList?nowPage=1&amount=9&catecode=&sort=').appendTo($card);
-  			$('<img>').attr('src', product.pthumbnail).attr('alt', '상품').attr('class', 'card-img-top').appendTo($a);
-  			$cardbody = $('<div>').attr('class', 'card-body').appendTo($card);
-  			$('<p>').attr('class', 'card-title').attr('style', 'color: crimson;').text(product.cname).appendTo($cardbody);
-  			$('<p>').attr('class', 'card-text fw-light mb-4').text(product.pname).appendTo($cardbody);
-  			$('<span>').attr('style', 'color:black; font-size: 20px;').text(product.price + " 원").appendTo($cardbody);
-  		})
-  	}  	
-  	
+<head th:fragment="html-head">
+	<meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+		integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
+		integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
+		integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="/css/common.css">
+	<link rel="stylesheet" href="/css/index.css">
+	<link rel="icon" href="/image/favicon.png">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.slim.min.js" integrity="sha512-6ORWJX/LrnSjBzwefdNUyLCMTIsGoNP6NftMy2UAm1JBm6PRZCO1d7OHBStWpVFZLO+RerTvqX/Z9mBFfCJZ4A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"
+		integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="/js/index.js"></script>
+	<script th:inline="javascript">
   	$(document).ready(function() {
-  		productList();
-  		
-  		if(msg!=null) {
-  			alert(msg);
-  		}
+  		loginMenu();
   	});
   </script>
+  <title>ECorea</title>
+</head>
 <body>
-  <header th:replace="fragments/common::header">
-  <!-- 
+
+  <header th:fragment="header">
     <span class="leftnav"><a href="/">ECorea</a></span>
     <span class="leftnav"><a href="/product/productList?nowPage=1&amount=9&catecode=&sort=">SHOP</a></span>
 
     <span class="leftnav"><a href="/challenge/challengeList">CHALLENGE</a></span>
     <span class="leftnav"><a href="/about">ABOUT</a></span>
 
+	<!-- 
     //<span class="leftnav"><a href="/challenge/challengeList?nowPage=1&amount=9">CHALLENGE</a></span>
     //<span class="leftnav"><a href="/">ABOUT</a></span> 
+	 -->
 
     <span class="rightnav all"><a href="/general/joinSelect">JOIN</a></span> 
     <span class="rightnav all"><a href="/general/login">LOGIN</a></span>
@@ -47,7 +54,6 @@
 	<span class="rightnav member" style="display: none;"><a href="/mypage/member/memberMypage">MYPAGE</a></span>
 	<span class="rightnav member" style="display: none;"><a href="/order/cart">CART</a></span> 
    	<span class="rightnav corp" style="display: none;"><a href="/mypage/corp/corpMypage">MYPAGE</a></span>
-   	-->
   </header>
 
   <section id="services">
@@ -56,28 +62,9 @@
         <div class="services-header text-center mb-5">
           <p class="display-5">최신 상품</p>
         </div>
-        
-        <i class="fas fa-chevron-left prev"></i>
-        <i class="fas fa-chevron-right next"></i>
-      
-		<!-- 상품 목록 -->
         <div id="slick-slide" class="sercives-body">
-          <div class="services-col mx-2 my-3">
-            <div class="card" th:each="product : ${list}">
-              <a href="./product/productList?nowPage=1&amount=9&catecode=&sort=">
-                <img th:src="${product.pthumbnail}" alt="상품" class="card-img-top">
-              </a>
-              <div class="card-body">
-                <p class="card-title" style="color: crimson;" th:text="${product.cname}">브랜드명</p>
-                <p class="card-text fw-light mb-4" th:text="${product.pname}">
-                  [업사이클링 DIY] 업사이클링 티셔츠 손목 쿠션 Kit
-                </p>
-                <span style="color:black; font-size: 20px;" th:text="|${product.price} 원|">15,000원</span>
-              </div>
-            </div>
-          </div>
+		<!-- 상품 목록 -->
         </div>
-        
       </div>
     </div>
   </section>
@@ -118,21 +105,12 @@
 
     <input class="goupbtn" type="button" value="↑" onclick="clickme()"></div>
 
-    <footer th:replace="fragments/common::footer">
-    <!-- 
+    <footer th:fragment="footer">
       <address style="font-size: 12px; display:inline-block;margin-top:20px;margin-left:30px;">
         인천광역시 미추홀구<br>
         이메일 : ecorea@gmail.com<br>
         전화번호 : 032-000-0000
       </address>
-     -->
     </footer>
- 
- 
-
-
-    
-    
-
 </body>
 </html>

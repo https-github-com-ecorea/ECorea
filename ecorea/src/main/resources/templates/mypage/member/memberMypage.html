@@ -13,12 +13,8 @@
   <title>마이페이지 - 일반회원</title>
   <style>
     body {
-  background: url('/image/bg.png');
-  }
-    h1 {
-      text-align: center;
-      margin-top: 100px;
-    }
+	  background: url('/image/bg.png');
+	}
     .point {
       width: 1000px;
       height: 50px;
@@ -85,7 +81,8 @@
   </style>
 </head>
 <body>
-  <header class="navwrapper">
+  <header class="navwrapper" th:replace="fragments/common::header">
+  <!-- 
     <span class="leftnav"><a href="/">ECorea</a></span>
     <span class="leftnav"><a href="/product/productList?nowPage=1&amount=9&catecode=&sort=">SHOP</a></span>
     <span class="leftnav"><a href="/challenge/challengeList?nowPage=1&amount=9">CHALLENGE</a></span>
@@ -93,6 +90,7 @@
 	<span class="rightnav member corp"><a href="/general/logout">LOGOUT</a></span>
 	<span class="rightnav member"><a href="/mypage/member/memberMypage">MYPAGE</a></span>
 	<span class="rightnav member"><a href="/order/cart">CART</a></span> 
+   -->
   </header>
   <h1>마이페이지</h1>
   <div th:text="${mypage}"></div>
@@ -133,7 +131,7 @@
 
     <input class="goupbtn" type="button" value="↑" onclick="clickme()"></div>
 
-
+<footer th:replace="fragments/common::header"></footer>
 </body>
 </html>
 
