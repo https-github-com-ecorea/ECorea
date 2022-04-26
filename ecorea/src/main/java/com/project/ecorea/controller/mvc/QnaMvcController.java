@@ -42,7 +42,7 @@ public class QnaMvcController {
 	public void memberQnaList(Model model, Criteria cri, Principal principal) {
 		log.info("memberMyPageQuestionList");
 		model.addAttribute("memberQnaList", service.memberMyPageQuestionList(principal.getName(), cri));
-		int total = service.getMemberTotal("haramiee");
+		int total = service.getMemberTotal(principal.getName());
 		PageMakerDto pageMaker = new PageMakerDto(cri, total);
 		model.addAttribute("pageMaker", pageMaker);
 	}

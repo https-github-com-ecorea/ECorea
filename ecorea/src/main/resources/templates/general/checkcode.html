@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-<meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<title>체크코드 확인</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="/css/main.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<link rel="stylesheet" href="/css/common.css">
-<link rel="icon" href="/image/favicon.png">
+<head th:replace="fragments/common :: html-head">
+</head>
 <style>
   body {
   background: url('/image/bg.png');
@@ -27,8 +20,9 @@
 		}
 	});
 </script>
-</head>
 <body>
+<header th:replace="fragments/common :: header">
+</header>
 <div id="page">
 	<div id="main">
 		<section id="section">
@@ -46,5 +40,8 @@
 		</section>
 	</div>
 </div>
+<footer th:replace="fragments/common :: footer">
+</footer>
+<script src="/js/index.js"></script>
 </body>
 </html>

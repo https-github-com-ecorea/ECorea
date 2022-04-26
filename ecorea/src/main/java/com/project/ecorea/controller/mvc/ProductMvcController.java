@@ -50,7 +50,7 @@ public class ProductMvcController {
 		model.addAttribute("pageMaker", pageMaker);
 		if (request.isUserInRole("ROLE_MEMBER")) {
 			model.addAttribute("role", "ROLE_MEMBER");
-		} else {
+		} else if (request.isUserInRole("ROLE_CORP")) {
 			model.addAttribute("role", "ROLE_CORP");
 		}
 	}
@@ -60,7 +60,7 @@ public class ProductMvcController {
 	public ModelAndView productRead(Integer pno, HttpSession session, HttpServletRequest request, Principal principal) {
 		session.setAttribute("pno", pno);
 		if (principal == null || request.isUserInRole("ROLE_MEMBER"))
-			return new ModelAndView("product/member/productDetail").addObject("product", productService.productRead(pno));
+			return new ModelAndView("product/member/productDetail").addObject("product", productService.productRead(pno)).addObject("role", "ROLE_MEMBER");
 		else 
 			return new ModelAndView("product/corp/productDetail").addObject("product", productService.productRead(pno));
 	}
@@ -75,7 +75,7 @@ public class ProductMvcController {
 	 @GetMapping("/product/corp/productDetail")
 	 public ModelAndView corpProductDetail(Integer pno, HttpSession session) {
 	 	session.setAttribute("pno", pno);
-	 	return new ModelAndView("product/corp/productDetail").addObject("product", productService.productRead(pno));
+	 	return new ModelAndView("product/corp/productDetail").addObject("product", productService.productRead(pno)).addObject("role", "ROLE_CORP");
 	}
 	
 	/* 문의 작성 버튼 */
@@ -88,7 +88,8 @@ public class ProductMvcController {
 	// 상품등록 페이지
 	@Secured("ROLE_CORP")
 	@GetMapping("/product/productUpload")
-	public void uploadProduct() {
+	public void uploadProduct(Model model) {
+		model.addAttribute("role", "ROLE_CORP");
 	}
 	
 	// 상품등록

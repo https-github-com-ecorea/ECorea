@@ -1,12 +1,10 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>page not found!</title>
+<head th:replace="fragments/common :: html-head">
 </head>
 <body>
+<header th:replace="fragments/common :: header">
+</header>
 <div class="container" style="max-width: 600px">
 	<h1>500 Error!</h1>
 		<a href="/">메인으로 이동</a>
@@ -16,5 +14,7 @@
 		<p th:text="|message: ${message}|"></p>
 		<p th:text="|trace: ${trace}|"></p>
 </div>
+<footer th:replace="fragments/common :: footer">
+</footer>
 </body>
 </html>
