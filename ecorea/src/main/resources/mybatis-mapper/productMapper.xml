@@ -38,8 +38,8 @@
 	<select id="productPagingList" resultType="com.project.ecorea.dto.ProductDto$productList">
 		select catecode, pno, cname, pthumbnail, pname, price from(
 			select catecode, pno, cname, pthumbnail, pname, price, row_number() over(<include refid="sort" />) rn
-            from product_dto where <![CDATA[rownum <= #{nowPage} * #{amount}]]> <if test="catecode != null and !catecode.equals('')">and catecode=#{catecode}</if>)
-       	where <![CDATA[rn > (#{nowPage} -1) * #{amount}]]>
+            from product_dto <if test="catecode != null and !catecode.equals('')">where catecode=#{catecode}</if>)
+       	where <![CDATA[rn > (#{nowPage} - 1) * #{amount} ]]> and <![CDATA[rn <= (#{nowPage} * #{amount})]]>
 	</select>
 		
 	<!-- 상품 상세 페이지 -->

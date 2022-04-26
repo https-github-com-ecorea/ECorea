@@ -24,7 +24,7 @@
   <style>
     h3 {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 100px;
     }
     .productinfo {
       width: 900px;
@@ -37,7 +37,6 @@
       margin: 10px;
     }
 * {box-sizing: border-box}
-body {font-family: Verdana, sans-serif; margin:0}
 .mySlides {display: none}
 img {vertical-align: middle; height: 300px;}
 
@@ -121,14 +120,9 @@ img {vertical-align: middle; height: 300px;}
   border: none;
   outline: none;
   padding: 10px 10px;
-  background-color: rgb(175, 122, 234);
   cursor: pointer;
   width: 300px;
   margin-top: 20px;
-}
-
-.btn:hover {
-  background-color: rgb(127, 109, 208);
 }
 
 .btn.active {
@@ -138,20 +132,32 @@ img {vertical-align: middle; height: 300px;}
 .progress {
   width: 300px;
 }
+.provezero {
+min-height: 100px;
+}
+.wrapper {
+ height : 100%;
+}
+.topnav {
+	background-color: #ecf0f1;
+}
 </style>
 </head>
 <body>
+
   <header class="navwrapper">
     <span class="leftnav"><a href="/">ECorea</a></span>
     <span class="leftnav"><a href="/product/productList?nowPage=1&amount=9&catecode=&sort=">SHOP</a></span>
     <span class="leftnav"><a href="/challenge/challengeList?nowPage=1&amount=9">CHALLENGE</a></span>
-    <span class="leftnav"><a href="/">ABOUT</a></span>
+    <span class="leftnav"><a href="/about">ABOUT</a></span>
     <span class="rightnav all"><a href="/general/joinSelect">JOIN</a></span> 
     <span class="rightnav all"><a href="/general/login">LOGIN</a></span>
 	<span class="rightnav member corp" style="display: none;"><a href="/general/logout">LOGOUT</a></span>
 	<span class="rightnav member" style="display: none;"><a href="/mypage/member/memberMypage">MYPAGE</a></span>
 	<span class="rightnav member" style="display: none;"><a href="/order/cart">CART</a></span>
   </header>
+  
+  
   <h3>챌린지 상세</h3><br>
 
 
@@ -173,7 +179,7 @@ img {vertical-align: middle; height: 300px;}
       <p>인증 횟수 <span th:text="${challenge.cjoincnt}">0</span>회</p>
     
       <div class="progress" id="progress">
-        <div class="progress-bar" style="width: 70%;">70%</div>
+        <div class="progress-bar"></div>
       </div>
       <input type="button" class="btn btn-primary" id="proveMove" value="신청하기">
     </div>
@@ -216,14 +222,14 @@ img {vertical-align: middle; height: 300px;}
   
       <input class="goupbtn" type="button" value="↑" onclick="clickme()"></div>
   
-      <footer class="footer">
-      <address style="font-size: 12px; display:inline-block;margin-top:20px;margin-left:30px;">
+<!--     <footer class="footer">
+      <address style="font-size: 12px; display:inline-block;margin-top:20px;margin-left:30px; bottom:0;">
         인천광역시 미추홀구<br>
         이메일 : ecorea@gmail.com<br>
         전화번호 : 032-000-0000
       </address>
-    </footer>
-  
+    </footer> -->
+
   
   <script th:inline="javascript">
     const challenge = /*[[${challenge}]]*/;

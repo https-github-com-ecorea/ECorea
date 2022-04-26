@@ -143,7 +143,7 @@ public class QnaService {
 		question.setMemberId(loginId);
 		question.setPno(pno);
 		question.setQqimg(defaultImage);
-		if(qqimg != null && qqimg.isEmpty() == false && qqimg.getContentType().toLowerCase().startsWith("image/")) {
+		if (qqimg != null && qqimg.isEmpty() == false && qqimg.getContentType().toLowerCase().startsWith("image/")) {
 			String qqimgName = UUID.randomUUID() + "-" + qqimg.getOriginalFilename();
 			File file = new File(imageFolder, qqimgName);
 			try {
@@ -157,8 +157,21 @@ public class QnaService {
 	}
 	
 	/* 일반 회원 : 문의 수정 */
-	public Boolean updateQuestion(QnaQ questionDto) {
-		Integer result = dao.updateQuestion(questionDto);
+	public Boolean updateQuestion(QnaDto.updateQuestion questionDto) {
+		QnaQ question = questionDto.toEntity();
+		MultipartFile qqimg = questionDto.getQqimg();
+		question.setQqimg(defaultImage);
+		if (qqimg != null && qqimg.isEmpty() == false && qqimg.getContentType().toLowerCase().startsWith("image/")) {
+			String qqimgName = UUID.randomUUID() + "-" + qqimg.getOriginalFilename();
+			File file = new File(imageFolder, qqimgName);
+			try {
+				qqimg.transferTo(file);
+				question.setQqimg(qqimgName);
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+		}
+		Integer result = dao.updateQuestion(question);
 		if (result <= 0)
 			return false;
 		return true;

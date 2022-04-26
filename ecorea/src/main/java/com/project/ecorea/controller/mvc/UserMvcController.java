@@ -51,6 +51,11 @@ public class UserMvcController {
 		}
 	}
 	
+	@GetMapping("/about")
+	public void readAbout() {
+		
+	}
+	
 	@PreAuthorize("isAnonymous()")
 	@GetMapping("/general/joinSelect")
 	public String joinSelect(HttpSession session) {

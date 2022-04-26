@@ -16,10 +16,10 @@ import javax.servlet.http.*;
 import lombok.*;
 
 @Controller
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Secured("ROLE_MEMBER")
 public class ChProveMvcController {
-	private ChProveService proveService;
+	private final ChProveService proveService;
 	
 	// 나의 챌린지 목록 보기
 	@GetMapping("/challenge/member/challengeList")

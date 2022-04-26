@@ -19,4 +19,6 @@ public interface JumunDao {
 	public List<Jumun> jumunFindByMemberId(String memberId);
 		
 	public JumunDto.JumunList jumunFindByMemberIdAndJno(String memberId, String imagePath, Integer jno);
+	
+	public List<JumunDto.JumunStatus> countShippingStatus(String memberId);
 }

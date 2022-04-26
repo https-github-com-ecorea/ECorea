@@ -8,6 +8,7 @@ import org.springframework.stereotype.*;
 import org.springframework.web.multipart.*;
 
 import com.project.ecorea.dto.*;
+import com.project.ecorea.dto.BookmarkDto.*;
 
 import lombok.*;
 
@@ -166,4 +167,28 @@ public class ProductService {
 			return true;
 		}
 	}
+
+	// 관심상품 -> 장바구니 선택한 상품 담기
+	public Boolean shoppingCartSelected(PnoSelected dto, String memberId) {
+		Integer cartcnt = 1;
+		List<Integer> pnos = dto.getPnos();
+		for(Integer pno: pnos) {
+			Cart existProduct = cartDao.findByMemberIdAndPno(memberId, pno);
+			if(existProduct==null) {
+				Product product = productDao.findByPno(pno);
+				Integer cartPrice = product.getPrice()*cartcnt;
+				Cart cart = Cart.builder().memberId(memberId).pno(pno).cartcnt(cartcnt)
+						.cartpname(product.getPname()).cartprice(cartPrice).build();
+				if(cart==null) {
+					return false;
+				} else {
+					cartDao.saveOneProduct(cart);
+				}
+			} else {
+				cartService.plusCnt(memberId, pno);
+			}
+		}
+		return true;
+	}
+
 }

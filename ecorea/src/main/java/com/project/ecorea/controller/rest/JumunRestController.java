@@ -21,4 +21,5 @@ public class JumunRestController {
 			return ResponseEntity.ok(null);
 		return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
 	}
+	
 }

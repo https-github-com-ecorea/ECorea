@@ -64,7 +64,7 @@ input[type=text], select, textarea {
   <h1>문의 작성</h1>
   <div class="container">
       <form action="/mypage/member/qnaUpload" method="post" enctype="multipart/form-data">
-
+      <input type="hidden" id="pno" name="pno" th:value="${session.pno}">
       <label for="choice">말머리</label>
       <select id="choice" name="qqcategory">
         <option selected disabled value="selectoption">선택해주세요</option>

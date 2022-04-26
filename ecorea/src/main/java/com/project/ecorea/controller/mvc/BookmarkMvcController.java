@@ -10,6 +10,7 @@ import org.springframework.web.servlet.*;
 import org.springframework.web.servlet.mvc.support.*;
 
 import com.project.ecorea.dto.*;
+import com.project.ecorea.dto.BookmarkDto.*;
 import com.project.ecorea.service.*;
 
 import lombok.*;
@@ -53,6 +54,13 @@ public class BookmarkMvcController {
 	@PostMapping("/mypage/member/bookmarkList/shoppingOne")
 	public String shoppingCartOne(Integer pno, Principal principal) {		
 		productService.shoppingCartOne(pno, principal.getName());	
+		return "redirect:/order/cart";
+	}
+	
+	// 선택한 관심상품 장바구니에 담기
+	@PostMapping("/mypage/member/bookmarkList/shoppingMultiple")
+	public String shoppingCartSelected(PnoSelected dto, Principal principal) {
+		productService.shoppingCartSelected(dto, principal.getName());
 		return "redirect:/order/cart";
 	}
 	
