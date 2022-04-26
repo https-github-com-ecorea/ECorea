@@ -11,6 +11,9 @@
   <link rel="icon" href="/image/favicon.png">
   <title>마이페이지 - 일반회원</title>
   <style>
+    body {
+  background: url('/image/bg.png');
+  }
     h1 {
       text-align: center;
       margin-top: 100px;
@@ -18,8 +21,8 @@
     .point {
       width: 1000px;
       height: 50px;
-      background-color: #ecf0f1;
-      border: none;
+      background-color:white;
+      border: 1px solid black;
       border-radius: 5px;
       margin: 10px;   
     }
@@ -32,8 +35,8 @@
     .order {
       width: 1000px;
       height: 150px;
-      background-color: #ecf0f1;
-      border: none;
+      background-color:white;
+      border: 1px solid black;
       border-radius: 5px;
       margin: 10px;
     }
@@ -60,14 +63,14 @@
     .btn {
       width: 150px;
       height: 150px;
-      background-color: white;
-      border-color: white;
+      background-color:white;
+      border: 1px solid black;
       margin: 25px;
       color: black;
     }
     .btn:hover {
       background-color: #ecf0f1;
-      border-color: #ecf0f1;
+      border-color: black;
       color: black;
     }
     a {
@@ -81,17 +84,14 @@
   </style>
 </head>
 <body>
-  <header>
+  <header class="navwrapper">
     <span class="leftnav"><a href="/">ECorea</a></span>
     <span class="leftnav"><a href="/product/productList?nowPage=1&amount=9&catecode=&sort=">SHOP</a></span>
-    <span class="leftnav"><a href="/challenge/challengeList">CHALLENGE</a></span>
+    <span class="leftnav"><a href="/challenge/challengeList?nowPage=1&amount=9">CHALLENGE</a></span>
     <span class="leftnav"><a href="/">ABOUT</a></span>
-    <span class="rightnav all"><a href="/general/joinSelect">JOIN</a></span> 
-    <span class="rightnav all"><a href="/general/login">LOGIN</a></span>
-	<span class="rightnav member corp" style="display: none;"><a href="/general/logout">LOGOUT</a></span>
-	<span class="rightnav member" style="display: none;"><a href="/mypage/member/memberMypage">MYPAGE</a></span>
-	<span class="rightnav member" style="display: none;"><a href="/order/cart">CART</a></span> 
-   	<span class="rightnav corp" style="display: none;"><a href="/mypage/corp/corpMypage">MYPAGE</a></span>
+	<span class="rightnav member corp"><a href="/general/logout">LOGOUT</a></span>
+	<span class="rightnav member"><a href="/mypage/member/memberMypage">MYPAGE</a></span>
+	<span class="rightnav member"><a href="/order/cart">CART</a></span> 
   </header>
   <h1>마이페이지</h1>
   <div class="wrapper">
@@ -128,6 +128,7 @@
 
 </div>
 
+    <input class="goupbtn" type="button" value="↑" onclick="clickme()"></div>
 
 
 </body>

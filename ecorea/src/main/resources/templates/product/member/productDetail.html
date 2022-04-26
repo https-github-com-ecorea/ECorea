@@ -344,12 +344,9 @@ p {
     <span class="leftnav"><a href="/product/productList?nowPage=1&amount=9&catecode=&sort=">SHOP</a></span>
     <span class="leftnav"><a href="/">CHALLENGE</a></span>
     <span class="leftnav"><a href="/">ABOUT</a></span>
-    <span class="rightnav all"><a href="/general/joinSelect">JOIN</a></span> 
-    <span class="rightnav all"><a href="/general/login">LOGIN</a></span>
 	<span class="rightnav member corp" style="display: none;"><a href="/general/logout">LOGOUT</a></span>
 	<span class="rightnav member" style="display: none;"><a href="/mypage/member/memberMypage">MYPAGE</a></span>
-	<span class="rightnav member" style="display: none;"><a href="/order/cart">CART</a></span> 
-   	<span class="rightnav corp" style="display: none;"><a href="/mypage/corp/corpMypage">MYPAGE</a></span>
+	<span class="rightnav member" style="display: none;"><a href="/order/cart">CART</a></span>
   </header>
  
   <div class="productwrap">
@@ -360,7 +357,7 @@ p {
     </div>
     
     <div class="product-info right">
-      <p style="font-size:20px;" th:text="${product.pname}">상품명</p><br>
+      <p style="font-size:25px; font-weight:bold;" th:text="${product.pname}">상품명</p><br>
       <span>판매가격 : <span id="price" th:text="${product.price}"></span> 원</span><br><br>
       <!--
       <p style="font-size:20px;">상품명</p><br>
