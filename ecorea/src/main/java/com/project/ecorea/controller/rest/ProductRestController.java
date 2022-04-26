@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 public class ProductRestController {
-	
+
 	private final ProductService productService;
 	private final QnaService qnaService;
 	private final HugiService hugiService;
