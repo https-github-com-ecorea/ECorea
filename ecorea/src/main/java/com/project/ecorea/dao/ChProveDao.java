@@ -22,4 +22,6 @@ public interface ChProveDao {
 
 	public int getChallengeDetailTotal(Integer cno);
 
+	public void saveApply(ChApplyCheck chApplyCheck);
+
 }

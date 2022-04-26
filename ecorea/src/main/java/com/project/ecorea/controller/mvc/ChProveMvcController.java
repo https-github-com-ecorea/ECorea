@@ -57,5 +57,4 @@ public class ChProveMvcController {
 			챌린지 신청 취소하면 바뀌어야 할것들..?			
 		 */
 	}
-	
 }

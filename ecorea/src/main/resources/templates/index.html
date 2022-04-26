@@ -6,6 +6,10 @@
   	const msg = /*[[${errormsg}]]*/
   	
   	$(document).ready(function() {
+  		loginMenu();
+  		productList();
+  		
+  		// $(slickSlide).slick('refresh');
   		if(msg!=null) {
   			alert(msg);
   		}
@@ -22,7 +26,6 @@
         <div class="services-header text-center mb-5">
           <p class="display-5">최신 상품</p>
         </div>
-        
         <i class="fas fa-chevron-left prev"></i>
         <i class="fas fa-chevron-right next"></i>
       
