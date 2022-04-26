@@ -146,9 +146,11 @@ img {vertical-align: middle; height: 300px;}
     <span class="leftnav"><a href="/product/productList?nowPage=1&amount=9&catecode=&sort=">SHOP</a></span>
     <span class="leftnav"><a href="/challenge/challengeList?nowPage=1&amount=9">CHALLENGE</a></span>
     <span class="leftnav"><a href="/">ABOUT</a></span>
-	<span class="rightnav member corp"><a href="/general/logout">LOGOUT</a></span>
-	<span class="rightnav member"><a href="/mypage/member/memberMypage">MYPAGE</a></span>
-	<span class="rightnav member"><a href="/order/cart">CART</a></span>
+    <span class="rightnav all"><a href="/general/joinSelect">JOIN</a></span> 
+    <span class="rightnav all"><a href="/general/login">LOGIN</a></span>
+	<span class="rightnav member corp" style="display: none;"><a href="/general/logout">LOGOUT</a></span>
+	<span class="rightnav member" style="display: none;"><a href="/mypage/member/memberMypage">MYPAGE</a></span>
+	<span class="rightnav member" style="display: none;"><a href="/order/cart">CART</a></span>
   </header>
   <h3>챌린지 상세</h3><br>
 
@@ -173,7 +175,7 @@ img {vertical-align: middle; height: 300px;}
       <div class="progress" id="progress">
         <div class="progress-bar" style="width: 70%;">70%</div>
       </div>
-      <input type="submit" class="btn btn-primary" value="신청하기">
+      <input type="button" class="btn btn-primary" id="proveMove" value="신청하기">
     </div>
       <div class="inside-product topnav topnav-right">
       <a href="#content1">챌린지 상세정보</a>
@@ -225,7 +227,10 @@ img {vertical-align: middle; height: 300px;}
   
   <script th:inline="javascript">
     const challenge = /*[[${challenge}]]*/;
-    	
+    const role = /*[[${role}]]*/;	
+    
+    	loginMenu();
+    
     	const joincnt = challenge.cjoincnt;
     	const goal = challenge.cgoal;
     	let percentage = (parseInt(joincnt)/parseInt(goal))*100;
@@ -333,7 +338,30 @@ img {vertical-align: middle; height: 300px;}
 		/* 후기 출력 */
 	    $.getJSON("/challengeDetail/provelist?", {cno : cno}, function(obj) {
 	      makeProve(obj);
-	    });    		
+	    });
+		
+		$('#proveMove').click(function() {
+			if(role !== null) {
+				$.ajax({
+					url: "/challenge/chapply",
+					type:"POST",
+					data: {
+						cno : cno
+					}
+				}).done(() => {
+					if(confirm('신청이 완료되었습니다.\n인증을 위해 챌린지 인증 목록으로 이동하시겠습니까?')) {
+						location.href='/challenge/member/challengeList';
+					}
+					
+				})
+				/* const $form = $('<form>').attr('action', '/challenge/chapply').attr('method', 'post').appendTo($('body'));
+				$('<input>').attr('type','hidden').val(cno).appendTo($form);
+				$form.submit(); */
+				
+			} else if(confirm('로그인이 필요한 작업입니다.\n로그인창으로 이동하시겠습니까?')) {
+				location.href='/general/login';
+			}
+		});
 	})
     </script>
     <script src="/js/index.js"></script>

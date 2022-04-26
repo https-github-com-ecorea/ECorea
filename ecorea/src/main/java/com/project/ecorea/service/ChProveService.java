@@ -29,7 +29,7 @@ public class ChProveService {
 	
 	// 나의 챌린지 목록 출력
 	public List<ChProveDto.ProveList> readProve(String memberId) {
-		List<ChProveDto.ProveList> proveList = proveDao.findByMemberId(memberId, imagePath);		
+		List<ChProveDto.ProveList> proveList = proveDao.findByMemberId(memberId, imagePath);
 		return proveList;
 	}
 	
@@ -75,6 +75,12 @@ public class ChProveService {
 		dto.setList(entity);
 		dto.setPageInfo(new PageMakerDto(cri, proveDao.getChallengeDetailTotal(cri.getCno())));
 		return dto;
+	}
+
+	public void chApplyCheck(String name, Integer cno) {
+		ChApplyCheck chApplyCheck = new ChApplyCheck();
+		chApplyCheck.setId(name).setCno(cno);
+		proveDao.saveApply(chApplyCheck);
 	}
 	
 }

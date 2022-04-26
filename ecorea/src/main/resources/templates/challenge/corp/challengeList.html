@@ -27,7 +27,6 @@
 body {
   background-color: white;
   padding: 20px;
-  font-family: Arial;
 }
 
 /* Center website */
@@ -132,22 +131,26 @@ h1 {
   <title>챌린지 목록</title>
 </head>
 <body>
-  <header>
-    <div class="logo"><a href="/">ECorea</a></div>
-  </header>
-  <h1>챌린지 목록</h1><br>
-  <nav>
-    <div class="topnav">
-      <a href="#">생활</a>
-      <a href="#">제로웨이스트</a>
-      <a href="#">소품</a>
-      <a href="#">DIY</a>
-      <div class="topnav-right">
-        <a href="#">챌린지</a>
-        <a href="#">브랜드 소개</a>
-      </div>
-    </div>
+  <header class="navwrapper">
+    <span class="leftnav"><a href="/">ECorea</a></span>
+    <span class="leftnav"><a href="/product/productList?nowPage=1&amount=9&catecode=&sort=">SHOP</a></span>
 
+    <span class="leftnav"><a href="/challenge/challengeList">CHALLENGE</a></span>
+    <span class="leftnav"><a href="/about">ABOUT</a></span>
+
+<!--     <span class="leftnav"><a href="/challenge/challengeList?nowPage=1&amount=9">CHALLENGE</a></span>
+    <span class="leftnav"><a href="/">ABOUT</a></span> -->
+
+    <span class="rightnav all"><a href="/general/joinSelect">JOIN</a></span> 
+    <span class="rightnav all"><a href="/general/login">LOGIN</a></span>
+	<span class="rightnav member corp" style="display: none;"><a href="/general/logout">LOGOUT</a></span>
+	<span class="rightnav member" style="display: none;"><a href="/mypage/member/memberMypage">MYPAGE</a></span>
+	<span class="rightnav member" style="display: none;"><a href="/order/cart">CART</a></span> 
+   	<span class="rightnav corp" style="display: none;"><a href="/mypage/corp/corpMypage">MYPAGE</a></span>
+  </header>
+
+  <h1>챌린지 목록</h1><br>
+  <a href="/challenge/corp/challengeUpload" class="btn btn-primary">등록</a>
   <!-- MAIN (Center website) -->
 <div class="main">
 
