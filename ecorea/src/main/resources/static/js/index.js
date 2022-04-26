@@ -1,30 +1,18 @@
 history.scrollRestoration = "auto"
 
 
-const slickSlide = jQuery('#slick-slide')
+const slickSlide = jQuery('.services-col')
 
 if (slickSlide) {
   slickSlide.slick({
-    dots: true,
-    arrows: false,
-    slidesToShow: 3,
+	infinite: true,
+	variableWidth: true,
+    dots: false,
+    nextArrow: $('.next'),
+    prevArrow: $('.prev'),
     slideToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
-    responsive: [
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 2
-        }
-      },
-      {
-        breakpoint: 576,
-        settings: {
-          slidesToShow: 1
-        }
-      }
-    ]
   })
 }
 
