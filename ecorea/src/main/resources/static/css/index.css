@@ -87,4 +87,33 @@ object-fit: cover;
 object-position: center;
 }
 
+/* 슬라이드 1 */
+.sercives-body { 
+  width: 100%;
+  margin: 0px auto;
+  position: relative;
+}
 
+.slick-slide {
+  margin: 0 15px;
+}
+
+/* 슬라이드 1 - 다음 버튼 */
+.section-content .next{
+  position:absolute;
+  top:50%;
+  right:30px;
+  font-size:1em;
+  color:gray;
+  cursor: pointer;
+}
+
+/* 슬라이드 1 - 이전 버튼 */
+.section-content .prev{
+  position:absolute;
+  top:50%;
+  left:30px;
+  font-size:1em;
+  color:gray;
+    cursor: pointer;
+}
