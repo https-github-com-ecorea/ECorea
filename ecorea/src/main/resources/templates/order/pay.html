@@ -37,6 +37,7 @@
     		if(list=="") {
     			$("#address_area").empty();
     			$('<button type="button" class="btn btn-primary">').attr("id","add_new_address").text("새 배송지").appendTo($("#address_area"));
+    			$('<br>').appendTo('#address_area');
     			$("<span>").text("등록된 배송지가 없습니다. 배송지를 등록하세요.").css("color","red").appendTo("#address_area");
     			$('#order').prop("disabled",true);
     		} else {
@@ -56,8 +57,11 @@
     				if(address.astandard==1) {
     					$radio.prop("checked", true);
     	                $atoname_input.val(address.atoname);
-    	                $atel_input.val(address.atel);    	               
-    	                $('#address_detail').text('( '+address.azipcode+' )' + ' ' + address.aaddress1 + ' ' + address.aaddress2);
+    	                $atel_input.val(address.atel);
+    	                if (address.aaddress2 != null)
+    	                	$('#address_detail').text('( '+address.azipcode+' )' + ' ' + address.aaddress1 + ', ' + address.aaddress2);
+    	                else
+    	                	$('#address_detail').text('( '+address.azipcode+' )' + ' ' + address.aaddress1);
     				}    				
     			});
     		}
@@ -68,7 +72,10 @@
     function changeAddress() {
     	const $addressNo = $(this).attr("data-addressNo");
     	$.ajax("/mypage/member/chosenAddress/" + $addressNo).done(address=>{
-    		$("#address_detail").text('( '+address.azipcode+' )' + ' ' + address.aaddress1 + ' ' + address.aaddress2);
+    		if (address.aaddress2 != null)
+            	$('#address_detail').text('( '+address.azipcode+' )' + ' ' + address.aaddress1 + ', ' + address.aaddress2);
+            else
+            	$('#address_detail').text('( '+address.azipcode+' )' + ' ' + address.aaddress1);
     		$("#atoname").val(address.atoname);
     		$("#atel").val(address.atel);
     	});

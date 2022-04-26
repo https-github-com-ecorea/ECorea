@@ -230,14 +230,10 @@ const challenge = /*[[${challenge}]]*/;
   <header class="navwrapper">
     <span class="leftnav"><a href="/">ECorea</a></span>
     <span class="leftnav"><a href="/product/productList?nowPage=1&amount=9&catecode=&sort=">SHOP</a></span>
-    <span class="leftnav"><a href="/challenge/challengeList">CHALLENGE</a></span>
+    <span class="leftnav"><a href="/challenge/challengeList?nowPage=1&amount=9">CHALLENGE</a></span>
     <span class="leftnav"><a href="/">ABOUT</a></span>
-    <span class="rightnav all"><a href="/general/joinSelect">JOIN</a></span> 
-    <span class="rightnav all"><a href="/general/login">LOGIN</a></span>
 	<span class="rightnav member corp" style="display: none;"><a href="/general/logout">LOGOUT</a></span>
-	<span class="rightnav member" style="display: none;"><a href="/mypage/member/memberMypage">MYPAGE</a></span>
-	<span class="rightnav member" style="display: none;"><a href="/order/cart">CART</a></span> 
-   	<span class="rightnav corp" style="display: none;"><a href="/mypage/corp/corpMypage">MYPAGE</a></span>
+   	<span class="rightnav corp"><a href="/mypage/corp/corpMypage">MYPAGE</a></span>
   </header>
 
 
@@ -347,7 +343,7 @@ const challenge = /*[[${challenge}]]*/;
 	function makeProve(obj) {
 	console.log(obj.list);
 		if (obj.list.length === 0) {
-	    $(".provezero").html('<span>후기가 없습니다. (≡^∇^≡)</span>');
+	    $(".provezero").html('<span>인증글이 없습니다. (≡^∇^≡)</span>');
 	    $(".provelist").html('');
 		  	$(".provePageMaker").html('');
 	  } else {

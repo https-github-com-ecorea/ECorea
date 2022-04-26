@@ -57,7 +57,15 @@ public class ChallengeMvcController {
 	
 	/* 전체 유저 : 챌린지 목록 출력 */
 	@GetMapping("/challenge/challengeList")
-	public ModelAndView readchallengeList(Criteria cri) {
+	public ModelAndView readchallengeList(Model model, Criteria cri, HttpServletRequest request, Principal principal) {
+		
+		if (request.isUserInRole("ROLE_MEMBER")) {			
+			model.addAttribute("role", "ROLE_MEMBER");
+		} else if(principal == null) {
+			model.addAttribute("role", "null");
+		} else {
+			model.addAttribute("role", "ROLE_CORP");
+		}
 		return new ModelAndView().addObject("challenge", service.readchallengeList(cri)).addObject("pageMaker", new PageMakerDto(cri, service.getListTotal()));
 	}
 	

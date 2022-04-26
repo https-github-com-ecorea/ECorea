@@ -9,6 +9,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <link rel="stylesheet" href="/css/common.css">
   <link rel="icon" href="/image/favicon.png">
+  <script src="/js/hugiCheck.js"></script>
   <style>
   * {box-sizing: border-box;}
   h1 {
@@ -73,7 +74,12 @@ input[type=text], select, textarea {
   		
   		$('.btn').click(function() {
   			if(confirm('글을 수정하시겠습니까 ?')) {
-  				$('#update_form').submit();
+  				if((titleCheck() && contentCheck())==false) {
+  		  			alert('내용을 입력해주세요');
+  		  			return false;
+  		  		} else {
+  					$('#update_form').submit();
+  		  		}
   			}
   		});
   	});
