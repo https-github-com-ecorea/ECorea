@@ -65,6 +65,7 @@ public class QnaMvcController {
 	@Secured("ROLE_MEMBER")
 	@PostMapping("/mypage/member/qnaUpload")
 	public String uploadQnaQ(QnaDto.uploadQuestion questionUpDto, Principal principal, Integer pno) {
+		System.out.println("### 상품 번호 : " + pno);
 		service.uploadQuestion(questionUpDto, principal.getName(), pno);
 		return "redirect:/mypage/member/qnaList";
 	}

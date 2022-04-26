@@ -236,6 +236,13 @@
         });
 	}
 	
+	/* 문의 등록 */
+	function qnaUpload() {
+		const $form = $('<form>').attr('method', 'get').attr('action','/mypage/member/qnaUpload').appendTo($('body')); 
+		$('<input>').attr('type', 'hidden').attr('name', 'pno').val(product.pno).appendTo($form);
+		$form.submit();
+	}
+	
 	/* 문의 페이징 버튼 */
   	$(document).on('click', '.qnaPageMaker_btn a', function(e){
   		e.preventDefault();
@@ -253,6 +260,7 @@
   	  $('#order').click(toOrder);
   	  $('#cart').click(toCart);
   	  $('#bookmark').click(toBookmark);
+  	  $('#qnaUpload').click(qnaUpload);
  		
       const pno = product.pno;
       
@@ -336,12 +344,9 @@ p {
     <span class="leftnav"><a href="/product/productList?nowPage=1&amount=9&catecode=&sort=">SHOP</a></span>
     <span class="leftnav"><a href="/">CHALLENGE</a></span>
     <span class="leftnav"><a href="/">ABOUT</a></span>
-    <span class="rightnav all"><a href="/general/joinSelect">JOIN</a></span> 
-    <span class="rightnav all"><a href="/general/login">LOGIN</a></span>
 	<span class="rightnav member corp" style="display: none;"><a href="/general/logout">LOGOUT</a></span>
 	<span class="rightnav member" style="display: none;"><a href="/mypage/member/memberMypage">MYPAGE</a></span>
-	<span class="rightnav member" style="display: none;"><a href="/order/cart">CART</a></span> 
-   	<span class="rightnav corp" style="display: none;"><a href="/mypage/corp/corpMypage">MYPAGE</a></span>
+	<span class="rightnav member" style="display: none;"><a href="/order/cart">CART</a></span>
   </header>
  
   <div class="productwrap">
@@ -364,9 +369,9 @@ p {
         <button type="button" id="plus">+</button>
       </div><br>
       <span>총 합계 : </span><span><span id='totalPrice' th:text="${product.price}"></span>&nbsp;원</span><span> (<span id='totalCnt'>1</span>&nbsp;개)</span><br><br><br>
-      <button type="button" class="btn btn-primary" id="order" value="바로구매">바로구매</button>
-      <button type="button" class="btn btn-primary" id="cart" value="장바구니 담기">장바구니 담기</button>
-      <button type="button" class="btn btn-primary" id="bookmark" value="관심상품 등록">관심상품 등록</button>
+      <button type="button" class="btn btn-primary" id="order">바로구매</button>
+      <button type="button" class="btn btn-primary" id="cart">장바구니 담기</button>
+      <button type="button" class="btn btn-primary" id="bookmark">관심상품 등록</button>
     </div>
 </div>
 
@@ -458,6 +463,8 @@ p {
     </div>
     <div class="qnaPageMaker">
     </div>
+    <br>
+    <button type="button" class="btn btn-primary" id="qnaUpload">문의 등록</button><br>
   </div>
   
       <input class="goupbtn" type="button" value="↑" onclick="clickme()"></div>

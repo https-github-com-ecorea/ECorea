@@ -9,6 +9,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <link rel="stylesheet" href="/css/common.css">
   <link rel="icon" href="/image/favicon.png">
+  <script src="/js/hugiCheck.js"></script>
   <style>
   * {box-sizing: border-box;}
   h1 {margin-top: 50px;}
@@ -67,8 +68,16 @@
 	  			});  				
   			}
   			previewImage();
-  			
   		});
+  		
+  		$('.btn').click(function() {
+	  		if((titleCheck() && contentCheck())==false) {
+	  			alert('내용을 입력해주세요');
+	  			return false;
+	  		} else {
+	  			$('#upload').submit();
+	  		}
+  		})
   	});
   </script>
   <title>후기 작성</title>
@@ -76,11 +85,10 @@
 <body>
   <h1>후기 작성</h1>
   <div class="container">
-    <form action="/order/reviewUpload" method="post" enctype="multipart/form-data">
+    <form action="/order/reviewUpload" method="post" enctype="multipart/form-data" id="upload">
       <label for="htitle">제목</label>
       <input type="hidden" name="jno" th:value="${jno}" />
       <input type="text" id="htitle" name="htitle" placeholder="제목을 입력해주세요.">
-      
       <div class="mb-3">
         <label for="himg" class="form-label">썸네일 이미지</label>
         <input type="file" class="form-control" id="himg" name="himg" accept=".jpg,.jpeg,.png,.gif">
@@ -89,7 +97,7 @@
       <label for="hcontent">내용</label>
       <textarea id="hcontent" name="hcontent" placeholder="내용을 입력해주세요." style="height:200px"></textarea>
   
-      <button type="submit" class="btn btn-primary">등록</button>
+      <button type="button" class="btn btn-primary">등록</button>
     </form>
   </div>
 </body>

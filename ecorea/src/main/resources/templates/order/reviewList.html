@@ -53,9 +53,9 @@
 		$form.submit();
 	}
   	
-  	function reviewDelete() {
+  	function reviewDelete(hno) {
 		const $form = $('<form>').attr('method','post').attr('action','/order/reviewDelete').appendTo($('body'));
-		$('<input>').attr('type','hidden').attr('name','hno').val($('.hno').text()).appendTo($form);
+		$('<input>').attr('type','hidden').attr('name','hno').val(hno).appendTo($form);
 		$form.submit();
 	}
   	
@@ -122,7 +122,7 @@
 	        <td>
 		        <button class="btn btn-primary moveReviewUpdate" th:data-hno="${hugis.hno}">수정</button>
 		        <br>
-		        <button class="btn btn-primary moveReviewDelete">삭제</button>
+		        <button class="btn btn-primary moveReviewDelete" th:data-hno="${hugis.hno}">삭제</button>
 	        </td>
     	</tr>
     </tbody>
