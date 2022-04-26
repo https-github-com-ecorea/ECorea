@@ -48,19 +48,18 @@ public class ProductMvcController {
 		int total = productService.getCategoryTotal(cri.getCatecode());
 		PageMakerDto pageMaker = new PageMakerDto(cri, total);
 		model.addAttribute("pageMaker", pageMaker);
-		if (request.isUserInRole("ROLE_MEMBER")) {			
+		if (request.isUserInRole("ROLE_MEMBER")) {
 			model.addAttribute("role", "ROLE_MEMBER");
 		} else {
 			model.addAttribute("role", "ROLE_CORP");
 		}
 	}
-
+	
 	/* 일반 회원 : 상품 상세 페이지 화면 */
-	@Secured("ROLE_MEMBER")
 	@GetMapping("/product/member/productDetail")
 	public ModelAndView productRead(Integer pno, HttpSession session, HttpServletRequest request, Principal principal) {
 		session.setAttribute("pno", pno);
-		if(principal==null || request.isUserInRole("ROLE_MEMBER"))
+		if (principal == null || request.isUserInRole("ROLE_MEMBER"))
 			return new ModelAndView("product/member/productDetail").addObject("product", productService.productRead(pno));
 		else 
 			return new ModelAndView("product/corp/productDetail").addObject("product", productService.productRead(pno));
@@ -72,13 +71,12 @@ public class ProductMvcController {
 //		return new ModelAndView("product/corp/productDetail").addObject("product", productService.productRead(pno));
 //	}
 
-	// 기업회원 상품 상세페이지
-	// @Secured("ROLE_CORP")
-	// @GetMapping("/product/corp/productDetail")
-	// public ModelAndView corpProductDetail(Integer pno, HttpSession session) {
-	// 	session.setAttribute("pno", pno);
-	// 	return new ModelAndView("product/corp/productDetail").addObject("product", productService.productRead(pno));
-	// }
+	 /* 기업 회원 상품 상세 페이지 */
+	 @GetMapping("/product/corp/productDetail")
+	 public ModelAndView corpProductDetail(Integer pno, HttpSession session) {
+	 	session.setAttribute("pno", pno);
+	 	return new ModelAndView("product/corp/productDetail").addObject("product", productService.productRead(pno));
+	}
 	
 	/* 문의 작성 버튼 */
 	@Secured("ROLE_MEMBER")
