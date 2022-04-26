@@ -15,6 +15,7 @@ import lombok.*;
 
 @RestController
 @RequiredArgsConstructor
+@Secured("ROLE_MEMBER")
 @PreAuthorize("isAuthenticated()")
 public class AddressRestController {
 

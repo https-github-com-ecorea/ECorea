@@ -36,6 +36,10 @@
 		where member_id=#{memberId} and jno=#{jno}
 	</select>
 	
+	<!-- 주문 배송상태 -->
+	<select id="countShippingStatus" resultType="com.project.ecorea.dto.JumunDto$JumunStatus">
+		select jstatus, count(*) as statusCnt from jumun where member_id=#{memberId} group by jstatus
+	</select>
 </mapper>
 
 <!-- 
