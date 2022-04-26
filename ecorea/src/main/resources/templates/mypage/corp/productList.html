@@ -62,7 +62,7 @@
 				<img th:src="${regProducts.pthumbnail}" style="width: 250px">
 			</td>
 	        <td>
-	        	<a th:href="@{/product/corp/productDetail/{pno}(pno=${regProducts.pno})}" id="moveProductDetail" th:text="${regProducts.pname}"></a>
+	        	<a th:href="@{/product/corp/productDetail(pno=${regProducts.pno})}" id="moveProductDetail" th:text="${regProducts.pname}"></a>
 	        </td>
 	        <td>
 		        <button id="moveProductUpdate" class="btn btn-primary">수정</button>
