@@ -141,17 +141,7 @@ min-height: 100px;
 .topnav {
 	background-color: #ecf0f1;
 }
-.provezero {
-width: 900px;
-display: flex;
-justify-content: center;
-margin: 0 auto;
-}
-.provelist {
-  width: 1100px;
-  text-align: center;
-  margin: 0 auto;
-}
+
 .table img {
 width: 200px;
 height: 200px;
@@ -171,6 +161,9 @@ text-align: center;
 }
 .topnav {
 	background-color: #ecf0f1;
+}
+.review{
+margin-top: 0;
 }
 </style>
 </head>
@@ -223,16 +216,15 @@ text-align: center;
       <p th:text="${challenge.ccontent}">A, voluptas culpa? Ipsum excepturi at possimus magnam cum, aperiam rem nulla quaerat facere provident alias sunt tempore eveniet vitae praesentium, sed totam tempora ex sapiente beatae rerum? Aperiam blanditiis recusandae fugit, laboriosam consectetur et officia est pariatur provident, dicta itaque dolorem inventore debitis eveniet expedita nam ducimus vitae aliquid. Doloribus quia illum tempora unde quo. Illum provident fugit eius consequuntur, expedita, sapiente quos sed quam obcaecati dicta nulla esse quae iste id suscipit quibusdam maiores, saepe nostrum aspernatur veniam nemo? Itaque doloremque aliquid delectus illum iste quaerat libero vel veniam praesentium. Delectus exercitationem, doloremque sunt dolorum explicabo est nostrum amet officiis pariatur nulla quasi nisi dicta! Illum doloribus dolore neque fugiat quo animi. Quidem voluptate sint necessitatibus quibusdam nihil repellendus omnis corporis saepe ut harum molestiae, consequatur delectus consectetur dignissimos, fugiat numquam ab atque impedit? Cupiditate doloremque repudiandae doloribus officiis aliquam iusto minima a sit omnis eveniet incidunt sequi pariatur excepturi, ex, tempora quas ut aperiam. Fugit quibusdam ab voluptatibus ea cupiditate culpa aliquam iusto blanditiis possimus at. Numquam deserunt natus, animi assumenda consequatur nesciunt quos adipisci molestiae vel repellendus. Repellendus obcaecati nesciunt dignissimos nostrum illo quam, atque ipsum quaerat, impedit totam iusto nihil laudantium natus velit laborum dolor porro deserunt ea unde perferendis sunt error. Dolorum repudiandae reprehenderit rem at saepe ab quam minus voluptas sunt doloremque minima, repellendus asperiores error perspiciatis voluptatem tempora itaque odio impedit explicabo vitae? Ad iste pariatur mollitia atque.</p>
   </div>
   <hr>
-  <div class="provezero">
-  </div>
   <div class="provelist">
-    <h3 style="text-align: center;" id="content2">인증 댓글</h3>
+    <h3 class="review" style="text-align: center;" id="content2">인증 댓글</h3>
     <table class="table">
       <thead class="thead-light">
         <tr>
           <th>이미지</th>
-          <th style="width:150px;">제목</th>
-          <th style="width:80px;">작성자</th>
+          <th>제목</th>
+          <th>작성자</th>
+        </tr>
         </tr>
       </thead>
       <tbody id="prove_tbody">
@@ -252,14 +244,7 @@ text-align: center;
   </div>
   
       <input class="goupbtn" type="button" value="↑" onclick="clickme()"></div>
-  
-<!--     <footer class="footer">
-      <address style="font-size: 12px; display:inline-block;margin-top:20px;margin-left:30px; bottom:0;">
-        인천광역시 미추홀구<br>
-        이메일 : ecorea@gmail.com<br>
-        전화번호 : 032-000-0000
-      </address>
-    </footer> -->
+
 
   
   <script th:inline="javascript">

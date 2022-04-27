@@ -152,20 +152,14 @@ height: 200px;
 .table td {
 font-size: 15px;
 }
-.provezero {
-width: 900px;
-display: flex;
-justify-content: center;
-margin: 0 auto;
-}
 .etc:hover {
 	color: black;
 }
 .topnav {
 	background-color: #ecf0f1;
 }
-.detail-product p {
-text-align: center;
+.review{
+margin-top: 0;
 }
 </style>
 <!-- <script th:inline="javascript">
@@ -307,13 +301,13 @@ const challenge = /*[[${challenge}]]*/;
   <div class="provezero">
   </div>
   <div class="provelist">
-    <h3 style="text-align: center;" id="content2">인증 댓글</h3>
+    <h3 class="review" style="text-align: center;" id="content2">인증 댓글</h3>
     <table class="table">
       <thead class="thead-light">
         <tr>
           <th>이미지</th>
-          <th style="width:150px;">제목</th>
-          <th style="width:80px;">작성자</th>
+          <th>제목</th>
+          <th>작성자</th>
         </tr>
       </thead>
       <tbody id="prove_tbody">

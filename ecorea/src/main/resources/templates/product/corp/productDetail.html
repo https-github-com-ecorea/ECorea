@@ -220,12 +220,10 @@ p {
 }
 
 .inside-product {
-	width: 90%;
-	display: flex;
-	justify-content: space-around;
-	margin-bottom: 20px;
-	margin-right: 60px;
-	margin-left: 60px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
 }
 
 .reviewlist {
@@ -336,6 +334,10 @@ table img {
 		<div class="detail-product" id="content1">
 			<p th:utext='${product.pcontent}'></p>
 		</div>
+		
+		<!-- <p class="pwrap" th:utext='${product.pcontent}'></p> -->
+		
+		
 		<hr>
 		<h3 style="text-align: center;" id="content2">구매 후기</h3>
 		<div class="hugizero"></div>
