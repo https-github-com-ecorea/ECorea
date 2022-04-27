@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="/css/common.css">
   <link rel="stylesheet" href="/css/index.css">
   <link rel="icon" href="/image/favicon.png">
-  <script src="/js/index.js"></script>
+  <script src="/js/loginMenu.js"></script>
   <title>챌린지 상세</title>
   <style>
     h3 {
@@ -386,10 +386,11 @@ text-align: center;
 						cno : cno
 					}
 				}).done(() => {
-					if(confirm('신청이 완료되었습니다.\n인증을 위해 챌린지 인증 목록으로 이동하시겠습니까?')) {
+					if(confirm('신청이 성공했습니다.\n인증을 위해 챌린지 인증 목록으로 이동하시겠습니까?')) {
 						location.href='/challenge/member/challengeList';
 					}
-					
+				}).fail((result) => {
+					alert("이미 신청한 챌린지입니다");
 				})
 				/* const $form = $('<form>').attr('action', '/challenge/chapply').attr('method', 'post').appendTo($('body'));
 				$('<input>').attr('type','hidden').val(cno).appendTo($form);

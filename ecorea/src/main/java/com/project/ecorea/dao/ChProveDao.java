@@ -24,4 +24,6 @@ public interface ChProveDao {
 
 	public void saveApply(ChApplyCheck chApplyCheck);
 
+	public Boolean chApplyFindById(ChApplyCheck chApplyCheck);
+
 }

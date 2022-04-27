@@ -77,10 +77,16 @@ public class ChProveService {
 		return dto;
 	}
 
-	public void chApplyCheck(String name, Integer cno) {
+	public Boolean chApplyCheck(String name, Integer cno) {
 		ChApplyCheck chApplyCheck = new ChApplyCheck();
 		chApplyCheck.setId(name).setCno(cno);
-		proveDao.saveApply(chApplyCheck);
+		Boolean result = proveDao.chApplyFindById(chApplyCheck);
+		if(result) {
+			return false;
+		} else {
+			proveDao.saveApply(chApplyCheck);
+			return true;
+		}
 	}
 	
 }

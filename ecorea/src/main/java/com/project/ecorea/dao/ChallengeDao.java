@@ -36,5 +36,7 @@ public interface ChallengeDao {
 	public int getCorpListTotal(String id);
 
 	public List<Challenge> challengePagingCorpList(Criteria cri);
+
+	public Boolean deleteByCno(Integer cno);
 	
 }
