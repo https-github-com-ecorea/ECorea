@@ -5,6 +5,7 @@
 </head>
 <body>
 <header th:replace="fragments/common::header"></header>
+<div id="wrapper">
   <h1>주문 조회</h1>
   <div class="container">            
     <table class="table table-bordered">
@@ -39,6 +40,8 @@
       </tbody>
     </table>
   </div>
-  <footer th:replace="fragments/common::footer"></footer>
+</div>
+<footer th:replace="fragments/common::footer"></footer>
+<script src="/js/index.js"></script>
 </body>
 </html>

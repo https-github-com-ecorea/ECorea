@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <!-- 헤드 사용!!
-<head th:replace="fragments/common :: html-head">
-</head>
+<head th:replace="fragments/common :: html-head"></head>
  -->
 <head th:fragment="html-head">
 <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
@@ -22,6 +21,7 @@
 <link rel="stylesheet" href="/css/index.css">
 <link rel="icon" href="/image/favicon.png">
 <script th:inline="javascript">
+	let role = /*[[${role}]]*/
 	$(document).ready(function() {
 		loginMenu();
 	});

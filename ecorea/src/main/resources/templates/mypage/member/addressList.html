@@ -4,9 +4,6 @@
   <title>배송 주소록 관리</title>
 </head>
 <style>
-    body {
-	  background: url('/image/bg.png');
-	}
     #main {
       width: 800px;
       margin: 0 auto;
@@ -57,8 +54,8 @@
 	})
 </script>
 <body>	
-	<div id="page">
-		<header th:replace="fragments/common::header"></header>
+<header th:replace="fragments/common::header"></header>
+	<div id="wrapper">
 		<h1>배송지 관리</h1>
 		<div id="main" class=".wrapper">
 			<div>
@@ -75,7 +72,8 @@
 				<hr>
 			</div>
 		</div>
-		<footer th:replace="fragments/common::footer"></footer>
 	</div>
+<footer th:replace="fragments/common::footer"></footer>
+<script src="/js/index.js"></script>
 </body>
 </html>

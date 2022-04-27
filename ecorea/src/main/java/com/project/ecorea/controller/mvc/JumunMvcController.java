@@ -64,7 +64,7 @@ public class JumunMvcController {
 	@GetMapping("/order/orderList")
 	public ModelAndView orderList(Principal principal) {
 		List<JumunDto.JumunList> jumunList = jumunService.readJumunList(principal.getName());
-		return new ModelAndView("/order/orderList").addObject("jumunList", jumunList);
+		return new ModelAndView("/order/orderList").addObject("jumunList", jumunList).addObject("role", "ROLE_MEMBER");
 	}
 		
 }

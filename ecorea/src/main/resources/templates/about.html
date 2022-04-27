@@ -38,30 +38,22 @@
     }
   </style>
 <body>
-  <header class="navwrapper">
-    <span class="leftnav"><a href="/">ECorea</a></span>
-    <span class="leftnav"><a href="/product/productList?nowPage=1&amount=9&catecode=&sort=">SHOP</a></span>
-    <span class="leftnav"><a href="/challenge/challengeList">CHALLENGE</a></span>
-    <span class="leftnav"><a href="/about">ABOUT</a></span>
-    <span class="rightnav all"><a href="/general/joinSelect">JOIN</a></span> 
-    <span class="rightnav all"><a href="/general/login">LOGIN</a></span>
-	<span class="rightnav member corp" style="display: none;"><a href="/general/logout">LOGOUT</a></span>
-	<span class="rightnav member" style="display: none;"><a href="/mypage/member/memberMypage">MYPAGE</a></span>
-	<span class="rightnav member" style="display: none;"><a href="/order/cart">CART</a></span> 
-   	<span class="rightnav corp" style="display: none;"><a href="/mypage/corp/corpMypage">MYPAGE</a></span>
-  </header>
+<header th:replace="fragments/common :: header">
+</header>
+	<div id="aboutwrap">
+		<div class="aboutimg">
+			<img src="/image/about.jpg" alt="홈페이지 소개">
+		</div>
 
-  <div id="aboutwrap">
-  <div class="aboutimg">
-    <img src="/image/about.jpg" alt="홈페이지 소개">
-  </div>
-
-  <div class="about">
-    <h1>ABOUT</h1>
-    <p class="aboutp">ECorea는 친환경, 제로웨이스트, 비건 등 ESG를 지향하는 시장 트렌드에 맞춰 이에 해당하는 기업들의 제품을 소비자와 이어주고 지구온난화, 대기오염, 기후변화 등으로 피해를 입고 있는 사람과 동물들을 위한 챌린지를 진행함으로써 환경오염에 대한 심각성을 부각시키며 자연스럽게 소비자들을 친환경 제품들의 구매로 이어지게끔 유도하기위해 만든 기업입니다.
-    </p>
-  </div>
-</div>
-<footer th:replace="fragments/common::footer"></footer>
+		<div class="about">
+			<h1>ABOUT</h1>
+			<p class="aboutp">ECorea는 친환경, 제로웨이스트, 비건 등 ESG를 지향하는 시장 트렌드에 맞춰
+				이에 해당하는 기업들의 제품을 소비자와 이어주고 지구온난화, 대기오염, 기후변화 등으로 피해를 입고 있는 사람과 동물들을
+				위한 챌린지를 진행함으로써 환경오염에 대한 심각성을 부각시키며 자연스럽게 소비자들을 친환경 제품들의 구매로 이어지게끔
+				유도하기위해 만든 기업입니다.</p>
+		</div>
+	</div>
+<footer id="footer" th:replace="fragments/common::footer"></footer>
+<script src="/js/index.js"></script>
 </body>
 </html>
