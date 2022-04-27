@@ -27,10 +27,23 @@ public class ChProveService {
 	@Value("${upload.image.folder}")
 	private String imageFolder; 
 	
-	// 나의 챌린지 목록 출력
+	// 나의 챌린지 목록 출력 - 인증 O
 	public List<ChProveDto.ProveList> readProve(String memberId) {
 		List<ChProveDto.ProveList> proveList = proveDao.findByMemberId(memberId, imagePath);
 		return proveList;
+	}
+	
+	// 나의 챌린지 목록 출력 - 인증 X
+	public List<ChProveDto.ChallengeApply> readChApply(String memberId) {
+		List<Integer> checkList = proveDao.applyCheckList(memberId);
+		List<ChProveDto.ChallengeApply> applyList = new ArrayList<>();
+		for(Integer cno: checkList) {
+			Integer result = proveDao.countChApply(memberId, cno);
+			if(result == 0) {
+				applyList.add(proveDao.applyFindByMemberId(memberId, cno)); 
+			}
+		}
+		return applyList;
 	}
 	
 	// 챌린지 인증 등록

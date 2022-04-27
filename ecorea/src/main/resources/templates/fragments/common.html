@@ -25,11 +25,11 @@
 	<link rel="icon" href="/image/favicon.png">
 	<script src="/js/loginMenu.js"></script>
 	<script th:inline="javascript">	
-  	$(document).ready(function() {
-  		$.ajax({url:"/navMenu"}).done((role) => {
-	  		loginMenu(role);
-  		})
-  	});
+	  	$(document).ready(function() {
+	  		$.ajax({url:"/navMenu"}).done((role) => {
+		  		loginMenu(role);
+	  		})
+	  	});
   </script>
   <title>ECorea</title>
 </head>

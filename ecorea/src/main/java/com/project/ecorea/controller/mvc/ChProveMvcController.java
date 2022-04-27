@@ -25,7 +25,7 @@ public class ChProveMvcController {
 	@GetMapping("/challenge/member/challengeList")
 	public ModelAndView readProve(Principal principal) {
 		ModelAndView mav = new ModelAndView("challenge/member/challengeList");
-		mav.addObject("proveList", proveService.readProve(principal.getName()));
+		mav.addObject("proveList", proveService.readProve(principal.getName())).addObject("applyList", proveService.readChApply(principal.getName()));
 		return mav;
 	}
 	
