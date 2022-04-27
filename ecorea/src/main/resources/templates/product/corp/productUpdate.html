@@ -30,34 +30,36 @@
 <body>
 <header th:replace="fragments/common :: header">
 </header>
-  <h1>상품 수정</h1>
-  <div class="wrapper">
-  <form action="/product/productUpdate" method="post"> 
-    <div class="mb-3 mt-3">
-      <label for="product-name" class="form-label">상품명</label>
-      <input type="text" class="form-control" id="product-name" placeholder="변경가능" name="product-name">
-    </div>
-    <div class="mb-3">
-      <label for="corpid" class="form-label">기업명</label>
-      <input type="text" class="form-control" id="corpid" name="corpid">
-    </div>
-    <div class="mb-3">
-      <label for="price" class="form-label">가격</label>
-      <input type="text" class="form-control" placeholder="변경가능" id="price" name="price">
-    </div>
-    <div class="mb-3">
-      <label for="stock" class="form-label">재고</label>
-      <input type="text" class="form-control"  placeholder="변경가능" id="stock" name="stock">
-    </div>
-    <div class="mb-3">
-      <label for="pimg" class="form-label">썸네일 이미지</label>
-      <input type="text" class="form-control"  placeholder="변경가능" id="pimg" name="pimg">
-    </div>
-    <button type="submit">첨부파일</button>
-    <label for="info" class="form-label">상세 정보</label><br><br>
-    <a href="./../mypage/corp/productList"><button type="submit" class="btn btn-primary">취소</button></a>
-    <a href="./corp/productDetail"><button type="submit" class="btn btn-primary">수정</button></a>
-  </form>
+<div id="wrapper">
+	  <h1>상품 수정</h1>
+	  <div class="wrapper">
+	  <form action="/product/productUpdate" method="post"> 
+	    <div class="mb-3 mt-3">
+	      <label for="product-name" class="form-label">상품명</label>
+	      <input type="text" class="form-control" id="product-name" placeholder="변경가능" name="product-name">
+	    </div>
+	    <div class="mb-3">
+	      <label for="corpid" class="form-label">기업명</label>
+	      <input type="text" class="form-control" id="corpid" name="corpid">
+	    </div>
+	    <div class="mb-3">
+	      <label for="price" class="form-label">가격</label>
+	      <input type="text" class="form-control" placeholder="변경가능" id="price" name="price">
+	    </div>
+	    <div class="mb-3">
+	      <label for="stock" class="form-label">재고</label>
+	      <input type="text" class="form-control"  placeholder="변경가능" id="stock" name="stock">
+	    </div>
+	    <div class="mb-3">
+	      <label for="pimg" class="form-label">썸네일 이미지</label>
+	      <input type="text" class="form-control"  placeholder="변경가능" id="pimg" name="pimg">
+	    </div>
+	    <button type="submit">첨부파일</button>
+	    <label for="info" class="form-label">상세 정보</label><br><br>
+	    <a href="./../mypage/corp/productList"><button type="submit" class="btn btn-primary">취소</button></a>
+	    <a href="./corp/productDetail"><button type="submit" class="btn btn-primary">수정</button></a>
+	  </form>
+	</div>
 </div>
 <footer th:replace="fragments/common :: footer">
 </footer>

@@ -6,9 +6,12 @@
 body {
 background: url('/image/bg.png');
 }
- h1 {
- margin-top: 50px;
- }
+  #wrapper {
+    display: flex;
+  }
+  h1 {
+    margin-top: 50px;
+  }
   ul li {
     list-style: none;
     display: inline-block;
@@ -44,10 +47,8 @@ background: url('/image/bg.png');
 	}
 </script>
 <body>
-<header th:replace="fragments/common :: header">
-</header>
 <h1>로그인</h1>
-<div class="wrapper">
+<div id="wrapper" class="wrapper">
 	<form action="/general/login" method="post">
 		<div class="mb-3 mt-3">
 			<label for="id" class="form-label">아이디</label> <input type="text"
@@ -68,7 +69,5 @@ background: url('/image/bg.png');
 		</div>
 	</form>
 </div>
-<footer id="footer" th:replace="fragments/common :: footer">
-</footer>
 </body>
 </html>

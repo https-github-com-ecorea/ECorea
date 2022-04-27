@@ -59,10 +59,11 @@ public class ProductMvcController {
 	@GetMapping("/product/member/productDetail")
 	public ModelAndView productRead(Integer pno, HttpSession session, HttpServletRequest request, Principal principal) {
 		session.setAttribute("pno", pno);
-		if (principal == null || request.isUserInRole("ROLE_MEMBER"))
+		if (request.isUserInRole("ROLE_MEMBER"))
 			return new ModelAndView("product/member/productDetail").addObject("product", productService.productRead(pno)).addObject("role", "ROLE_MEMBER");
-		else 
+		else if (request.isUserInRole("ROLE_CORP"))
 			return new ModelAndView("product/corp/productDetail").addObject("product", productService.productRead(pno));
+		return new ModelAndView("product/member/productDetail").addObject("product", productService.productRead(pno));
 	}
 	
 //	// 기업회원 상품 상세페이지

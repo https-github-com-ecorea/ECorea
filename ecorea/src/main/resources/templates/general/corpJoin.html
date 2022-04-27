@@ -37,8 +37,6 @@
 	}
   </style>
 <body>
-<header th:replace="fragments/common :: header">
-</header>
   <div class="wrap">
     <h1>기업 회원 가입</h1>
   <form action="/general/corpJoin" method="post" class="was-validated">
@@ -82,8 +80,6 @@
     <button type="submit" class="btn btn-primary" id="join">회원가입</button>
   </form>
 </div>
-<footer th:replace="fragments/common :: footer">
-</footer>
 <script>
 		$('#id').focusout(function() {
 			if(idCheck()==false)

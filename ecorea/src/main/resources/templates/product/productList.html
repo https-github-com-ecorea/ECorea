@@ -144,88 +144,107 @@
 	})
 </script>
 <style>
-  .card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  max-width: 380px;
-  text-align: center;
-  font-family: arial;
-  display: inline-block;
-  margin: 30px;
-  }
-.title {
-  color: #1b1b1baf;
-  font-size: 18px;
-}
-.amount {
- font-size: 20px;
- font-weight: bold;
-}
-button {
-  outline: 0;
-  color: white;
-  background-color: gray;
-  text-align: center;
-  cursor: pointer;
-  font-size: 18px;
-  display: inline-block;
-  width: 50%;
-  border: none;
-  border-right: 1px solid white;
-}
-button:hover {
-  color: black;
-}
-.btnwrapper {
- clear: both;
-}
-.left-btn {
-  float: left;
-}
-.right-btn {
-  float: right;
-}
-.card-wrap {
-  display: flex;
-  justify-content: center;
-}
-.card-wrap tr td {
-  width: 380px;
-  height: 250px;
-}
-
-a {
-  text-decoration: none;
-  font-size: 22px;
+.card {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	max-width: 380px;
+	text-align: center;
+	font-family: arial;
+	display: inline-block;
+	margin: 30px;
 }
 
 .card h1 {
-  font-size: 15px;
-  color: crimson;
-  padding-top: 10px;
+    font-size: 15px;
+    color: crimson;
+    padding: 20px;
+    margin: 0;
+}
+
+.title {
+	color: #1b1b1baf;
+	font-size: 18px;
+}
+
+.amount {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+button {
+	outline: 0;
+	color: white;
+	background-color: gray;
+	text-align: center;
+	cursor: pointer;
+	font-size: 18px;
+	display: inline-block;
+	width: 50%;
+	border: none;
+	border-right: 1px solid white;
+}
+
+button:hover {
+	color: black;
+}
+
+.btnwrapper {
+	clear: both;
+}
+
+.left-btn {
+	float: left;
+}
+
+.right-btn {
+	float: right;
+}
+
+.card-wrap {
+	display: flex;
+	justify-content: center;
+}
+
+.card-wrap tr td {
+	width: 380px;
+	height: 250px;
+}
+
+a {
+	text-decoration: none;
+	font-size: 22px;
+}
+
+.card h1 {
+	font-size: 15px;
+	color: crimson;
+	padding-top: 10px;
 }
 
 #category {
-  padding: 27px 0;
+	padding: 27px 0;
 }
+
 #category .position ul {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
 }
-li{
-  padding-left: 0;
-  margin: 20px;
-  display: list-item;
-  text-align: -webkit-match-parent;
+
+li {
+	padding-left: 0;
+	margin: 20px;
+	display: list-item;
+	text-align: -webkit-match-parent;
 }
 
 .category ul li a:hover {
-  color: black;
-} 
- </style>
+	color: black;
+}
+</style>
 <body>
 <header th:replace="fragments/common :: header">
 </header>
+<div id="wrapper">
     <div class="category">
       <ul>
       	<!-- ★ catecode는 카테고리 데이터 수정하는 대로 수정 필요! -->
@@ -249,20 +268,6 @@ li{
 	
 	<section class="card-wrap">
 	  <table class="twrap">
-	  <!-- 
-	  	<tr th:each="product : ${list}">
-	  		<td>
-	  			<div class="card">
-			  		<a th:href="@{/product/member/productDetail(pno=${product.pno})}"><img th:src="${product.pthumbnail}" alt="상품" style="width:100%"></a>
-		            <a th:href="@{/product/member/productDetail(pno=${product.pno})}"><h1 th:text="${product.cname}"></h1></a>
-		            <a th:href="@{/product/member/productDetail(pno=${product.pno})}"><p class="title" th:text="${product.pname}"></p></a>
-		            <p class="amount" th:text="${product.price} + ' 원'"></p>
-		            <div class="btnwrapper">
-		            <p><button class="left-btn">바로구매</button></p>
-		            <p><button class="right-btn">장바구니</button></p>
-	  			</div>
-	  		</td>
-	  	-->
 	  </table>
 	  <form id="sendData" method="get">
 	  	<input type="hidden" name="nowPage" value="${pageMaker.cri.nowPage}">
@@ -273,8 +278,8 @@ li{
 	</section>
 		<div id="pagination" style="display:flex; justify-content:center;">
 		</div>
-	
-	<input class="goupbtn" type="button" value="↑" onclick="clickme()"></div>
+	<input class="goupbtn" type="button" value="↑" onclick="clickme()">
+</div>
 <footer th:replace="fragments/common :: footer">
 </footer>
 <script src="/js/index.js"></script>
