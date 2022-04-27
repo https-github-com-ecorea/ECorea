@@ -35,7 +35,6 @@ public class HugiMvcController {
 	@PostMapping("/order/reviewUpload")
 	public String reviewUpload(Principal principal, HugiDto.HugiUpload upload) {
 		hugiService.reviewUpload(principal.getName(), upload);
-		
 		return "redirect:/order/reviewList";
 	}
 	

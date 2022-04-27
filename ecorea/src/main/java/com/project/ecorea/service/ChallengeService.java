@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 
+import com.project.ecorea.controller.rest.*;
 import com.project.ecorea.dao.*;
 import com.project.ecorea.dto.*;
 import com.project.ecorea.entity.*;
@@ -134,6 +135,10 @@ public class ChallengeService {
 
 	public int getCorpListTotal(String loginId) {
 		return dao.getCorpListTotal(loginId);
+	}
+
+	public Boolean deleteChallenge(Integer cno) {
+		return dao.deleteByCno(cno);
 	}
 	
 	

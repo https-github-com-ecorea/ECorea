@@ -3,7 +3,7 @@
 <head th:replace="fragments/common::html-head">
   <title>문의글 상세</title>
 </head>
-  <style>  
+<style>  
   input[type=text], select, textarea {
     width: 100%;
     padding: 12px;
@@ -20,9 +20,9 @@
     background-color: #f2f2f2;
     padding: 20px;
   }
-  </style>
-  <script th:inline="javascript">
-    const question = /*[[${memberQnaDetail[0]}]]*/
+</style>
+<script th:inline="javascript">
+  const question = /*[[${memberQnaDetail[0]}]]*/
 	console.log(question);
     
    	/* 삭제 버튼 처리 함수 */
@@ -67,7 +67,7 @@
 			previewImage();
 		});
   	});
-  </script>
+</script>
 <body>
 	<header th:replace="fragments/common::header"></header>
   <h1>문의글 상세</h1>

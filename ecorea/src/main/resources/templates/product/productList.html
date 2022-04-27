@@ -1,27 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-  integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
-  crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
-  integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
-  crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
-  integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
-  crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-  <link rel="stylesheet" href="/css/common.css">
-  <link rel="stylesheet" href="/css/index.css">
-  <link rel="icon" href="/image/favicon.png">
-  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script th:inline="javascript">
+<head th:replace="fragments/common :: html-head">
+</head>
+<script th:inline="javascript">
   	const list = /*[[${list}]]*/
   	var pagemaker = /*[[${pageMaker}]]*/
   	const role = /*[[${role}]]*/
@@ -51,7 +32,7 @@
 			const $td = $('<td>').appendTo($tr);
   			const $card = $('<div class="card">').appendTo($td);
   			let $a;
-  			if (role == "ROLE_MEMBER") {
+  			if (role == "ROLE_MEMBER" || role == null) {
 	  			$a = $('<a>').attr('href', "/product/member/productDetail?pno=" + product.pno).attr('title', product.name).appendTo($card);  				
   			} else if (role == "ROLE_CORP") {
 	  			$a = $('<a>').attr('href', "/product/corp/productDetail?pno=" + product.pno).attr('title', product.name).appendTo($card);  				  				
@@ -160,108 +141,111 @@
 		
 		/* 낮은 가격순 정렬 버튼 처리 */
 		$('#lowprice').click(lowPrice);
-		
-		
-		
 	})
-  </script>
-  <style>
-  .card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  max-width: 380px;
-  text-align: center;
-  font-family: arial;
-  display: inline-block;
-  margin: 30px;
-  }
-.title {
-  color: #1b1b1baf;
-  font-size: 18px;
-}
-.amount {
- font-size: 20px;
- font-weight: bold;
-}
-button {
-  outline: 0;
-  color: white;
-  background-color: gray;
-  text-align: center;
-  cursor: pointer;
-  font-size: 18px;
-  display: inline-block;
-  width: 50%;
-  border: none;
-  border-right: 1px solid white;
-}
-button:hover {
-  color: black;
-}
-.btnwrapper {
- clear: both;
-}
-.left-btn {
-  float: left;
-}
-.right-btn {
-  float: right;
-}
-.card-wrap {
-  display: flex;
-  justify-content: center;
-}
-.card-wrap tr td {
-  width: 380px;
-  height: 250px;
-}
-
-a {
-  text-decoration: none;
-  font-size: 22px;
+</script>
+<style>
+.card {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	max-width: 380px;
+	text-align: center;
+	font-family: arial;
+	display: inline-block;
+	margin: 30px;
 }
 
 .card h1 {
-  font-size: 15px;
-  color: crimson;
-  padding-top: 10px;
+    font-size: 15px;
+    color: crimson;
+    padding: 20px;
+    margin: 0;
+}
+
+.title {
+	color: #1b1b1baf;
+	font-size: 18px;
+}
+
+.amount {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+button {
+	outline: 0;
+	color: white;
+	background-color: gray;
+	text-align: center;
+	cursor: pointer;
+	font-size: 18px;
+	display: inline-block;
+	width: 50%;
+	border: none;
+	border-right: 1px solid white;
+}
+
+button:hover {
+	color: black;
+}
+
+.btnwrapper {
+	clear: both;
+}
+
+.left-btn {
+	float: left;
+}
+
+.right-btn {
+	float: right;
+}
+
+.card-wrap {
+	display: flex;
+	justify-content: center;
+}
+
+.card-wrap tr td {
+	width: 380px;
+	height: 250px;
+}
+
+a {
+	text-decoration: none;
+	font-size: 22px;
+}
+
+.card h1 {
+    font-size: 15px;
+    color: crimson;
+    padding: 20px;
+    margin: 0;
 }
 
 #category {
-  padding: 27px 0;
+	padding: 27px 0;
 }
+
 #category .position ul {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
 }
-li{
-  padding-left: 0;
-  margin: 20px;
-  display: list-item;
-  text-align: -webkit-match-parent;
+
+li {
+	padding-left: 0;
+	margin: 20px;
+	display: list-item;
+	text-align: -webkit-match-parent;
 }
 
 .category ul li a:hover {
-  color: black;
-} 
- </style>
- <title>상품 목록</title>
-</head>
+	color: black;
+}
+</style>
 <body>
-  <header class="navwrapper">
-    <span class="leftnav"><a href="/">ECorea</a></span>
-    <span class="leftnav"><a href="/product/productList?nowPage=1&amount=9&catecode=&sort=">SHOP</a></span>
-    <span class="leftnav"><a href="/challenge/challengeList?nowPage=1&amount=9">CHALLENGE</a></span>
-    <span class="leftnav"><a href="/">ABOUT</a></span>
-    <span class="rightnav all"><a href="/general/joinSelect">JOIN</a></span> 
-    <span class="rightnav all"><a href="/general/login">LOGIN</a></span>
-	<span class="rightnav member corp" style="display: none;"><a href="/general/logout">LOGOUT</a></span>
-	<span class="rightnav member" style="display: none;"><a href="/mypage/member/memberMypage">MYPAGE</a></span>
-	<span class="rightnav member" style="display: none;"><a href="/order/cart">CART</a></span> 
-   	<span class="rightnav corp" style="display: none;"><a href="/mypage/corp/corpMypage">MYPAGE</a></span>
-  </header>
-
-
+<header th:replace="fragments/common :: header">
+</header>
+<div id="wrapper">
     <div class="category">
       <ul>
       	<!-- ★ catecode는 카테고리 데이터 수정하는 대로 수정 필요! -->
@@ -275,7 +259,6 @@ li{
       </ul>
     </div>
 
-
   <div class="mininav">
     <ul>
       <li><a href="#" id="newest">신상품</a></li>
@@ -286,20 +269,6 @@ li{
 	
 	<section class="card-wrap">
 	  <table class="twrap">
-	  <!-- 
-	  	<tr th:each="product : ${list}">
-	  		<td>
-	  			<div class="card">
-			  		<a th:href="@{/product/member/productDetail(pno=${product.pno})}"><img th:src="${product.pthumbnail}" alt="상품" style="width:100%"></a>
-		            <a th:href="@{/product/member/productDetail(pno=${product.pno})}"><h1 th:text="${product.cname}"></h1></a>
-		            <a th:href="@{/product/member/productDetail(pno=${product.pno})}"><p class="title" th:text="${product.pname}"></p></a>
-		            <p class="amount" th:text="${product.price} + ' 원'"></p>
-		            <div class="btnwrapper">
-		            <p><button class="left-btn">바로구매</button></p>
-		            <p><button class="right-btn">장바구니</button></p>
-	  			</div>
-	  		</td>
-	  	-->
 	  </table>
 	  <form id="sendData" method="get">
 	  	<input type="hidden" name="nowPage" value="${pageMaker.cri.nowPage}">
@@ -310,16 +279,10 @@ li{
 	</section>
 		<div id="pagination" style="display:flex; justify-content:center;">
 		</div>
-	
-	<input class="goupbtn" type="button" value="↑" onclick="clickme()"></div>
-	
-<footer>
-  <address style="font-size:12px; display:inline-block;margin-top:10px;margin-left:20px;">
-    인천광역시 미추홀구<br>
-    이메일 : ecorea@gmail.com<br>
-    전화번호 : 032-000-0000
-  </address>
+	<input class="goupbtn" type="button" value="↑" onclick="clickme()">
+</div>
+<footer th:replace="fragments/common :: footer">
 </footer>
-  <script src="/js/index.js"></script>
+<script src="/js/index.js"></script>
 </body>
 </html>

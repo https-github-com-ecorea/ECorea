@@ -50,6 +50,7 @@ public class ProductDto {
 	@Data
 	public static class Upload {
 		private String pname;
+		private String catecode;
 		private String corpId;
 		private Integer price;
 		private Integer pstock;
@@ -57,7 +58,7 @@ public class ProductDto {
 		private String pcontent;
 		
 		public Product toEntity() {
-			return Product.builder().catecode("1").price(price).pname(pname).pstock(pstock)
+			return Product.builder().catecode(catecode).price(price).pname(pname).pstock(pstock)
 					.pcontent(pcontent).pordercnt(0).pregday(LocalDate.now()).corpId(corpId).build();
 		}
 	}

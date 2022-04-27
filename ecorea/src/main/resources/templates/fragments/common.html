@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html lang="ko">
+<!-- 헤드 사용!!
+<head th:replace="fragments/common :: html-head">
+</head>
+ -->
 <head th:fragment="html-head">
-	<meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+<meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
 	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
 		integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
@@ -15,94 +19,51 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
 		integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
 		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<link rel="stylesheet" href="/css/common.css">
 	<link rel="stylesheet" href="/css/index.css">
 	<link rel="icon" href="/image/favicon.png">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<script th:inline="javascript">
-  	$(document).ready(function() {
-  		loginMenu();
-  	});
+	<script src="/js/loginMenu.js"></script>
+	<script th:inline="javascript">	
+	  	$(document).ready(function() {
+	  		$.ajax({url:"/navMenu"}).done((role) => {
+		  		loginMenu(role);
+	  		})
+	  	});
   </script>
   <title>ECorea</title>
 </head>
+
 <body>
-
-  <header th:fragment="header" class="navwrapper">
-    <span class="leftnav"><a href="/">ECorea</a></span>
-    <span class="leftnav"><a href="/product/productList?nowPage=1&amount=9&catecode=&sort=">SHOP</a></span>
-
-    <span class="leftnav"><a href="/challenge/challengeList">CHALLENGE</a></span>
-    <span class="leftnav"><a href="/about">ABOUT</a></span>
-
-	<!-- 
-    //<span class="leftnav"><a href="/challenge/challengeList?nowPage=1&amount=9">CHALLENGE</a></span>
-    //<span class="leftnav"><a href="/">ABOUT</a></span> 
-	 -->
-
-    <span class="rightnav all"><a href="/general/joinSelect">JOIN</a></span> 
-    <span class="rightnav all"><a href="/general/login">LOGIN</a></span>
+<!-- 헤더 사용!! 
+<header th:replace="fragments/common :: header">
+</header>
+ -->
+<header th:fragment="header">
+	<span class="leftnav"><a href="/">ECorea</a></span>
+	<span class="leftnav"><a href="/product/productList?nowPage=1&amount=9&catecode=&sort=">SHOP</a></span>
+	<span class="leftnav"><a href="/challenge/challengeList">CHALLENGE</a></span>
+	<span class="leftnav"><a href="/about">ABOUT</a></span>
+	<span class="rightnav all"><a href="/general/joinSelect">JOIN</a></span> 
+	<span class="rightnav all"><a href="/general/login">LOGIN</a></span>
 	<span class="rightnav member corp" style="display: none;"><a href="/general/logout">LOGOUT</a></span>
 	<span class="rightnav member" style="display: none;"><a href="/mypage/member/memberMypage">MYPAGE</a></span>
 	<span class="rightnav member" style="display: none;"><a href="/order/cart">CART</a></span> 
-   	<span class="rightnav corp" style="display: none;"><a href="/mypage/corp/corpMypage">MYPAGE</a></span>
-  </header>
+	<span class="rightnav corp" style="display: none;"><a href="/mypage/corp/corpMypage">MYPAGE</a></span>
+</header>
 
-  <section id="services">
-    <div class="section-content">
-      <div class="container services">
-        <div class="services-header text-center mb-5">
-          <p class="display-5">최신 상품</p>
-        </div>
-        <div id="slick-slide" class="sercives-body">
-		<!-- 상품 목록 -->
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <article>
-    <!-- Carousel -->
-    <div id="demo" class="carousel slide" data-bs-ride="carousel">
-    
-      <!-- Indicators/dots -->
-      <div class="carousel-indicators">
-        <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
-        <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
-        <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
-      </div>
-    
-      <!-- The slideshow/carousel -->
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="/image/slider1.jpg" alt="챌린지 슬라이더 이미지1" class="d-block w-100">
-        </div>
-        <div class="carousel-item">
-          <img src="/image/slider2.jpg" alt="챌린지 슬라이더 이미지2" class="d-block w-100">
-        </div>
-        <div class="carousel-item">
-          <img src="/image/slider3.jpg" alt="챌린지 슬라이더 이미지3" class="d-block w-100">
-        </div>
-      </div>
-    
-      <!-- Left and right controls/icons -->
-      <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
-        <span class="carousel-control-next-icon"></span>
-      </button>
-    </div>
-    </article>
-
-    <input class="goupbtn" type="button" value="↑" onclick="clickme()"></div>
-
-    <footer class="footer" th:fragment="footer">
-      <address style="font-size: 12px; display:inline-block; margin-top:20px;margin-left:30px;">
-        인천광역시 미추홀구<br>
-        이메일 : ecorea@gmail.com<br>
-        전화번호 : 032-000-0000
-      </address>
-    </footer>
+<!-- 푸터 사용!!
+<footer th:replace="fragments/common :: footer">
+</footer>
+<script src="/js/index.js"></script>
+ -->
+<footer class="footer" th:fragment="footer">
+	<address style="font-size: 12px; display:inline-block;margin-top:20px;margin-left:30px;">
+	  인천광역시 미추홀구<br>
+	  이메일 : ecorea@gmail.com<br>
+	  전화번호 : 032-000-0000
+	</address>
+</footer>
+  
 </body>
 </html>

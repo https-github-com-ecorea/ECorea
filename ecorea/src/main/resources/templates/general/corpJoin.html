@@ -1,15 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <link rel="stylesheet" href="/css/common.css">
-  <link rel="icon" href="/image/favicon.png">
+<head th:replace="fragments/common :: html-head">
+</head> 
   <script src="/js/check.js"></script>
   <style>
     body {
@@ -20,16 +12,9 @@
       margin-bottom: 20px;
       margin-top: 50px;
     }
-    #join {
-    float: right;
-    }
-    .form-control {
+   .form-control {
       width: 400px;
       margin-bottom: 10px;
-    }
-    .was-validated {
-      position:absolute;
-      left: 34%;
     }
     #address {
       margin-bottom: 20px;
@@ -43,12 +28,18 @@
 		color: red; 
 		font-size: 0.75em; 
 	}
+	.wrap {
+	  display: flex;
+	  justify-content: center;
+      text-align: start;
+	}
+	.btn {
+	width: 140px;
+	}
   </style>
-  <title>기업 회원 가입</title>
-</head>
 <body>
-  <div class="wrap">
-    <h1>기업 회원 가입</h1>
+   <h1>기업 회원 가입</h1>
+   <div class="wrap">
   <form action="/general/corpJoin" method="post" class="was-validated">
     <div class="mb-3 mt-3">
       <label for="name" class="form-label">기업명</label>
@@ -89,9 +80,11 @@
     </div>
     <button type="submit" class="btn btn-primary" id="join">회원가입</button>
   </form>
-</div>
+  </div>
+  
+  
 <script>
-		/* $('#id').focusout(function() {
+		$('#id').focusout(function() {
 			if(idCheck()==false)
 				return false;
 			$.ajax("/user/overlap/id?id="+$('#id').val())
@@ -114,7 +107,7 @@
 					$('#join_form').submit();
 				})
 			.fail(()=>$('#id_msg').text('사용중인 아이디입니다').attr('class','fail'));
-		}); */
+		});
 		
 
 		//본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
