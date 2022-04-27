@@ -20,13 +20,3 @@ if (slickSlide) {
 function clickme() {
   window.scrollTo({top:0, left:0, behavior:'smooth'});
 }
-
-function loginMenu() {
-	if(role=="ROLE_MEMBER") {
-  			$('.member').css('display','block');
-  			$('.all').css('display','none');
-  		} else if(role=="ROLE_CORP") {
-  			$('.corp').css('display','block');
-  			$('.all').css('display','none');
-  		}
-}

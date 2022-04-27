@@ -99,4 +99,8 @@
 		select count(*) from challenge where corp_id=#{id}
 	</select>
 	
+	<delete id="deleteByCno">
+		delete from challenge where cno=#{cno}
+	</delete>
+	
 </mapper>

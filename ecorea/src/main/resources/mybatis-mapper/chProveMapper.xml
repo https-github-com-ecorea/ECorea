@@ -77,9 +77,13 @@
 	</delete>
 	
 	<insert id="saveApply">
-		<selectKey keyProperty="chapplynum" order="BEFORE" resultType="int">
+		<selectKey keyProperty="chapplyno" order="BEFORE" resultType="int">
 			select chapplycheck_seq.nextval from dual
 		</selectKey>
-		insert into chapplycheck values(#{chapplynum}, #{id}, #{cno})
+		insert into chapplycheck values(#{chapplyno}, #{id}, #{cno})
 	</insert>
+	
+	<select id="chApplyFindById" resultType="int">
+		select count(*) from chapplycheck where member_id=#{id}
+	</select>
 </mapper>

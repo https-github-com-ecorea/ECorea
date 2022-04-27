@@ -28,7 +28,7 @@ public class HugiMvcController {
 	
 	// 일반회원 후기 등록 페이지
 	@GetMapping("/order/reviewUpload")
-	public ModelAndView reviewUpload(Integer pno, Integer jno) {
+	public ModelAndView reviewUpload(Integer jno) {
 		return new ModelAndView("order/reviewUpload").addObject("jno", jno);
 	}
 	

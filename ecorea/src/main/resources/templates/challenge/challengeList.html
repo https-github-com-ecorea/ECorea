@@ -82,7 +82,6 @@ margin-bottom: 5px;
   </style>
   <script th:inline="javascript">
   	var pagemaker = /*[[${pageMaker}]]*/
-  	const role = /*[[${role}]]*/
   	
   		/* 페이징 */
   	  	function pagination() {
@@ -106,7 +105,6 @@ margin-bottom: 5px;
   	
   	$(document).ready(function() {
 		pagination();
-		loginMenu();
   	});
   </script>
 
