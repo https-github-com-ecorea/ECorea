@@ -111,7 +111,6 @@ h1 {
 </header>
 <div id="wrapper">
   <h1>챌린지 목록</h1><br>
-
   <a href="/challenge/corp/challengeUpload" class="btn btn-primary">등록</a>
   <!-- MAIN (Center website) -->
 <div class="main">
@@ -203,12 +202,33 @@ h1 {
 	      		let $thirdParentsDiv = $('<div>').appendTo($secondParentsDiv);
 	      			let $progressDiv = $('<div class="progress">').appendTo($thirdParentsDiv);
 	      			$('<div class="progress-bar">').css('width', percentage+"%").text(percentage+"%").appendTo($progressDiv);
-	      		/* let $update = $('<a id="update">').attr('href', '/challenge/corp/challengeUpdate?cno=' + challenges.cno).appendTo($secondParentsDiv); */
-   				$('<a type="submit" class="btn btn-primary">').attr('href', '/challenge/corp/challengeUpdate?cno=' + challenges.cno).text('수정').appendTo($secondParentsDiv);
-	      		$('<a type="submit" class="btn btn-primary">').css('margin-left', '5px').text('삭제').appendTo($secondParentsDiv);
-	      
+   				$('<button type="submit" class="btn btn-primary updateBtn">').attr('type', 'button').attr('data-cno', challenges.cno).text('수정').appendTo($secondParentsDiv);
+	      		$('<button type="submit" class="btn btn-primary deleteBtn">').attr('type', 'button').attr('data-cno', challenges.cno).css('margin-left', '5px').text('삭제').appendTo($secondParentsDiv);
 	}
   
+  	$(document).on('click', '.deleteBtn', function() {
+  		let cno = $(this).data('cno');
+		if(confirm('챌린지를 삭제하시겠습니까?')) {
+			$.ajax({
+				url: '/challenge/corp/deleteChallenge',
+				method: 'post',
+				data: {
+					cno: cno
+				}
+			}).done(() => {
+				alert('챌린지를 삭제하였습니다');
+				location.reload(true);
+			});
+		}
+	})
+	
+	$(document).on('click', '.updateBtn', function() {
+  		let cno = $(this).data('cno');
+		const $form = $('<form>').attr('action', '/challenge/corp/challengeUpdate').appendTo($('body'));
+		$('<input>').attr('type','hidden').attr('name', 'cno').val(cno).appendTo($form);
+		$form.submit();
+	})
+  	
   filterSelection("all")
   function filterSelection(c) {
     var x, i;

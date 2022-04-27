@@ -2,11 +2,13 @@ package com.project.ecorea.controller.rest;
 
 import java.security.Principal;
 
+import javax.servlet.http.*;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.*;
+import org.springframework.web.bind.annotation.*;
 
 import com.project.ecorea.service.UserService;
 
@@ -53,5 +55,17 @@ public class UserRestController {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("아이디와 이메일을 확인해주세요");
 		}
 		return ResponseEntity.ok("임시비밀번호를 이메일로 전송했습니다");
+	}
+	
+	@GetMapping("/navMenu")
+	public ResponseEntity<String> navMenu(HttpServletRequest request, Principal principal) {
+		if(principal==null) {
+			return ResponseEntity.status(HttpStatus.OK).body(null);
+		}
+		if(request.isUserInRole("ROLE_MEMBER")) {
+			return ResponseEntity.status(HttpStatus.OK).body("ROLE_MEMBER");
+		} else {
+			return ResponseEntity.status(HttpStatus.OK).body("ROLE_CORP");
+		}
 	}
 }

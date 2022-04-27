@@ -21,7 +21,14 @@ public interface ChProveDao {
 	public Integer deleteByMemberIdAndCno(String memberId, Integer cno);
 
 	public int getChallengeDetailTotal(Integer cno);
+	
+	public List<Integer> applyCheckList(String memberId);
+	
+	public ChProveDto.ChallengeApply applyFindByMemberId(String memberId, Integer cno);
+	
+	public Integer countChApply(String memberId, Integer cno);
 
 	public void saveApply(ChApplyCheck chApplyCheck);
 
+	public Boolean chApplyFindById(ChApplyCheck chApplyCheck);
 }
