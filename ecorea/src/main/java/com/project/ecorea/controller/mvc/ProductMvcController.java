@@ -105,7 +105,7 @@ public class ProductMvcController {
 	@Secured("ROLE_CORP")
 	@GetMapping("/mypage/corp/productList") 
 	public ModelAndView regProductList(Principal principal) {
-		return new ModelAndView("mypage/corp/productList").addObject("regProducts", productService.regProductsList(principal.getName()));
+		return new ModelAndView("mypage/corp/productList").addObject("regProducts", productService.regProductsList(principal.getName())).addObject("role", "ROLE_CORP");
 	}
 
 	// 상품 수정페이지에서 등록된 상품 상세정보 출력

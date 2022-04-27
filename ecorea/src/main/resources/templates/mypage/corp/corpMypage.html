@@ -1,12 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head th:replace="fragments/common::html-head">
-  	<title>마이페이지 - 기업회원</title>
 </head>
 <style>
-    body {
-  		background: url('/image/bg.png');
-  	}
     .btn {
       width: 150px;
       height: 150px;
@@ -31,15 +27,17 @@
 </style>
 <body>
  	<header class="navwrapper" th:replace="fragments/common::header"></header>
+ 	<div id="wrapper">
 	<h1>마이페이지 - 기업회원</h1>
 	<div class="wrapper">
 		<a href="/mypage/corp/info"><button type="text" class="btn btn-primary">기업정보 보기</button></a>
 		<a href="/challenge/corp/challengeList?nowPage=1&amount=9"><button type="text" class="btn btn-primary">챌린지 목록</button></a>
 		<a href="/mypage/corp/productList"><button type="text" class="btn btn-primary">상품 목록</button></a>
 		<a href="/mypage/corp/qnaList"><button type="text" class="btn btn-primary">문의 목록</button></a>
-		<a href="#"><button type="text" class="btn btn-primary">통계</button></a>
 	</div>
 	<input class="goupbtn" type="button" value="↑" onclick="clickme()">
+	</div>
 	<footer th:replace="fragments/common::footer"></footer>
+	<script src="/js/index.js"></script>
 </body>
 </html>
