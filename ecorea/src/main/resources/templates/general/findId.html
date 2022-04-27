@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <link rel="stylesheet" href="/css/common.css">
-  <link rel="icon" href="/image/favicon.png">
+<head th:replace="fragments/common :: html-head">
+</head> 
   <title>아이디 찾기</title>
   <style>
     body {
@@ -20,14 +13,16 @@
       margin-top: 50px;
     }
     .formwrap {
-	margin-left: 450px;
-    }
-    .wrapper {
-      position:absolute;
-      left: 30%;
+	display: flex;
+	justify-content: center;
+	text-align: center;
     }
     .form-control {
-      width: 400px;
+      width: 300px;
+   }
+    .btn {
+    height: 100px;
+    margin-left: 20px;
     }
   </style>
   <script>
@@ -50,7 +45,6 @@
 		});
 	});
 	</script>
-</head>
 <body>
   <h1>아이디 찾기</h1>
   <form class="formwrap">
@@ -59,8 +53,9 @@
 	    <br>
 	    <input type="email" class="form-control" id="email" placeholder="이메일입력" name="email" required>
 	  </div>
-	  <button type="button" class="btn btn-primary" id="findUserId">아이디 찾기</button>
+	   <button type="button" class="btn btn-primary" id="findUserId">아이디 찾기</button>
   </form>
+  
   <div class="mb-3">
   	<p id="view_id" style="display: none">
   		가입하신 아이디는
@@ -71,5 +66,6 @@
   		아이디를 찾을 수 없습니다
   	</p>
   </div>
+<script src="/js/index.js"></script>
 </body>
 </html>

@@ -42,9 +42,10 @@ public class QnaMvcController {
 	public void memberQnaList(Model model, Criteria cri, Principal principal) {
 		log.info("memberMyPageQuestionList");
 		model.addAttribute("memberQnaList", service.memberMyPageQuestionList(principal.getName(), cri));
-		int total = service.getMemberTotal("haramiee");
+		int total = service.getMemberTotal(principal.getName());
 		PageMakerDto pageMaker = new PageMakerDto(cri, total);
 		model.addAttribute("pageMaker", pageMaker);
+		model.addAttribute("role", "ROLE_MEMBER");
 	}
 	
 	/* 일반 회원 - 문의 상세 */
@@ -52,13 +53,14 @@ public class QnaMvcController {
 	@GetMapping("/mypage/member/qnaDetail")
 	public ModelAndView memberQnaDetail(Principal principal, Integer qqno, HttpSession session) {
 		session.setAttribute("memberId", principal.getName());
-		return new ModelAndView("mypage/member/qnaDetail").addObject("memberQnaDetail", service.memberMypageDetail(principal.getName(), qqno));
+		return new ModelAndView("mypage/member/qnaDetail").addObject("memberQnaDetail", service.memberMypageDetail(principal.getName(), qqno)).addObject("role", "ROLE_MEMBER");
 	}
 	
 	/* 일반 회원 - 문의 등록 화면 */
 	@Secured("ROLE_MEMBER")
 	@GetMapping("/mypage/member/qnaUpload")
-	public void uploadQnaQ() {
+	public void uploadQnaQ(Model model) {
+		model.addAttribute("role", "ROLE_MEMBER");
 	}
 	
 	/* 일반 회원 - 문의 등록 */
@@ -113,13 +115,14 @@ public class QnaMvcController {
 		int total = service.getCorpTotal(principal.getName());
 		PageMakerDto pageMaker = new PageMakerDto(cri, total);
 		model.addAttribute("pageMaker", pageMaker);
+		model.addAttribute("role", "ROLE_CORP");
 	}
 
 	/* 기업 회원 - 문의 상세 화면 */
 	@Secured("ROLE_CORP")
 	@GetMapping("/mypage/corp/qnaDetail")
 	public ModelAndView corpQnaDetail(Principal principal, Integer qqno) {
-		return new ModelAndView("mypage/corp/qnaDetail").addObject("corpQnaDetail", service.corpMypageDetail(principal.getName(), qqno));
+		return new ModelAndView("mypage/corp/qnaDetail").addObject("corpQnaDetail", service.corpMypageDetail(principal.getName(), qqno)).addObject("role", "ROLE_CORP");
 	}
 	
 	/* 기업 회원 - 문의 답변 등록 */
