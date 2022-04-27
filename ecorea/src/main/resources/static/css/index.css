@@ -87,7 +87,6 @@ object-fit: cover;
 object-position: center;
 }
 
-/* �뒳�씪�씠�뱶 1 */
 .sercives-body { 
   width: 100%;
   margin: 0px auto;
@@ -98,7 +97,6 @@ object-position: center;
   margin: 0 15px;
 }
 
-/* �뒳�씪�씠�뱶 1 - �떎�쓬 踰꾪듉 */
 .section-content .next{
   position:absolute;
   top:50%;
@@ -108,7 +106,7 @@ object-position: center;
   cursor: pointer;
 }
 
-/* �뒳�씪�씠�뱶 1 - �씠�쟾 踰꾪듉 */
+
 .section-content .prev{
   position:absolute;
   top:50%;
