@@ -18,9 +18,6 @@
 		}
 	});
 </script>
-<style>
-
-</style>
 <body>
   <div id="wrapper">
   <header th:replace="fragments/common :: header">
@@ -30,12 +27,12 @@
     <div class="section-content">
       <div class="container services">
         <div class="services-header text-center mb-5">
-          <p class="display-5">최신 상품</p>
+          <p class="display-5">최신상품</p>
         </div>
         <i class="fas fa-chevron-left prev"></i>
         <i class="fas fa-chevron-right next"></i>
       
-		<!-- 상품 목록 -->
+		<!-- �긽�뭹 紐⑸줉 -->
         <div id="slick-slide" class="sercives-body">
           <div class="services-col mx-2 my-3">
             <div class="card" th:each="product : ${list}">
@@ -43,9 +40,8 @@
                 <img th:src="${product.pthumbnail}" alt="상품" class="card-img-top">
               </a>
               <div class="card-body">
-                <p class="card-title" style="color: crimson;" th:text="${product.cname}">브랜드명</p>
+                <p class="card-title" style="color: crimson;" th:text="${product.cname}"></p>
                 <p class="card-text fw-light mb-4" th:text="${product.pname}">
-                  [업사이클링 DIY] 업사이클링 티셔츠 손목 쿠션 Kit
                 </p>
                 <span style="color:black; font-size: 20px;" th:text="|${product.price} 원|">15,000원</span>
               </div>
@@ -71,13 +67,13 @@
       <!-- The slideshow/carousel -->
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img src="/image/slider1.jpg" alt="챌린지 슬라이더 이미지1" class="d-block w-100">
+          <img src="/image/slider1.jpg" alt="광고 슬라이드 1" class="d-block w-100">
         </div>
         <div class="carousel-item">
-          <img src="/image/slider2.jpg" alt="챌린지 슬라이더 이미지2" class="d-block w-100">
+          <img src="/image/slider2.jpg" alt="광고 슬라이드 2" class="d-block w-100">
         </div>
         <div class="carousel-item">
-          <img src="/image/slider3.jpg" alt="챌린지 슬라이더 이미지3" class="d-block w-100">
+          <img src="/image/slider3.jpg" alt="광고 슬라이드 3" class="d-block w-100">
         </div>
       </div>
     
@@ -91,7 +87,7 @@
     </div>
     </article>
 
-    <input class="goupbtn" type="button" value="↑" onclick="clickme()"></div>
+    <input class="goupbtn" type="button" value="↑" onclick="clickme()">
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

@@ -358,6 +358,13 @@ hr {
 .qnaPageMaker {
 	text-align: center;
 }
+table img {
+width: 200px;
+height: 200px;
+}
+.table td {
+font-size: 15px;
+}
 </style>
 <body>
 <header th:replace="fragments/common :: header">
@@ -377,10 +384,6 @@ hr {
 				th:text="|${product.price}|"></span> 원
 			</span><br>
 			<br>
-			<!--
-      <p style="font-size:20px;">상품명</p><br>
-      <span>판매가격 : <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;원</span></span><br>
-       -->
 			<div class="updown">
 				<span>수량 : </span>&nbsp;&nbsp;&nbsp;
 				<button type="button" id="minus">-</button>

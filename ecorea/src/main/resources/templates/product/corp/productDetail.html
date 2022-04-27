@@ -263,6 +263,13 @@ margin-right: 60px;
 .qnaPageMaker {
 text-align: center;
 }
+table img {
+width: 200px;
+height: 200px;
+}
+.table td {
+font-size: 15px;
+}
 </style>
 <body>
 <header th:replace="fragments/common :: header">
@@ -282,10 +289,6 @@ text-align: center;
 				th:text="${product.price}"></span> 원
 			</span><br>
 			<br>
-			<!--
-      <p style="font-size:20px;">상품명</p><br>
-      <span>판매가격 : <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;원</span></span><br>
-       -->
 	<div class="updown">
 		<span>수량 : </span>&nbsp;&nbsp;&nbsp;
 		<button type="button" id="minus">-</button>
@@ -315,7 +318,6 @@ text-align: center;
 			<p th:utext='${product.pcontent}'></p>
 		</div>
 		<hr>
-
 		<h3 style="text-align: center;" id="content2">구매 후기</h3>
 		<div class="hugizero"></div>
 		<div class="hugilist">
@@ -358,6 +360,7 @@ text-align: center;
 </div>
 <footer th:replace="fragments/common :: footer">
 </footer>
+
   <script>
   	/* 제목 클릭 시 본문 출력 */
 	$(document).on('click', '.title', function() {

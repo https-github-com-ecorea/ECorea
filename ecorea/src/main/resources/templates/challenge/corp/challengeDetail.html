@@ -24,7 +24,8 @@
   <style>
     h3 {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 100px;
+      margin-bottom: 20px;
     }
     .productinfo {
       width: 900px;
@@ -36,9 +37,9 @@
       float: left;
       margin: 10px;
     }
-* {box-sizing: border-box}
-body {font-family: Verdana, sans-serif; margin:0}
-.mySlides {display: none}
+*{box-sizing: border-box;}
+body {margin:0;}
+.mySlides {display: none;}
 img {vertical-align: middle; height: 300px;}
 
 /* Slideshow container */
@@ -135,6 +136,36 @@ img {vertical-align: middle; height: 300px;}
 
 .progress {
   width: 300px;
+}
+.provelist {
+    width: 1100px;
+    text-align: center;
+    margin: 0 auto;
+}
+.provePageMaker{
+text-align: center;
+}
+.table img {
+width: 200px;
+height: 200px;
+}
+.table td {
+font-size: 15px;
+}
+.provezero {
+width: 900px;
+display: flex;
+justify-content: center;
+margin: 0 auto;
+}
+.etc:hover {
+	color: black;
+}
+.topnav {
+	background-color: #ecf0f1;
+}
+.detail-product p {
+text-align: center;
 }
 </style>
 <!-- <script th:inline="javascript">
@@ -236,6 +267,7 @@ const challenge = /*[[${challenge}]]*/;
    	<span class="rightnav corp"><a href="/mypage/corp/corpMypage">MYPAGE</a></span>
   </header>
 
+<h3>챌린지 상세</h3>
 
   <div class="productinfo">
     <div class="product-img">
@@ -251,21 +283,21 @@ const challenge = /*[[${challenge}]]*/;
 
  
     <div class="product-info">
-      <p th:text="${challenge.cname}" style="font-size:20px;">챌린지명</p><br>
+      <p th:text="${challenge.cname}" style="font-size:20px; font-weight:bold;">챌린지명</p><br>
       <p th:text="${challenge.cstartday} + ' ~ ' + ${challenge.cendday}">기한 <span></span></p>
       <p>참여한 횟수 <span th:text="${challenge.applycnt}">0</span>회</p>
       <p>인증 횟수 <span th:text="${challenge.cjoincnt}">0</span>회</p>
     
       <div class="progress">
-        <div class="progress-bar" style="width:70%">70%</div>
+        <div class="progress-bar"></div>
       </div>
       
       <input type="submit" class="btn btn-primary" value="신청하기" readonly>
 
     </div>
       <div class="inside-product topnav topnav-right">
-      <a href="#content1">챌린지 상세정보</a>
-      <a href="#content2">인증 댓글</a>
+      <a class="etc" href="#content1">챌린지 상세정보</a>
+      <a class="etc" href="#content2">인증 댓글</a>
     </div>
 
     <div class="detail-product" id="content1">
@@ -280,8 +312,8 @@ const challenge = /*[[${challenge}]]*/;
       <thead class="thead-light">
         <tr>
           <th>이미지</th>
-          <th>제목</th>
-          <th>작성자</th>
+          <th style="width:150px;">제목</th>
+          <th style="width:80px;">작성자</th>
         </tr>
       </thead>
       <tbody id="prove_tbody">
