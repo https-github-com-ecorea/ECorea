@@ -65,8 +65,9 @@ public class HugiService {
 		dao.deleteByHno(hno);
 	}
 
-	/* 일반 회원 상품 등록 */
+	/* 일반 회원 후기 등록 */
 	public void reviewUpload(String loginId, HugiDto.HugiUpload upload) {
+		System.out.println("###### 주문 번호 : " + upload.getJno());
 		Hugi hugi = upload.toEntity();
 		MultipartFile image = upload.getHimg();
 		hugi.setHimg(defaultImage);

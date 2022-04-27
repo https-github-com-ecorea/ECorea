@@ -1,25 +1,15 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-  integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
-  crossorigin="anonymous" referrerpolicy="no-referrer" />
+<head th:replace="fragments/common :: html-head">
+</head>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
   integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
   crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
   integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
   crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="/css/common.css">
-  <link rel="stylesheet" href="/css/index.css">
-  <link rel="icon" href="/image/favicon.png">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script th:inline="javascript">
+  	const role = /*[[${role}]]*/
   	const product = /*[[${product}]]*/
  	
 	/* 페이지 정보 */
@@ -180,21 +170,19 @@
 	});
 	
   	$(document).ready(function() {
-      const pno = product.pno;
+        const pno = product.pno;
       
-      /* 후기 출력 */
-      $.getJSON("/productDetail/hugilist?", {pno : pno}, function(obj) {
-    	  makeHugi(obj);
-      });
+        /* 후기 출력 */
+        $.getJSON("/productDetail/hugilist?", {pno : pno}, function(obj) {
+    	    makeHugi(obj);
+        });
       
-      /* 문의 출력 */
-      $.getJSON("/productDetail/qnalist?", {pno : pno}, function(obj) {
-    	  makeQna(obj);
-      });
-      
+        /* 문의 출력 */
+        $.getJSON("/productDetail/qnalist?", {pno : pno}, function(obj) {
+      	    makeQna(obj);
+        });
 	});
   </script>
-  <title>상품 상세페이지</title>
   <style>
   * {box-sizing: border-box;}
   h3 {
@@ -283,136 +271,96 @@ height: 200px;
 font-size: 15px;
 }
 </style>
-</head>
 <body>
-  <header class="navwrapper">
-    <span class="leftnav"><a href="/">ECorea</a></span>
-    <span class="leftnav"><a href="/product/productList?nowPage=1&amount=9&catecode=&sort=">SHOP</a></span>
-    <span class="leftnav"><a href="/challenge/challengeList">CHALLENGE</a></span>
-    <span class="leftnav"><a href="/about">ABOUT</a></span>
-	<span class="rightnav member corp" style="display: none;"><a href="/general/logout">LOGOUT</a></span>
-   	<span class="rightnav corp" style="display: none;"><a href="/mypage/corp/corpMypage">MYPAGE</a></span>
-  </header>
- 
-  <div class="productwrap">
-  <div class="product-info left">
-    <div class="product-img">
-    <img th:src="${product.pthumbnail}" alt="상품" style="width:100%">
-     </div> 
-    </div>
-    
-    <div class="product-info right">
-      <p style="font-size:25px; font-weight:bold;" th:text="${product.pname}">상품명</p><br>
-      <span>판매가격 : <span id="price" th:text="${product.price}"></span> 원</span><br><br>
-      <!--
-      <p style="font-size:20px;">상품명</p><br>
-      <span>판매가격 : <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;원</span></span><br>
-       -->
-      <div class="updown">
-        <span>수량 : </span>&nbsp;&nbsp;&nbsp;<button type="button" id="minus">-</button>
-        <input type="text" name="p_num1" id="p_num1" size="2" maxlength="4" class="p_num" value="1">
-        <button type="button" id="plus">+</button>
-      </div><br>
-      <span>총 합계 : </span><span><span id='totalPrice' th:text="${product.price}"></span>&nbsp;원</span><span> (<span id='totalCnt'>1</span>&nbsp;개)</span><br><br><br>
-      <button type="button" class="btn btn-primary" id="order" disabled>바로구매</button>
-      <button type="button" class="btn btn-primary" id="cart" disabled>장바구니 담기</button>
-      <button type="button" class="btn btn-primary" formaction="#" disabled>관심상품 등록</button>
-    </div>
-</div>
+<header th:replace="fragments/common :: header">
+</header>
+<div id="wrapper">
+	<div class="productwrap">
+		<div class="product-info left">
+			<div class="product-img">
+				<img th:src="${product.pthumbnail}" alt="상품" style="width: 100%">
+			</div>
+		</div>
 
-    <div class="inside-product topnav topnav-right">
-      <a href="#content1" class="etc">상품 상세정보</a>
-      <a href="#content2" class="etc">구매 후기</a>
-      <a href="#content3" class="etc">상품 문의</a>
-    </div>
-  
- 
-  <div class="wrapper">
-    <div class="detail-product" id="content1">
-    <p th:utext='${product.pcontent}'></p>
-  </div>
-  <hr>
-  
-  <h3 style="text-align: center;" id="content2">구매 후기</h3>
-  <div class="hugizero">
-  </div>
-  <div class="hugilist">
-    <table class="table">
-      <thead class="thead-light">
-        <tr>
-          <th style="width:50px;">번호</th>
-          <th style="width:150px;">제목</th>
-          <th style="width:80px;">작성자</th>
-          <th style="width:100px;">등록일</th>
-          <th style="width:300px;">내용</th>
-        </tr>
-      </thead>
-      <tbody id="hugi_tbody">
-      <!-- 
-      	<tr>
-	       	  <td th:text="${hugi.hno}">
-	       	  <td th:text="${hugi.htitle}" class="title">
-	       	  <td th:text="${hugi.hwriter}">
-	       	  <td th:text="${hugi.hregday}">
-	       	  <tr class="show" style="display: none">
-  				 <div th:if="${not #strings.isEmpty(hugi.himg)}">
-			     	 <td colspan="2"> <img th:src="${hugi.himg}"></td>
-		             <td colspan="3" th:text="${hugi.hcontent}"></td>
-				 </div>
-				 <div th:unless="${not #strings.isEmpty(hugi.himg)}">
-		             <td colspan="5" th:text="${hugi.hcontent}"></td>
-				 </div>
-	             <td colspan="4" th:text="${hugi.hcontent}">본문</td>
-	          </tr>
-         </tr>
-         -->
-	</tbody>
-    </table>
-  </div>
-  <div class="hugiPageMaker">
-  </div>
-  <hr>
-  <h3 style="text-align: center;" id="content3">상품 문의</h3>
-  <div class="qnazero">
-  </div>
-  <div class="qnalist">
-      <table class="table">
-        <thead class="thead-light">
-          <tr>
-            <th style="width:50px;">번호</th>
-            <th style="width:100px;">카테고리</th>
-            <th style="width:150px;">제목</th>
-            <th style="width:80px;">작성자</th>
-            <th style="width:100px;">등록일</th>
-            <th style="width:300px;">내용</th>
-          </tr>
-        </thead>
-        <tbody id="qna_tbody">
-         <!--
-          <tr>
-            <td th:text="${qqna.qqno}">
-            <td th:text="${qqna.qqcategory}">
-            <td th:text="${qqna.qqtitle}" class="title">
-            <td th:text="${qqna.memberId}">
-            <td th:text="${qqna.qqregday}">
-            <tr class="show" style="display: none">
-              <div th:if="${not #strings.isEmpty(qqna.qqimg)}">
-                <td colspan="2"> <img th:src="${qqna.qqimg}"></td>
-                <td colspan="3" th:text="${qqna.qqcontent}"></td>
-              </div>
-              <div th:unless="${not #strings.isEmpty(qqna.qqimg)}">
-                <td colspan="5" th:text="${qqna.qqcontent}"></td>
-              </div>
-            </tr>
-          </tr>
-          -->
-	  </tbody>
-      </table>
-    </div>
-    <div class="qnaPageMaker">
-    </div>
-    <button type="button" class="btn btn-primary qnabtn" onclick="location.href='/mypage/member/qnaUpload'">등록</button>
-  </div>
+		<div class="product-info right">
+			<p style="font-size: 25px; font-weight: bold;"
+				th:text="${product.pname}">상품명</p>
+			<br> <span>판매가격 : <span id="price"
+				th:text="${product.price}"></span> 원
+			</span><br>
+			<br>
+	<div class="updown">
+		<span>수량 : </span>&nbsp;&nbsp;&nbsp;
+		<button type="button" id="minus">-</button>
+		<input type="text" name="p_num1" id="p_num1" size="2" maxlength="4"
+			class="p_num" value="1">
+		<button type="button" id="plus">+</button>
+	</div>
+	<br> <span>총 합계 : </span><span><span id='totalPrice'
+		th:text="${product.price}"></span>&nbsp;원</span><span> (<span
+		id='totalCnt'>1</span>&nbsp;개)
+	</span><br>
+	<br>
+	<br>
+	<button type="button" class="btn btn-primary" id="order" disabled>바로구매</button>
+	<button type="button" class="btn btn-primary" id="cart" disabled>장바구니
+		담기</button>
+	<button type="button" class="btn btn-primary" formaction="#" disabled>관심상품
+		등록</button>
+	</div>
+	</div>
+	<div class="inside-product topnav topnav-right">
+		<a href="#content1" class="etc">상품 상세정보</a> <a href="#content2"
+			class="etc">구매 후기</a> <a href="#content3" class="etc">상품 문의</a>
+	</div>
+	<div class="wrapper">
+		<div class="detail-product" id="content1">
+			<p th:utext='${product.pcontent}'></p>
+		</div>
+		<hr>
+		<h3 style="text-align: center;" id="content2">구매 후기</h3>
+		<div class="hugizero"></div>
+		<div class="hugilist">
+			<table class="table">
+				<thead class="thead-light">
+					<tr>
+						<th>번호</th>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>등록일</th>
+					</tr>
+				</thead>
+				<tbody id="hugi_tbody">
+				</tbody>
+			</table>
+		</div>
+		<div class="hugiPageMaker"></div>
+		<hr>
+		<h3 style="text-align: center;" id="content3">상품 문의</h3>
+		<div class="qnazero"></div>
+		<div class="qnalist">
+			<table class="table">
+				<thead class="thead-light">
+					<tr>
+						<th>번호</th>
+						<th>카테고리</th>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>등록일</th>
+					</tr>
+				</thead>
+				<tbody id="qna_tbody">
+				</tbody>
+			</table>
+		</div>
+		<div class="qnaPageMaker"></div>
+		<button type="button" class="btn btn-primary qnabtn"
+			onclick="location.href='/mypage/member/qnaUpload'">등록</button>
+	</div>
+</div>
+<footer th:replace="fragments/common :: footer">
+</footer>
+
   <script>
   	/* 제목 클릭 시 본문 출력 */
 	$(document).on('click', '.title', function() {
@@ -423,21 +371,6 @@ font-size: 15px;
 			$(this).next().next().next().attr('style', 'display: none');
 		}
 	})
-  
-	  /* 제목 눌렀을 때 본문 출력      
-	  let show = document.getElementsByClassName('show');
-	  let title = document.getElementsByClassName('title');
-	  
-	  for (let i=0; i<title.length; i++) {
-	    title[i].addEventListener('click', function(){
-	       if(show[i].style.display==='none') {
-	          show[i].style.display="";
-	       } else {
-	          show[i].style.display='none';
-	       }
-	    });
-	  }
-	  */
   
     let slideIndex = 1;
     showSlides(slideIndex);

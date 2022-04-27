@@ -1,20 +1,23 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>page not found!</title>
+<head th:replace="fragments/common :: html-head">
 </head>
 <body>
-<div class="container" style="max-width: 600px">
-	<h1>적절한 입력이 아닙니다.</h1>
+<div id="wrapper" class="container" style="text-align: center;">
+	<h1 th:text="|${status} Error!|"></h1>
+	<h3>페이지를 찾을 수 없습니다.</h3>
+	<br>
+	<p>페이지가 존재하지 않거나, 사용할 수 없는 페이지입니다.</p>
+	<p>주소를 다시 한번 확인해 주세요.</p>
+	<br>
     <a href="/" class="btn btn-primary">메인 페이지로 이동</a>
+    	<!-- 
 		<p th:text="|timestamp: ${timestamp}|"></p>
 		<p th:text="|path: ${path}|"></p>
 		<p th:text="|status: ${status}|"></p>
 		<p th:text="|message: ${message}|"></p>
 		<p th:text="|trace: ${trace}|"></p>
+		 -->
 </div>
 </body>
 </html>
