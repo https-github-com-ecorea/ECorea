@@ -24,7 +24,8 @@
   <style>
     h3 {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 100px;
+      margin-bottom: 20px;
     }
     .productinfo {
       width: 900px;
@@ -36,9 +37,9 @@
       float: left;
       margin: 10px;
     }
-* {box-sizing: border-box}
-body {font-family: Verdana, sans-serif; margin:0}
-.mySlides {display: none}
+*{box-sizing: border-box;}
+body {margin:0;}
+.mySlides {display: none;}
 img {vertical-align: middle; height: 300px;}
 
 /* Slideshow container */
@@ -160,6 +161,9 @@ margin: 0 auto;
 .etc:hover {
 	color: black;
 }
+.topnav {
+	background-color: #ecf0f1;
+}
 .detail-product p {
 text-align: center;
 }
@@ -263,6 +267,7 @@ const challenge = /*[[${challenge}]]*/;
    	<span class="rightnav corp"><a href="/mypage/corp/corpMypage">MYPAGE</a></span>
   </header>
 
+<h3>챌린지 상세</h3>
 
   <div class="productinfo">
     <div class="product-img">
@@ -284,7 +289,7 @@ const challenge = /*[[${challenge}]]*/;
       <p>인증 횟수 <span th:text="${challenge.cjoincnt}">0</span>회</p>
     
       <div class="progress">
-        <div class="progress-bar" style="width:70%">70%</div>
+        <div class="progress-bar"></div>
       </div>
       
       <input type="submit" class="btn btn-primary" value="신청하기" readonly>

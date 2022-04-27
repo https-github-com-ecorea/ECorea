@@ -20,16 +20,9 @@
       margin-bottom: 20px;
       margin-top: 50px;
     }
-    #join {
-    float: right;
-    }
-    .form-control {
+   .form-control {
       width: 400px;
       margin-bottom: 10px;
-    }
-    .was-validated {
-      position:absolute;
-      left: 34%;
     }
     #address {
       margin-bottom: 20px;
@@ -43,12 +36,20 @@
 		color: red; 
 		font-size: 0.75em; 
 	}
+	.wrap {
+	  display: flex;
+	  justify-content: center;
+      text-align: start;
+	}
+	.btn {
+	width: 140px;
+	}
   </style>
   <title>기업 회원 가입</title>
 </head>
 <body>
-  <div class="wrap">
-    <h1>기업 회원 가입</h1>
+   <h1>기업 회원 가입</h1>
+   <div class="wrap">
   <form action="/general/corpJoin" method="post" class="was-validated">
     <div class="mb-3 mt-3">
       <label for="name" class="form-label">기업명</label>
@@ -89,7 +90,9 @@
     </div>
     <button type="submit" class="btn btn-primary" id="join">회원가입</button>
   </form>
-</div>
+  </div>
+  
+  
 <script>
 		$('#id').focusout(function() {
 			if(idCheck()==false)
