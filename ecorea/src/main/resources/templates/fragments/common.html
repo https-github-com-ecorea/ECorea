@@ -15,7 +15,6 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
 		integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
 		crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="/css/common.css">
 	<link rel="stylesheet" href="/css/index.css">
 	<link rel="icon" href="/image/favicon.png">
@@ -26,6 +25,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"
 		integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg=="
 		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="/js/index.js"></script>
 	<script th:inline="javascript">
   	$(document).ready(function() {
@@ -36,7 +36,7 @@
 </head>
 <body>
 
-  <header th:fragment="header">
+  <header th:fragment="header" class="navwrapper">
     <span class="leftnav"><a href="/">ECorea</a></span>
     <span class="leftnav"><a href="/product/productList?nowPage=1&amount=9&catecode=&sort=">SHOP</a></span>
 
@@ -105,8 +105,8 @@
 
     <input class="goupbtn" type="button" value="↑" onclick="clickme()"></div>
 
-    <footer th:fragment="footer">
-      <address style="font-size: 12px; display:inline-block;margin-top:20px;margin-left:30px;">
+    <footer class="footer" th:fragment="footer">
+      <address style="font-size: 12px; display:inline-block; margin-top:20px;margin-left:30px;">
         인천광역시 미추홀구<br>
         이메일 : ecorea@gmail.com<br>
         전화번호 : 032-000-0000

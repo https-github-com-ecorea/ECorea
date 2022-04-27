@@ -1,14 +1,10 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/css/common.css">
-  <link rel="stylesheet" href="/css/index.css">
+<head th:replace="fragments/common::html-head">
   <title>ABOUT</title>
+</head>
   <style>
-    .aboutwrap {
+    #aboutwrap {
       display: flex;
       justify-content: space-around;
       align-items: center;
@@ -32,11 +28,10 @@
       text-align: start;
       font-size: 20px;
     }
-.navwrapper a {
-	font-size: 23px;
-}
+	.navwrapper a {
+		font-size: 23px;
+	}
   </style>
-</head>
 <body>
   <header class="navwrapper">
     <span class="leftnav"><a href="/">ECorea</a></span>
@@ -51,7 +46,7 @@
    	<span class="rightnav corp" style="display: none;"><a href="/mypage/corp/corpMypage">MYPAGE</a></span>
   </header>
 
-  <div class="aboutwrap">
+  <div id="aboutwrap">
   <div class="aboutimg">
     <img src="/image/about.jpg" alt="홈페이지 소개">
   </div>
@@ -62,6 +57,6 @@
     </p>
   </div>
 </div>
-
+<footer th:replace="fragments/common::footer"></footer>
 </body>
 </html>
