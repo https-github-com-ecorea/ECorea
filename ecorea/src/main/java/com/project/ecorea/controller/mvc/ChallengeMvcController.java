@@ -84,9 +84,9 @@ public class ChallengeMvcController {
 		}
 		
 		if(request.isUserInRole("ROLE_MEMBER")) {
-			return new ModelAndView("challenge/member/challengeDetail").addObject("challenge", service.readUserDetail(cno));
+			return new ModelAndView("challenge/member/challengeDetail").addObject("challenge", service.readUserDetail(cno)).addObject("role", "ROLE_MEMBER");
 		} else {
-			return new ModelAndView("challenge/corp/challengeDetail").addObject("challenge", service.readUserDetail(cno));
+			return new ModelAndView("challenge/corp/challengeDetail").addObject("challenge", service.readUserDetail(cno)).addObject("role", "ROLE_CORP");
 		}
 	}
 }
