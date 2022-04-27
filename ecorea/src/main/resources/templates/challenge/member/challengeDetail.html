@@ -141,6 +141,34 @@ min-height: 100px;
 .topnav {
 	background-color: #ecf0f1;
 }
+.provezero {
+width: 900px;
+display: flex;
+justify-content: center;
+margin: 0 auto;
+}
+.provelist {
+  width: 1100px;
+  text-align: center;
+  margin: 0 auto;
+}
+.table img {
+width: 200px;
+height: 200px;
+}
+.table td {
+font-size: 15px;
+}
+.provePageMaker{
+text-align: center;
+}
+
+.etc:hover {
+	color: black;
+}
+.detail-product p {
+text-align: center;
+}
 </style>
 </head>
 <body>
@@ -173,7 +201,7 @@ min-height: 100px;
 
  
     <div class="product-info">
-      <p style="font-size:20px;" th:text="${challenge.cname}">챌린지명</p><br>
+      <p style="font-size:20px; font-weight:bold;" th:text="${challenge.cname}">챌린지명</p><br>
       <p th:text="${challenge.cstartday} + ' ~ ' +  ${challenge.cendday}">기한 <span></span></p>
       <p>참여한 횟수 <span th:text=${challenge.applycnt}>0</span>회</p>
       <p>인증 횟수 <span th:text="${challenge.cjoincnt}">0</span>회</p>
@@ -184,8 +212,8 @@ min-height: 100px;
       <input type="button" class="btn btn-primary" id="proveMove" value="신청하기">
     </div>
       <div class="inside-product topnav topnav-right">
-      <a href="#content1">챌린지 상세정보</a>
-      <a href="#content2">인증 댓글</a>
+      <a class="etc" href="#content1">챌린지 상세정보</a>
+      <a class="etc" href="#content2">인증 댓글</a>
     </div>
 
     <div class="detail-product" id="content1">
@@ -200,8 +228,8 @@ min-height: 100px;
       <thead class="thead-light">
         <tr>
           <th>이미지</th>
-          <th>제목</th>
-          <th>작성자</th>
+          <th style="width:150px;">제목</th>
+          <th style="width:80px;">작성자</th>
         </tr>
       </thead>
       <tbody id="prove_tbody">
