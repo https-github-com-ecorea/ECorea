@@ -54,5 +54,11 @@ public class ChProveDto {
 		private LocalDate cpregday;
 		private String cpwriter;
 	}
+	
+	@Data
+	public static class ChallengeApply {
+		private Integer cno;
+		private String cname;
+	}
 }
 

@@ -84,7 +84,7 @@ header {
 .footer {
   background-color: white;
   color: black;
-  position: absolute;
+  position: relative;
   bottom: 0;
 }
 

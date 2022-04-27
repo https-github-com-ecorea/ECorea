@@ -71,7 +71,26 @@
 </head>
 <body>
 	<h1>나의 챌린지 목록</h1>
-	<div th:text="${proveList}"></div>
+	<div th:each="applyList: ${applyList}" class="wrapper">
+		<div class="certified">
+            <h3 th:text="${applyList.cname}"></h3>
+            <button type="button" class="btn btn-primary upload" th:onclick="|location.href='@{/challenge/member/challengeProveUpload(cno=${applyList.cno})}'|">인증하기</button>
+            <button type="button" class="btn btn-secondary cancel" th:data-cno="${applyList.cno}">신청취소</button>
+        </div>
+        <div class="container">            
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>이미지</th>
+                        <th>인증내용</th>
+                        <th>작성일</th>
+                        <th>삭제</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+	</div>
     <div th:each="list: ${proveList}" class="wrapper">
         <div class="certified">
             <h3 th:text="${list.cname}"></h3>
