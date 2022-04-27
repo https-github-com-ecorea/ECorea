@@ -4,12 +4,8 @@
   <title>관심 상품 조회</title>
 </head>
 <style>
-    body {
-		background: url('/image/bg.png') no-repeat;
-  	}
     img {
-	    width: 450px;
-	    height: 300px;
+	    width: 250px;
     }
     .btn {
     	margin-bottom: 10px;
@@ -79,7 +75,8 @@
   	})
 </script>
 <body>
-	<header th:replace="fragments/common::header"></header>
+<header th:replace="fragments/common::header"></header>
+<div id="wrapper">
   <h1>관심 상품 조회</h1>
   <div class="container">
     <button type="button" class="btn btn-primary" id="deleteSelected">선택삭제</button>
@@ -116,6 +113,8 @@
     </table>
     <button type="button" id="shoppingSelected" class="btn btn-primary">선택상품 장바구니 담기</button>
   </div>
+</div>
   <footer th:replace="fragments/common::footer"></footer>
+  <script src="/js/index.js"></script>
 </body>
 </html>

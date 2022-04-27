@@ -4,9 +4,6 @@
   <title>마이페이지 - 일반회원</title>
 </head>
   <style>
-    body {
-	  background: url('/image/bg.png');
-	}
     .point {
       width: 1000px;
       height: 50px;
@@ -80,78 +77,53 @@
     }
   </style>
 <body>
-  <header class="navwrapper" th:replace="fragments/common::header">
-  <!-- 
-    <span class="leftnav"><a href="/">ECorea</a></span>
-    <span class="leftnav"><a href="/product/productList?nowPage=1&amount=9&catecode=&sort=">SHOP</a></span>
-    <span class="leftnav"><a href="/challenge/challengeList?nowPage=1&amount=9">CHALLENGE</a></span>
-    <span class="leftnav"><a href="/">ABOUT</a></span>
-	<span class="rightnav member corp"><a href="/general/logout">LOGOUT</a></span>
-	<span class="rightnav member"><a href="/mypage/member/memberMypage">MYPAGE</a></span>
-	<span class="rightnav member"><a href="/order/cart">CART</a></span> 
-   -->
-  </header>
-  <h1>마이페이지</h1>
-	<div class="wrapper">
-        <div class="point">
-            <p>보상포인트</p>
-            <span class="currentpoint" th:text="${mypage.point}"></span>
-        </div>
-        <div class="order">
-            <p>주문 처리 현황</p>
-            <div class="order-process">
-                <span>주문 완료</span><br>
-                <a href="/order/orderList"><span th:text="${mypage.payCnt}">0</span></a>
-            </div>
-            <div class="order-process">
-                <span>배송중</span><br>
-                <a href="/order/orderList"><span th:text="${mypage.shippingCnt}">0</span></a>
-            </div>
-            <div class="order-process">
-                <span>배송 완료</span><br>
-                <a href="/order/orderList"><span th:text="${mypage.completeCnt}">0</span></a>
-            </div>
-            <div class="order-process">
-                <span>취소 / 환불</span><br>
-                <a href="/order/orderList"><span th:text="${mypage.cancelCnt}">0</span></a>
-            </div>
-        </div>
+  <header class="navwrapper" th:replace="fragments/common::header"></header>
+		<div id="wrapper">
+			<h1>마이페이지</h1>
+			<div class="wrapper">
+				<div class="point">
+					<p>보상포인트</p>
+					<span class="currentpoint" th:text="${mypage.point}"></span>
+				</div>
+				<div class="order">
+					<p>주문 처리 현황</p>
+					<div class="order-process">
+						<span>주문 완료</span><br> <a href="/order/orderList"><span
+							th:text="${mypage.payCnt}">0</span></a>
+					</div>
+					<div class="order-process">
+						<span>배송중</span><br> <a href="/order/orderList"><span
+							th:text="${mypage.shippingCnt}">0</span></a>
+					</div>
+					<div class="order-process">
+						<span>배송 완료</span><br> <a href="/order/orderList"><span
+							th:text="${mypage.completeCnt}">0</span></a>
+					</div>
+					<div class="order-process">
+						<span>취소 / 환불</span><br> <a href="/order/orderList"><span
+							th:text="${mypage.cancelCnt}">0</span></a>
+					</div>
+				</div>
 
-  <a href="/mypage/member/info"><button type="text" class="btn btn-primary">회원정보 보기</button></a>
-  <a href="/order/orderList"><button type="text" class="btn btn-primary">주문 내역 조회</button></a>
-  <a href="/mypage/member/bookmarkList"><button type="text" class="btn btn-primary">관심 상품 조회</button></a>
-  <a href="/mypage/member/qnaList"><button type="text" class="btn btn-primary">문의 목록</button></a>
-  <a href="/mypage/member/addressList"><button type="text" class="btn btn-primary">주소록 관리</button></a>
-  <a href="/order/reviewList?nowPage=1&amount=9"><button type="text" class="btn btn-primary">내가 쓴 후기</button></a>
-  <a href="/challenge/member/challengeList"><button type="text" class="btn btn-primary">나의 챌린지</button></a>
-
-</div>
-
-    <input class="goupbtn" type="button" value="↑" onclick="clickme()"></div>
+				<a href="/mypage/member/info"><button type="text"
+						class="btn btn-primary">회원정보 보기</button></a> <a
+					href="/order/orderList"><button type="text"
+						class="btn btn-primary">주문 내역 조회</button></a> <a
+					href="/mypage/member/bookmarkList"><button type="text"
+						class="btn btn-primary">관심 상품 조회</button></a> <a
+					href="/mypage/member/qnaList"><button type="text"
+						class="btn btn-primary">문의 목록</button></a> <a
+					href="/mypage/member/addressList"><button type="text"
+						class="btn btn-primary">주소록 관리</button></a> <a
+					href="/order/reviewList?nowPage=1&amount=9"><button type="text"
+						class="btn btn-primary">내가 쓴 후기</button></a> <a
+					href="/challenge/member/challengeList"><button type="text"
+						class="btn btn-primary">나의 챌린지</button></a>
+			</div>
+			<input class="goupbtn" type="button" value="↑" onclick="clickme()">
+		</div>
 
 <footer th:replace="fragments/common::footer"></footer>
+<script src="/js/index.js"></script>
 </body>
 </html>
-
-
-<!-- 
-        <div class="order" th:each="list, idx: ${mypage.jumunStatusList}" th:switch="${list.getJstatus().toString()}">
-            <p>주문 처리 현황</p>
-            <div class="order-process">
-                <span>주문 완료</span><br>
-                <a href="/order/orderList"><span th:case="PAY" th:text="${list.statusCnt}">0</span></a>
-            </div>
-            <div class="order-process">
-                <span>배송중</span><br>
-                <a href="/order/orderList"><span th:case="SHIPPING" th:text="${list.statusCnt}">0</span></a>
-            </div>
-            <div class="order-process">
-                <span>배송 완료</span><br>
-                <a href="/order/orderList"><span th:case="COMPLETE" th:text="${list.statusCnt}">0</span></a>
-            </div>
-            <div class="order-process">
-                <span>취소 / 환불</span><br>
-                <a href="/order/orderList"></a>
-            </div>
-        </div>
- -->

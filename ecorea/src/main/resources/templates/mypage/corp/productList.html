@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head th:replace="fragments/common::html-head">
-  <title>기업 상품 목록</title>
 </head>
   <style>
     .wrapper {
@@ -37,6 +36,7 @@
   </script>
 <body>
 <header th:replace="fragments/common::header"></header>
+<div id="wrapper">
   <h1>기업 상품 목록</h1>
   <div class="wrapper">
   <table class="table">
@@ -52,7 +52,7 @@
     	<tr th:each="regProducts : ${regProducts}">
 	        <td id="pno" th:text="${regProducts.pno}"></td>
 			<td>
-				<img th:src="${regProducts.pthumbnail}" style="width: 250px">
+				<img th:src="${regProducts.pthumbnail}" style="width: 120px">
 			</td>
 	        <td>
 	        	<a th:href="@{/product/corp/productDetail(pno=${regProducts.pno})}" id="moveProductDetail" th:text="${regProducts.pname}"></a>
@@ -68,6 +68,8 @@
   <button type="button" class="btn btn-primary" onclick="location.href='/product/productUpload'">제품 등록</button>
   <button type="button" class="btn btn-primary" onclick="location.href='/mypage/corp/corpMypage'">마이 페이지로</button>
 </div>
+</div>
 <footer th:replace="fragments/common::footer"></footer>
+<script src="/js/index.js"></script>
 </body>
 </html>

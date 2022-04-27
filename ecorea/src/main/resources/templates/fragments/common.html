@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <!-- 헤드 사용!!
-<head th:replace="fragments/common :: html-head">
-</head>
+<head th:replace="fragments/common :: html-head"></head>
  -->
 <head th:fragment="html-head">
 <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
@@ -25,11 +24,11 @@
 	<link rel="icon" href="/image/favicon.png">
 	<script src="/js/loginMenu.js"></script>
 	<script th:inline="javascript">	
-  	$(document).ready(function() {
-  		$.ajax({url:"/navMenu"}).done((role) => {
-	  		loginMenu(role);
-  		})
-  	});
+	  	$(document).ready(function() {
+	  		$.ajax({url:"/navMenu"}).done((role) => {
+		  		loginMenu(role);
+	  		})
+	  	});
   </script>
   <title>ECorea</title>
 </head>

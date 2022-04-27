@@ -6,10 +6,10 @@ import lombok.experimental.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Accessors(chain = true)
+@Builder
 public class ChApplyCheck {
-	private Integer chapplynum;
-	private String id;
+	private Integer chapplyno;
+	private String memberId;
 	private Integer cno;
 }

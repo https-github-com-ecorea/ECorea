@@ -9,10 +9,12 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,8 +54,12 @@ public class UserMvcController {
 	}
 	
 	@GetMapping("/about")
-	public void readAbout() {
-		
+	public void readAbout(Model model, HttpServletRequest request) {
+		if (request.isUserInRole("ROLE_MEMBER")) {
+			model.addAttribute("role", "ROLE_MEMBER");
+		} else if (request.isUserInRole("ROLE_CORP")){
+			model.addAttribute("role", "ROLE_CORP");
+		}
 	}
 	
 	@PreAuthorize("isAnonymous()")
@@ -136,7 +142,7 @@ public class UserMvcController {
 		}
 		MemberDto.Info dto = service.memberInfo(principal.getName());
 		
-		return new ModelAndView("mypage/member/info").addObject("member",dto);
+		return new ModelAndView("mypage/member/info").addObject("member",dto).addObject("role", "ROLE_MEMBER");
 	}
 	
 	// 일반회원정보 수정
@@ -174,7 +180,7 @@ public class UserMvcController {
 		
 		CorpDto.Info dto = service.corpInfo(principal.getName());
 		
-		return new ModelAndView("mypage/corp/info").addObject("corp", dto);
+		return new ModelAndView("mypage/corp/info").addObject("corp", dto).addObject("role", "ROLE_CORP");
 	}
 	
 	// 기업회원정보 수정
