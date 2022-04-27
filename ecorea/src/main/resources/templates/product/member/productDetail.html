@@ -292,12 +292,10 @@ h3 {
 }
 
 .inside-product {
-	width: 90%;
+	width: 100%;
 	display: flex;
 	justify-content: space-around;
 	margin-bottom: 20px;
-	margin-right: 60px;
-	margin-left: 60px;
 }
 
 .reviewlist {
@@ -365,6 +363,7 @@ height: 200px;
 .table td {
 font-size: 15px;
 }
+
 </style>
 <body>
 <header th:replace="fragments/common :: header">
@@ -406,8 +405,8 @@ font-size: 15px;
 	</div>
 
 	<div class="inside-product topnav topnav-right">
-		<a href="#content1" class="etc">상품 상세정보</a> <a href="#content2"
-			class="etc">구매 후기</a> <a href="#content3" class="etc">상품 문의</a>
+		<a href="#content1" class="etc">상품 상세정보</a>
+		<a href="#content2" class="etc">구매 후기</a> <a href="#content3" class="etc">상품 문의</a>
 	</div>
 
 
@@ -415,6 +414,7 @@ font-size: 15px;
 		<div class="detail-product" id="content1">
 			<p th:utext='${product.pcontent}'></p>
 		</div>
+		
 		<hr>
 		<h3 style="text-align: center;" id="content2">구매 후기</h3>
 		<div class="hugizero"></div>
