@@ -92,7 +92,7 @@ public class ChProveService {
 
 	public Boolean chApplyCheck(String name, Integer cno) {
 		ChApplyCheck chApplyCheck = new ChApplyCheck();
-		chApplyCheck.setId(name).setCno(cno);
+		chApplyCheck.setMemberId(name).setCno(cno);
 		Boolean result = proveDao.chApplyFindById(chApplyCheck);
 		if(result) {
 			return false;
