@@ -290,7 +290,7 @@ margin-bottom: 5px;
 		      		let $thirdParentsDiv = $('<div>').appendTo($secondParentsDiv);
 		      			let $progressDiv = $('<div class="progress">').appendTo($thirdParentsDiv);
 		      			$('<div class="progress-bar">').css('width', applycnt+"%").text(applycnt+"%").appendTo($progressDiv);
-		      		$('<button type="submit" class="btn btn-primary" formaction="">').text('신청하기').appendTo($secondParentsDiv);
+		      		$('<a class="btn btn-primary">').attr('href', '/challenge/member/challengeDetail?cno=' + challenges.cno).text('신청하기').appendTo($secondParentsDiv);
 	      }
   
   // Add active class to the current button (highlight it)
