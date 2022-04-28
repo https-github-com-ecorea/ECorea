@@ -71,6 +71,7 @@ public class HugiService {
 		Hugi hugi = upload.toEntity();
 		MultipartFile image = upload.getHimg();
 		hugi.setHimg(defaultImage);
+		hugi.setJno(upload.getJno());
 		// MultipartFile이 null이 아니고 비어있지 않고 이미지 파일(image/jpeg, image/png.....)이라면
 		if(image!=null && image.isEmpty()==false && image.getContentType().toLowerCase().startsWith("image/")) {
 			String imagename = UUID.randomUUID() + "-" + image.getOriginalFilename();
