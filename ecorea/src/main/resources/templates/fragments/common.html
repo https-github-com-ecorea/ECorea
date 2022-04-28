@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko">
-<!-- 헤드 사용!!
+<!-- 사용!!
 <head th:replace="fragments/common :: html-head"></head>
+<header th:replace="fragments/common :: header"></header>
+<footer th:replace="fragments/common :: footer"></footer>
  -->
 <head th:fragment="html-head">
 <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
@@ -23,7 +25,8 @@
 	<link rel="stylesheet" href="/css/index.css">
 	<link rel="icon" href="/image/favicon.png">
 	<script src="/js/loginMenu.js"></script>
-	<script th:inline="javascript">	
+	<script th:inline="javascript">
+		let role = /*[[${role}]]*/
 	  	$(document).ready(function() {
 	  		$.ajax({url:"/navMenu"}).done((role) => {
 		  		loginMenu(role);
@@ -34,10 +37,6 @@
 </head>
 
 <body>
-<!-- 헤더 사용!! 
-<header th:replace="fragments/common :: header">
-</header>
- -->
 <header th:fragment="header">
 	<span class="leftnav"><a href="/">ECorea</a></span>
 	<span class="leftnav"><a href="/product/productList?nowPage=1&amount=9&catecode=&sort=">SHOP</a></span>
@@ -51,11 +50,6 @@
 	<span class="rightnav corp" style="display: none;"><a href="/mypage/corp/corpMypage">MYPAGE</a></span>
 </header>
 
-<!-- 푸터 사용!!
-<footer th:replace="fragments/common :: footer">
-</footer>
-<script src="/js/index.js"></script>
- -->
 <footer class="footer" th:fragment="footer">
 	<address style="font-size: 12px; display:inline-block;margin-top:20px;margin-left:30px;">
 	  인천광역시 미추홀구<br>
