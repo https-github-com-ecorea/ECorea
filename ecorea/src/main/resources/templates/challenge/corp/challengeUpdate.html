@@ -21,12 +21,38 @@ input[type=text], select, textarea {
   padding: 20px;
 }
 </style>
+<script th:inline="javascript">
+/* 썸네일 처리 함수 */
+function previewImage() {
+	const file = $("#cthumbnail")[0].files[0];
+	const maxSize = 1024 * 1024;
+	if (file.size > maxSize) {
+		Swal.fire('이미지 크기 오류!', '상품 이미지는 1MB를 넘을 수 없습니다.', 'error');
+		$('#cthumbnail').val('');
+		$('#thumbnail_img').removeAttr('src');
+		return false;
+	}
+	const reader = new FileReader();
+	reader.readAsDataURL(file);
+	reader.onload = function() {
+		$("#thumbnail_img").attr("src", reader.result);
+	}
+	return true;
+}
+
+$(document).ready(function() {
+	/* 썸네일 처리 */
+	$('#cthumbnail').change(function() {
+		previewImage();
+	});
+});
+</script>
 <body>
 <header th:replace="fragments/common :: header"></header>
 <div id="wrapper">
   <h1>챌린지 수정</h1>
   <div class="container">
-    <form action="/challenge/corp/challengeUpdate" method="post">
+    <form action="/challenge/corp/challengeUpdate" method="post" enctype="multipart/form-data">
     <input type="hidden" id="regday" name="cregday" th:value="${challenge.cregday}">
     <input type="hidden" id="cno" name="cno" th:value="${challenge.cno}">
     
@@ -50,7 +76,9 @@ input[type=text], select, textarea {
 	  <div class="mb-3">
       <label for="challthumbnail" style="margin-top: 20px;">썸네일용 이미지</label><br>
         <input type="file" class="form-control" id="cthumbnail" name="cthumbnail" accept=".jpg,.jpeg,.png,.gif">
-        <img id="thumbnail_img" height="200px" style="display:none;">
+        <div th:if="${not #strings.isEmpty(challenge.cthumbnail)}">
+      		<img id="thumbnail_img" height="200px" th:src="${challenge.cthumbnail}">
+      	</div>
       </div>
       
       <label for="challcontent">상세 설명</label>

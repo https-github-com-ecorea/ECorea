@@ -160,7 +160,6 @@ public class QnaService {
 	public Boolean updateQuestion(QnaDto.updateQuestion questionDto) {
 		QnaQ question = questionDto.toEntity();
 		MultipartFile qqimg = questionDto.getQqimg();
-		question.setQqimg(defaultImage);
 		if (qqimg != null && qqimg.isEmpty() == false && qqimg.getContentType().toLowerCase().startsWith("image/")) {
 			String qqimgName = UUID.randomUUID() + "-" + qqimg.getOriginalFilename();
 			File file = new File(imageFolder, qqimgName);

@@ -78,13 +78,6 @@ public class ProductMvcController {
 	 	session.setAttribute("pno", pno);
 	 	return new ModelAndView("product/corp/productDetail").addObject("product", productService.productRead(pno)).addObject("role", "ROLE_CORP");
 	}
-	
-	/* 문의 작성 버튼 */
-	@Secured("ROLE_MEMBER")
-	@GetMapping("/product/member/qnaUpload")
-	public void qnaUpload() {
-	}
-	
 
 	// 상품등록 페이지
 	@Secured("ROLE_CORP")

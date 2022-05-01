@@ -38,20 +38,28 @@ public class ChallengeMvcController {
 	public String challengeUpload(ChallengeDto.ChallengeUpload challenge, Principal principal) {
 		service.challengeUpload(challenge, principal.getName());
 		return "redirect:/challenge/corp/challengeList";
-	} 
-	
-	/* 기업 회원 : 챌린지 수정 화면 */
+	}
+		
+	/* 기업 회원 : 챌린지 수정 가능한 지 확인 */
 	@Secured("ROLE_CORP")
 	@GetMapping("/challenge/corp/challengeUpdate")
-	public ModelAndView challengeUpdate(Integer cno) {
-		return new ModelAndView().addObject("challenge", service.challengeUpdateView(cno));
+	public ModelAndView challengeUpdateisPossible(ModelAndView mav, Integer cno) {
+		Challenge challenge = service.challengeUpdateView(cno);
+		Boolean result = service.challengeUpdateisDate(challenge);
+		if (result == true) {
+			mav.addObject("challenge", service.challengeUpdateView(cno));
+		} else {
+			mav.addObject("data", new Message("수정이 가능한 날짜가 아닙니다.", "/challenge/corp/challengeList"));
+			mav.setViewName("alert");
+		}
+		return mav;
 	}
 	
 	/* 기업 회원 : 챌린지 수정 */
 	@Secured("ROLE_CORP")
 	@PostMapping("/challenge/corp/challengeUpdate")
-	public String challengeUpdate(Challenge challenge) {
-		service.challengeUpdate(challenge);
+	public String challengeUpdate(ChallengeDto.ChallengeUpload challenge, Integer cno) {
+		service.challengeUpdate(challenge, cno);
 		return "redirect:/challenge/corp/challengeList";
 	}
 	
