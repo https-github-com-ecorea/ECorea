@@ -32,6 +32,7 @@ public class HugiMvcController {
 		return new ModelAndView("order/reviewUpload").addObject("jno", jno);
 	}
 	
+	// 일반회원 후기 등록
 	@PostMapping("/order/reviewUpload")
 	public String reviewUpload(Principal principal, HugiDto.HugiUpload upload) {
 		hugiService.reviewUpload(principal.getName(), upload);
@@ -44,6 +45,7 @@ public class HugiMvcController {
 		return new ModelAndView("order/reviewUpdate").addObject("hugi", hugiService.readReviewUpdate(principal.getName(), hno));
 	}
 	
+	// 후기 수정
 	@PostMapping("/order/reviewUpdate")
 	public String reviewUpdate(Integer hno, HugiDto.HugiUpdate update, Principal principal) {
 		hugiService.reviewUpdate(hno, update);
@@ -51,6 +53,7 @@ public class HugiMvcController {
 		return "redirect:/order/reviewList";
 	}
 	
+	// 후기 삭제
 	@PostMapping("/order/reviewDelete")
 	public String reviewDelete(Integer hno) {
 		hugiService.reviewDelete(hno);

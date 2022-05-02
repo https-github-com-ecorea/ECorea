@@ -176,16 +176,7 @@ text-align: center;
 </head>
 <body>
 
-  <header class="navwrapper">
-    <span class="leftnav"><a href="/">ECorea</a></span>
-    <span class="leftnav"><a href="/product/productList?nowPage=1&amount=9&catecode=&sort=">SHOP</a></span>
-    <span class="leftnav"><a href="/challenge/challengeList?nowPage=1&amount=9">CHALLENGE</a></span>
-    <span class="leftnav"><a href="/about">ABOUT</a></span>
-    <span class="rightnav all"><a href="/general/joinSelect">JOIN</a></span> 
-    <span class="rightnav all"><a href="/general/login">LOGIN</a></span>
-	<span class="rightnav member corp" style="display: none;"><a href="/general/logout">LOGOUT</a></span>
-	<span class="rightnav member" style="display: none;"><a href="/mypage/member/memberMypage">MYPAGE</a></span>
-	<span class="rightnav member" style="display: none;"><a href="/order/cart">CART</a></span>
+  <header th:replace="fragments/common :: header">
   </header>
   
   
@@ -264,10 +255,7 @@ text-align: center;
   
   <script th:inline="javascript">
     const challenge = /*[[${challenge}]]*/;
-    const role = /*[[${role}]]*/;	
-    
-    	loginMenu();
-    
+        
     	const joincnt = challenge.cjoincnt;
     	const goal = challenge.cgoal;
     	let percentage = (parseInt(joincnt)/parseInt(goal))*100;
@@ -400,6 +388,10 @@ text-align: center;
 				location.href='/general/login';
 			}
 		});
+		
+		$.ajax({url:"/navMenu"}).done((role) => {
+	  		loginMenu(role);
+  		});
 	})
     </script>
     <script src="/js/index.js"></script>

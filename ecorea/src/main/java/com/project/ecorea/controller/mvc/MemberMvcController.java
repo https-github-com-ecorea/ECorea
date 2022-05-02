@@ -26,11 +26,12 @@ public class MemberMvcController {
 	public void addAddressMvc() {
 	}
 	
+	/* 기업 회원 마이 페이지 화면 */
 	@GetMapping("/mypage/corp/corpMypage")
 	public void readCorpMypage() {
 	}
 
-	/* 마이 페이지 화면 */
+	/* 일반 회원 마이 페이지 화면 */
 	@GetMapping("/mypage/member/memberMypage")
 	public ModelAndView readMypage(Principal principal) {
 		return new ModelAndView("/mypage/member/memberMypage").addObject("mypage", mypageService.readMyPage(principal.getName())) ;

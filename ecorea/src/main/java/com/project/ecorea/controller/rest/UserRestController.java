@@ -19,6 +19,7 @@ import lombok.AllArgsConstructor;
 public class UserRestController {
 	private UserService service;
 	
+	/* 아이디 중복 검사 */
 	@PreAuthorize("isAnonymous()")
 	@GetMapping("/user/overlap/id")
 	public ResponseEntity<String> findOverlapId(String id, Principal principal) {
