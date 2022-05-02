@@ -18,17 +18,18 @@ import lombok.experimental.Accessors;
 @Builder
 @Accessors(chain = true)
 public class Member {
-	private String id;
-	private String pw;
-	private String name;
-	private String email;
-	private Integer point;
-	private String checkcode;
-	private LocalDate joinday;
-	private Boolean enable;
-	private String authority;
-	private Integer failcnt;
+	private String id; /* 아이디 */
+	private String pw; /* 비밀번호 */
+	private String name; /* 이름 */
+	private String email; /* 이메일 */
+	private Integer point; /* 포인트 */
+	private String checkcode; /* 체크코드 */
+	private LocalDate joinday; /* 가입날짜 */
+	private Boolean enable; /* 계정 활성화 여부 */
+	private String authority; /* 권한 */
+	private Integer failcnt; /* 로그인 실패 횟수 */
 	
+	// Entity 를 MemberDto.Info Dto로 변환
 	public Info toInfo() {
 		return MemberDto.Info.builder().id(id).name(name).email(email).build();
 	}

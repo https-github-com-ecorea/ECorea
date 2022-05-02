@@ -21,6 +21,16 @@ input[type=text], select, textarea {
   padding: 20px;
 }
 </style>
+  <title>챌린지 수정</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+  	$(document).ready(function() {
+  		$('#cancel').click(function() {
+  			history.go(-1);
+  		});
+  	});
+  </script>
+</head>
 <body>
 <header th:replace="fragments/common :: header"></header>
 <div id="wrapper">
@@ -60,7 +70,7 @@ input[type=text], select, textarea {
       <span style="color:red; font-size:10pxl">챌린지 수정은 작성일로부터 10일 이내에만 가능합니다.</span><br><br>
       
       <button type="submit" class="btn btn-primary">수정</button>
-      <button type="submit" class="btn btn-primary" formaction="">취소</button>
+      <button type="button" class="btn btn-primary" id="cancel">취소</button>
 
     </form>
   </div>

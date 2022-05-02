@@ -40,6 +40,7 @@ public class CorpDto {
 	
 	@Data
 	public static class infoUpdate {
+		// 알파벳 소문자,대문자,숫자,특수문자를 포함한 8-10글자 단 특수문자가 1개이상은 무조건 들어가야한다
 		@Pattern(regexp = "(?=.*[!@#$%^&*])^[A-Za-z0-9!@#$%^&*]{8,10}$")
 		private String pw;
 
