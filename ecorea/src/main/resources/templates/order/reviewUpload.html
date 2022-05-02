@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
+<head th:replace="fragments/common::html-head">
   <title>후기 작성</title>
 </head>
   <script src="/js/hugiCheck.js"></script>
@@ -46,9 +46,7 @@
 		return true;
 	}
   
-  	$(document).ready(function() {
-  		alert(/*[[${jno}]]*/);
-  		
+  	$(document).ready(function() {  		
   		$('#himg').change(function() {
   			console.log($('#himg').val());
   			if($('#himg').val()==='') {

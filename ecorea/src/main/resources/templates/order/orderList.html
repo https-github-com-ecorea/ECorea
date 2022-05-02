@@ -3,8 +3,20 @@
 <head th:replace="fragments/common::html-head">
   <title>주문 조회</title>  
 </head>
+<script>
+	function writeHugi() {
+		const $form = $("<form>").attr('method','post').attr('action','/order/reviewUpload').appendTo($('body'));
+		$("<input>").attr('type','hidden').attr("name", "jno").val($(this).attr('data-jno')).appendTo($form);
+		$form.submit();
+	}
+	
+	$(document).ready(function() {
+		$("#write_hugi").click(writeHugi);
+	})
+</script>
 <body>
 <header th:replace="fragments/common::header"></header>
+<div id="wrapper">
   <h1>주문 조회</h1>
   <div class="container">            
     <table class="table table-bordered">
@@ -30,7 +42,7 @@
           <td th:text="${list.price}"></td>
           <td>
           	<span th:text="${list.jstatus}"></span>
-          	<a href="/order/reviewUpload" th:if="${list.getJstatus.toString}=='배송완료'" class="btn btn-primary">후기 작성</a>
+          	<a th:href="@{/order/reviewUpload(jno=${list.jno})}" th:if="${list.getJstatus.toString}=='배송완료'" th:data-jno="${list.jno}" id="write_hugi" class="btn btn-primary">후기 작성</a>
           </td>
           <td>
             <a href="#" class="btn btn-primary">취소/교환/반품</a>
@@ -39,6 +51,8 @@
       </tbody>
     </table>
   </div>
-  <footer th:replace="fragments/common::footer"></footer>
+</div>
+<footer th:replace="fragments/common::footer"></footer>
+<script src="/js/index.js"></script>
 </body>
 </html>

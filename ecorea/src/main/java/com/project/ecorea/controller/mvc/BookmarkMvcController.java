@@ -26,7 +26,7 @@ public class BookmarkMvcController {
 	@GetMapping("/mypage/member/bookmarkList")
 	public ModelAndView readBookmark(Principal principal) {
 		List<BookmarkDto.BookmarkList> bookmarkList = bookmarkService.readBookmark(principal.getName());
-		return new ModelAndView("mypage/member/bookmarkList").addObject("bookmarkList", bookmarkList);		
+		return new ModelAndView("mypage/member/bookmarkList").addObject("bookmarkList", bookmarkList).addObject("role", "ROLE_MEMBER");		
 	}
 	
 	// 관심상품 한개 삭제

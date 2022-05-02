@@ -14,6 +14,7 @@
 </style>
 <body>
 	<header th:replace="fragments/common::header"></header>
+<div id="wrapper">
   <h1>문의 목록</h1>
   <div class="wrapper">
   <table class="table">
@@ -43,6 +44,8 @@
   	<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
   </form>
 </div>
+</div>
 <footer th:replace="fragments/common::footer"></footer>
+<script src="/js/index.js"></script>
 </body>
 </html>

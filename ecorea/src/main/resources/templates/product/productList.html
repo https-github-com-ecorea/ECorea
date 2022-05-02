@@ -4,11 +4,8 @@
 </head>
 <script th:inline="javascript">
   	const list = /*[[${list}]]*/
-  	var pagemaker = /*[[${pageMaker}]]*/
-  	const role = /*[[${role}]]*/
-  	console.log(pagemaker.cri.amount);
   	console.log(list);
-  	console.log(role);
+  	var pagemaker = /*[[${pageMaker}]]*/
   	
   	/* 현재 url의 카테고리 코드 추출 */
   	/* Code By Color Scripter™ 
@@ -283,6 +280,5 @@ li {
 </div>
 <footer th:replace="fragments/common :: footer">
 </footer>
-<script src="/js/index.js"></script>
 </body>
 </html>
