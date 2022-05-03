@@ -10,28 +10,34 @@
     margin-bottom: 5px;
     }
   </style>
-    <script>
+    <script th:inline="javascript">
+    const msg = /*[[${serverMsg}]]*/
+    
   	function productUpdate() {
 		const $form = $('<form>').attr('method','get').attr('action','/product/corp/productUpdate').appendTo($('body'));
-		$('<input>').attr('type','hidden').attr('name','pno').val($('#pno').text()).appendTo($form);
+		$('<input>').attr('type','hidden').attr('name','pno').val($(this).attr('data-pno')).appendTo($form);
 		$form.submit();
 	}
   	
   	function productDelete() {
 		const $form = $('<form>').attr('method','post').attr('action','/product/corp/productDelete').appendTo($('body'));
-		$('<input>').attr('type','hidden').attr('name','pno').val($('#pno').text()).appendTo($form);
+		$('<input>').attr('type','hidden').attr('name','pno').val($(this).attr('data-pno')).appendTo($form);
 		$form.submit();
 	}
   	
   	$(function() {
-		$('#moveProductUpdate').click(productUpdate);
-		$('#moveProductDelete').click(function() {
+		$('.moveProductUpdate').click(productUpdate);
+		$('.moveProductDelete').click(function() {
 			const result = confirm("상품을 삭제할까요?")
 			
 			if(result === true) {
 				productDelete();
 			}
 		});
+		
+		if(msg!=null) {
+			alert(msg);
+		}
   	});
   </script>
 <body>
@@ -58,9 +64,9 @@
 	        	<a th:href="@{/product/corp/productDetail(pno=${regProducts.pno})}" id="moveProductDetail" th:text="${regProducts.pname}"></a>
 	        </td>
 	        <td>
-		        <button id="moveProductUpdate" class="btn btn-primary">수정</button>
+		        <button id="moveProductUpdate" class="moveProductUpdate btn btn-primary" th:data-pno="${regProducts.pno}">수정</button>
 		        <br>
-		        <button id="moveProductDelete" class="btn btn-primary">삭제</button>
+		        <button id="moveProductDelete" class="moveProductDelete btn btn-primary" th:data-pno="${regProducts.pno}">삭제</button>
 	        </td>
     	</tr>
     </tbody>

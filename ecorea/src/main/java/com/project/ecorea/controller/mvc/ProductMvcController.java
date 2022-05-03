@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.security.Principal;
 
+import javax.validation.*;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -105,20 +107,30 @@ public class ProductMvcController {
 	@Secured("ROLE_CORP")
 	@GetMapping("/product/corp/productUpdate")
 	public ModelAndView readCorpProductDetail(Principal principal, Integer pno) {
-		return new ModelAndView("product/corp/productUpdate").addObject("product", productService.readProductDetailForUpdate(principal.getName(), pno));
+		return new ModelAndView("product/corp/productUpdate")
+				.addObject("product", productService.readProductDetailForUpdate(principal.getName(), pno));
 	}
 	
 	// 상품 수정
 	@Secured("ROLE_CORP")
 	@PostMapping("/product/corp/productUpdate")
-	public String updateProduct(ProductDto.UpdateProduct updateDto, RedirectAttributes ra) {
-		if((updateDto.getPname()==null || updateDto.getPname()=="") && (updateDto.getPrice()==null) && (updateDto.getPstock()==null) && (updateDto.getPthumbnail()==null || updateDto.getPthumbnail()=="") && (updateDto.getPcontent()==null || updateDto.getPcontent()=="")) {
-			ra.addFlashAttribute("변경할 값이 없습니다.");
-			return "redirect:/product/corp/productUpdate";
+	public String updateProduct(@Valid ProductDto.UpdateProduct updateDto, RedirectAttributes ra) {
+		if((updateDto.getPname()==null || updateDto.getPname().equals("")) && 
+				(updateDto.getPrice()==null || updateDto.getPrice().equals("")) && 
+				(updateDto.getPstock()==null || updateDto.getPstock().equals("")) && 
+				(updateDto.getPthumbnail()==null || updateDto.getPthumbnail().equals("")) && 
+				(updateDto.getPcontent()==null || updateDto.getPcontent().equals(""))) {
+			ra.addFlashAttribute("serverMsg","값을 정확히 입력해주세요.");
+			return "redirect:/mypage/corp/productList";
 		}
 		else {
-			productService.updateProduct(updateDto);
-			return "redirect:/product/corp/productUpdate";
+			Boolean result = productService.updateProduct(updateDto);
+			if(result==false) {
+				ra.addFlashAttribute("serverMsg", "변경사항이 없습니다.");
+				return "redirect:/mypage/corp/productList";
+			}
+			ra.addFlashAttribute("serverMsg","수정 성공");
+			return "redirect:/mypage/corp/productList";
 		}				
 	}
 	

@@ -73,17 +73,6 @@ public class ProductDto {
 	}
 	
 	@Data
-	public static class ProductDetailForUpdate {
-		private Integer pno;
-		private String pname;
-		private String corpId;
-		private Integer price;
-		private Integer pstock;
-		private MultipartFile pthumbnail;
-		private String pcontent;
-	}
-	
-	@Data
 	@AllArgsConstructor
 	public static class UpdateProduct  {
 		private Integer pno;
@@ -93,5 +82,16 @@ public class ProductDto {
 		private String pthumbnail;
 		private String pcontent;
 		private String corpId;
+		
+		public Product toEntity() {
+			Product product = new Product();
+			if(pname.equals("")==false) 
+				product.setPname(pname);
+			if(pthumbnail.equals("")==false)
+				product.setPthumbnail(pthumbnail);
+			if(pcontent.equals("")==false)
+				product.setPcontent(pcontent);
+			return product;
+		}
 	}
 }
