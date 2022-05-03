@@ -23,4 +23,8 @@ public interface AddressDao {
 	
 	/* 기본배송지 정보 출력 */
 	public Address defaultAddress(String memberId);
+	
+	/* 배송지 삭제 */
+	public Integer deleteAddress(String memberId, Integer ano);
+	
 }

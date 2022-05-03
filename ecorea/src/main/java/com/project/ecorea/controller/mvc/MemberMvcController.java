@@ -16,6 +16,7 @@ import lombok.*;
 @AllArgsConstructor
 public class MemberMvcController {
 	private MyPageService mypageService;
+	private AddressService addressService;
 	
 	/* 마이 페이지 - 배송 주소록 관리 화면 */
 	@Secured("ROLE_MEMBER")
@@ -27,6 +28,13 @@ public class MemberMvcController {
 	/* 배송 주소록 추가 팝업창 화면 */
 	@GetMapping("/mypage/member/newAddress")
 	public void addAddressMvc() {
+	}
+
+	/* 배송지 삭제 */
+	@PostMapping("/mypage/member/addressDelete")
+	public String deleteAddress(Principal principal, Integer ano) {
+		addressService.deleteAddress(principal.getName(), ano);
+		return "redirect:/mypage/member/addressList";
 	}
 	
 	/* 기업 회원 마이 페이지 화면 */

@@ -28,10 +28,11 @@ public class ChallengeDto {
 		private LocalDate cendday; /* 챌린지 마감일 */
 		private MultipartFile cthumbnail; /* 썸네일 */
 		private String ccontent; /* 내용 */
+		private String corpId; /* 작성자 */
 		
 		public Challenge toEntity() {
 			return Challenge.builder().cname(cname).cgoal(cgoal).cpoint(cpoint).cregday(LocalDate.now())
-					.cstartday(cstartday).cendday(cendday).ccontent(ccontent).cjoincnt(0).build();
+					.cstartday(cstartday).cendday(cendday).ccontent(ccontent).cjoincnt(0).corpId(corpId).build();
 		}
 	}
 	

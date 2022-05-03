@@ -34,5 +34,10 @@
 	<select id="defaultAddress" resultType="address">
 		select * from address where member_id=#{memberId} and astandard=1
 	</select>
+	
+	<!-- 배송지 삭제 -->
+	<delete id="deleteAddress">
+		DELETE FROM address WHERE member_id=#{memberId} AND ano=#{ano}
+	</delete>
 
 </mapper>

@@ -51,6 +51,19 @@
 					$('#chosen_address_info').text("(" + address.azipcode + ") " + address.aaddress1);
 			})
 		})
+		
+		/* 선택한 배송지 삭제 */
+		$('#radio_btn_area').on("click", ".address", function() {
+			const $ano = $(this).attr("data-ano");
+			$('#delete').click(function() {
+				const result = confirm("선택한 주소를 삭제하시겠습니까?");
+				if (result == true) {
+					const $form = $('<form>').attr('method', 'post').attr('action', '/mypage/member/addressDelete').appendTo('body');
+					$('<input>').attr('type', 'hidden').attr('name', 'ano').val($ano).appendTo($form);
+					$form.submit();
+				}
+			})
+		})
 	})
 </script>
 <body>	
@@ -60,6 +73,7 @@
 		<div id="main" class=".wrapper">
 			<div>
 				<button id="add_address_btn" class="btn btn-primary">배송지 추가</button>
+				<button id="delete" class="btn btn-primary">삭제</button>
 				<div id="radio_btn_area">
 				<!-- 등록된 배송지들을 라디오 버튼으로 출력하는 영역 -->
 				</div>
