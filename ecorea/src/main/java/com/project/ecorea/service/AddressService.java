@@ -37,4 +37,11 @@ public class AddressService {
 		return dao.chosenAddress(memberId, ano);
 	}
 
+	/* 배송지 삭제 */
+	public Boolean deleteAddress(String loginId, Integer ano) {
+		Integer result = dao.deleteAddress(loginId, ano);
+		if (result <= 0)
+			return false;
+		return true;
+	}
 }
