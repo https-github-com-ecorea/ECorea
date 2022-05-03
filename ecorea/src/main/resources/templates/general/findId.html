@@ -30,13 +30,13 @@
 		$('#findUserId').click(function() {
 			$.ajax("/user/find/id?email=" + $('#email').val() + "&name=" + $('#name').val())
 				.done(result => {
-					$('#view_id').css('display', 'block');
+					$('#view_id').css('display', 'block').css('text-align','center');
 					$('#fail_find_id').css('display', 'none');
 					$('#show_find_id').text(result);
 				})
 				.fail((response)=>{
 					$('#view_id').css('display', 'none');
-					$('#fail_find_id').css('display', 'block');
+					$('#fail_find_id').css('display', 'block').css('text-align','center');
 				}).always(()=>{
 					// 성공, 실패 상관없이 실행해야 되는 코드
 					$('#name').val("");

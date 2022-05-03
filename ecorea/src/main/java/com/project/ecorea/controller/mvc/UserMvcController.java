@@ -36,23 +36,15 @@ import lombok.AllArgsConstructor;
 @Controller
 public class UserMvcController {
 	private UserService service;
-	
-	@Autowired
 	private ProductService productService;
 	
+	/* 메인 페이지 */
 	@GetMapping("/")
-	public ModelAndView main(HttpSession session, HttpServletRequest servletRequest) {
-		if(session.getAttribute("login")==null) {
-			return new ModelAndView("index").addObject("list", productService.productList());
-		}
-		
-		if(servletRequest.isUserInRole("ROLE_MEMBER")) {
-			return new ModelAndView("index").addObject("role", "ROLE_MEMBER").addObject("list", productService.productList());
-		} else {
-			return new ModelAndView("index").addObject("role", "ROLE_CORP").addObject("list", productService.productList());
-		}
+	public ModelAndView main() {
+		return new ModelAndView("index").addObject("list", productService.productList());
 	}
 	
+	/* 어바웃 페이지 */
 	@GetMapping("/about")
 	public void readAbout(Model model, HttpServletRequest request) {
 		if (request.isUserInRole("ROLE_MEMBER")) {
@@ -62,6 +54,7 @@ public class UserMvcController {
 		}
 	}
 	
+	/* 일반 회원 , 기업 회원 가입 선택 페이지 */
 	@PreAuthorize("isAnonymous()")
 	@GetMapping("/general/joinSelect")
 	public String joinSelect(HttpSession session) {

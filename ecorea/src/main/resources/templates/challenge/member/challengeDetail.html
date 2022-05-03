@@ -176,7 +176,6 @@ img {
 <body>
 <header th:replace="fragments/common :: header"></header>
 	<div id="wrapper">
-
 		<h3>챌린지 상세</h3>
 		<br>
 
@@ -257,7 +256,6 @@ img {
 
 	<script th:inline="javascript">
     const challenge = /*[[${challenge}]]*/;
-    
     	const joincnt = challenge.cjoincnt;
     	const goal = challenge.cgoal;
     	let percentage = (parseInt(joincnt)/parseInt(goal))*100;
@@ -390,6 +388,10 @@ img {
 				location.href='/general/login';
 			}
 		});
+		
+		$.ajax({url:"/navMenu"}).done((role) => {
+	  		loginMenu(role);
+  		});
 	})
     </script>
 </body>

@@ -29,7 +29,7 @@ public class MemberMvcController {
 	@GetMapping("/mypage/member/newAddress")
 	public void addAddressMvc() {
 	}
-	
+
 	/* 배송지 삭제 */
 	@PostMapping("/mypage/member/addressDelete")
 	public String deleteAddress(Principal principal, Integer ano) {
@@ -37,14 +37,14 @@ public class MemberMvcController {
 		return "redirect:/mypage/member/addressList";
 	}
 	
-	/* 기업 마이 페이지 */
+	/* 기업 회원 마이 페이지 화면 */
 	@Secured("ROLE_CORP")
 	@GetMapping("/mypage/corp/corpMypage")
 	public void readCorpMypage(Model model) {
 		model.addAttribute("role", "ROLE_CORP");
 	}
 
-	/* 마이 페이지 화면 */
+	/* 일반 회원 마이 페이지 화면 */
 	@Secured("ROLE_MEMBER")
 	@GetMapping("/mypage/member/memberMypage")
 	public ModelAndView readMypage(Principal principal) {

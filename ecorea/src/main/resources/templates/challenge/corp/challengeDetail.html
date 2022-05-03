@@ -258,6 +258,7 @@ const challenge = /*[[${challenge}]]*/;
 	    });    		
 	})
 </script> -->
+<body>
 <header th:replace="fragments/common :: header"></header>
 <div id="wrapper">
 <h3>챌린지 상세</h3>
@@ -437,6 +438,9 @@ const challenge = /*[[${challenge}]]*/;
 	    $.getJSON("/challengeDetail/provelist?", {cno : cno}, function(obj) {
 	      makeProve(obj);
 	    });    		
+	    $.ajax({url:"/navMenu"}).done((role) => {
+	  		loginMenu(role);
+  		});
 	})
     </script>
 

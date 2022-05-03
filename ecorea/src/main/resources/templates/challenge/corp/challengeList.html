@@ -104,6 +104,9 @@ h1 {
   	
   	$(document).ready(function() {
 		pagination();
+		$.ajax({url:"/navMenu"}).done((role) => {
+	  		loginMenu(role);
+  		});
   	});
   </script>
 <body>
