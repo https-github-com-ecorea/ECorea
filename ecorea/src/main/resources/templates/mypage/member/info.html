@@ -31,9 +31,10 @@
       text-align: center;
       left: 30%;
     }
-    .btn {
+    .btnwrap {
       float: right;
-      margin-right: 20px;
+      margin-right: 380px;
+      
     }
   </style>
     <script type="text/javascript">
@@ -52,7 +53,7 @@
   </script>
 <body>
 <div id="page">
-	<header th:replace="fragments/common::header"></header>
+
     <h1>회원 정보 수정</h1>
     <div class="wrapper">
   <form action="/mypage/member/info" method="post" class="was-validated" id="update_form">
@@ -76,8 +77,10 @@
       <label for="email" class="form-label">이메일</label>
       <input type="email" class="form-control" id="email" placeholder="이메일" name="email" th:value="${member.email}" required>
     </div>
+    <div class="btnwrap">
     <button type="button" class="btn btn-primary outbtn">탈퇴하기</button>
     <button type="button" class="btn btn-primary" id="update">수정하기</button>
+    </div>
   </form>
 </div>
 </div>

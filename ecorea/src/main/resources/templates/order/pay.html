@@ -12,13 +12,15 @@
   <title>주문 / 결제</title>
   <style>
     .form-control {
-      width: 350px;
+    display: inline-block;
+    width: 800px;
     }
     .btn {
       margin-bottom: 20px;
     }
     .wrapper {
-      position:absolute;
+      margin: 0 auto;
+      width: 800px;
       left: 30%;
     }
   </style>
@@ -149,6 +151,7 @@
   </script>
 </head>
 <body>
+<header th:replace="fragments/common::header"></header>
 	<h1>주문 / 결제</h1>
     <div class="wrapper" th:each="preview: ${preview}">
         <div class="jumun_info">
