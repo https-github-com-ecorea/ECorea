@@ -20,8 +20,7 @@ public class BookmarkService {
 	
 	// 관심상품 리스트 출력
 	public List<BookmarkDto.BookmarkList> readBookmark(String memberId) {
-		List<BookmarkDto.BookmarkList> list = bookmarkDao.findByMemberId(memberId, imagePath);
-		return list;
+		return bookmarkDao.findByMemberId(memberId, imagePath);
 	}
 	
 	// 관심상품 한개 삭제

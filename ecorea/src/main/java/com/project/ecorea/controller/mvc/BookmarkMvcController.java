@@ -20,13 +20,13 @@ import lombok.*;
 @Secured("ROLE_MEMBER")
 public class BookmarkMvcController {
 	private BookmarkService bookmarkService;
-	private ProductService productService;
 	
 	// 관심상품 목록 출력
 	@GetMapping("/mypage/member/bookmarkList")
 	public ModelAndView readBookmark(Principal principal) {
 		List<BookmarkDto.BookmarkList> bookmarkList = bookmarkService.readBookmark(principal.getName());
-		return new ModelAndView("mypage/member/bookmarkList").addObject("bookmarkList", bookmarkList).addObject("role", "ROLE_MEMBER");		
+		return new ModelAndView("mypage/member/bookmarkList")
+				.addObject("bookmarkList", bookmarkList).addObject("role", "ROLE_MEMBER");		
 	}
 	
 	// 관심상품 한개 삭제
@@ -50,26 +50,12 @@ public class BookmarkMvcController {
 		return "redirect:/mypage/member/bookmarkList";
 	}
 	
-	// 관심상품 한 개 장바구니에 담기
-	@PostMapping("/mypage/member/bookmarkList/shoppingOne")
-	public String shoppingCartOne(Integer pno, Principal principal) {		
-		productService.shoppingCartOne(pno, principal.getName());	
-		return "redirect:/order/cart";
-	}
-	
-	// 선택한 관심상품 장바구니에 담기
-	@PostMapping("/mypage/member/bookmarkList/shoppingMultiple")
-	public String shoppingCartSelected(PnoSelected dto, Principal principal) {
-		productService.shoppingCartSelected(dto, principal.getName());
-		return "redirect:/order/cart";
-	}
-	
 	// 상품상세 -> 관심상품 등록
 	@PostMapping("/bookmark/add")
 	public String addBookmark(Integer pno, Principal principal, RedirectAttributes ra) {
 		String resultMsg = bookmarkService.addBookmark(pno, principal.getName()); 
 		if(resultMsg.equals("exist")) {
-			ra.addFlashAttribute("msg", "이미 등록된 상품입니다.");
+			ra.addFlashAttribute("msg", "이미 등록된 상품입니다. 관심상품 목록으로 이동하시겠습니까");
 			return "redirect:/product/member/productDetail?pno="+pno;
 		} else if(resultMsg.equals("fail")) {
 			ra.addFlashAttribute("msg", "관심상품 등록에 실패했습니다.");

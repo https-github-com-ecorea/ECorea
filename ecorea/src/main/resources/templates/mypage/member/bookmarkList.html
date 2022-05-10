@@ -12,7 +12,7 @@
     }
 </style>
 <script th:inline="javascript">  	
-  
+
   	// 상품 한 개 삭제
   	function deleteOne() {
   		const result = confirm("해당 상품을 관심상품에서 삭제하시겠습니까?");  		
@@ -49,14 +49,14 @@
   
   	// 상품 한 개 장바구니 담기
   	function shoppingOne() {
-  		const $form = $('<form>').attr('method','post').attr('action','/mypage/member/bookmarkList/shoppingOne').appendTo($('body'));
+  		const $form = $('<form>').attr('method','post').attr('action','/order/cart/addOne').appendTo($('body'));
   		$('<input>').attr('type','hidden').attr('name','pno').val($(this).attr('data-pno')).appendTo($form);
   		$form.submit();
   	} 
   	
   	// 선택상품 장바구니에 담기
   	function shoppingSelected() {
-  		const $form = $("<form>").attr("method","post").attr("action","/mypage/member/bookmarkList/shoppingMultiple").appendTo($('body'));
+  		const $form = $("<form>").attr("method","post").attr("action","/order/cart/addMultiple").appendTo($('body'));
   		$(".pno").each(function(idx, checkbox) {
   			if($(this).prop('checked')==true) {
   				$("<input>").attr("type","hidden").attr("name","pnos").val($(this).attr('data-pno')).appendTo($form);  				
@@ -66,7 +66,8 @@
   			$form.submit();
   	}
   	
-  	$(document).ready(function() {  		
+  	$(document).ready(function() { 
+  		
   		$('.deleteOne').click(deleteOne);
   		$('#deleteAll').click(deleteAll);
   		$('#deleteSelected').click(deleteSelected);
