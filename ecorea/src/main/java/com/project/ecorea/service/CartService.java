@@ -49,21 +49,18 @@ public class CartService {
 	
 	// 상품 한 개 삭제
 	public Integer deleteOne(String memberId, Integer pno) {
-		Integer deleteOneResult = cartDao.deleteOne(memberId, pno);
-		return deleteOneResult;
+		return cartDao.deleteOne(memberId, pno);
 	}
 	
 	// 상품 전체 삭제
 	public Integer deleteAll(String memberId) {
-		Integer deleteAllResult = cartDao.deleteAll(memberId);
-		return deleteAllResult;
+		return cartDao.deleteAll(memberId);
 	}
 	
 	// 선택상품 삭제
 	public Integer deleteSelected(String memberId, CartDto.DeleteSelected dto) {
 		List<Integer> list = dto.getPnos();
 		list.removeAll(Collections.singleton(null));
-		Integer deleteSelectedResult = cartDao.deleteSelected(memberId, list);			
-		return deleteSelectedResult;		
+		return cartDao.deleteSelected(memberId, list);		
 	}
 }

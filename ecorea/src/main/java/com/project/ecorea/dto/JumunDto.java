@@ -23,7 +23,7 @@ public class JumunDto {
 	
 	@Data
 	public static class ParamsList {
-		private List<Params> paramsList;
+		private List<Params> list;
 	}	
 	
 	
