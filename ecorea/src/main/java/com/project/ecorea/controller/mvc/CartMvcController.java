@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.*;
 
 import com.project.ecorea.dto.*;
+import com.project.ecorea.dto.BookmarkDto.*;
 import com.project.ecorea.service.*;
 
 import lombok.*;
@@ -21,12 +22,26 @@ public class CartMvcController {
 	private final CartService cartService;
 	private final ProductService productService;
 	
+	// 관심상품 한 개 장바구니에 담기
+	@PostMapping("/order/cart/addOne")
+	public String shoppingCartOne(Integer pno, Principal principal) {		
+		productService.shoppingCartOne(pno, principal.getName());	
+		return "redirect:/order/cart";
+	}
+	
 	/* 장바구니에 담기 */
 	@PostMapping("/order/cart/add")
 	public String add(Integer pno, Integer count, Principal principal) {
 		Boolean result = productService.shoppingCartMultiple(pno, count, principal.getName());
 		if (result == false)
 			return "redirect:/product/productList?page=1&amount=9&catecode=&sort=";
+		return "redirect:/order/cart";
+	}
+	
+	// 선택한 관심상품 장바구니에 담기
+	@PostMapping("/order/cart/addMultiple")
+	public String shoppingCartSelected(PnoSelected dto, Principal principal) {
+		productService.shoppingCartSelected(dto, principal.getName());
 		return "redirect:/order/cart";
 	}
 	

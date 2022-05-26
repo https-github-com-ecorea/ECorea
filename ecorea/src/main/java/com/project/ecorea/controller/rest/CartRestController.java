@@ -16,6 +16,7 @@ import lombok.*;
 public class CartRestController {
 	private final CartService cartService;
 	
+	// 수량 증가
 	@PatchMapping("/order/cart/plusProduct/{pno}")
 	public ResponseEntity<Integer> plusCartProduct(@PathVariable Integer pno, Principal principal) {
 		Integer productCnt = cartService.plusCnt(principal.getName(), pno);
@@ -26,6 +27,7 @@ public class CartRestController {
 		
 	}
 	
+	// 수량 감소
 	@PatchMapping("/order/cart/minusProduct/{pno}")
 	public ResponseEntity<Integer> minusCartProduct(@PathVariable Integer pno, Principal principal) {
 		Integer productCnt = cartService.minusCnt(principal.getName(), pno);

@@ -3,6 +3,9 @@ package com.project.ecorea.service;
 import java.io.*;
 import java.util.*;
 
+import javax.validation.*;
+
+import org.apache.commons.lang3.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.*;
 import org.springframework.web.multipart.*;
@@ -80,8 +83,7 @@ public class ProductService {
 		return productDao.findByPno(pno).getPstock() >= count;
 	}
 
-  /* 상품 등록 */
-
+	/* 상품 등록 */
 	public void uploadProduct(ProductDto.Upload uploadDto) {
 		Product product = uploadDto.toEntity();
 		MultipartFile pthumbnail = uploadDto.getPthumbnail();
@@ -106,18 +108,29 @@ public class ProductService {
 	}
 	
 	// 등록된 상품 상세정보 출력
-	public ProductDto.ProductDetailForUpdate readProductDetailForUpdate(String corpId, Integer pno) {
-		ProductDto.ProductDetailForUpdate product = productDao.findByCorpIdAndPno(corpId, pno);
+	public ProductDto.UpdateProduct readProductDetailForUpdate(String corpId, Integer pno) {
+		ProductDto.UpdateProduct product = productDao.findByCorpIdAndPno(corpId, pno);
 		return product;
 	}
 	
 	// 상품 상세정보 수정
-	public Boolean updateProduct(ProductDto.UpdateProduct productDto) {
-		Integer updateResult = productDao.updateProduct(productDto);
-		if(updateResult<=0) {
+	public Boolean updateProduct(@Valid ProductDto.UpdateProduct productDto) {
+		// content 내용이 바뀌었는지 확인
+		ProductDto.UpdateProduct existInfo = productDao.findByCorpIdAndPno(productDto.getCorpId(), productDto.getPno());
+		Boolean isNotChange = productDto.getPcontent().equals(existInfo.getPcontent());
+		if(isNotChange)
+			productDto.setPcontent("");		
+		// 커맨드객체 "" -> update시 null 가질 수 있도록
+		Product product = productDto.toEntity();
+		// 변경사항이 없을 경우
+		if(product.getPname()==null && product.getPrice()==null && product.getPstock()==null 
+				&& product.getPthumbnail()==null && product.getPcontent()==null) {
 			return false;
-		}
-		return true;		
+		}	
+		product.setPno(productDto.getPno());
+		product.setCorpId(productDto.getCorpId());
+		productDao.updateProduct(product);
+		return true;
 	}
 	
 	// 상품 삭제

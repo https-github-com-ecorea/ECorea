@@ -73,17 +73,16 @@
    	<select id="memberQuestionFindById" resultType="com.project.ecorea.dto.QnaDto$QuestionDto" parameterType="map" resultMap="namecheckQuestion">
 	   	select qqno, qqcategory, qqtitle, qqcontent, qqimg, qqregday, member_id from(
 	   		select qqno, qqcategory, qqtitle, qqcontent, qqimg, qqregday, member_id, row_number() over(order by qqno desc) rn
-	   		from qna_q where <![CDATA[rownum <= #{cri.nowPage} * #{cri.amount}]]> and member_id=#{loginId})
-	   	where <![CDATA[rn > (#{cri.nowPage} -1) * #{cri.amount}]]>
+	   		from qna_q WHERE member_id=#{loginId}) 
+	   		where <![CDATA[rn > (#{cri.nowPage} -1) * #{cri.amount}]]> AND <![CDATA[rn <= #{cri.nowPage} * #{cri.amount}]]>
    	</select>
    	
    	<!-- 기업 회원 마이페이지 : 문의 목록 (페이징) -->
    	<select id="corpQuestionFindById" resultType="com.project.ecorea.dto.QnaDto$QuestionDto" parameterType="map" resultMap="namecheckQuestion">
 	   	select qqno, qqcategory, qqtitle, qqcontent, qqimg, qqregday, member_id from(
-	   		select qqno, qqcategory, qqtitle, qqcontent, qqimg, qqregday, member_id, row_number() over(order by qqno desc) rn
-	   		from QNA_Q inner join product on qna_q.pno=product.pno
-	   		where <![CDATA[rownum <= #{cri.nowPage} * #{cri.amount}]]> and corp_id=#{loginId})
-	   	where <![CDATA[rn > (#{cri.nowPage} -1) * #{cri.amount}]]>
+		    select qqno, qqcategory, qqtitle, qqcontent, qqimg, qqregday, member_id, row_number() over(order by qqno desc) as rn
+		    from QNA_Q inner join product on qna_q.pno=product.pno WHERE corp_id=#{loginId})
+		    where <![CDATA[rn > (#{cri.nowPage} -1) * #{cri.amount}]]> AND <![CDATA[rn <= #{cri.nowPage} * #{cri.amount}]]>
    	</select>
 	
 	<!-- 일반 회원 마이페이지 : 문의 목록 

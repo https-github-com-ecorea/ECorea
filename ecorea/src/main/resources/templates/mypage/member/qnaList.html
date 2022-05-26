@@ -4,7 +4,7 @@
   <style>
     h1 {
       text-align: center;
-      margin-top: 50px;
+      margin-top: 100px;
     }
     .wrapper {
       margin: 30px;      
@@ -14,7 +14,31 @@
     }
   </style>
 <script th:inline="javascript">
-	const role = /*[[${role}]]*/
+	var pagemaker = /*[[${pageMaker}]]*/
+
+	/* 페이징 */
+  	function pagination() {
+		const $pagination = $('#pagination');
+		const $ul = $('<ul class="pagination">').appendTo($pagination);
+		if (pagemaker.prev == true) {
+			const $li = $('<li>').appendTo($ul);
+			$('<a>').attr('href', '/mypage/member/qnaList?nowPage=' + (pagemaker.start - 1) + '&amount=' + pagemaker.cri.amount).text("이전").appendTo($li);
+		}
+		for (let i = pagemaker.start; i <= pagemaker.end; i++) {
+			const $li = $('<li>').appendTo($ul);
+			$('<a>').attr('href', '/mypage/member/qnaList?nowPage=' + i + '&amount=' + pagemaker.cri.amount).text(i).appendTo($li);
+			if (i == pagemaker.nowPage)
+				$li.attr('class', 'active');
+		}
+		if (pagemaker.next == true) {
+			const $li = $('<li>').appendTo($ul);
+			$('<a>').attr('href', '/mypage/member/qnaList?nowPage=' + (pagemaker.end + 1) + '&amount=' + pagemaker.cri.amount).text("다음").appendTo($li);
+		}
+  	}
+	
+	$(document).ready(function() {
+		pagination();
+	})
 </script>
 <body>
 <header th:replace="fragments/common :: header"></header>

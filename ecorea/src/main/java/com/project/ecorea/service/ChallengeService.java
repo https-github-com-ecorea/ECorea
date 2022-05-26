@@ -59,6 +59,7 @@ public class ChallengeService {
 	/* 기업 회원 : 챌린지 수정 화면 */
 	public Challenge challengeUpdateView(Integer cno) {
 		Challenge update = dao.challengeUpdateView(cno);
+		update.setCthumbnail(imagePath + update.getCthumbnail());
 		return update;
 	}
 	
@@ -84,16 +85,25 @@ public class ChallengeService {
 	}
 	
 	/* 기업 회원 : 챌린지 수정 */
-	public Boolean challengeUpdate(Challenge challenge) {
+	public Boolean challengeUpdate(ChallengeDto.ChallengeUpload challengeDto, Integer cno) {
 		boolean result;
-		if (challengeUpdateisDate(challenge) == true) {
-			Integer update = dao.challengeUpdate(challenge);
-			if (update <= 0)
-				result = false;
-			result = true;		
-		} else {
-			result = false;
+		Challenge challenge = challengeDto.toEntity();
+		MultipartFile cthumbnail = challengeDto.getCthumbnail();
+		challenge.setCno(cno);
+		if (cthumbnail != null && cthumbnail.isEmpty() == false) {
+			String imgname = UUID.randomUUID() + "-" + cthumbnail.getOriginalFilename();
+			File file = new File(imageFolder, imgname);
+			try {
+				cthumbnail.transferTo(file);
+				challenge.setCthumbnail(imgname);
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
 		}
+		Integer update = dao.challengeUpdate(challenge);
+		if (update <= 0)
+			result = false;
+		result = true;
 		return result;
 	}
 	

@@ -36,7 +36,7 @@ public class JumunMvcController {
 	// 장바구니 -> 구매 (주문 상품 여러개)
 	@PostMapping("/order/preview/multiple")
 	public ModelAndView cartToOrder(JumunDto.ParamsList list, Principal principal, HttpSession session) {
-		JumunDto.JumunPreview dto = jumunService.jumunPreview(list.getParamsList(), principal.getName());
+		JumunDto.JumunPreview dto = jumunService.jumunPreview(list.getList(), principal.getName());
 		session.setAttribute("dto", dto);
 		return new ModelAndView("order/pay").addObject("preview", dto);
 	}

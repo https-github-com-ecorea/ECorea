@@ -29,8 +29,7 @@ public class ChProveService {
 	
 	// 나의 챌린지 목록 출력 - 인증 O
 	public List<ChProveDto.ProveList> readProve(String memberId) {
-		List<ChProveDto.ProveList> proveList = proveDao.findByMemberId(memberId, imagePath);
-		return proveList;
+		return proveDao.findByMemberId(memberId, imagePath);
 	}
 	
 	// 나의 챌린지 목록 출력 - 인증 X
@@ -47,7 +46,7 @@ public class ChProveService {
 	}
 	
 	// 챌린지 인증 등록
-	public void UploadChProve(ChProveDto.InputProve dto, String memberId) {
+	public void uploadChProve(ChProveDto.InputProve dto, String memberId) {
 		ChProve chprove = dto.toEntity();
 		
 		MultipartFile image = dto.getCpimg();
@@ -68,14 +67,12 @@ public class ChProveService {
 	
 	// 챌린지 인증 삭제
 	public Integer deleteChProve(String memberId, Integer cpno) {
-		Integer result = proveDao.deleteByMemberIdAndCpno(memberId, cpno);
-		return result;
+		return proveDao.deleteByMemberIdAndCpno(memberId, cpno);
 	}
 	
 	// 챌린지 신청 취소
 	public Integer cancelJoin(String memberId, Integer cno) {
-		Integer result = proveDao.deleteByMemberIdAndCno(memberId, cno);
-		return result;
+		return proveDao.deleteByMemberIdAndCno(memberId, cno);
 	}
 	
 	/* 챌린지 상세 : 인증 목록 (페이징) */

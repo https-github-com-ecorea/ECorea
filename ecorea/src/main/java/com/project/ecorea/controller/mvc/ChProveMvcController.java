@@ -31,13 +31,13 @@ public class ChProveMvcController {
 	
 	// 챌린지 인증 등록페이지
 	@GetMapping("/challenge/member/challengeProveUpload")
-	public void UploadProve(Integer cno) {
+	public void uploadProve(Integer cno) {
 	}
 	
 	// 챌린지 인증 등록	
 	@PostMapping("/challenge/member/challengeProveUpload")
-	public String UploadProve(ChProveDto.InputProve dto, Principal principal) {	
-		proveService.UploadChProve(dto, principal.getName());
+	public String uploadProve(ChProveDto.InputProve dto, Principal principal) {	
+		proveService.uploadChProve(dto, principal.getName());
 		return "redirect:/challenge/member/challengeList";
 	}
 	
@@ -53,8 +53,5 @@ public class ChProveMvcController {
 	public String cancelJoin(Integer cno, Principal principal) {
 		proveService.cancelJoin(principal.getName(), cno);
 		return "redirect:/challenge/member/challengeList";
-		/*
-			챌린지 신청 취소하면 바뀌어야 할것들..?			
-		 */
 	}
 }

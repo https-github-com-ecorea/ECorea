@@ -75,6 +75,12 @@
       margin: 0 auto;
       left: 10%;
     }
+    .minibox {
+    display: flex;
+    justify-content: flex-start;
+    text-align: center;
+    flex-wrap: wrap;
+    }
   </style>
 <body>
   <header class="navwrapper" th:replace="fragments/common::header"></header>
@@ -104,21 +110,22 @@
 							th:text="${mypage.cancelCnt}">0</span></a>
 					</div>
 				</div>
-
+				<div class="minibox">
 				<a href="/mypage/member/info"><button type="text"
 						class="btn btn-primary">회원정보 보기</button></a> <a
 					href="/order/orderList"><button type="text"
 						class="btn btn-primary">주문 내역 조회</button></a> <a
 					href="/mypage/member/bookmarkList"><button type="text"
 						class="btn btn-primary">관심 상품 조회</button></a> <a
-					href="/mypage/member/qnaList"><button type="text"
+					href="/mypage/member/qnaList?nowPage=1&amount=10"><button type="text"
 						class="btn btn-primary">문의 목록</button></a> <a
 					href="/mypage/member/addressList"><button type="text"
 						class="btn btn-primary">주소록 관리</button></a> <a
-					href="/order/reviewList?nowPage=1&amount=9"><button type="text"
+					href="/order/reviewList?nowPage=1&amount=10"><button type="text"
 						class="btn btn-primary">내가 쓴 후기</button></a> <a
 					href="/challenge/member/challengeList"><button type="text"
 						class="btn btn-primary">나의 챌린지</button></a>
+			</div>
 			</div>
 			<input class="goupbtn" type="button" value="↑" onclick="clickme()">
 		</div>

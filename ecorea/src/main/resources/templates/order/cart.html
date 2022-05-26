@@ -14,7 +14,8 @@
       float: right;
     }
     .form-inline {
-      float: right;
+      display: flex;
+      justify-content: flex-end;
       margin-right: 45px;
     }
     .form-control {
@@ -26,6 +27,7 @@
     .wrapper {
       margin: 40px;
     }
+
   </style>
 	<script th:inline="javascript">
 		const cartList = /*[[${cartList}]]*/
@@ -141,7 +143,7 @@
 <body>
 	<header th:replace="fragments/common::header"></header>
 	<h1>장바구니</h1>
-    <div class="wrapper">
+    <div class="wrapper" style="margin-bottom:150px;">
         <button type="submit" class="btn btn-primary" id="delete_selected">선택삭제</button>
         <button type="submit" class="btn btn-primary" id="delete_all">전체삭제</button><br>
         <div id="list" th:each="list: ${cartList}">

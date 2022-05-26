@@ -60,7 +60,7 @@
   	
   	/* 관심상품 등록 버튼 */
   	function toBookmark() {
-  		const check = confirm("관심상품으로 등록했습니다. 관심상품으로 이동하시겠습니까?");
+  		const check = confirm("관심상품으로 등록하시겠습니까?");
   		if(check == true) {
   			const $form = $('<form>').attr('method','post').attr('action', '/bookmark/add').appendTo($('body'));
   			$("<input>").attr("type","hidden").attr("name","pno").val(product.pno).appendTo($form);
@@ -244,6 +244,13 @@
   	  $('#cart').click(toCart);
   	  $('#bookmark').click(toBookmark);
   	  $('#qnaUpload').click(qnaUpload);
+  	  
+  	  if(msg!=null) {
+  		  const answer = confirm(msg);
+  		  if(answer==true) {
+  			  location = '/mypage/member/bookmarkList';
+  		  }
+  	  }
  		
       const pno = product.pno;
       
@@ -341,6 +348,7 @@ hr {
 
 .qnabtn {
 	float: right;
+	margin-bottom: 10px;
 	display: inline-block;
 	margin-right: 60px;
 }
