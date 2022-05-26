@@ -87,10 +87,12 @@ public class ChProveService {
 		return dto;
 	}
 
+	/* 챌린지 상세 : 챌린지 신청하기 */
 	public Boolean chApplyCheck(String name, Integer cno) {
 		ChApplyCheck chApplyCheck = new ChApplyCheck();
 		chApplyCheck.setMemberId(name).setCno(cno);
 		Boolean result = proveDao.chApplyFindById(chApplyCheck);
+		System.out.println(result);
 		if(result) {
 			return false;
 		} else {

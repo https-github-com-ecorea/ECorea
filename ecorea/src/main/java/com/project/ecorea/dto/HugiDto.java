@@ -27,12 +27,13 @@ public class HugiDto {
 	/* 후기 등록 */
 	@Data
 	public static class HugiUpload {
-		private Integer jno;
-		private String htitle;
-		private String hcontent;
+		private Integer jno; /* 주문 번호 */
+		private String htitle; /* 후기 제목 */
+		private String hcontent; /* 후기 내용 */
 		
-		private MultipartFile himg;
+		private MultipartFile himg; /* 후기 이미지 */
 		
+		/* Entity 로 변환하는 Method */
 		public Hugi toEntity() {
 			return Hugi.builder().htitle(htitle).hcontent(hcontent).jno(1).build();
 		}
@@ -41,14 +42,14 @@ public class HugiDto {
 	/* 후기 변경 */
 	@Data
 	public static class HugiUpdate {
-		private Integer hno;
-		private String htitle;
-		private String hcontent;
-		private MultipartFile himg;
+		private Integer hno; /* 후기 번호 */
+		private String htitle; /* 후기 제목 */
+		private String hcontent; /* 후기 내용 */
+		private MultipartFile himg; /* 후기 이미지 */
 		
+		/* Entity로 변환하는 Method */
 		public Hugi toEntity() {
 			return Hugi.builder().hno(hno).htitle(htitle).hcontent(hcontent).build();
 		}
 	}
-
 }

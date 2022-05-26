@@ -51,6 +51,7 @@
 		order by p.cpno desc
 	</select> -->
   
+  	<!-- 챌린지 상세 : 전체 인증 댓글 목록(페이징) -->
   	<select id="findByProveAll" resultMap="detailProveList">
 	   	select cname, cpno, cptitle, cpregday, cpimg, cpcontent, cpwriter
 	   	from(
@@ -102,7 +103,7 @@
 		insert into chapplycheck values(#{chapplyno}, #{memberId}, #{cno})
 	</insert>
 	
-	<select id="chApplyFindById" resultType="int">
-		select count(*) from chapplycheck where member_id=#{memberId}
+	<select id="chApplyFindById" resultType="boolean">
+		select count(*) from chapplycheck where member_id=#{memberId} and cno=#{cno}
 	</select>
 </mapper>

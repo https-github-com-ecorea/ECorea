@@ -36,6 +36,7 @@ public class ChallengeDto {
 		}
 	}
 	
+	/* 챌린지 상세 페이지 */
 	@Data
 	@Builder
 	public static class ChallengeDetail {
@@ -48,9 +49,9 @@ public class ChallengeDto {
 		private String ccontent; /* 챌린지 상세 내용 */
 		private Integer cjoincnt; /* 인증 인원 */
 		private Integer applycnt; /* 참여 인원 */
-		// private List<ChProveDto.ChallengeDetailProveList> chProveList; /* 챌린지 인증 글 리스트 */
 	}
 	
+	/* 챌린지 목록 */
 	@Data
 	@Builder
 	public static class ChallengeList {

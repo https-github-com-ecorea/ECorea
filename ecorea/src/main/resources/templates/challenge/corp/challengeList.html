@@ -80,33 +80,11 @@ h1 {
 }
   </style>
   <script th:inline="javascript">
-  	var pagemaker = /*[[${pageMaker}]]*/
   	
-  		/* 페이징 */
-  	  	function pagination() {
-  			const $pagination = $('#pagination');
-  			const $ul = $('<ul class="pagination">').appendTo($pagination);
-  			if (pagemaker.prev == true) {
-  				const $li = $('<li>').appendTo($ul);
-  				$('<a>').attr('href', '/challenge/corp/challengeList?nowPage=' + (pagemaker.start - 1) + '&amount=' + pagemaker.cri.amount).text("이전").appendTo($li);
-  			}
-  			for (let i = pagemaker.start; i <= pagemaker.end; i++) {
-  				const $li = $('<li>').appendTo($ul);
-  				$('<a>').attr('href', '/challenge/corp/challengeList?nowPage=' + i + '&amount=' + pagemaker.cri.amount).text(i).appendTo($li);
-  				if (i == pagemaker.nowPage)
-  					$li.attr('class', 'active');
-  			}
-  			if (pagemaker.next == true) {
-  				const $li = $('<li>').appendTo($ul);
-  				$('<a>').attr('href', '/challenge/corp/challengeList?nowPage=' + (pagemaker.end + 1) + '&amount=' + pagemaker.cri.amount).text("다음").appendTo($li);
-  			}
-  	  	}
   	
   	$(document).ready(function() {
-		pagination();
-		$.ajax({url:"/navMenu"}).done((role) => {
-	  		loginMenu(role);
-  		});
+		
+		
   	});
   </script>
 <body>
@@ -182,6 +160,7 @@ h1 {
   <footer th:replace="fragments/common :: footer">
 </footer>
   <script th:inline="javascript">
+  	
   
   	const $challenge = /*[[${challenge}]]*/;
   	
@@ -207,7 +186,31 @@ h1 {
    				$('<button type="submit" class="btn btn-primary updateBtn">').attr('type', 'button').attr('data-cno', challenges.cno).text('수정').appendTo($secondParentsDiv);
 	      		$('<button type="submit" class="btn btn-primary deleteBtn">').attr('type', 'button').attr('data-cno', challenges.cno).css('margin-left', '5px').text('삭제').appendTo($secondParentsDiv);
 	}
+  	
+  	var pagemaker = /*[[${pageMaker}]]*/
+  	  	
+  	/* 페이징 */
+  	function pagination() {
+  		const $pagination = $('#pagination');
+  		const $ul = $('<ul class="pagination">').appendTo($pagination);
+  		if (pagemaker.prev == true) {
+  			const $li = $('<li>').appendTo($ul);
+  			$('<a>').attr('href', '/challenge/corp/challengeList?nowPage=' + (pagemaker.start - 1) + '&amount=' + pagemaker.cri.amount).text("이전").appendTo($li);
+  		}
+  		for (let i = pagemaker.start; i <= pagemaker.end; i++) {
+  			const $li = $('<li>').appendTo($ul);
+  			$('<a>').attr('href', '/challenge/corp/challengeList?nowPage=' + i + '&amount=' + pagemaker.cri.amount).text(i).appendTo($li);
+  			if (i == pagemaker.nowPage)
+  				$li.attr('class', 'active');
+  		}
+  		if (pagemaker.next == true) {
+  			const $li = $('<li>').appendTo($ul);
+  			$('<a>').attr('href', '/challenge/corp/challengeList?nowPage=' + (pagemaker.end + 1) + '&amount=' + pagemaker.cri.amount).text("다음").appendTo($li);
+  		}
+  	}
   
+  	pagination();
+  	
   	$(document).on('click', '.deleteBtn', function() {
   		let cno = $(this).data('cno');
 		if(confirm('챌린지를 삭제하시겠습니까?')) {

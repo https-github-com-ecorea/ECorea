@@ -27,8 +27,12 @@ public interface UserDao {
 	public Integer corpInfoUpdate(Corp corp);
 
 	public Member memberFindById(String id);
+	
+	public Member memberFindByEmail(String email);
 
 	public Corp corpFindById(String id);
+	
+	public Corp corpFindByEmail(String email);
 
 	public Boolean memberDeleteById(String id);
 

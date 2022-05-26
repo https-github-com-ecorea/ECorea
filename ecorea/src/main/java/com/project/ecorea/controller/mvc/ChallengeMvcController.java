@@ -1,19 +1,14 @@
 package com.project.ecorea.controller.mvc;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
-
 import java.security.*;
-import java.util.*;
 
 import javax.servlet.http.*;
 
+import org.springframework.security.access.annotation.*;
 import org.springframework.stereotype.*;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.*;
 
-import com.project.ecorea.dao.*;
 import com.project.ecorea.dto.*;
 import com.project.ecorea.entity.*;
 import com.project.ecorea.service.*;
@@ -65,15 +60,7 @@ public class ChallengeMvcController {
 	
 	/* 전체 유저 : 챌린지 목록 출력 */
 	@GetMapping("/challenge/challengeList")
-	public ModelAndView readchallengeList(Model model, Criteria cri, HttpServletRequest request, Principal principal) {
-		
-		if (request.isUserInRole("ROLE_MEMBER")) {			
-			model.addAttribute("role", "ROLE_MEMBER");
-		} else if(principal == null) {
-			model.addAttribute("role", "null");
-		} else {
-			model.addAttribute("role", "ROLE_CORP");
-		}
+	public ModelAndView readchallengeList(Criteria cri) {
 		return new ModelAndView().addObject("challenge", service.readchallengeList(cri)).addObject("pageMaker", new PageMakerDto(cri, service.getListTotal()));
 	}
 	
@@ -81,20 +68,24 @@ public class ChallengeMvcController {
 	@Secured("ROLE_CORP")
 	@GetMapping("/challenge/corp/challengeList")
 	public ModelAndView readCorpChallengeList(Principal principal, Criteria cri) {
-		return new ModelAndView("challenge/corp/challengeList").addObject("challenge", service.readCorpChallengeList(principal.getName(), cri)).addObject("pageMaker", new PageMakerDto(cri, service.getCorpListTotal(principal.getName())));
+		return new ModelAndView("challenge/corp/challengeList").addObject("challenge", service.readCorpChallengeList(principal.getName(), cri))
+				.addObject("pageMaker", new PageMakerDto(cri, service.getCorpListTotal(principal.getName())));
 	}
 	
 	/* 전체 유저 : 챌린지 상세 페이지 출력 */
 	@GetMapping("/challenge/member/challengeDetail")
-	public ModelAndView readUserDetail(Integer cno, HttpSession session, HttpServletRequest request) {
-		if(session.getAttribute("login")==null) {
+	public ModelAndView readUserDetail(Integer cno, Principal principal, HttpServletRequest request) {
+		// 로그인하지 않은 회원이 접근했을때
+		if(principal==null) {
 			return new ModelAndView("challenge/member/challengeDetail").addObject("challenge", service.readUserDetail(cno));
 		}
 		
+		// MEMBER 권한을 가진 회원이 접속했을 때 권한을 HTML로 보내 비회원인지 로그인한 회원인지를 구분해 챌린지 신청버튼의 기능이 달라진다
 		if(request.isUserInRole("ROLE_MEMBER")) {
 			return new ModelAndView("challenge/member/challengeDetail").addObject("challenge", service.readUserDetail(cno)).addObject("role", "ROLE_MEMBER");
 		} else {
-			return new ModelAndView("challenge/corp/challengeDetail").addObject("challenge", service.readUserDetail(cno)).addObject("role", "ROLE_CORP");
+			// CORP 권한을 가진 회원이 접속했을 때
+			return new ModelAndView("challenge/corp/challengeDetail").addObject("challenge", service.readUserDetail(cno));
 		}
 	}
 }
