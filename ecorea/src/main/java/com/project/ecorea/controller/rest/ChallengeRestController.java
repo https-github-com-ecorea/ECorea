@@ -16,6 +16,7 @@ public class ChallengeRestController {
 	private ChProveService chProveService;
 	private ChallengeService challengeService;
 	
+	/* 챌린지 상세 페이지 : 인증 댓글 */
 	@GetMapping(value="/challengeDetail/provelist", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public PagingChProveDto challengeDetailProveList(Criteria cri) {
 		return chProveService.challengeDetailProveList(cri);
@@ -25,12 +26,13 @@ public class ChallengeRestController {
 	@PostMapping("/challenge/chapply")
 	public ResponseEntity<String> chApplyCheck(Principal principal, Integer cno) {
 		if(chProveService.chApplyCheck(principal.getName(), cno) == true) {
-			return ResponseEntity.status(HttpStatus.OK).body("신청에 성공했습니다");			
+			return ResponseEntity.status(HttpStatus.OK).body("신청에 성공했습니다");
 		} else {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 신청한 챌린지입니다");
 		}
 	}
 	
+	/* 챌린지 삭제 */
 	@PostMapping("/challenge/corp/deleteChallenge")
 	public ResponseEntity<String> deleteChallenge(Integer cno) {
 		Boolean result = challengeService.deleteChallenge(cno);

@@ -28,12 +28,6 @@ public class HugiService {
 
 	private final HugiDao dao;
 	
-	/* 후기 목록 출력 */
-	public List<HugiDto.HugiList> hugiList(Integer pno) {
-		List<HugiDto.HugiList> hugis = dao.findByPno(pno);
-		return hugis;
-	}
-	
 	/* 상품 상세 : 후기 목록 (페이징) */
 	public PagingHugiDto productDetailHugiList(Criteria cri) {
 		PagingHugiDto dto = new PagingHugiDto();
@@ -49,7 +43,9 @@ public class HugiService {
 	/* 일반 회원 후기 목록 출력 */
 	public List<HugiDto.HugiList> memberHugiList(String loginId, Criteria cri) {
 		List<HugiDto.HugiList> memberHugiList = new ArrayList<>();
+		// 로그인한 회원의 아이디로 작성한 후기글들을 db에서 읽어온다
 		List<HugiDto.HugiList> hugiPaging = dao.findByhwriter(cri);
+		// 가지고 온 후기 글들의 이미지에 imagePath 주소값을 더해준다
 		for(HugiDto.HugiList hugi : hugiPaging) {
 			if(hugi.getHwriter().equals(loginId)) {
 				hugi.setHimg(imagePath + hugi.getHimg());
@@ -67,16 +63,20 @@ public class HugiService {
 
 	/* 일반 회원 후기 등록 */
 	public void reviewUpload(String loginId, HugiDto.HugiUpload upload) {
-		System.out.println("###### 주문 번호 : " + upload.getJno());
+		// 입력받은 데이터를 Entity 형태로 변환
 		Hugi hugi = upload.toEntity();
 		MultipartFile image = upload.getHimg();
+		// 이미지가 없을 경우 사용하게 될 기본 이미지
 		hugi.setHimg(defaultImage);
 		hugi.setJno(upload.getJno());
 		// MultipartFile이 null이 아니고 비어있지 않고 이미지 파일(image/jpeg, image/png.....)이라면
 		if(image!=null && image.isEmpty()==false && image.getContentType().toLowerCase().startsWith("image/")) {
+			// 데이터베이스에 저장될 이미지 이름 생성
 			String imagename = UUID.randomUUID() + "-" + image.getOriginalFilename();
+			// file 변수에 이미지를 저장할 주소 , 이미지 이름을 가진 File 객체를 생성
 			File file = new File(imageFolder, imagename);
 			try {
+				// file 변수에 담긴 File 객체를 저장한다
 				image.transferTo(file);
 				hugi.setHimg(imagename);
 			} catch (IllegalStateException | IOException e) {
@@ -90,19 +90,24 @@ public class HugiService {
 	}
 
 	public void reviewUpdate(Integer hno, HugiUpdate update) {
+		// 입력받은 데이터를 Entity 형태로 변환
 		Hugi hugi = update.toEntity();
-		
 		MultipartFile image = update.getHimg();
+		// MultipartFile이 null이 아니고 비어있지 않고 이미지 파일(image/jpeg, image/png......)이라면
 		if(image!=null && image.isEmpty()==false && image.getContentType().toLowerCase().startsWith("image/")) {
+			// 데이터베이스에 저장될 이미지 이름 생성
 			String imagename = UUID.randomUUID() + "-" + image.getOriginalFilename();
+			// file 변수에 이미지를 저장할 주소 , 이미지 이름을 가진 File 객체를 생성
 			File file = new File(imageFolder, imagename);
 			try {
+				// file 변수에 담긴 File 객체를 저장한다
 				image.transferTo(file);
 				hugi.setHimg(imagename);
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
 			}
 		} else {
+			// 이미지가 null 이라면 기본이미지를 넣는다
 			hugi.setHimg(defaultImage);			
 		}
 				

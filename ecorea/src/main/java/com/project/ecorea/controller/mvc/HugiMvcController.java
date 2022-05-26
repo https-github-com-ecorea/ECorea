@@ -23,13 +23,13 @@ public class HugiMvcController {
 	@GetMapping("/order/reviewList")
 	public ModelAndView reviewList(Principal principal, Criteria cri) {
 		List<HugiDto.HugiList> hugiList = hugiService.memberHugiList(principal.getName(), cri);
-		return new ModelAndView("order/reviewList").addObject("hugi", hugiList).addObject("pageMaker", new PageMakerDto(cri, hugiService.getHugiListTotal(principal.getName()))).addObject("role", "ROLE_MEMBER");
+		return new ModelAndView("order/reviewList").addObject("hugi", hugiList).addObject("pageMaker", new PageMakerDto(cri, hugiService.getHugiListTotal(principal.getName())));
 	}
 	
-	// 일반회원 후기 등록 페이지
+	// 일반회원 후기 작성 페이지
 	@GetMapping("/order/reviewUpload")
 	public ModelAndView reviewUpload(Integer jno) {
-		return new ModelAndView("order/reviewUpload").addObject("jno", jno).addObject("role", "ROLE_MEMBER");
+		return new ModelAndView("order/reviewUpload").addObject("jno", jno);
 	}
 	
 	// 일반회원 후기 등록

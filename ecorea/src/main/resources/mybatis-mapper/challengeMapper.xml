@@ -61,6 +61,7 @@
 		select * from challenge where corp_id=#{id} order by cno desc
 	</select>
 
+	<!-- 챌린지 상세 페이지 -->
 	<select id="findByCno" resultType="com.project.ecorea.dto.ChallengeDto$ChallengeDetail">
 		select cno,cname,cgoal,cstartday,cendday,cthumbnail,ccontent,cjoincnt, 
 			(select count(distinct p.member_id) from chprove p) as applycnt 
@@ -68,6 +69,7 @@
 		where cno=#{cno}
 	</select>
 
+	<!-- 챌린지 전체 목록 읽어오기 -->
 	<select id="challengePagingList" resultType="com.project.ecorea.dto.ChallengeDto$ChallengeList">
 		select c.corp_name as corpname, ch.cno, ch.cname, ch.cregday, ch.cstartday, ch.cendday, ch.cthumbnail, ch.cgoal, ch.cjoincnt 
 		from(
@@ -76,6 +78,7 @@
        	where <![CDATA[rn > (#{nowPage} -1) * #{amount}]]> order by cno desc
 	</select>
 
+	<!-- 특정 기업 챌린지 목록 읽어오기 -->
 	<select id="challengePagingCorpList" resultType="challenge">
 		select cno,cname,cgoal,cpoint,cregday,cstartday,cendday,cthumbnail,ccontent,cjoincnt,corpid
 		from(

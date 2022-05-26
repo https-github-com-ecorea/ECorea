@@ -65,6 +65,14 @@
 		select * from corp where corp_id=#{id}
 	</select>
 	
+	<select id="memberFindByEmail" resultMap="memberTable">
+		select * from member where member_email=#{email}
+	</select>
+	
+	<select id="corpFindByEmail" resultMap="corpTable">
+		select * from corp where corp_email=#{email}
+	</select>
+	
 	<update id="memberInfoUpdate">
 		update member
 		<trim suffixOverrides="," prefix="set">

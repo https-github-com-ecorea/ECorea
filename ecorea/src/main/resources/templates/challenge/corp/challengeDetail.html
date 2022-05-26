@@ -390,31 +390,31 @@ const challenge = /*[[${challenge}]]*/;
 	    let reply_pageMaker = '';	
 	    
 	    /* prev */
-	  		if (pf.prev) {
-	  			let prev_num = pf.start -1;
-	  			reply_pageMaker += '<li class="provePageMaker_btn prev">';
-	  			reply_pageMaker += '<a href="'+ prev_num +'">이전</a>';
-	  			reply_pageMaker += '</li>';	
+	  	if (pf.prev) {
+	  		let prev_num = pf.start -1;
+	  		reply_pageMaker += '<li class="provePageMaker_btn prev">';
+	  		reply_pageMaker += '<a href="'+ prev_num +'">이전</a>';
+	  		reply_pageMaker += '</li>';	
+	  	}
+	  	/* number btn */
+	  	for(let i = pf.start; i < pf.end+1; i++){
+	  		reply_pageMaker += '<li class="provePageMaker_btn ';
+	  		if(pf.cri.pageNum === i){
+	  			reply_pageMaker += 'active';
 	  		}
-	  		/* number btn */
-	  		for(let i = pf.start; i < pf.end+1; i++){
-	  			reply_pageMaker += '<li class="provePageMaker_btn ';
-	  			if(pf.cri.pageNum === i){
-	  				reply_pageMaker += 'active';
-	  			}
-	  			reply_pageMaker += '">';
-	  			reply_pageMaker += '<a href="' + i + '">' + i + '</a>';
-	  			reply_pageMaker += '</li>';
-	  		}
-	  		/* next */
-	  		if(pf.next){
-	  			let next_num = pf.end +1;
-	  			reply_pageMaker += '<li class="provePageMaker_btn next">';
-	  			reply_pageMaker += '<a href="'+ next_num +'">다음</a>';
-	  			reply_pageMaker += '</li>';	
-	  		}
-	  		
-	  		$(".provePageMaker").html(reply_pageMaker);	
+	  		reply_pageMaker += '">';
+	  		reply_pageMaker += '<a href="' + i + '">' + i + '</a>';
+	  		reply_pageMaker += '</li>';
+	  	}
+	  	/* next */
+	  	if(pf.next){
+	  		let next_num = pf.end +1;
+	  		reply_pageMaker += '<li class="provePageMaker_btn next">';
+	  		reply_pageMaker += '<a href="'+ next_num +'">다음</a>';
+	  		reply_pageMaker += '</li>';	
+	  	}
+	  	
+	  	$(".provePageMaker").html(reply_pageMaker);	
 	  };
 	}
 	function requestProve() {

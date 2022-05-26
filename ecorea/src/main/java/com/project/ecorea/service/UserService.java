@@ -249,4 +249,26 @@ public class UserService {
 		// 일반 회원 , 기업 회원 모두 아이디를 사용중이지 않다면 사용가능한 아이디이다
 		return true;
 	}
+	
+	/* 이메일 중복검사 */
+	public Boolean findOverlapEmail(String email) {
+		Member member = dao.memberFindByEmail(email);
+		Corp corp = null;
+		
+		// 일반 회원이 존재하지 않는다면
+		if(member==null) {
+			// 기업 회원인지 찾는다
+			corp = dao.corpFindByEmail(email);
+			
+			// 기업 회원이 존재한다면
+			if(corp!=null)
+				// 이메일을 사용할 수 없으므로 false를 return 해준다
+				return false;
+		} else {
+			// 일반 회원이 존재한다면 이메일을 사용할 수 없으므로 false를 return 해준다
+			return false;
+		}
+		// 일반 회원 , 기업 회원 모두 이메일을 사용중이지 않다면 사용가능한 이메일이다
+		return true;
+	}
 }

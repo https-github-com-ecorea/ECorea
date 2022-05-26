@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
+<head th:replace="fragments/common::html-head">
   <title>후기 수정</title>
 </head>
   <script src="/js/hugiCheck.js"></script>
@@ -79,7 +79,7 @@ input[type=text], select, textarea {
   	});
   </script>
 <body>
-<header th:replace="fragements/common::header"></header>
+<header th:replace="fragments/common::header"></header>
   <h1>후기 수정</h1>
   <div class="container">
     <form action="/order/reviewUpdate" method="post" enctype="multipart/form-data" id="update_form">
@@ -97,6 +97,6 @@ input[type=text], select, textarea {
       <button type="button" class="btn btn-primary">수정</button>
     </form>
   </div>
-  <footer th:replace="fragements/common::footer"></footer>
+  <footer th:replace="fragments/common::footer"></footer>
 </body>
 </html>

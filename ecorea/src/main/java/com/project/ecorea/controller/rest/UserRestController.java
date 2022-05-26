@@ -31,6 +31,17 @@ public class UserRestController {
 		return ResponseEntity.status(HttpStatus.OK).body("사용가능한 아이디입니다");
 	}
 	
+	/* 이메일 중복 검사 */
+	@PreAuthorize("isAnonymous()")
+	@GetMapping("/user/overlap/email")
+	public ResponseEntity<String> findOverlapEmail(String email, Principal principal) {
+		if(principal!=null)
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("잘못된 접근입니다");
+		if(service.findOverlapEmail(email)==false)
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("사용이 불가능한 이메일입니다");
+		return ResponseEntity.status(HttpStatus.OK).body("사용가능한 이메일입니다");
+	}
+	
 	/* 아이디 찾기 */
 	@PreAuthorize("isAnonymous()")
 	@GetMapping("/user/find/id")

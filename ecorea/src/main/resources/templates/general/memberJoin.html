@@ -49,15 +49,24 @@
 				$.ajax("/user/overlap/id?id="+$('#id').val())
 					.done(()=>$('#id_msg').text('사용가능한 아이디입니다').attr('class','success'))
 					.fail(()=>$('#id_msg').text('사용중인 아이디입니다').attr('class','fail'));
-			});
-			
+		});
+  		
+  		$('#email').focusout(function() {
+			if(emailCheck()==false)
+				return false;
+	  		$.ajax("/user/overlap/email?email="+$('#email').val())
+			.done(()=>$('#email_msg').text('사용가능한 이메일입니다').attr('class','success'))
+			.fail(()=>$('#email_msg').text('사용중인 이메일입니다').attr('class','fail'));
+		});
+		
+  		
 			$('#pw').focusout(pwCheck);
 			$('#pw2').focusout(pw2Check);
 			$('#name').focusout(nameCheck);
 			$('#email').focusout(emailCheck);
 
 			$('#join').click(function() {
-				if((idCheck() && pwCheck() && pw2Check() && emailCheck() && nameCheck())==false)
+				if((idCheck() && emailCheck() && pwCheck() && pw2Check() && nameCheck())==false)
 					return false;
 				
 				$.ajax("/user/overlap/id?id="+$('#id').val())
@@ -65,6 +74,12 @@
 						$('#join_form').submit();
 					})
 				.fail(()=>$('#id_msg').text('사용중인 아이디입니다').attr('class','fail'));
+				
+				$.ajax("/user/overlap/email?email="+$('#email').val())
+				.done(()=>{
+					$('#join_form').submit();
+				})
+			.fail(()=>$('#email_msg').text('사용중인 이메일입니다').attr('class','fail'));
 			});
   	})
   </script>
@@ -94,7 +109,7 @@
     </div>
     <div class="mb-3">
       <label for="email" class="form-label">이메일</label>
-      <input type="email" class="form-control" id="email" placeholder="이메일" name="email" required>
+      <input type="text" class="form-control" id="email" placeholder="이메일" name="email" required>
       <span id="email_msg"></span>
     </div>
     <button type="button" class="btn btn-primary" id="join">회원가입</button>
